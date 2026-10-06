@@ -7,6 +7,22 @@ func _initialize() -> void:
 	root.add_child(main)
 	await process_frame
 	var gs = root.get_node("GameState")
+	main.show_hub()   # abertura do capítulo
+	await process_frame
+	gs.begin_chapter()
+	gs.gold = 999
+	gs.reputation = 10
+	main.show_upgrades()
+	await process_frame
+	for up in gs.upgrades_data.upgrades:
+		gs.buy_upgrade(up.id)
+	main.show_hub()
+	await process_frame
+	main.show_training()
+	await process_frame
+	main._train_pick = ["mira", "lyssa"]
+	main.show_training()
+	await process_frame
 	var m: Dictionary = gs.board()[0]
 	main.show_party(m)
 	main._toggle_hero(m, "vera")
@@ -42,7 +58,14 @@ func _initialize() -> void:
 		await process_frame
 	main._on_end_day()
 	await process_frame
-	gs.day = 99
+	gs.chapter_result = {"chapter": gs.current_chapter(), "success": true, "text": "x"}
+	gs.chapter_state = "encerrado"
+	main.show_hub()
+	await process_frame
+	gs.next_chapter()
+	main.show_hub()
+	await process_frame
+	gs.chapter_state = "fim_do_ato"
 	main.show_hub()
 	await process_frame
 	# PV e incapacitado

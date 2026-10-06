@@ -6,6 +6,13 @@ func _initialize() -> void:
 	root.add_child(main)
 	var gs = root.get_node("GameState")
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("user://shots"))
+	await process_frame
+	main.show_hub()
+	await _shot("10_capitulo")
+	gs.begin_chapter()
+	main.show_upgrades()
+	await _shot("11_upgrades")
+	main.show_hub()
 	await _shot("1_hub")
 	var m: Dictionary = gs.board()[2]
 	main.show_party(m)

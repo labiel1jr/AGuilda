@@ -10,6 +10,8 @@ O jogo não é sobre combate. É sobre gestão de gente complicada com poder de 
 
 ## Como se joga
 
+O jogo é dividido em **capítulos**. Cada um abre com uma cena, dura alguns dias e tem um objetivo; o resultado muda o texto dos capítulos seguintes. O Ato 1 tem dois capítulos.
+
 1. **Mural de Quests** — pedidos chegam a cada dia, com risco, prazo e atributos exigidos.
 2. **Montagem de Party** — escolha de 1 a 4 aventureiros. O preview mostra a afinidade entre eles, mas nunca o resultado.
 3. **Despacho** — confirme com o Selo de Cera.
@@ -17,17 +19,29 @@ O jogo não é sobre combate. É sobre gestão de gente complicada com poder de 
 5. **Resolução** — Sucesso Limpo, Sucesso com Custo ou Falha com Revelação. Falhar nunca é beco sem saída: é gancho de história.
 6. **Vínculos** — quem vai junto se aproxima ou se afasta. Ao cruzar limiares, você decide o que existe entre eles (Amizade, Mentoria, Rivalidade, Romance...), e isso desbloqueia **Ações de Vínculo**.
 7. **Bastidores** — cenas curtas na guilda (taverna, treino, brigas, segredos). Você escolhe como reagir: pagar a rodada, tomar partido, mediar.
-8. **Encerrar o dia** — aventureiros descansam, missões expiram, novos pedidos chegam. Quem não sai junto em missão vai se afastando (neglect).
+8. **Guilda** — gaste o ouro das missões em melhorias: Quadro de Relações, Enfermaria, Arquivo e Salão de Treinamento.
+9. **Encerrar o dia** — aventureiros descansam, missões expiram, novos pedidos chegam. Quem não sai junto em missão vai se afastando (neglect).
 
 | Montagem de Party | Mapa Mágico |
 |---|---|
 | ![Montagem de Party](docs/img/2_party.png) | ![Mapa Mágico](docs/img/6_mapa.png) |
 | **Livro da Guilda** | **Resolução** |
 | ![Livro da Guilda](docs/img/5_livro.png) | ![Resolução](docs/img/3_resultado.png) |
+| **Abertura de capítulo** | **Melhorias da Guilda** |
+| ![Capítulo](docs/img/10_capitulo.png) | ![Melhorias](docs/img/11_upgrades.png) |
 | **Bastidores no hub** | **Cena de bastidor** |
 | ![Bastidores](docs/img/8_hub_bastidores.png) | ![Cena de bastidor](docs/img/9_bastidor.png) |
 
-## Estado atual — v0.3
+## Estado atual — v0.4
+
+- **Capítulos (GDD §9)**: Ato 1 com "Herança de Cinzas" (objetivo: Reputação 6+) e "Ecos do Corvo" (objetivo: sobreviver à missão final *A Noite do Corvo*, que exige 3+ aventureiros). Abertura, encerramento com objetivo cumprido ou não, flags que mudam o texto do capítulo seguinte e tela de fim de ato. Falhar não encerra o jogo.
+- **Ouro**: missões pagam recompensa (limpo = inteira, custo = metade, falha = nada).
+- **Melhorias da Guilda (GDD §7)**:
+  - *Quadro de Relações* — sem ele, a afinidade aparece só como impressão ("Se dão bem", "Mal se olham"); com ele, números e o Quadro.
+  - *Enfermaria* — descanso recupera um estado de fadiga a mais e o dobro de PV.
+  - *Arquivo da Guilda* — histórico de missões de cada dupla no Quadro.
+  - *Salão de Treinamento* — 1 treino de dupla por dia: +1 de afinidade, os dois ficam Cansados.
+  - Slots de missão seguem liberados pela reputação (5 → 2 slots, 12 → 3 slots).
 
 - 6 aventureiros (Theo, Lyssa, Mira, Senna, Bram, Vera) com atributos e grade de afinidade assimétrica.
 - 10 missões, com tags de composição (exige especialista, proíbe herói) e requisito oculto.
@@ -56,6 +70,8 @@ Requer **Godot 4.7**. Abra a pasta no editor e pressione **F5**.
 | `scripts/core/game_state.gd` | Autoload `GameState`: elenco, afinidade, vínculos, despacho, fadiga, moral, reputação, dias |
 | `data/narration.json` | Narração do Mapa Mágico por partida, bioma e resultado |
 | `data/backstage.json` | Eventos de bastidor: condições, texto e escolhas com efeitos |
+| `data/chapters.json` | Atos e capítulos: abertura, duração, missões, objetivo, flags e encerramentos |
+| `data/upgrades.json` | Ouro inicial, recompensas por risco e melhorias da guilda |
 | `data/book.json` | Seções trancadas do Livro (slots de expansão por versão) |
 | `scripts/ui/main.gd` | Telas, montadas por código |
 | `scripts/ui/magic_map.gd` | Mapa Mágico: desenho do bioma, rota, waypoints e marcadores |
@@ -82,6 +98,10 @@ Adicione um objeto em `data/backstage.json`:
 - `min`/`max`: faixa de afinidade do par. `heroes`: fixa um ou os dois heróis (`null` = qualquer). `once`: aparece uma vez por jogo.
 - Efeitos: `aff` = [a→b, b→a], `morale` e `fatigue` por `a`/`b`. Mudanças de afinidade disparam os eventos de vínculo normalmente.
 
+### Criando capítulos
+
+Em `data/chapters.json`, adicione o capítulo à lista `chapters` e o id dele em `acts[].chapters`. As missões do capítulo ficam em `missions.json` com `day` relativo ao início do capítulo. Objetivos: `{"type": "reputation", "min": N}` ou `{"type": "mission", "mission": "<id>"}`. `intro_flags` acrescenta texto conforme as flags de capítulos anteriores (`"!flag"` = flag ausente).
+
 ### Expandindo o Livro da Guilda
 
 - **Campo novo na ficha:** adicione no herói em `heroes.json`. Todos os campos da ficha são opcionais, com valor padrão em `GameState.new_game`.
@@ -102,7 +122,8 @@ godot --headless --path . -s res://tests/ui_smoke.gd
 - [x] **v0.1** — loop de despacho
 - [x] **v0.2** — party, afinidade, Ações de Vínculo
 - [x] **v0.3** — Mapa Mágico, Livro da Guilda, eventos de bastidor, neglect
-- [ ] **v0.4** — capítulos, Ato 1 completo, upgrades da guilda
+- [x] **v0.4** — capítulos, Ato 1 completo, upgrades da guilda
+- [ ] **v0.5** — Ato 2, eventos de bastidor ligados aos capítulos, saída de aventureiros por moral baixa
 - [ ] **v1.0** — arte, trilha sonora, minigame opcional, finais variáveis
 
 ## Créditos

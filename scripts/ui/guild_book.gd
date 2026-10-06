@@ -147,7 +147,7 @@ func _right_page(id: String, h: Dictionary) -> Control:
 			t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			row.add_child(t)
 
-	col.add_child(_heading("Afinidades"))
+	col.add_child(_heading("Afinidades" if gs.affinity_visible() else "Afinidades (impressões — construa o Quadro de Relações para ver os números)"))
 	for other in gs.hero_order:
 		if other == id:
 			continue
@@ -158,10 +158,13 @@ func _right_page(id: String, h: Dictionary) -> Control:
 		var n := _text(gs.heroes[other].name, 13, C_INK, false)
 		n.custom_minimum_size.x = 52
 		row.add_child(n)
-		row.add_child(_aff_bar(v))
-		row.add_child(_text("%+d" % v, 13, C_INK, false))
 		var lbl: String = gs.bond_label(id, other)
-		row.add_child(_text(gs.band(v).label + ("  ✦ " + lbl if lbl != "" else ""), 12, C_INK_SOFT, true))
+		if gs.affinity_visible():
+			row.add_child(_aff_bar(v))
+			row.add_child(_text("%+d" % v, 13, C_INK, false))
+			row.add_child(_text(gs.band(v).label + ("  ✦ " + lbl if lbl != "" else ""), 12, C_INK_SOFT, true))
+		else:
+			row.add_child(_text(gs.describe_aff(v) + ("  ✦ " + lbl if lbl != "" else ""), 13, C_INK_SOFT, true))
 
 	_add_locked(col, "right")
 	return col

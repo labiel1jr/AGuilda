@@ -44,16 +44,31 @@ func _ready() -> void:
 
 func show_hub() -> void:
 	_clear()
-	if gs.is_over():
-		show_ending()
-		return
+	match gs.chapter_state:
+		"intro":
+			show_chapter_intro()
+			return
+		"encerrado":
+			show_chapter_end()
+			return
+		"fim_do_ato":
+			show_ending()
+			return
+	var ch: Dictionary = gs.current_chapter()
 	var top := HBoxContainer.new()
 	root.add_child(top)
-	top.add_child(_label("A Guilda do Corvo Cinzento", 26, C_GOLD))
+	var titles := VBoxContainer.new()
+	titles.add_theme_constant_override("separation", 0)
+	top.add_child(titles)
+	titles.add_child(_label("A Guilda do Corvo Cinzento", 24, C_GOLD))
+	titles.add_child(_label("Capítulo %d — %s   ·   Dia %d/%d   ·   Reputação %d   ·   Ouro %d   ·   Despachos %d/%d" % [ch.number, ch.title, gs.chapter_day(), int(ch.days), gs.reputation, gs.gold, gs.dispatched_today, gs.slots()], 14, C_TEXT))
 	top.add_child(_spacer())
-	top.add_child(_label("Dia %d/%d   ·   Reputação %d   ·   Despachos %d/%d" % [gs.day, gs.LAST_DAY, gs.reputation, gs.dispatched_today, gs.slots()], 16, C_TEXT))
-	top.add_child(_button("Quadro de Relações", show_relations))
-	top.add_child(_button("Livro da Guilda", show_book.bind(0)))
+	top.add_child(_button("Guilda", show_upgrades))
+	var rel := _button("Quadro" if gs.affinity_visible() else "🔒 Quadro", show_relations)
+	rel.disabled = not gs.affinity_visible()
+	rel.tooltip_text = "Construa o Quadro de Relações na tela Guilda." if rel.disabled else "Quadro de Relações"
+	top.add_child(rel)
+	top.add_child(_button("Livro", show_book.bind(0)))
 	top.add_child(_button("Encerrar dia ▶", _on_end_day))
 
 	var body := HBoxContainer.new()
@@ -68,7 +83,11 @@ func show_hub() -> void:
 	body.add_child(board_panel)
 	var bcol := VBoxContainer.new()
 	board_panel.add_child(bcol)
-	bcol.add_child(_label("Mural de Quests", 20, C_GOLD))
+	var bhead := HBoxContainer.new()
+	bcol.add_child(bhead)
+	bhead.add_child(_label("Mural de Quests", 20, C_GOLD))
+	bhead.add_child(_spacer())
+	bhead.add_child(_label("Objetivo: " + ch.goal.text, 13, C_MUTED))
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -103,6 +122,11 @@ func show_hub() -> void:
 		row.add_child(_label("  PV %d/%d" % [h.hp, h.hp_max], 13, C_MUTED))
 		row.add_child(_label("  Moral %d" % h.morale, 13, C_MUTED))
 
+	if gs.has_upgrade("salao"):
+		var tb := _button("Salão de Treinamento: treinar uma dupla" if gs.can_train() else "Salão de Treinamento: já usado hoje", show_training)
+		tb.disabled = not gs.can_train()
+		ccol.add_child(tb)
+
 	# Bastidores
 	ccol.add_child(_label("Bastidores", 20, C_GOLD))
 	var pending: Array = gs.backstage_today.filter(func(bs): return not bs.done)
@@ -135,7 +159,7 @@ func _mission_card(m: Dictionary) -> Control:
 	col.add_child(_para(m.desc, 13, C_INK))
 	var left: int = gs.expires_on(m) - gs.day
 	var prazo := "último dia!" if left <= 0 else "%d dia(s)" % (left + 1)
-	col.add_child(_para("Tipo: %s   ·   %s + %s   ·   Prazo: %s" % [m.type.capitalize(), gs.ATTR_NAMES[m.primary], gs.ATTR_NAMES[m.secondary], prazo], 13, C_INK.lightened(0.25)))
+	col.add_child(_para("Tipo: %s   ·   %s + %s   ·   Prazo: %s   ·   Recompensa: %d ouro" % [m.type.capitalize(), gs.ATTR_NAMES[m.primary], gs.ATTR_NAMES[m.secondary], prazo, gs.mission_reward(m)], 13, C_INK.lightened(0.25)))
 	for tag in m.get("tags", []):
 		col.add_child(_para("⚑ " + tag.text, 13, Color("#8a3b1f")))
 	var btn := _button("Montar party", show_party.bind(m))
@@ -150,7 +174,7 @@ func _mission_card(m: Dictionary) -> Control:
 func _on_end_day() -> void:
 	var lines: Array = gs.end_day()
 	_clear()
-	root.add_child(_label("Dia %d" % gs.day, 28, C_GOLD))
+	root.add_child(_label("Fim do dia" if gs.chapter_state == "encerrado" else "Dia %d do capítulo" % gs.chapter_day(), 28, C_GOLD))
 	root.add_child(_para("Os aventureiros descansam. A taverna esvazia. O mural range com pergaminhos novos.", 15, C_TEXT))
 	for l in lines:
 		root.add_child(_para("• " + l, 15, C_TEXT))
@@ -224,10 +248,9 @@ func _render_party(m: Dictionary) -> void:
 		rcol.add_child(_label("AFINIDADE DA PARTY:", 14, C_GOLD))
 		for pr in pairs:
 			var v: int = gs.pair_value(pr[0], pr[1])
-			var bd: Dictionary = gs.band(v)
 			var lbl: String = gs.bond_label(pr[0], pr[1])
 			var extra := "  · " + lbl if lbl != "" else ""
-			rcol.add_child(_label("%s ↔ %s  %+d  [%s]%s" % [gs.heroes[pr[0]].name, gs.heroes[pr[1]].name, v, bd.label, extra], 14, _aff_color(v)))
+			rcol.add_child(_label("%s ↔ %s  %s%s" % [gs.heroes[pr[0]].name, gs.heroes[pr[1]].name, gs.describe_aff(v), extra], 14, _aff_color(v)))
 	for act in gs.active_bond_actions(selected):
 		rcol.add_child(_label("✦ Ação de Vínculo: %s (%s & %s)" % [act.action, gs.heroes[act.a].name, gs.heroes[act.b].name], 14, C_GOLD))
 
@@ -376,7 +399,7 @@ func show_result(res: Dictionary) -> void:
 		root.add_child(_label("Vínculos", 16, C_GOLD))
 		for ch in res.affinity:
 			var arrow := "▲" if ch.after > ch.before else ("▼" if ch.after < ch.before else "=")
-			root.add_child(_label("%s ↔ %s   %+d → %+d  %s  [%s]" % [gs.heroes[ch.a].name, gs.heroes[ch.b].name, ch.before, ch.after, arrow, gs.band(ch.after).label], 14, _aff_color(ch.after)))
+			root.add_child(_label("%s ↔ %s   %s  %s" % [gs.heroes[ch.a].name, gs.heroes[ch.b].name, gs.describe_change(ch.before, ch.after), arrow], 14, _aff_color(ch.after)))
 	root.add_child(_spacer_v())
 	root.add_child(_button("Continuar", _after_result))
 
@@ -397,7 +420,7 @@ func show_bond_event(ev: Dictionary) -> void:
 	var b: Dictionary = gs.heroes[ev.b]
 	root.add_child(_label("Bastidores da guilda", 16, C_MUTED))
 	root.add_child(_label("\"%s\"" % info.title, 28, C_GOLD))
-	root.add_child(_label("%s e %s  ·  afinidade %+d" % [a.name, b.name, gs.pair_value(ev.a, ev.b)], 18, C_TEXT))
+	root.add_child(_label("%s e %s  ·  %s" % [a.name, b.name, gs.describe_aff(gs.pair_value(ev.a, ev.b))], 18, C_TEXT))
 	root.add_child(_label("Como você enxerga o que existe entre eles?", 15, C_TEXT))
 	for lbl in info.labels:
 		var action: String = gs.BOND_ACTIONS.get(lbl, "")
@@ -420,7 +443,7 @@ func show_backstage(bs: Dictionary) -> void:
 	root.add_child(who)
 	for id in [bs.a, bs.b]:
 		who.add_child(_badge(gs.heroes[id].name, gs.heroes[id].color.darkened(0.2)))
-	who.add_child(_label("   afinidade %+d  [%s]" % [gs.pair_value(bs.a, bs.b), gs.band(gs.pair_value(bs.a, bs.b)).label], 14, _aff_color(gs.pair_value(bs.a, bs.b))))
+	who.add_child(_label("   " + gs.describe_aff(gs.pair_value(bs.a, bs.b)), 14, _aff_color(gs.pair_value(bs.a, bs.b))))
 	var p := _panel(C_PARCHMENT)
 	root.add_child(p)
 	p.add_child(_para(gs.backstage_text(bs, bs.event.text), 17, C_INK))
@@ -472,6 +495,11 @@ func show_relations() -> void:
 			var lbl: String = gs.bond_label(a, b)
 			var tip := "%s → %s: %+d\n%s → %s: %+d\n%s%s" % [gs.heroes[a].name, gs.heroes[b].name, gs.affinity[a][b], gs.heroes[b].name, gs.heroes[a].name, gs.affinity[b][a], gs.band(v).label, ("\nVínculo: " + lbl) if lbl != "" else ""]
 			tip += "\nSem missão juntos há %d dia(s)" % gs.days_apart(a, b)
+			if gs.has_upgrade("arquivo"):
+				var hist: Array = gs.pair_missions(a, b)
+				tip += "\n— Arquivo: %d missão(ões) juntos —" % hist.size()
+				for e in hist:
+					tip += "\nDia %d · %s · %s" % [e.day, e.mission, gs.OUTCOME_NAMES[e.outcome]]
 			grid.add_child(_cell("%+d%s" % [v, " ✦" if lbl != "" else ""], _aff_color(v).darkened(0.55), C_TEXT, tip))
 	root.add_child(_spacer_v())
 	root.add_child(_button("◀ Voltar", show_hub))
@@ -487,19 +515,158 @@ func show_book(index: int) -> void:
 	book.closed.connect(show_hub)
 
 
-# ================= Fim =================
+# ================= Capítulos =================
+
+func show_chapter_intro() -> void:
+	_clear()
+	var ch: Dictionary = gs.current_chapter()
+	root.add_child(_label(gs.act.title, 16, C_MUTED))
+	root.add_child(_label("Capítulo %d" % ch.number, 20, C_GOLD))
+	root.add_child(_label(ch.title, 36, C_GOLD))
+	var p := _panel(C_PARCHMENT)
+	root.add_child(p)
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 10)
+	p.add_child(col)
+	for l in gs.chapter_intro():
+		col.add_child(_para(l, 17, C_INK))
+	root.add_child(_label("Objetivo: %s   ·   Duração: %d dias" % [ch.goal.text, int(ch.days)], 15, C_TEXT))
+	root.add_child(_spacer_v())
+	root.add_child(_button("Começar o capítulo", func():
+		gs.begin_chapter()
+		show_hub()))
+
+
+func show_chapter_end() -> void:
+	_clear()
+	var r: Dictionary = gs.chapter_result
+	var ch: Dictionary = r.chapter
+	root.add_child(_label("Fim do Capítulo %d — %s" % [ch.number, ch.title], 28, C_GOLD))
+	root.add_child(_label(("✓ Objetivo cumprido: " if r.success else "✗ Objetivo não cumprido: ") + ch.goal.text, 17, C_GOOD if r.success else C_BAD))
+	var p := _panel(C_PARCHMENT)
+	root.add_child(p)
+	p.add_child(_para(r.text, 17, C_INK))
+	var done := 0
+	var total := 0
+	for m in gs.missions:
+		if ch.missions.has(m.id):
+			total += 1
+			if m.status == "concluida":
+				done += 1
+	root.add_child(_label("Missões concluídas: %d/%d   ·   Reputação: %d   ·   Ouro: %d" % [done, total, gs.reputation, gs.gold], 15, C_TEXT))
+	root.add_child(_spacer_v())
+	root.add_child(_button("Continuar", func():
+		gs.next_chapter()
+		show_hub()))
+
+
+# ================= Upgrades da Guilda =================
+
+func show_upgrades() -> void:
+	_clear()
+	var top := HBoxContainer.new()
+	root.add_child(top)
+	top.add_child(_label("Melhorias da Guilda", 24, C_GOLD))
+	top.add_child(_spacer())
+	top.add_child(_label("Ouro %d   ·   Reputação %d" % [gs.gold, gs.reputation], 16, C_TEXT))
+	root.add_child(_para("A guilda está caindo aos pedaços. Cada reforma muda o que você enxerga — e o que seus aventureiros conseguem fazer.", 14, C_MUTED))
+	var grid := GridContainer.new()
+	grid.columns = 2
+	grid.add_theme_constant_override("h_separation", 12)
+	grid.add_theme_constant_override("v_separation", 12)
+	root.add_child(grid)
+	for up in gs.upgrades_data.upgrades:
+		var owned: bool = gs.has_upgrade(up.id)
+		var card := _panel(C_PARCHMENT if owned else Color("#4a3a2a"))
+		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		grid.add_child(card)
+		var col := VBoxContainer.new()
+		card.add_child(col)
+		var ink := C_INK if owned else C_TEXT
+		col.add_child(_label(("✓ " if owned else "") + up.name, 18, ink))
+		col.add_child(_para(up.desc, 13, ink))
+		var row := HBoxContainer.new()
+		col.add_child(row)
+		row.add_child(_label("%d ouro · Reputação %d+" % [int(up.cost), int(up.rep)], 13, C_MUTED if not owned else C_INK.lightened(0.3)))
+		row.add_child(_spacer())
+		var reason: String = gs.upgrade_block_reason(up)
+		var b := _button("Construir" if reason == "" else reason, func():
+			gs.buy_upgrade(up.id)
+			show_upgrades())
+		b.disabled = reason != ""
+		row.add_child(b)
+	var slots_info := "Slots de missão por dia: %d (Reputação 5 → 2 slots · Reputação 12 → 3 slots)" % gs.slots()
+	root.add_child(_label(slots_info, 14, C_TEXT))
+	root.add_child(_spacer_v())
+	root.add_child(_button("◀ Voltar", show_hub))
+
+
+# ================= Salão de Treinamento =================
+
+var _train_pick: Array = []
+
+func show_training() -> void:
+	_clear()
+	root.add_child(_label("Salão de Treinamento", 24, C_GOLD))
+	root.add_child(_para("Escolha dois aventureiros prontos. A dupla ganha afinidade, mas os dois ficam Cansados para o resto do dia.", 14, C_MUTED))
+	for id in gs.hero_order:
+		var h: Dictionary = gs.heroes[id]
+		var reason: String = gs.train_reason(id)
+		var row := HBoxContainer.new()
+		root.add_child(row)
+		row.add_child(_swatch(h.color))
+		var sel := _train_pick.has(id)
+		var b := _button(("✓ " if sel else "") + h.name, func():
+			if _train_pick.has(id):
+				_train_pick.erase(id)
+			elif _train_pick.size() < 2:
+				_train_pick.append(id)
+			show_training())
+		b.custom_minimum_size.x = 120
+		b.disabled = reason != "" or (not sel and _train_pick.size() >= 2)
+		row.add_child(b)
+		row.add_child(_label("  " + (reason if reason != "" else gs.hero_status(id)), 13, C_BAD if reason != "" else C_GOOD))
+	if _train_pick.size() == 2:
+		root.add_child(_label("%s ↔ %s: %s" % [gs.heroes[_train_pick[0]].name, gs.heroes[_train_pick[1]].name, gs.describe_aff(gs.pair_value(_train_pick[0], _train_pick[1]))], 15, C_TEXT))
+	root.add_child(_spacer_v())
+	var foot := HBoxContainer.new()
+	root.add_child(foot)
+	foot.add_child(_button("◀ Voltar", func():
+		_train_pick = []
+		show_hub()))
+	foot.add_child(_spacer())
+	var go := _button("Treinar", func():
+		var lines: Array = gs.train_pair(_train_pick[0], _train_pick[1])
+		_train_pick = []
+		_clear()
+		root.add_child(_label("Salão de Treinamento", 24, C_GOLD))
+		var p := _panel(C_PARCHMENT)
+		root.add_child(p)
+		p.add_child(_para(lines[0], 17, C_INK))
+		root.add_child(_spacer_v())
+		root.add_child(_button("Continuar", _after_result)))
+	go.disabled = _train_pick.size() != 2
+	foot.add_child(go)
+
+
+# ================= Fim do Ato =================
 
 func show_ending() -> void:
 	_clear()
-	root.add_child(_label("Fim do capítulo", 30, C_GOLD))
-	var done := 0
-	for m in gs.missions:
-		if m.status == "concluida":
-			done += 1
-	root.add_child(_label("Reputação final: %d   ·   Missões concluídas: %d/%d" % [gs.reputation, done, gs.missions.size()], 18, C_TEXT))
+	root.add_child(_label(gs.act.title, 30, C_GOLD))
+	var p := _panel(C_PARCHMENT)
+	root.add_child(p)
+	p.add_child(_para(gs.act.ending, 18, C_INK))
+	for cid in gs.act.chapters:
+		for ch in gs.chapters_data.chapters:
+			if ch.id == cid:
+				var ok: bool = gs.flags.has(ch.get("flag_success", ""))
+				root.add_child(_label("%s Capítulo %d — %s" % ["✓" if ok else "✗", ch.number, ch.title], 15, C_GOOD if ok else C_BAD))
+	root.add_child(_label("Reputação final: %d   ·   Ouro: %d   ·   Melhorias: %d/%d" % [gs.reputation, gs.gold, gs.upgrades_owned.size(), gs.upgrades_data.upgrades.size()], 16, C_TEXT))
 	for key in gs.bond_labels:
 		var ids: PackedStringArray = key.split("|")
 		root.add_child(_label("✦ %s & %s — %s" % [gs.heroes[ids[0]].name, gs.heroes[ids[1]].name, gs.bond_labels[key]], 15, C_TEXT))
+	root.add_child(_spacer_v())
 	root.add_child(_button("Novo jogo", _on_new_game))
 
 

@@ -1,0 +1,15 @@
+{
+  "_doc": "Upgrades da guilda (GDD §7). cost em ouro, rep = reputação mínima para comprar.",
+  "start_gold": 30,
+  "rewards": {"baixo": 20, "medio": 35, "alto": 60, "lendario": 90},
+  "upgrades": [
+    {"id": "quadro", "name": "Quadro de Relações", "cost": 40, "rep": 0,
+     "desc": "Revela a afinidade exata entre os aventureiros. Sem ele, você só sabe o que observa."},
+    {"id": "enfermaria", "name": "Enfermaria", "cost": 60, "rep": 3,
+     "desc": "Descanso recupera um estado de fadiga a mais e o dobro de PV."},
+    {"id": "arquivo", "name": "Arquivo da Guilda", "cost": 50, "rep": 4,
+     "desc": "Registra o histórico de cada dupla: missões feitas juntos e resultados."},
+    {"id": "salao", "name": "Salão de Treinamento", "cost": 80, "rep": 5,
+     "desc": "Uma vez por dia, treine uma dupla: +1 de afinidade, mas os dois ficam Cansados."}
+  ]
+}

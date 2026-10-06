@@ -12,6 +12,8 @@ func _init() -> void:
 	_check_rules(gs)
 	_check_neglect(gs)
 	_check_backstage(gs)
+	_check_chapters(gs)
+	_check_upgrades(gs)
 	_random_playthroughs(gs, 200)
 	print("RESULTADO: %s (%d falha(s))" % ["OK" if failures == 0 else "FALHOU", failures])
 	gs.free()
@@ -94,6 +96,60 @@ func _check_backstage(gs) -> void:
 	gs.new_game(42)
 
 
+func _check_chapters(gs) -> void:
+	gs.new_game(3)
+	_expect(gs.chapter_state == "intro" and gs.current_chapter().id == "c1", "jogo começa na abertura do Capítulo 1")
+	_expect(gs.board().size() == 3, "Capítulo 1 abre com 3 missões no dia 1")
+	gs.begin_chapter()
+	for i in 5:
+		gs.end_day()
+	_expect(gs.chapter_state == "encerrado" and not gs.chapter_result.success, "Capítulo 1 encerra no dia 5 sem objetivo cumprido")
+	gs.end_day()
+	_expect(gs.flags.is_empty(), "encerramento não se repete antes de confirmar")
+	gs.next_chapter()
+	_expect(gs.current_chapter().id == "c2" and gs.chapter_day() == 1, "Capítulo 2 começa no dia 1 dele")
+	var intro: Array = gs.chapter_intro()
+	_expect(String(intro[-1]).contains("observador"), "texto do Capítulo 2 reflete o fracasso no Capítulo 1")
+	var c1_open := 0
+	for m in gs.missions:
+		if gs.chapters_data.chapters[0].missions.has(m.id) and m.status == "aberta":
+			c1_open += 1
+	_expect(c1_open == 0, "missões do Capítulo 1 não ficam abertas no Capítulo 2")
+	var finale: Dictionary = {}
+	for m in gs.missions:
+		if m.id == "noite_corvo":
+			finale = m
+	_expect(gs.unmet_tags(finale, ["vera", "bram"]).size() == 1, "missão final exige 3 aventureiros")
+	gs.begin_chapter()
+	for i in 5:
+		gs.end_day()
+	gs.next_chapter()
+	_expect(gs.is_over(), "fim do Ato 1 após o Capítulo 2")
+	gs.new_game(42)
+
+
+func _check_upgrades(gs) -> void:
+	gs.new_game(42)
+	_expect(not gs.affinity_visible() and gs.describe_aff(4) == "Se cobrem em campo", "sem Quadro, afinidade é só impressão")
+	_expect(not gs.buy_upgrade("quadro"), "Quadro custa mais que o ouro inicial")
+	gs.gold = 500
+	gs.reputation = 10
+	_expect(gs.buy_upgrade("quadro") and gs.affinity_visible(), "comprar o Quadro revela a afinidade")
+	_expect(not gs.buy_upgrade("quadro"), "upgrade não é comprado duas vezes")
+	gs.buy_upgrade("enfermaria")
+	gs.heroes.mira.fatigue = 2
+	gs.heroes.mira.hp = 1
+	gs.end_day()
+	_expect(gs.heroes.mira.fatigue == 0 and gs.heroes.mira.hp == 3, "Enfermaria acelera a recuperação (fadiga %d, PV %d)" % [gs.heroes.mira.fatigue, gs.heroes.mira.hp])
+	gs.buy_upgrade("salao")
+	_expect(gs.can_train(), "Salão permite treinar")
+	gs.train_pair("vera", "bram")
+	_expect(gs.pair_value("vera", "bram") == 5 and gs.heroes.vera.fatigue == 1 and not gs.can_train(), "treino: +1 afinidade, Cansados, 1 vez por dia")
+	gs.end_day()
+	_expect(gs.can_train(), "treino volta no dia seguinte")
+	gs.new_game(42)
+
+
 func _random_playthroughs(gs, n: int) -> void:
 	var outcomes := {"limpo": 0, "custo": 0, "falha": 0}
 	var rng := RandomNumberGenerator.new()
@@ -103,6 +159,13 @@ func _random_playthroughs(gs, n: int) -> void:
 		var guard := 0
 		while not gs.is_over() and guard < 100:
 			guard += 1
+			if gs.chapter_state == "intro":
+				gs.begin_chapter()
+			if gs.chapter_state == "encerrado":
+				gs.next_chapter()
+				continue
+			for up in gs.upgrades_data.upgrades:
+				gs.buy_upgrade(up.id)
 			for m in gs.board():
 				if gs.free_slots() <= 0:
 					break

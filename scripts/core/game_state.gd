@@ -1,5 +1,5 @@
 extends Node
-## Estado da guilda: elenco, afinidades, missões, dia e reputação.
+## Estado da guilda: elenco, afinidades, missões, capítulos, ouro, upgrades, dia e reputação.
 ## Autoload "GameState". Toda regra de jogo fica aqui ou em ScoreCalc; a UI só lê e chama.
 
 const ATTRS := ["forca", "destreza", "conhecimento", "carisma", "resistencia"]
@@ -13,7 +13,6 @@ const OUTCOME_NAMES := {"limpo": "Sucesso Limpo", "custo": "Sucesso com Custo", 
 
 const AFF_MIN := -5
 const AFF_MAX := 10
-const LAST_DAY := 8
 
 ## Faixas de afinidade (GDD §5.4.1): [até, rótulo, modificador]
 const BANDS := [
@@ -72,6 +71,28 @@ var backstage_data := {}
 var backstage_today := []      # [{event, a, b, done}]
 var backstage_once := []       # ids de eventos "once" já usados
 
+# Capítulos (GDD §9)
+var chapters_data := {}
+var act := {}                  # ato atual
+var chapter_index := 0         # índice em act.chapters
+var chapter_start := 1         # dia global em que o capítulo começou
+var chapter_state := "intro"   # intro | jogando | encerrado | fim_do_ato
+var chapter_result := {}       # resultado do último capítulo encerrado
+var flags := []                # flags narrativas ganhas nos capítulos
+
+# Ouro e upgrades (GDD §7)
+var upgrades_data := {}
+var gold := 0
+var upgrades_owned := []
+var trained_today := false
+var pair_history := {}         # "a|b" -> [{day, mission, outcome}] (exibido com o Arquivo)
+
+const AFF_PHRASES := {
+	"Conflito Aberto": "Mal se olham", "Tensão Velada": "Desconfortáveis juntos",
+	"Neutros": "Indiferentes", "Camaradas": "Se dão bem", "Companheiros": "Se cobrem em campo",
+	"Laço Forte": "Inseparáveis", "Dupla Lendária": "Uma lenda juntos",
+}
+
 
 func _ready() -> void:
 	new_game()
@@ -118,9 +139,10 @@ func new_game(seed_value: int = -1) -> void:
 	missions.clear()
 	for m in _load_json("res://data/missions.json").missions:
 		var mm: Dictionary = m.duplicate(true)
-		mm.day = int(mm.day)
+		mm.rel_day = int(mm.day)
+		mm.day = 0
 		mm.deadline = int(mm.deadline)
-		mm.status = "aberta"
+		mm.status = "futura"   # vira "aberta" quando o capítulo dela começa
 		mm.result = {}
 		missions.append(mm)
 	narration = _load_json("res://data/narration.json")
@@ -131,6 +153,16 @@ func new_game(seed_value: int = -1) -> void:
 	pending_events.clear()
 	backstage_data = _load_json("res://data/backstage.json")
 	backstage_once.clear()
+	upgrades_data = _load_json("res://data/upgrades.json")
+	gold = int(upgrades_data.get("start_gold", 0))
+	upgrades_owned.clear()
+	trained_today = false
+	pair_history.clear()
+	chapters_data = _load_json("res://data/chapters.json")
+	act = chapters_data.acts[0]
+	flags.clear()
+	chapter_result = {}
+	_start_chapter(0)
 	_roll_backstage()
 
 
@@ -214,12 +246,157 @@ func board() -> Array:
 
 
 func is_over() -> bool:
-	if day > LAST_DAY:
-		return true
+	return chapter_state == "fim_do_ato"
+
+
+# ---------- capítulos ----------
+
+func current_chapter() -> Dictionary:
+	var id: String = act.chapters[chapter_index]
+	for ch in chapters_data.chapters:
+		if ch.id == id:
+			return ch
+	return {}
+
+
+func chapter_end_day() -> int:
+	return chapter_start + int(current_chapter().days) - 1
+
+
+func chapter_day() -> int:
+	return day - chapter_start + 1
+
+
+func chapter_intro() -> Array:
+	var ch := current_chapter()
+	var lines: Array = ch.get("intro", []).duplicate()
+	var extra: Dictionary = ch.get("intro_flags", {})
+	for key in extra:
+		var neg := String(key).begins_with("!")
+		var flag := String(key).trim_prefix("!")
+		if flags.has(flag) != neg:
+			lines.append(extra[key])
+	return lines
+
+
+func _start_chapter(i: int) -> void:
+	chapter_index = i
+	chapter_start = day
+	var ch := current_chapter()
 	for m in missions:
-		if m.status == "aberta":
-			return false
-	return true
+		if ch.missions.has(m.id):
+			m.status = "aberta"
+			m.day = chapter_start + m.rel_day - 1
+	chapter_state = "intro"
+
+
+func begin_chapter() -> void:
+	chapter_state = "jogando"
+
+
+## Avalia o objetivo do capítulo que terminou.
+func _close_chapter() -> void:
+	var ch := current_chapter()
+	var goal: Dictionary = ch.goal
+	var ok := false
+	match goal.type:
+		"reputation":
+			ok = reputation >= int(goal.min)
+		"mission":
+			for m in missions:
+				if m.id == goal.mission:
+					ok = m.status == "concluida" and m.result.outcome != "falha"
+	if ok and ch.has("flag_success"):
+		flags.append(ch.flag_success)
+	chapter_result = {"chapter": ch, "success": ok, "text": ch.outro["success" if ok else "failure"]}
+	chapter_state = "encerrado"
+
+
+## Depois da tela de encerramento: próximo capítulo ou fim do ato.
+func next_chapter() -> void:
+	if chapter_index + 1 < act.chapters.size():
+		_start_chapter(chapter_index + 1)
+	else:
+		chapter_state = "fim_do_ato"
+
+
+# ---------- ouro e upgrades ----------
+
+func has_upgrade(id: String) -> bool:
+	return upgrades_owned.has(id)
+
+
+func upgrade_block_reason(up: Dictionary) -> String:
+	if has_upgrade(up.id):
+		return "Construído"
+	if reputation < int(up.rep):
+		return "Requer Reputação %d" % int(up.rep)
+	if gold < int(up.cost):
+		return "Ouro insuficiente"
+	return ""
+
+
+func buy_upgrade(id: String) -> bool:
+	for up in upgrades_data.upgrades:
+		if up.id == id and upgrade_block_reason(up) == "":
+			gold -= int(up.cost)
+			upgrades_owned.append(id)
+			return true
+	return false
+
+
+func mission_reward(m: Dictionary) -> int:
+	return int(m.get("reward", upgrades_data.rewards.get(m.risk, 0)))
+
+
+## Sem o Quadro de Relações, a afinidade só aparece como impressão (GDD §5.4.1).
+func affinity_visible() -> bool:
+	return has_upgrade("quadro")
+
+
+func describe_aff(v: int) -> String:
+	if affinity_visible():
+		return "%+d  [%s]" % [v, band(v).label]
+	return AFF_PHRASES[band(v).label]
+
+
+func describe_change(before: int, after: int) -> String:
+	if affinity_visible():
+		return "afinidade %+d → %+d" % [before, after]
+	if after > before:
+		return "parecem mais próximos"
+	if after < before:
+		return "parecem mais distantes"
+	return "nada mudou entre eles"
+
+
+func can_train() -> bool:
+	return has_upgrade("salao") and not trained_today
+
+
+func train_reason(id: String) -> String:
+	var h: Dictionary = heroes[id]
+	if h.busy:
+		return "Em missão"
+	if h.hp <= 0:
+		return "Incapacitado"
+	if h.fatigue >= 1:
+		return "Precisa estar Pronto"
+	return ""
+
+
+## Salão de Treinamento: +1 de afinidade para a dupla, os dois ficam Cansados.
+func train_pair(a: String, b: String) -> Array:
+	var before := pair_value(a, b)
+	change_affinity(a, b, 1, 1)
+	heroes[a].fatigue = 1
+	heroes[b].fatigue = 1
+	trained_today = true
+	return ["%s e %s treinam juntos até o sol se pôr. Os dois estão cansados — e %s." % [heroes[a].name, heroes[b].name, describe_change(before, pair_value(a, b))]]
+
+
+func pair_missions(a: String, b: String) -> Array:
+	return pair_history.get(pair_key(a, b), [])
 
 
 ## Modificador estilo D&D para a escala 1–10 do jogo: 1–2 → −2 · 3–4 → −1 · 5–6 → 0 · 7–8 → +1 · 9–10 → +2
@@ -269,6 +446,8 @@ func unmet_tags(mission: Dictionary, party: Array) -> Array:
 					ok = true
 			if not ok:
 				out.append(tag.text)
+		elif tag.type == "min_party" and party.size() < int(tag.min):
+			out.append(tag.text)
 	return out
 
 
@@ -338,9 +517,17 @@ func dispatch(mission: Dictionary, party: Array) -> Dictionary:
 		h.history.append({"day": day, "mission": mission.name, "result": result})
 		h.last_dispatch = day
 	reputation = max(0, reputation + {"limpo": 2, "custo": 1, "falha": -1}[result])
+	var earned: int = {"limpo": mission_reward(mission), "custo": mission_reward(mission) / 2, "falha": 0}[result]
+	gold += earned
+	if earned > 0:
+		lines.append("A guilda recebe %d de ouro." % earned)
 
 	for pr in ScoreCalc.pairs_of(party):
-		last_together[pair_key(pr[0], pr[1])] = day
+		var key := pair_key(pr[0], pr[1])
+		last_together[key] = day
+		if not pair_history.has(key):
+			pair_history[key] = []
+		pair_history[key].append({"day": day, "mission": mission.name, "outcome": result})
 
 	# Afinidade (GDD §5.4.2)
 	var pair_delta: int = {"limpo": 1, "custo": 0, "falha": -1}[result]
@@ -393,21 +580,26 @@ func _change_logged(a: String, b: String, dab: int, dba: int, log_out: Array) ->
 ## Avança o tempo (GDD §4 passo 7). Devolve as linhas do resumo.
 func end_day() -> Array:
 	var lines := []
+	var infirmary := 1 if has_upgrade("enfermaria") else 0
 	for id in hero_order:
 		var h: Dictionary = heroes[id]
 		if not h.busy:
 			if h.fatigue > 0:
-				h.fatigue = max(0, h.fatigue - (2 if h.attrs.resistencia >= 7 else 1))
-			h.hp = min(h.hp_max, h.hp + max(1, h.hp_max / 4))
+				h.fatigue = max(0, h.fatigue - (2 if h.attrs.resistencia >= 7 else 1) - infirmary)
+			h.hp = min(h.hp_max, h.hp + max(1, h.hp_max / 4) * (1 + infirmary))
 		h.busy = false
+	trained_today = false
+	var chapter_over: bool = day >= chapter_end_day() and chapter_state in ["intro", "jogando"]
 	for m in missions:
-		if m.status == "aberta" and m.day <= day and day >= expires_on(m):
+		if m.status == "aberta" and m.day <= day and (day >= expires_on(m) or chapter_over):
 			m.status = "expirada"
 			reputation = max(0, reputation - 1)
 			lines.append("A missão \"%s\" expirou. A reputação da guilda caiu." % m.name)
 	lines.append_array(_apply_neglect())
 	day += 1
 	dispatched_today = 0
+	if chapter_over:
+		_close_chapter()
 	_roll_backstage()
 	if not backstage_today.is_empty():
 		lines.append("Há movimento nos bastidores da guilda (%d cena(s))." % backstage_today.size())
@@ -435,7 +627,7 @@ func _apply_neglect() -> Array:
 		var before := v
 		change_affinity(a, b, -1 if affinity[a][b] > initial_affinity[key] else 0, -1 if affinity[b][a] > initial_affinity[key] else 0)
 		if pair_value(a, b) < before:
-			lines.append("%s e %s quase não se falam desde a última missão juntos (afinidade %+d → %+d)." % [heroes[a].name, heroes[b].name, before, pair_value(a, b)])
+			lines.append("%s e %s quase não se falam desde a última missão juntos (%s)." % [heroes[a].name, heroes[b].name, describe_change(before, pair_value(a, b))])
 	for id in hero_order:
 		var h: Dictionary = heroes[id]
 		if day - int(h.last_dispatch) >= IDLE_MORALE_DAYS and h.morale > 0:
@@ -518,7 +710,7 @@ func resolve_backstage(bs: Dictionary, choice: Dictionary) -> Array:
 	if int(aff[0]) != 0 or int(aff[1]) != 0:
 		var before := pair_value(a, b)
 		change_affinity(a, b, int(aff[0]), int(aff[1]))
-		lines.append("%s ↔ %s: afinidade %+d → %+d" % [heroes[a].name, heroes[b].name, before, pair_value(a, b)])
+		lines.append("%s ↔ %s: %s" % [heroes[a].name, heroes[b].name, describe_change(before, pair_value(a, b))])
 	for who in choice.get("morale", {}):
 		var id: String = a if who == "a" else b
 		var d := int(choice.morale[who])
