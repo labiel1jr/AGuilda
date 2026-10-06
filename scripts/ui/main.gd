@@ -20,6 +20,9 @@ const Portrait := preload("res://scripts/ui/portrait.gd")
 
 var gs  # GameState
 var root: VBoxContainer
+var title_bg: TextureRect   # arte da tela de título (só visível no título)
+
+const TITLE_ART := "res://art/geralimagem/titulo.png"
 var selected: Array = []
 var prepared: Dictionary = {}   # magia preparada por conjurador na montagem de party
 var last_result := {}
@@ -31,6 +34,15 @@ func _ready() -> void:
 	bg.color = C_BG
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
+	title_bg = TextureRect.new()
+	title_bg.set_anchors_preset(Control.PRESET_FULL_RECT)
+	title_bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	title_bg.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	title_bg.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	title_bg.visible = false
+	if ResourceLoader.exists(TITLE_ART):
+		title_bg.texture = load(TITLE_ART)
+	add_child(title_bg)
 	var margin := MarginContainer.new()
 	margin.set_anchors_preset(Control.PRESET_FULL_RECT)
 	for side in ["left", "right", "top", "bottom"]:
@@ -1032,24 +1044,38 @@ func show_epilogue() -> void:
 
 func show_title() -> void:
 	_clear()
-	root.add_child(_spacer_v())
+	var has_art := title_bg.texture != null
+	title_bg.visible = has_art
 	var t := _label("A Guilda", 64, C_GOLD)
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	t.add_theme_constant_override("outline_size", 12)
+	t.add_theme_color_override("font_outline_color", Color("#1a120c"))
 	root.add_child(t)
-	var st := _label("Quem você envia define quem eles se tornam", 18, C_MUTED)
+	var st := _label("Quem você envia define quem eles se tornam", 18, C_TEXT if has_art else C_MUTED)
 	st.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	st.add_theme_constant_override("outline_size", 6)
+	st.add_theme_color_override("font_outline_color", Color("#1a120c"))
 	root.add_child(st)
-	var faces := HBoxContainer.new()
-	faces.alignment = BoxContainer.ALIGNMENT_CENTER
-	faces.add_theme_constant_override("separation", 10)
-	root.add_child(faces)
-	for id in gs.hero_order:
-		faces.add_child(_portrait(gs.heroes[id], 64))
-	var box := VBoxContainer.new()
-	box.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	box.custom_minimum_size.x = 320
+	if not has_art:
+		var faces := HBoxContainer.new()
+		faces.alignment = BoxContainer.ALIGNMENT_CENTER
+		faces.add_theme_constant_override("separation", 10)
+		root.add_child(faces)
+		for id in gs.hero_order:
+			faces.add_child(_portrait(gs.heroes[id], 64))
+	root.add_child(_spacer_v())
+	# Botões numa faixa no rodapé, para não cobrir a arte do grupo
+	var bar := PanelContainer.new()
+	bar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.1, 0.07, 0.05, 0.78)
+	sb.set_corner_radius_all(6)
+	sb.set_content_margin_all(8)
+	bar.add_theme_stylebox_override("panel", sb)
+	root.add_child(bar)
+	var box := HBoxContainer.new()
 	box.add_theme_constant_override("separation", 8)
-	root.add_child(box)
+	bar.add_child(box)
 	var latest: String = gs.latest_save()
 	var cont := _button("Continuar", func():
 		if gs.load_game(latest):
@@ -1064,7 +1090,8 @@ func show_title() -> void:
 	ld.disabled = not gs.has_any_save()
 	box.add_child(ld)
 	box.add_child(_button("Sair", func(): get_tree().quit()))
-	root.add_child(_spacer_v())
+	for b in box.get_children():
+		b.custom_minimum_size.x = 150
 
 
 func show_menu() -> void:
@@ -1104,6 +1131,15 @@ func show_load(from_title: bool) -> void:
 
 
 func _portrait(h: Dictionary, px: int) -> Control:
+	if h.get("portrait", "") != "" and ResourceLoader.exists(h.portrait):
+		var tr := TextureRect.new()
+		tr.texture = load(h.portrait)
+		tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		tr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		tr.custom_minimum_size = Vector2(px, px)
+		tr.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		return tr
 	var p = Portrait.new()
 	p.custom_minimum_size = Vector2(px, px)
 	p.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -1119,6 +1155,7 @@ func _on_new_game() -> void:
 # ================= Helpers =================
 
 func _clear() -> void:
+	title_bg.visible = false
 	for c in root.get_children():
 		c.queue_free()
 

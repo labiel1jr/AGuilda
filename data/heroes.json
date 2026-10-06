@@ -30,7 +30,7 @@
         "bond": "Devo minha vida a quem me tirou da masmorra — e ainda não sei quem foi.",
         "flaw": "Não recuo de uma ordem injusta... recuso. E recuso alto."
       },
-      "portrait": "",
+      "portrait": "res://art/portraits/theo.png",
       "spells_known": [
         "bencao"
       ]
@@ -65,7 +65,7 @@
         "bond": "Mira é a única que nunca me perguntou o que eu roubei.",
         "flaw": "Se alguém é gentil demais comigo, procuro o golpe."
       },
-      "portrait": "",
+      "portrait": "res://art/portraits/lyssa.png",
       "spells_known": []
     },
     {
@@ -98,7 +98,7 @@
         "bond": "O Arquivo da guilda guarda a última carta do meu mestre.",
         "flaw": "Subestimo o perigo quando há uma runa para decifrar."
       },
-      "portrait": "",
+      "portrait": "res://art/portraits/mira.png",
       "spells_known": [
         "detectar_magia"
       ]
@@ -133,7 +133,7 @@
         "bond": "Tenho um irmão em algum lugar ao sul. Ele me deve um adeus.",
         "flaw": "Trabalho melhor sozinha — e faço questão de que saibam disso."
       },
-      "portrait": "",
+      "portrait": "res://art/portraits/senna.png",
       "spells_known": []
     },
     {
@@ -166,7 +166,7 @@
         "bond": "Entrei na guilda por causa das histórias da Vera.",
         "flaw": "Quando alguém que admiro me decepciona, desmorono."
       },
-      "portrait": "",
+      "portrait": "res://art/portraits/bram.png",
       "spells_known": [
         "inspiracao"
       ]
@@ -201,7 +201,7 @@
         "bond": "Enterrei metade da antiga guilda. Não enterro a outra metade.",
         "flaw": "Confundo proteger com controlar."
       },
-      "portrait": "",
+      "portrait": "res://art/portraits/vera.png",
       "spells_known": []
     },
     {
@@ -234,7 +234,7 @@
         "bond": "Fui expulso do meu templo por curar um inimigo do bispo.",
         "flaw": "Confio rápido demais em quem diz que mudou."
       },
-      "portrait": "",
+      "portrait": "res://art/portraits/corin.png",
       "spells_known": [
         "cura"
       ],

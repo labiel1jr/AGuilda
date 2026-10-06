@@ -285,21 +285,25 @@ func _page(content: Control) -> PanelContainer:
 
 func _portrait(h: Dictionary) -> Control:
 	var frame := PanelContainer.new()
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = h.color.darkened(0.15)
-	sb.border_color = C_GOLD
-	sb.set_border_width_all(3)
-	sb.set_corner_radius_all(48)
-	frame.add_theme_stylebox_override("panel", sb)
-	frame.custom_minimum_size = Vector2(96, 96)
+	frame.custom_minimum_size = Vector2(112, 112)
 	frame.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
-	if h.portrait != "" and ResourceLoader.exists(h.portrait):
+	var has_image: bool = h.portrait != "" and ResourceLoader.exists(h.portrait)
+	if has_image:
+		# a arte já traz o medalhão: sem moldura extra
+		frame.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
 		var tex := TextureRect.new()
 		tex.texture = load(h.portrait)
 		tex.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		tex.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 		frame.add_child(tex)
 	else:
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = h.color.darkened(0.15)
+		sb.border_color = C_GOLD
+		sb.set_border_width_all(3)
+		sb.set_corner_radius_all(56)
+		frame.add_theme_stylebox_override("panel", sb)
 		var por = load("res://scripts/ui/portrait.gd").new()
 		por.setup(h)
 		frame.add_child(por)
