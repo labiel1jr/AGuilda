@@ -10,6 +10,8 @@ func _init() -> void:
 	gs.new_game(42)
 	_check_calibration(gs)
 	_check_rules(gs)
+	_check_neglect(gs)
+	_check_backstage(gs)
 	_random_playthroughs(gs, 200)
 	print("RESULTADO: %s (%d falha(s))" % ["OK" if failures == 0 else "FALHOU", failures])
 	gs.free()
@@ -54,6 +56,44 @@ func _check_rules(gs) -> void:
 	gs.new_game(42)
 
 
+func _check_neglect(gs) -> void:
+	gs.new_game(42)
+	# Vera/Bram começam em +4 (piso). Sobe para +6 e fica 3 dias sem missão juntos.
+	gs.change_affinity("vera", "bram", 2, 2)
+	gs.pending_events.clear()
+	for i in 3:
+		gs.end_day()
+	_expect(gs.pair_value("vera", "bram") == 5, "neglect: −1 após 3 dias separados (obtido %d)" % gs.pair_value("vera", "bram"))
+	for i in 12:
+		gs.end_day()
+	_expect(gs.pair_value("vera", "bram") == 4, "neglect não passa do valor inicial (obtido %d)" % gs.pair_value("vera", "bram"))
+	_expect(gs.pair_value("theo", "lyssa") == -3, "neglect não mexe em par negativo")
+	_expect(gs.heroes.mira.morale < 6, "moral cai para quem fica sem missão")
+	gs.new_game(42)
+
+
+func _check_backstage(gs) -> void:
+	var total := 0
+	var ids := {}
+	var bad := 0
+	for sd in 50:
+		gs.new_game(sd)
+		for d in 6:
+			for bs in gs.backstage_today:
+				total += 1
+				ids[bs.event.id] = true
+				if bs.a == bs.b:
+					bad += 1
+			gs.end_day()
+	_expect(total > 0 and bad == 0, "bastidores gerados com pares válidos (%d em 50 jogos)" % total)
+	print("  eventos vistos: ", ids.keys())
+	gs.new_game(1)
+	var bs := {"event": {}, "a": "theo", "b": "lyssa", "done": false}
+	gs.resolve_backstage(bs, {"result": "x", "aff": [0, -1], "morale": {"a": 2, "b": -1}})
+	_expect(gs.heroes.theo.morale == 8 and gs.heroes.lyssa.morale == 5 and bs.done, "escolher um lado: +2 / −1 de moral")
+	gs.new_game(42)
+
+
 func _random_playthroughs(gs, n: int) -> void:
 	var outcomes := {"limpo": 0, "custo": 0, "falha": 0}
 	var rng := RandomNumberGenerator.new()
@@ -73,6 +113,10 @@ func _random_playthroughs(gs, n: int) -> void:
 					continue
 				var res: Dictionary = gs.dispatch(m, party)
 				outcomes[res.outcome] += 1
+				for bs in gs.backstage_today:
+					if not bs.done:
+						var chs: Array = bs.event.choices
+						gs.resolve_backstage(bs, chs[rng.randi_range(0, chs.size() - 1)])
 				while not gs.pending_events.is_empty():
 					var ev: Dictionary = gs.pending_events.pop_front()
 					var labels: Array = gs.THRESHOLD_EVENTS[ev.threshold].labels

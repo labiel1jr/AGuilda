@@ -60,6 +60,18 @@ var rng := RandomNumberGenerator.new()
 var narration := {}
 var book := {}
 
+# Neglect (GDD §5.4.2) e moral por abandono (§5.7)
+const NEGLECT_DAYS := 3        # dias sem missão juntos para perder 1 ponto
+const NEGLECT_MIN := 3         # só pares a partir de +3 têm o que perder
+const IDLE_MORALE_DAYS := 4    # dias sem ser despachado para perder 1 de moral
+var initial_affinity := {}     # "a|b" -> valor inicial do par (piso do neglect)
+var last_together := {}        # "a|b" -> último dia em que foram juntos (ou do último neglect)
+
+# Eventos de bastidor
+var backstage_data := {}
+var backstage_today := []      # [{event, a, b, done}]
+var backstage_once := []       # ids de eventos "once" já usados
+
 
 func _ready() -> void:
 	new_game()
@@ -88,6 +100,7 @@ func new_game(seed_value: int = -1) -> void:
 			"fatigue": 0, "morale": 6, "busy": false, "history": [],
 		}
 		heroes[h.id].hp = heroes[h.id].hp_max
+		heroes[h.id].last_dispatch = 0
 		hero_order.append(h.id)
 	affinity.clear()
 	for a in hd.affinity:
@@ -96,6 +109,12 @@ func new_game(seed_value: int = -1) -> void:
 			affinity[a][b] = int(hd.affinity[a][b])
 	bond_labels.clear()
 	fired.clear()
+	initial_affinity.clear()
+	last_together.clear()
+	for pr in ScoreCalc.pairs_of(hero_order):
+		var key := pair_key(pr[0], pr[1])
+		initial_affinity[key] = pair_value(pr[0], pr[1])
+		last_together[key] = 0
 	missions.clear()
 	for m in _load_json("res://data/missions.json").missions:
 		var mm: Dictionary = m.duplicate(true)
@@ -110,6 +129,9 @@ func new_game(seed_value: int = -1) -> void:
 	reputation = 0
 	dispatched_today = 0
 	pending_events.clear()
+	backstage_data = _load_json("res://data/backstage.json")
+	backstage_once.clear()
+	_roll_backstage()
 
 
 # ---------- afinidade ----------
@@ -314,7 +336,11 @@ func dispatch(mission: Dictionary, party: Array) -> Dictionary:
 			dm -= 1
 		h.morale = clampi(h.morale + dm, 0, 10)
 		h.history.append({"day": day, "mission": mission.name, "result": result})
+		h.last_dispatch = day
 	reputation = max(0, reputation + {"limpo": 2, "custo": 1, "falha": -1}[result])
+
+	for pr in ScoreCalc.pairs_of(party):
+		last_together[pair_key(pr[0], pr[1])] = day
 
 	# Afinidade (GDD §5.4.2)
 	var pair_delta: int = {"limpo": 1, "custo": 0, "falha": -1}[result]
@@ -379,11 +405,130 @@ func end_day() -> Array:
 			m.status = "expirada"
 			reputation = max(0, reputation - 1)
 			lines.append("A missão \"%s\" expirou. A reputação da guilda caiu." % m.name)
+	lines.append_array(_apply_neglect())
 	day += 1
 	dispatched_today = 0
+	_roll_backstage()
+	if not backstage_today.is_empty():
+		lines.append("Há movimento nos bastidores da guilda (%d cena(s))." % backstage_today.size())
 	for m in missions:
 		if m.status == "aberta" and m.day == day:
 			lines.append("Novo pedido no mural: \"%s\"." % m.name)
+	return lines
+
+
+# ---------- neglect ----------
+
+## Aplicado no fim do dia, antes de virar. Devolve linhas para o resumo.
+func _apply_neglect() -> Array:
+	var lines := []
+	for pr in ScoreCalc.pairs_of(hero_order):
+		var a: String = pr[0]
+		var b: String = pr[1]
+		var key := pair_key(a, b)
+		var v := pair_value(a, b)
+		if day - int(last_together[key]) < NEGLECT_DAYS:
+			continue
+		last_together[key] = day
+		if v < NEGLECT_MIN or v <= int(initial_affinity[key]):
+			continue
+		var before := v
+		change_affinity(a, b, -1 if affinity[a][b] > initial_affinity[key] else 0, -1 if affinity[b][a] > initial_affinity[key] else 0)
+		if pair_value(a, b) < before:
+			lines.append("%s e %s quase não se falam desde a última missão juntos (afinidade %+d → %+d)." % [heroes[a].name, heroes[b].name, before, pair_value(a, b)])
+	for id in hero_order:
+		var h: Dictionary = heroes[id]
+		if day - int(h.last_dispatch) >= IDLE_MORALE_DAYS and h.morale > 0:
+			h.morale -= 1
+			h.last_dispatch = day
+			lines.append("%s se sente esquecido(a) na guilda (moral −1)." % h.name)
+	return lines
+
+
+func days_apart(a: String, b: String) -> int:
+	return day - int(last_together[pair_key(a, b)])
+
+
+# ---------- eventos de bastidor ----------
+
+func _roll_backstage() -> void:
+	backstage_today.clear()
+	var used := []
+	var events: Array = backstage_data.get("events", [])
+	for _i in int(backstage_data.get("per_day", 2)):
+		var options := []   # [peso, evento, a, b]
+		for ev in events:
+			if ev.get("once", false) and backstage_once.has(ev.id):
+				continue
+			for pr in _candidate_pairs(ev):
+				if used.has(pr[0]) or used.has(pr[1]):
+					continue
+				options.append([float(ev.get("weight", 1)), ev, pr[0], pr[1]])
+		if options.is_empty():
+			break
+		var total := 0.0
+		for o in options:
+			total += o[0]
+		var roll := rng.randf() * total
+		for o in options:
+			roll -= o[0]
+			if roll <= 0.0:
+				backstage_today.append({"event": o[1], "a": o[2], "b": o[3], "done": false})
+				used.append(o[2])
+				used.append(o[3])
+				if o[1].get("once", false):
+					backstage_once.append(o[1].id)
+				break
+
+
+func _candidate_pairs(ev: Dictionary) -> Array:
+	var out := []
+	var fixed: Array = ev.get("heroes", [null, null])
+	for a in hero_order:
+		for b in hero_order:
+			if a == b:
+				continue
+			if fixed[0] != null and fixed[0] != a:
+				continue
+			if fixed[1] != null and fixed[1] != b:
+				continue
+			if fixed[0] == null and fixed[1] == null and a > b:
+				continue   # par sem ordem: considera uma vez só
+			if heroes[a].hp <= 0 or heroes[b].hp <= 0:
+				continue
+			var v := pair_value(a, b)
+			if ev.has("min") and v < int(ev.min):
+				continue
+			if ev.has("max") and v > int(ev.max):
+				continue
+			out.append([a, b])
+	return out
+
+
+func backstage_text(bs: Dictionary, text: String) -> String:
+	return text.replace("{a}", heroes[bs.a].name).replace("{b}", heroes[bs.b].name)
+
+
+## Aplica a escolha e devolve as linhas de resultado.
+func resolve_backstage(bs: Dictionary, choice: Dictionary) -> Array:
+	var a: String = bs.a
+	var b: String = bs.b
+	var lines := [backstage_text(bs, choice.get("result", ""))]
+	var aff: Array = choice.get("aff", [0, 0])
+	if int(aff[0]) != 0 or int(aff[1]) != 0:
+		var before := pair_value(a, b)
+		change_affinity(a, b, int(aff[0]), int(aff[1]))
+		lines.append("%s ↔ %s: afinidade %+d → %+d" % [heroes[a].name, heroes[b].name, before, pair_value(a, b)])
+	for who in choice.get("morale", {}):
+		var id: String = a if who == "a" else b
+		var d := int(choice.morale[who])
+		heroes[id].morale = clampi(heroes[id].morale + d, 0, 10)
+		lines.append("%s: moral %+d" % [heroes[id].name, d])
+	for who in choice.get("fatigue", {}):
+		var id: String = a if who == "a" else b
+		heroes[id].fatigue = clampi(heroes[id].fatigue + int(choice.fatigue[who]), 0, 2)
+		lines.append("%s ficou %s." % [heroes[id].name, FATIGUE_NAMES[heroes[id].fatigue].to_lower()])
+	bs.done = true
 	return lines
 
 

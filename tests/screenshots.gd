@@ -19,6 +19,12 @@ func _initialize() -> void:
 	await _shot("6_mapa")
 	main.show_result(main.last_result)
 	await _shot("3_resultado")
+	gs.backstage_today = [{"event": gs.backstage_data.events[6], "a": "theo", "b": "lyssa", "done": false},
+		{"event": gs.backstage_data.events[0], "a": "mira", "b": "bram", "done": false}]
+	main.show_hub()
+	await _shot("8_hub_bastidores")
+	main.show_backstage(gs.backstage_today[0])
+	await _shot("9_bastidor")
 	main.show_relations()
 	await _shot("4_relacoes")
 	main.show_book(5)

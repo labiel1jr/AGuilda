@@ -16,15 +16,18 @@ O jogo não é sobre combate. É sobre gestão de gente complicada com poder de 
 4. **Mapa Mágico** — você acompanha a party pelo mapa: a rota se revela em dourado, os marcadores avançam e cada ponto de interesse narra o que acontece. Você assiste, não controla.
 5. **Resolução** — Sucesso Limpo, Sucesso com Custo ou Falha com Revelação. Falhar nunca é beco sem saída: é gancho de história.
 6. **Vínculos** — quem vai junto se aproxima ou se afasta. Ao cruzar limiares, você decide o que existe entre eles (Amizade, Mentoria, Rivalidade, Romance...), e isso desbloqueia **Ações de Vínculo**.
-7. **Encerrar o dia** — aventureiros descansam, missões expiram, novos pedidos chegam.
+7. **Bastidores** — cenas curtas na guilda (taverna, treino, brigas, segredos). Você escolhe como reagir: pagar a rodada, tomar partido, mediar.
+8. **Encerrar o dia** — aventureiros descansam, missões expiram, novos pedidos chegam. Quem não sai junto em missão vai se afastando (neglect).
 
 | Montagem de Party | Mapa Mágico |
 |---|---|
 | ![Montagem de Party](docs/img/2_party.png) | ![Mapa Mágico](docs/img/6_mapa.png) |
 | **Livro da Guilda** | **Resolução** |
 | ![Livro da Guilda](docs/img/5_livro.png) | ![Resolução](docs/img/3_resultado.png) |
+| **Bastidores no hub** | **Cena de bastidor** |
+| ![Bastidores](docs/img/8_hub_bastidores.png) | ![Cena de bastidor](docs/img/9_bastidor.png) |
 
-## Estado atual — MVP v0.2
+## Estado atual — v0.3
 
 - 6 aventureiros (Theo, Lyssa, Mira, Senna, Bram, Vera) com atributos e grade de afinidade assimétrica.
 - 10 missões, com tags de composição (exige especialista, proíbe herói) e requisito oculto.
@@ -35,7 +38,9 @@ O jogo não é sobre combate. É sobre gestão de gente complicada com poder de 
 - **Mapa Mágico** (GDD §13): 5 biomas desenhados por código, rota sinuosa revelada aos poucos, marcadores por herói, 3 waypoints com narração e botão de acelerar.
 - **Livro da Guilda** (GDD §14): ficha D&D 5e resumida — retrato, classe, raça, nível, PV, moral, status, proficiências, histórico, atributos com modificador, personalidade (Traço, Ideal, Vínculo, Defeito) e barras de afinidade.
 - PV: missões com custo ou falha ferem; o descanso cura; com 0 PV o herói fica Incapacitado.
-- Quadro de Relações e fim de capítulo no dia 8.
+- **Eventos de bastidor**: até 2 cenas por dia, sorteadas por afinidade do par, com escolhas que mudam afinidade, moral e fadiga. Inclui cenas exclusivas de duplas (Vera & Bram, Theo & Lyssa, Mira & Lyssa) e a regra "escolher um lado" (+2 / −1 de moral).
+- **Neglect**: par com afinidade +3 ou mais perde 1 a cada 3 dias sem missão juntos, nunca abaixo do valor inicial. Herói 4 dias sem missão perde 1 de moral.
+- Quadro de Relações (com dias sem missão juntos no tooltip) e fim de capítulo no dia 8.
 
 ## Rodar
 
@@ -50,6 +55,7 @@ Requer **Godot 4.7**. Abra a pasta no editor e pressione **F5**.
 | `scripts/core/score_calc.gd` | Fórmula de score e limiares |
 | `scripts/core/game_state.gd` | Autoload `GameState`: elenco, afinidade, vínculos, despacho, fadiga, moral, reputação, dias |
 | `data/narration.json` | Narração do Mapa Mágico por partida, bioma e resultado |
+| `data/backstage.json` | Eventos de bastidor: condições, texto e escolhas com efeitos |
 | `data/book.json` | Seções trancadas do Livro (slots de expansão por versão) |
 | `scripts/ui/main.gd` | Telas, montadas por código |
 | `scripts/ui/magic_map.gd` | Mapa Mágico: desenho do bioma, rota, waypoints e marcadores |
@@ -58,6 +64,23 @@ Requer **Godot 4.7**. Abra a pasta no editor e pressione **F5**.
 | `docs/GDD.md` | Game Design Document |
 
 A regra de jogo fica em `scripts/core`; a UI só lê o estado e chama métodos. Heróis, missões e textos novos entram pelos JSON, sem mexer em código.
+
+### Criando eventos de bastidor
+
+Adicione um objeto em `data/backstage.json`:
+
+```json
+{"id": "duelo", "title": "Duelo ao amanhecer", "min": -5, "max": -2, "weight": 2, "once": false,
+ "heroes": ["senna", null],
+ "text": "{a} desafia {b} na frente de todos.",
+ "choices": [
+   {"label": "Permitir o duelo", "aff": [1, 1], "fatigue": {"a": 1, "b": 1}, "result": "..."},
+   {"label": "Proibir", "morale": {"a": -1}, "result": "..."}
+ ]}
+```
+
+- `min`/`max`: faixa de afinidade do par. `heroes`: fixa um ou os dois heróis (`null` = qualquer). `once`: aparece uma vez por jogo.
+- Efeitos: `aff` = [a→b, b→a], `morale` e `fatigue` por `a`/`b`. Mudanças de afinidade disparam os eventos de vínculo normalmente.
 
 ### Expandindo o Livro da Guilda
 
@@ -77,8 +100,8 @@ godot --headless --path . -s res://tests/ui_smoke.gd
 ## Roadmap
 
 - [x] **v0.1** — loop de despacho
-- [x] **v0.2** — party, afinidade, Ações de Vínculo *(atual)*
-- [ ] **v0.3** — Mapa Mágico ✔, Livro da Guilda ✔, eventos de bastidor, neglect
+- [x] **v0.2** — party, afinidade, Ações de Vínculo
+- [x] **v0.3** — Mapa Mágico, Livro da Guilda, eventos de bastidor, neglect
 - [ ] **v0.4** — capítulos, Ato 1 completo, upgrades da guilda
 - [ ] **v1.0** — arte, trilha sonora, minigame opcional, finais variáveis
 

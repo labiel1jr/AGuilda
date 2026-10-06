@@ -1,0 +1,55 @@
+{
+  "_doc": "Eventos de bastidor (GDD §5.4.2, §8). Cada evento envolve um par {a}/{b}. Condições: heroes (par exato, na ordem a,b), min/max (afinidade do par), once (só uma vez por jogo), weight. Efeitos por escolha: aff [a→b, b→a], morale {a,b}, fatigue {a,b}.",
+  "per_day": 2,
+  "events": [
+    {"id": "taverna", "title": "Uma rodada na taverna", "min": -2, "max": 5, "weight": 3,
+     "text": "{a} e {b} dividem a mesma mesa no Corvo Bêbado. A conversa começa sobre o tempo e termina sobre o passado.",
+     "choices": [
+       {"label": "Pagar a rodada (a guilda arca)", "aff": [1, 1], "morale": {"a": 1, "b": 1}, "result": "Copos se batem. Pela primeira vez em dias, alguém ri alto na guilda."},
+       {"label": "Deixar que conversem em paz", "aff": [1, 0], "result": "{a} fala mais do que pretendia. {b} só escuta."}
+     ]},
+    {"id": "treino", "title": "Treino no pátio", "min": -1, "max": 8, "weight": 3,
+     "text": "Ao amanhecer, {a} desafia {b} para um treino com espadas de madeira.",
+     "choices": [
+       {"label": "Incentivar: \"Até o primeiro sangue!\"", "aff": [2, 2], "fatigue": {"a": 1, "b": 1}, "result": "O treino vira espetáculo. Os dois terminam exaustos — e sorrindo."},
+       {"label": "Lembrar que há missões amanhã", "aff": [1, 1], "result": "Um treino curto, técnico. Respeito, sem exagero."}
+     ]},
+    {"id": "discussao", "title": "Discussão no refeitório", "max": -1, "weight": 4,
+     "text": "Uma tigela voa. {a} acusa {b} de pôr a guilda em risco. Todos olham para você.",
+     "choices": [
+       {"label": "Ficar do lado de {a}", "aff": [0, -1], "morale": {"a": 2, "b": -1}, "result": "{a} se sente ouvido. {b} sai batendo a porta."},
+       {"label": "Ficar do lado de {b}", "aff": [-1, 0], "morale": {"a": -1, "b": 2}, "result": "{b} acena em silêncio. {a} não esquece."},
+       {"label": "Mediar: \"Os dois. Meu escritório. Agora.\"", "aff": [1, 1], "morale": {"a": -1, "b": -1}, "result": "Ninguém sai satisfeito, mas os dois saem conversando."}
+     ]},
+    {"id": "luar", "title": "Conversa ao luar", "min": 5, "weight": 2,
+     "text": "Já é tarde. {a} e {b} estão na muralha, olhando a estrada. Nenhum dos dois parece querer dormir.",
+     "choices": [
+       {"label": "Deixá-los a sós", "aff": [1, 1], "morale": {"a": 1, "b": 1}, "result": "Ninguém sabe o que conversaram. Mas no dia seguinte chegam juntos ao mural."},
+       {"label": "Juntar-se a eles", "morale": {"a": 1, "b": 1}, "result": "A conversa muda de tom, mas eles agradecem a companhia do(a) Mestre(a)."}
+     ]},
+    {"id": "lealdade", "title": "Prova de lealdade", "heroes": ["senna", null], "max": 1, "weight": 3,
+     "text": "Senna deixa a bolsa de moedas aberta sobre a mesa e sai. {b} é o único na sala.",
+     "choices": [
+       {"label": "Pedir a {b} que guarde a bolsa para Senna", "aff": [2, 1], "result": "Senna volta, conta as moedas e não diz nada. Mas da próxima vez se senta ao lado de {b}."},
+       {"label": "Não interferir", "aff": [-1, 0], "result": "Ninguém tocou na bolsa. Senna conclui que ninguém se importou."}
+     ]},
+    {"id": "licao", "title": "A primeira lição", "heroes": ["vera", "bram"], "once": true, "weight": 5,
+     "text": "Vera encontra Bram tentando segurar uma espada longa do jeito errado. Ela suspira e se aproxima.",
+     "choices": [
+       {"label": "Pedir a Vera que o ensine de verdade", "aff": [2, 2], "fatigue": {"b": 1}, "result": "\"Pés firmes. Olhos em mim, não na lâmina.\" Bram cai doze vezes. Levanta treze."},
+       {"label": "Deixar Vera seguir seu caminho", "aff": [0, -1], "morale": {"b": -1}, "result": "Vera ajusta a pegada de Bram e vai embora sem dizer nada. Ele fica olhando."}
+     ]},
+    {"id": "codigo", "title": "O código e a gazua", "heroes": ["theo", "lyssa"], "once": true, "weight": 5,
+     "text": "Lyssa abre a fechadura do arsenal \"só para provar que podia\". Theo a pega no flagra.",
+     "choices": [
+       {"label": "Apoiar Theo: regras são regras", "aff": [0, -1], "morale": {"a": 2, "b": -1}, "result": "Theo assente, grave. Lyssa devolve a gazua com um sorriso torto."},
+       {"label": "Rir e chamar de teste de segurança", "aff": [1, 2], "morale": {"a": -1}, "result": "Lyssa explica a falha da fechadura. Theo, a contragosto, anota."}
+     ]},
+    {"id": "mapa", "title": "O mapa rasgado", "heroes": ["mira", "lyssa"], "once": true, "weight": 4,
+     "text": "Mira encontra metade de um mapa no Arquivo. Lyssa reconhece a outra metade — já a viu num cofre que não deveria ter aberto.",
+     "choices": [
+       {"label": "Deixar que investiguem juntas", "aff": [2, 2], "result": "Passam a noite no Arquivo. De manhã, o mapa tem um X que ninguém comenta."},
+       {"label": "Proibir: a guilda não precisa de mais problemas", "aff": [0, 0], "morale": {"a": -1, "b": -1}, "result": "Mira guarda o mapa. Lyssa guarda o segredo."}
+     ]}
+  ]
+}

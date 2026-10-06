@@ -103,6 +103,25 @@ func show_hub() -> void:
 		row.add_child(_label("  PV %d/%d" % [h.hp, h.hp_max], 13, C_MUTED))
 		row.add_child(_label("  Moral %d" % h.morale, 13, C_MUTED))
 
+	# Bastidores
+	ccol.add_child(_label("Bastidores", 20, C_GOLD))
+	var pending: Array = gs.backstage_today.filter(func(bs): return not bs.done)
+	if pending.is_empty():
+		ccol.add_child(_para("A guilda está quieta hoje.", 13, C_MUTED))
+	for bs in pending:
+		var card := _panel(Color("#4a3a2a"))
+		ccol.add_child(card)
+		var bc := VBoxContainer.new()
+		card.add_child(bc)
+		var brow := HBoxContainer.new()
+		bc.add_child(brow)
+		brow.add_child(_swatch(gs.heroes[bs.a].color))
+		brow.add_child(_swatch(gs.heroes[bs.b].color))
+		brow.add_child(_label(" " + bs.event.title, 15, C_TEXT))
+		brow.add_child(_spacer())
+		brow.add_child(_button("Assistir cena", show_backstage.bind(bs)))
+		bc.add_child(_label("%s e %s" % [gs.heroes[bs.a].name, gs.heroes[bs.b].name], 12, C_MUTED))
+
 
 func _mission_card(m: Dictionary) -> Control:
 	var card := _panel(C_PARCHMENT)
@@ -391,6 +410,44 @@ func _on_label_chosen(ev: Dictionary, lbl: String) -> void:
 	_after_result()
 
 
+# ================= Evento de Bastidor =================
+
+func show_backstage(bs: Dictionary) -> void:
+	_clear()
+	root.add_child(_label("Bastidores da guilda", 16, C_MUTED))
+	root.add_child(_label(bs.event.title, 28, C_GOLD))
+	var who := HBoxContainer.new()
+	root.add_child(who)
+	for id in [bs.a, bs.b]:
+		who.add_child(_badge(gs.heroes[id].name, gs.heroes[id].color.darkened(0.2)))
+	who.add_child(_label("   afinidade %+d  [%s]" % [gs.pair_value(bs.a, bs.b), gs.band(gs.pair_value(bs.a, bs.b)).label], 14, _aff_color(gs.pair_value(bs.a, bs.b))))
+	var p := _panel(C_PARCHMENT)
+	root.add_child(p)
+	p.add_child(_para(gs.backstage_text(bs, bs.event.text), 17, C_INK))
+	root.add_child(_label("O que você faz?", 15, C_TEXT))
+	for choice in bs.event.choices:
+		var b := _button(gs.backstage_text(bs, choice.label), _on_backstage_choice.bind(bs, choice))
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		root.add_child(b)
+	root.add_child(_spacer_v())
+	root.add_child(_button("◀ Voltar (decidir depois)", show_hub))
+
+
+func _on_backstage_choice(bs: Dictionary, choice: Dictionary) -> void:
+	var lines: Array = gs.resolve_backstage(bs, choice)
+	_clear()
+	root.add_child(_label(bs.event.title, 24, C_GOLD))
+	var p := _panel(C_PARCHMENT)
+	root.add_child(p)
+	var col := VBoxContainer.new()
+	p.add_child(col)
+	col.add_child(_para(lines[0], 17, C_INK))
+	for i in range(1, lines.size()):
+		root.add_child(_label(lines[i], 14, C_TEXT))
+	root.add_child(_spacer_v())
+	root.add_child(_button("Continuar", _after_result))
+
+
 # ================= Quadro de Relações =================
 
 func show_relations() -> void:
@@ -414,6 +471,7 @@ func show_relations() -> void:
 			var v: int = gs.pair_value(a, b)
 			var lbl: String = gs.bond_label(a, b)
 			var tip := "%s → %s: %+d\n%s → %s: %+d\n%s%s" % [gs.heroes[a].name, gs.heroes[b].name, gs.affinity[a][b], gs.heroes[b].name, gs.heroes[a].name, gs.affinity[b][a], gs.band(v).label, ("\nVínculo: " + lbl) if lbl != "" else ""]
+			tip += "\nSem missão juntos há %d dia(s)" % gs.days_apart(a, b)
 			grid.add_child(_cell("%+d%s" % [v, " ✦" if lbl != "" else ""], _aff_color(v).darkened(0.55), C_TEXT, tip))
 	root.add_child(_spacer_v())
 	root.add_child(_button("◀ Voltar", show_hub))

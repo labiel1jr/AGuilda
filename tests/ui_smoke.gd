@@ -27,6 +27,14 @@ func _initialize() -> void:
 	main._after_result()
 	await process_frame
 	main._on_label_chosen({"a": "vera", "b": "bram", "threshold": 6}, "Mentoria")
+	gs.backstage_today = [{"event": gs.backstage_data.events[0], "a": "theo", "b": "bram", "done": false}]
+	main.show_hub()
+	await process_frame
+	main.show_backstage(gs.backstage_today[0])
+	await process_frame
+	main._on_backstage_choice(gs.backstage_today[0], gs.backstage_data.events[0].choices[0])
+	await process_frame
+	assert(gs.backstage_today[0].done)
 	main.show_relations()
 	await process_frame
 	for i in 6:
