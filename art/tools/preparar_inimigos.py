@@ -6,7 +6,7 @@ borda de cada imagem; tudo que for parecido com elas e estiver ligado à borda
 vira transparente. O cartaz, o prego e o que sai da moldura têm outras cores e ficam.
 
 Uso:  python art/tools/preparar_inimigos.py
-Entrada: art/enemies/originais/<id>.jpg   Saída: art/enemies/<id>.png
+Entrada: art/enemies/originais/<id>.jpg (ou .png — o formato é lido do conteúdo)   Saída: art/enemies/<id>.png
 """
 from collections import deque
 from pathlib import Path
@@ -117,7 +117,7 @@ def remover_fundo(img: Image.Image) -> Image.Image:
 
 
 def main():
-    for jpg in sorted((RAIZ / "originais").glob("*.jpg")):
+    for jpg in sorted(p for p in (RAIZ / "originais").glob("*.*") if p.suffix.lower() in (".jpg", ".jpeg", ".png")):
         img = remover_fundo(Image.open(jpg))
         img = img.convert("RGBa").resize((TAMANHO, TAMANHO), Image.LANCZOS).convert("RGBA")
         destino = RAIZ / (jpg.stem + ".png")

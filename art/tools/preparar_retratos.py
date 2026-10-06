@@ -2,7 +2,7 @@
 para o jogo: remove o fundo a partir das bordas e salva PNG RGBA 256x256.
 
 Uso:  python art/tools/preparar_retratos.py
-Entrada: art/portraits/originais/<id>.jpg   Saída: art/portraits/<id>.png
+Entrada: art/portraits/originais/<id>.jpg (ou .png — o formato é lido do conteúdo)   Saída: art/portraits/<id>.png
          art/geralimagem/originais/inicial.jpg -> art/geralimagem/titulo.png
 """
 from collections import deque
@@ -72,7 +72,7 @@ def remover_fundo(img: Image.Image) -> Image.Image:
 
 def main():
     origem = RAIZ / "portraits" / "originais"
-    for jpg in sorted(origem.glob("*.jpg")):
+    for jpg in sorted(p for p in origem.glob("*.*") if p.suffix.lower() in (".jpg", ".jpeg", ".png")):
         img = remover_fundo(Image.open(jpg))
         # reduz em alfa pré-multiplicado para não sujar a borda de preto
         img = img.convert("RGBa").resize((TAMANHO, TAMANHO), Image.LANCZOS).convert("RGBA")
