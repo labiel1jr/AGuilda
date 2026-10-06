@@ -91,6 +91,23 @@ func _left_page(id: String, h: Dictionary) -> Control:
 	col.add_child(_rule())
 	col.add_child(_pips_row("PV", h.hp, h.hp_max, C_HP, "%d/%d" % [h.hp, h.hp_max]))
 	col.add_child(_pips_row("Moral", h.morale, 10, C_GOLD, "%d/10" % h.morale))
+	col.add_child(_xp_row(id, h))
+
+	col.add_child(_heading("Equipamento"))
+	for slot in HeroRPG.SLOTS:
+		var cur: String = h.equip[slot]
+		var t := _text("%s: %s" % [HeroRPG.SLOT_NAMES[slot], HeroRPG.item(gs, cur).name if cur != "" else "—"], 13, C_INK if cur != "" else C_INK_SOFT, cur == "")
+		if cur != "":
+			t.tooltip_text = HeroRPG.item(gs, cur).desc
+			t.mouse_filter = Control.MOUSE_FILTER_STOP
+		col.add_child(t)
+	var eb := Button.new()
+	eb.text = "Gerenciar equipamento ▸"
+	eb.flat = true
+	eb.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	eb.add_theme_color_override("font_color", C_RUBRIC)
+	eb.pressed.connect(func(): ui.show_equip(index))
+	col.add_child(eb)
 
 	col.add_child(_heading("Proficiências"))
 	var tags := HFlowContainer.new()
@@ -133,6 +150,8 @@ func _right_page(id: String, h: Dictionary) -> Control:
 	for k in gs.ATTRS:
 		grid.add_child(_attr_box(gs.ATTR_NAMES[k], h.attrs[k]))
 
+	_add_powers(col, id, h)
+
 	col.add_child(_heading("Personalidade"))
 	var pers: Dictionary = h.personality
 	for key in [["trait", "Traço"], ["ideal", "Ideal"], ["bond", "Vínculo"], ["flaw", "Defeito"]]:
@@ -168,6 +187,62 @@ func _right_page(id: String, h: Dictionary) -> Control:
 
 	_add_locked(col, "right")
 	return col
+
+
+# ---------- RPG ----------
+
+func _xp_row(id: String, h: Dictionary) -> Control:
+	var row := HBoxContainer.new()
+	var l := _text("XP", 14, C_INK, false)
+	l.custom_minimum_size.x = 52
+	row.add_child(l)
+	var need: int = HeroRPG.xp_to_next(gs, h.level)
+	var bar := ProgressBar.new()
+	bar.max_value = need
+	bar.value = h.xp
+	bar.show_percentage = false
+	bar.custom_minimum_size = Vector2(180, 10)
+	bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = Color("#4f7a3a")
+	bar.add_theme_stylebox_override("fill", fill)
+	var bg := StyleBoxFlat.new()
+	bg.bg_color = Color(C_INK, 0.12)
+	bar.add_theme_stylebox_override("background", bg)
+	row.add_child(bar)
+	row.add_child(_text("  %d/%d para o nível %d" % [h.xp, need, h.level + 1], 13, C_INK_SOFT, false))
+	return row
+
+
+## Magias (conjuradores) ou talentos (demais), com espaços de magia e magias de guilda.
+func _add_powers(col: VBoxContainer, id: String, h: Dictionary) -> void:
+	if HeroRPG.is_caster(gs, id):
+		var mx := HeroRPG.max_slots(gs, id)
+		col.add_child(_heading("Magias  —  espaços %s" % ("●".repeat(h.slots) + "○".repeat(max(0, mx - h.slots)))))
+		for sid in h.spells_known:
+			var sp := HeroRPG.spell(gs, sid)
+			var row := HBoxContainer.new()
+			col.add_child(row)
+			var t := _text("✦ %s — %s" % [sp.name, sp.desc], 13, C_INK, false)
+			t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			row.add_child(t)
+			if sp.has("hub"):
+				var b := Button.new()
+				b.text = "Lançar"
+				b.disabled = h.slots <= 0 or h.busy
+				b.tooltip_text = "Gasta 1 espaço de magia." if not b.disabled else "Sem espaços: precisa descansar."
+				b.pressed.connect(func(): ui.show_cast(id, sid, index))
+				row.add_child(b)
+		if h.spells_known.is_empty():
+			col.add_child(_text("Nenhuma magia ainda.", 13, C_INK_SOFT, true))
+	else:
+		col.add_child(_heading("Talentos"))
+		for tid in h.talents:
+			var t: Dictionary = gs.classes_data.talents[tid]
+			col.add_child(_text("✦ %s — %s" % [t.name, t.desc], 13, C_INK, false))
+		if h.talents.is_empty():
+			col.add_child(_text("Talentos chegam nos níveis %s." % ", ".join(gs.classes_data.xp.milestones.map(func(x): return str(x))), 13, C_INK_SOFT, true))
 
 
 # ---------- seções trancadas (expansão) ----------

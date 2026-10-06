@@ -23,10 +23,30 @@ func _initialize() -> void:
 	main._train_pick = ["mira", "lyssa"]
 	main.show_training()
 	await process_frame
+	# RPG: mercado, equipamento, magia na guilda, subida de nível
+	main.show_market()
+	await process_frame
+	HeroRPG.buy(gs, "espada_longa")
+	HeroRPG.buy(gs, "pocao_cura")
+	main.show_equip(0)
+	await process_frame
+	gs.heroes.theo.hp = 3
+	gs.pending_levelups.append({"id": "bram", "level": 3})
+	main.show_levelup(gs.pending_levelups.pop_front())
+	await process_frame
+	gs.heroes.bram.spells_known.append("palavra_cura")
+	main.show_cast("bram", "palavra_cura", 4)
+	await process_frame
+	gs.set_resting("lyssa", true)
+	main.show_hub()
+	await process_frame
 	var m: Dictionary = gs.board()[0]
 	main.show_party(m)
 	main._toggle_hero(m, "vera")
 	main._toggle_hero(m, "bram")
+	main._toggle_hero(m, "mira")
+	main.prepared = {"mira": "detectar_magia"}
+	main._render_party(m)
 	await process_frame
 	main._on_dispatch(m)
 	await process_frame

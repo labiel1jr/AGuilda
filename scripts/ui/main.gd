@@ -20,6 +20,7 @@ const GuildBook := preload("res://scripts/ui/guild_book.gd")
 var gs  # GameState
 var root: VBoxContainer
 var selected: Array = []
+var prepared: Dictionary = {}   # magia preparada por conjurador na montagem de party
 var last_result := {}
 
 
@@ -64,6 +65,7 @@ func show_hub() -> void:
 	titles.add_child(_label("Capítulo %d — %s   ·   Dia %d/%d   ·   Reputação %d   ·   Ouro %d   ·   Despachos %d/%d" % [ch.number, ch.title, gs.chapter_day(), int(ch.days), gs.reputation, gs.gold, gs.dispatched_today, gs.slots()], 14, C_TEXT))
 	top.add_child(_spacer())
 	top.add_child(_button("Guilda", show_upgrades))
+	top.add_child(_button("Mercado", show_market))
 	var rel := _button("Quadro" if gs.affinity_visible() else "🔒 Quadro", show_relations)
 	rel.disabled = not gs.affinity_visible()
 	rel.tooltip_text = "Construa o Quadro de Relações na tela Guilda." if rel.disabled else "Quadro de Relações"
@@ -115,12 +117,19 @@ func show_hub() -> void:
 		var row := HBoxContainer.new()
 		ccol.add_child(row)
 		row.add_child(_swatch(h.color))
-		row.add_child(_label("%s — %s" % [h.name, h.archetype], 14, C_TEXT))
+		row.add_child(_label("%s  Nv %d" % [h.name, h.level], 14, C_TEXT))
+		if h.rest_request and not h.resting:
+			row.add_child(_label(" ⚠ pede descanso", 12, C_BAD))
 		row.add_child(_spacer())
-		var state: String = gs.hero_status(id)
-		row.add_child(_label(state, 13, _fatigue_color(h)))
-		row.add_child(_label("  PV %d/%d" % [h.hp, h.hp_max], 13, C_MUTED))
-		row.add_child(_label("  Moral %d" % h.morale, 13, C_MUTED))
+		var state: String = "Descansando" if h.resting else gs.hero_status(id)
+		row.add_child(_label(state, 13, C_MUTED if h.resting else _fatigue_color(h)))
+		row.add_child(_label("  PV %d/%d  Moral %d " % [h.hp, h.hp_max, h.morale], 13, C_MUTED))
+		var rest := _button("Acordar" if h.resting else "Descansar", func():
+			gs.set_resting(id, not h.resting)
+			show_hub())
+		rest.disabled = h.busy
+		rest.tooltip_text = "Passa o dia descansando: no fim do dia recupera toda a fadiga, metade do PV, as magias e +1 de moral. Não pode ir em missão hoje."
+		row.add_child(rest)
 
 	if gs.has_upgrade("salao"):
 		var tb := _button("Salão de Treinamento: treinar uma dupla" if gs.can_train() else "Salão de Treinamento: já usado hoje", show_training)
@@ -185,6 +194,7 @@ func _on_end_day() -> void:
 
 func show_party(m: Dictionary) -> void:
 	selected = []
+	prepared = {}
 	_render_party(m)
 
 
@@ -223,7 +233,8 @@ func _render_party(m: Dictionary) -> void:
 		b.custom_minimum_size.x = 110
 		b.disabled = reason != "" or (not is_sel and selected.size() >= 4)
 		row.add_child(b)
-		row.add_child(_label("%s %d / %s %d" % [gs.ATTR_NAMES[m.primary].left(3), h.attrs[m.primary], gs.ATTR_NAMES[m.secondary].left(3), h.attrs[m.secondary]], 13, C_TEXT))
+		var ea: Dictionary = HeroRPG.effective_attrs(gs, id)
+		row.add_child(_label("Nv %d · %s %d / %s %d" % [h.level, gs.ATTR_NAMES[m.primary].left(3), ea[m.primary], gs.ATTR_NAMES[m.secondary].left(3), ea[m.secondary]], 13, C_TEXT))
 		row.add_child(_spacer())
 		var state: String = reason if reason != "" else gs.hero_status(id)
 		row.add_child(_label(state, 13, C_BAD if reason != "" else _fatigue_color(h)))
@@ -241,7 +252,12 @@ func _render_party(m: Dictionary) -> void:
 	for id in selected:
 		var h: Dictionary = gs.heroes[id]
 		var tired := "  (Cansado: −40%)" if h.fatigue == 1 else ""
-		rcol.add_child(_label("→ %s%s" % [h.name, tired], 14, C_TEXT))
+		var prow := HBoxContainer.new()
+		rcol.add_child(prow)
+		prow.add_child(_label("→ %s%s" % [h.name, tired], 14, C_TEXT))
+		if HeroRPG.is_caster(gs, id):
+			prow.add_child(_spacer())
+			prow.add_child(_spell_picker(m, id))
 
 	var pairs := ScoreCalc.pairs_of(selected)
 	if pairs.size() > 0:
@@ -256,7 +272,9 @@ func _render_party(m: Dictionary) -> void:
 
 	var unmet: Array = gs.unmet_tags(m, selected)
 	if not selected.is_empty():
-		var est := ScoreCalc.compute(gs, m, selected)
+		var est := ScoreCalc.compute(gs, m, selected, null, prepared)
+		if est.powers > 0:
+			rcol.add_child(_label("✦ Poderes (itens, talentos, magias): +%d" % est.powers, 14, C_GOLD))
 		var t: Array = ScoreCalc.THRESHOLDS[m.risk]
 		var txt := "Arriscado"
 		var col := C_BAD
@@ -277,7 +295,10 @@ func _render_party(m: Dictionary) -> void:
 		rcol.add_child(_label("Expectativa: " + txt, 15, col))
 		rcol.add_child(bar)
 	if m.has("hidden"):
-		rcol.add_child(_para("⚠ Algo nesta missão não está no pergaminho...", 13, C_MUTED))
+		if HeroRPG.reveals_hidden(gs, selected, prepared):
+			rcol.add_child(_para("👁 Revelado: " + m.hidden.text, 13, C_GOLD))
+		else:
+			rcol.add_child(_para("⚠ Algo nesta missão não está no pergaminho...", 13, C_MUTED))
 	for u in unmet:
 		rcol.add_child(_para("✗ " + u, 13, C_BAD))
 
@@ -293,14 +314,16 @@ func _render_party(m: Dictionary) -> void:
 func _toggle_hero(m: Dictionary, id: String) -> void:
 	if selected.has(id):
 		selected.erase(id)
+		prepared.erase(id)
 	elif selected.size() < 4:
 		selected.append(id)
 	_render_party(m)
 
 
 func _on_dispatch(m: Dictionary) -> void:
-	var res: Dictionary = gs.dispatch(m, selected.duplicate())
+	var res: Dictionary = gs.dispatch(m, selected.duplicate(), prepared.duplicate())
 	selected = []
+	prepared = {}
 	last_result = res
 	show_map(res)
 
@@ -393,7 +416,7 @@ func show_result(res: Dictionary) -> void:
 
 	var sc: Dictionary = res.score
 	var t: Array = ScoreCalc.THRESHOLDS[m.risk]
-	root.add_child(_para("Score %.1f  =  Base %.1f  + Cobertura %d  + Afinidade %+.1f  + Vínculo %d  + Oculto %d  + Sorte %+d      (custo ≥ %d · limpo ≥ %d)" % [sc.total, sc.base, sc.coverage, sc.affinity, sc.bond, sc.hidden, sc.luck, t[0], t[1]], 13, C_MUTED))
+	root.add_child(_para("Score %.1f  =  Base %.1f  + Cobertura %d  + Afinidade %+.1f  + Vínculo %d  + Poderes %d  + Oculto %d  + Sorte %+d      (custo ≥ %d · limpo ≥ %d)" % [sc.total, sc.base, sc.coverage, sc.affinity, sc.bond, sc.powers, sc.hidden, sc.luck, t[0], t[1]], 13, C_MUTED))
 
 	if not res.affinity.is_empty():
 		root.add_child(_label("Vínculos", 16, C_GOLD))
@@ -407,6 +430,8 @@ func show_result(res: Dictionary) -> void:
 func _after_result() -> void:
 	if not gs.pending_events.is_empty():
 		show_bond_event(gs.pending_events.pop_front())
+	elif not gs.pending_levelups.is_empty():
+		show_levelup(gs.pending_levelups.pop_front())
 	else:
 		show_hub()
 
@@ -530,6 +555,8 @@ func show_chapter_intro() -> void:
 	p.add_child(col)
 	for l in gs.chapter_intro():
 		col.add_child(_para(l, 17, C_INK))
+	for rid in gs.chapter_recruits():
+		col.add_child(_para("✦ " + gs.heroes[rid].joins_text, 17, Color("#3f6b2f")))
 	root.add_child(_label("Objetivo: %s   ·   Duração: %d dias" % [ch.goal.text, int(ch.days)], 15, C_TEXT))
 	root.add_child(_spacer_v())
 	root.add_child(_button("Começar o capítulo", func():
@@ -647,6 +674,247 @@ func show_training() -> void:
 		root.add_child(_button("Continuar", _after_result)))
 	go.disabled = _train_pick.size() != 2
 	foot.add_child(go)
+
+
+# ================= RPG: magias na montagem =================
+
+func _spell_picker(m: Dictionary, id: String) -> Control:
+	var h: Dictionary = gs.heroes[id]
+	var ob := OptionButton.new()
+	ob.add_item("Sem magia (%d espaço(s))" % h.slots)
+	ob.set_item_metadata(0, "")
+	var i := 1
+	for sid in h.spells_known:
+		ob.add_item(HeroRPG.spell(gs, sid).name)
+		ob.set_item_metadata(i, sid)
+		ob.set_item_tooltip(i, HeroRPG.spell(gs, sid).desc)
+		if prepared.get(id, "") == sid:
+			ob.select(i)
+		i += 1
+	ob.disabled = h.slots <= 0
+	ob.tooltip_text = "Sem espaços de magia: precisa descansar." if h.slots <= 0 else "Magia preparada para esta missão (gasta 1 espaço)."
+	ob.item_selected.connect(func(idx: int):
+		var sid: String = ob.get_item_metadata(idx)
+		if sid == "":
+			prepared.erase(id)
+		else:
+			prepared[id] = sid
+		_render_party(m))
+	return ob
+
+
+# ================= RPG: subida de nível =================
+
+func show_levelup(entry: Dictionary) -> void:
+	_clear()
+	var h: Dictionary = gs.heroes[entry.id]
+	var opts: Dictionary = HeroRPG.levelup_options(gs, entry)
+	var pick := {"attr": "", "choice": {}}
+	var head := HBoxContainer.new()
+	root.add_child(head)
+	head.add_child(_swatch(h.color, 28))
+	head.add_child(_label("  %s chegou ao nível %d!" % [h.name, entry.level], 28, C_GOLD))
+	root.add_child(_label("%s · %s" % [h["class"], h.archetype], 15, C_MUTED))
+
+	root.add_child(_label("Escolha um atributo para melhorar (+1):", 16, C_TEXT))
+	var arow := HBoxContainer.new()
+	arow.add_theme_constant_override("separation", 8)
+	root.add_child(arow)
+	var attr_buttons := []
+	for k in gs.ATTRS:
+		var b := _button("%s\n%d → %d" % [gs.ATTR_NAMES[k], h.attrs[k], h.attrs[k] + 1], func(): pass)
+		b.toggle_mode = true
+		b.custom_minimum_size = Vector2(140, 56)
+		b.disabled = not opts.attrs.has(k)
+		attr_buttons.append(b)
+		arow.add_child(b)
+	var choice_buttons := []
+	if not opts.choices.is_empty():
+		var kind: String = "uma nova magia" if opts.choices[0].kind == "spell" else "um novo talento"
+		root.add_child(_label("Nível marcante! Escolha %s:" % kind, 16, C_GOLD))
+		for c in opts.choices:
+			var b := _button("%s — %s" % [c.name, c.desc], func(): pass)
+			b.toggle_mode = true
+			b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+			choice_buttons.append(b)
+			root.add_child(b)
+	root.add_child(_spacer_v())
+	var confirm := _button("Confirmar", func():
+		HeroRPG.apply_levelup(gs, entry, pick.attr, pick.choice)
+		_after_result())
+	confirm.disabled = true
+	root.add_child(confirm)
+	var refresh := func():
+		confirm.disabled = (pick.attr == "" and not opts.attrs.is_empty()) or (pick.choice.is_empty() and not opts.choices.is_empty())
+	for i in attr_buttons.size():
+		var k: String = gs.ATTRS[i]
+		attr_buttons[i].pressed.connect(func():
+			pick.attr = k
+			for j in attr_buttons.size():
+				attr_buttons[j].button_pressed = j == i
+			refresh.call())
+	for i in choice_buttons.size():
+		var c: Dictionary = opts.choices[i]
+		choice_buttons[i].pressed.connect(func():
+			pick.choice = c
+			for j in choice_buttons.size():
+				choice_buttons[j].button_pressed = j == i
+			refresh.call())
+	refresh.call()
+
+
+# ================= RPG: mercado =================
+
+func show_market() -> void:
+	_clear()
+	var top := HBoxContainer.new()
+	root.add_child(top)
+	top.add_child(_label("Mercado de Pedravale", 24, C_GOLD))
+	top.add_child(_spacer())
+	top.add_child(_label("Ouro %d" % gs.gold, 18, C_TEXT))
+	var body := HBoxContainer.new()
+	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	body.add_theme_constant_override("separation", 16)
+	root.add_child(body)
+
+	var lp := _panel(C_PANEL)
+	lp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	body.add_child(lp)
+	var lcol := VBoxContainer.new()
+	lp.add_child(lcol)
+	lcol.add_child(_label("À venda", 18, C_GOLD))
+	for iid in HeroRPG.shop_items(gs):
+		var it := HeroRPG.item(gs, iid)
+		lcol.add_child(_item_row(it, "Comprar %d" % int(it.price), gs.gold < int(it.price), func():
+			HeroRPG.buy(gs, iid)
+			show_market()))
+
+	var rp := _panel(C_PANEL)
+	rp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	body.add_child(rp)
+	var rcol := VBoxContainer.new()
+	rp.add_child(rcol)
+	rcol.add_child(_label("Baú da Guilda (vender)", 18, C_GOLD))
+	if gs.inventory.is_empty():
+		rcol.add_child(_label("O baú está vazio.", 14, C_MUTED))
+	for i in gs.inventory.size():
+		var iid: String = gs.inventory[i]
+		var it := HeroRPG.item(gs, iid)
+		rcol.add_child(_item_row(it, "Vender %d" % HeroRPG.sell_price(gs, iid), false, func():
+			HeroRPG.sell(gs, i)
+			show_market()))
+	root.add_child(_button("◀ Voltar", show_hub))
+
+
+func _item_row(it: Dictionary, action: String, disabled: bool, cb: Callable) -> Control:
+	var row := HBoxContainer.new()
+	var name := _label(("★ " if it.get("rare", false) else "") + it.name, 14, C_GOLD if it.get("rare", false) else C_TEXT)
+	name.custom_minimum_size.x = 190
+	row.add_child(name)
+	var d := _para(it.desc, 12, C_MUTED)
+	row.add_child(d)
+	var b := _button(action, cb)
+	b.disabled = disabled
+	row.add_child(b)
+	return row
+
+
+# ================= RPG: equipamento =================
+
+func show_equip(index: int) -> void:
+	_clear()
+	var id: String = gs.hero_order[index]
+	var h: Dictionary = gs.heroes[id]
+	var top := HBoxContainer.new()
+	root.add_child(top)
+	top.add_child(_swatch(h.color, 24))
+	top.add_child(_label("  Equipamento de %s" % h.name, 24, C_GOLD))
+	top.add_child(_spacer())
+	var armor: Array = HeroRPG.class_info(gs, id).get("armor", [])
+	top.add_child(_label("%s · armaduras: %s" % [h["class"], ", ".join(armor.map(func(a): return HeroRPG.ARMOR_NAMES[a])) if not armor.is_empty() else "nenhuma"], 14, C_MUTED))
+	var body := HBoxContainer.new()
+	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	body.add_theme_constant_override("separation", 16)
+	root.add_child(body)
+
+	var lp := _panel(C_PANEL)
+	lp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	body.add_child(lp)
+	var lcol := VBoxContainer.new()
+	lcol.add_theme_constant_override("separation", 8)
+	lp.add_child(lcol)
+	lcol.add_child(_label("Equipado", 18, C_GOLD))
+	for slot in HeroRPG.SLOTS:
+		var row := HBoxContainer.new()
+		lcol.add_child(row)
+		var sl := _label(HeroRPG.SLOT_NAMES[slot], 14, C_MUTED)
+		sl.custom_minimum_size.x = 100
+		row.add_child(sl)
+		var cur: String = h.equip[slot]
+		if cur == "":
+			row.add_child(_label("—", 14, C_MUTED))
+		else:
+			var it := HeroRPG.item(gs, cur)
+			row.add_child(_label(it.name, 14, C_TEXT))
+			row.add_child(_para(it.desc, 12, C_MUTED))
+			row.add_child(_button("Remover", func():
+				HeroRPG.unequip(gs, id, slot)
+				show_equip(index)))
+
+	var rp := _panel(C_PANEL)
+	rp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	body.add_child(rp)
+	var rcol := VBoxContainer.new()
+	rcol.add_theme_constant_override("separation", 6)
+	rp.add_child(rcol)
+	rcol.add_child(_label("Baú da Guilda", 18, C_GOLD))
+	if gs.inventory.is_empty():
+		rcol.add_child(_label("O baú está vazio. Missões trazem saque; o Mercado vende o básico.", 13, C_MUTED))
+	for i in gs.inventory.size():
+		var iid: String = gs.inventory[i]
+		var it := HeroRPG.item(gs, iid)
+		var target := ""
+		if it.slot == "consumivel":
+			target = "consumivel1" if h.equip.consumivel1 == "" else "consumivel2"
+		else:
+			target = it.slot
+		var reason := HeroRPG.equip_block_reason(gs, id, target, iid)
+		var row := _item_row(it, "Equipar" if reason == "" else reason, reason != "", func():
+			HeroRPG.equip(gs, id, target, i)
+			show_equip(index))
+		rcol.add_child(row)
+		if it.has("hub"):
+			row.add_child(_button("Usar em %s" % h.name, func():
+				var msg := HeroRPG.use_item_hub(gs, i, id)
+				_toast(msg, show_equip.bind(index))))
+	root.add_child(_button("◀ Voltar ao Livro", show_book.bind(index)))
+
+
+## Lançar magia da guilda: escolhe o alvo.
+func show_cast(caster: String, sid: String, back_index: int) -> void:
+	_clear()
+	var sp := HeroRPG.spell(gs, sid)
+	root.add_child(_label("%s — %s" % [gs.heroes[caster].name, sp.name], 24, C_GOLD))
+	root.add_child(_para(sp.desc, 14, C_MUTED))
+	root.add_child(_label("Em quem?", 16, C_TEXT))
+	for id in gs.hero_order:
+		var h: Dictionary = gs.heroes[id]
+		var b := _button("%s   PV %d/%d   %s" % [h.name, h.hp, h.hp_max, gs.hero_status(id)], func():
+			_toast(HeroRPG.cast_hub(gs, caster, sid, id), show_book.bind(back_index)))
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.disabled = h.busy
+		root.add_child(b)
+	root.add_child(_spacer_v())
+	root.add_child(_button("◀ Voltar", show_book.bind(back_index)))
+
+
+func _toast(msg: String, next: Callable) -> void:
+	_clear()
+	var p := _panel(C_PARCHMENT)
+	root.add_child(p)
+	p.add_child(_para(msg, 17, C_INK))
+	root.add_child(_spacer_v())
+	root.add_child(_button("Continuar", next))
 
 
 # ================= Fim do Ato =================

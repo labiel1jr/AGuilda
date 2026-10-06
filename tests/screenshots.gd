@@ -12,6 +12,27 @@ func _initialize() -> void:
 	gs.begin_chapter()
 	main.show_upgrades()
 	await _shot("11_upgrades")
+	gs.gold = 300
+	HeroRPG.buy(gs, "espada_longa")
+	HeroRPG.buy(gs, "cota_malha")
+	HeroRPG.buy(gs, "pocao_cura")
+	HeroRPG.buy(gs, "amuleto_coragem")
+	HeroRPG.equip(gs, "vera", "arma", 0)
+	HeroRPG.equip(gs, "vera", "armadura", 0)
+	main.show_market()
+	await _shot("12_mercado")
+	main.show_equip(5)
+	await _shot("13_equipamento")
+	gs.heroes.bram.xp = 70
+	gs.heroes.bram.level = 2
+	gs.pending_levelups.append({"id": "bram", "level": 3})
+	main.show_levelup(gs.pending_levelups.pop_front())
+	await _shot("14_nivel")
+	main.show_book(2)
+	await _shot("15_livro_mira")
+	gs.heroes.senna.rest_request = true
+	gs.set_resting("lyssa", true)
+	gs.gold = 30
 	main.show_hub()
 	await _shot("1_hub")
 	var m: Dictionary = gs.board()[2]

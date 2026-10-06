@@ -55,6 +55,13 @@ var day := 1
 var reputation := 0
 var dispatched_today := 0
 var pending_events := []  # eventos de vínculo aguardando escolha do jogador
+var pending_levelups := [] # subidas de nível aguardando escolha do jogador
+
+# RPG (níveis, equipamento, magias) — regras em HeroRPG
+var classes_data := {}
+var items_data := {}
+var inventory := []        # Baú da Guilda: ids de itens
+var recruits := []         # heróis que ainda vão entrar (recruit_chapter)
 var rng := RandomNumberGenerator.new()
 var narration := {}
 var book := {}
@@ -104,6 +111,13 @@ func new_game(seed_value: int = -1) -> void:
 	else:
 		rng.randomize()
 	var hd: Dictionary = _load_json("res://data/heroes.json")
+	classes_data = _load_json("res://data/classes.json")
+	# JSON devolve números como float; níveis marcantes são comparados com int
+	classes_data.xp.milestones = classes_data.xp.milestones.map(func(x): return int(x))
+	items_data = _load_json("res://data/items.json")
+	inventory.clear()
+	pending_levelups.clear()
+	recruits.clear()
 	heroes.clear()
 	hero_order.clear()
 	for h in hd.heroes:
@@ -122,7 +136,12 @@ func new_game(seed_value: int = -1) -> void:
 		}
 		heroes[h.id].hp = heroes[h.id].hp_max
 		heroes[h.id].last_dispatch = 0
-		hero_order.append(h.id)
+		heroes[h.id].joins_text = h.get("joins_text", "")
+		HeroRPG.init_hero(self, heroes[h.id], h)
+		if h.has("recruit_chapter"):
+			recruits.append({"id": h.id, "chapter": h.recruit_chapter})
+		else:
+			hero_order.append(h.id)
 	affinity.clear()
 	for a in hd.affinity:
 		affinity[a] = {}
@@ -283,11 +302,34 @@ func _start_chapter(i: int) -> void:
 	chapter_index = i
 	chapter_start = day
 	var ch := current_chapter()
+	for r in recruits.duplicate():
+		if r.chapter == ch.id:
+			_recruit(r.id)
+			recruits.erase(r)
 	for m in missions:
 		if ch.missions.has(m.id):
 			m.status = "aberta"
 			m.day = chapter_start + m.rel_day - 1
 	chapter_state = "intro"
+
+
+## Herói novo entra no elenco: pares novos começam a contar a partir de hoje.
+func _recruit(id: String) -> void:
+	for other in hero_order:
+		var key := pair_key(id, other)
+		initial_affinity[key] = pair_value(id, other)
+		last_together[key] = day
+	hero_order.append(id)
+	heroes[id].last_dispatch = day
+
+
+## Heróis que entraram neste capítulo (para a tela de abertura).
+func chapter_recruits() -> Array:
+	var out := []
+	for id in hero_order:
+		if heroes[id].joins_text != "" and heroes[id].last_dispatch == chapter_start and chapter_start > 1:
+			out.append(id)
+	return out
 
 
 func begin_chapter() -> void:
@@ -392,7 +434,9 @@ func train_pair(a: String, b: String) -> Array:
 	heroes[a].fatigue = 1
 	heroes[b].fatigue = 1
 	trained_today = true
-	return ["%s e %s treinam juntos até o sol se pôr. Os dois estão cansados — e %s." % [heroes[a].name, heroes[b].name, describe_change(before, pair_value(a, b))]]
+	var xp: int = int(classes_data.xp.training)
+	var extra := HeroRPG.gain_xp(self, a, xp) + HeroRPG.gain_xp(self, b, xp)
+	return ["%s e %s treinam juntos até o sol se pôr. Os dois estão cansados — e %s." % [heroes[a].name, heroes[b].name, describe_change(before, pair_value(a, b))], "+%d de XP para cada um." % xp] + extra
 
 
 func pair_missions(a: String, b: String) -> Array:
@@ -423,6 +467,8 @@ func unavailable_reason(id: String, mission: Dictionary) -> String:
 	var h: Dictionary = heroes[id]
 	if h.busy:
 		return "Em missão"
+	if h.resting:
+		return "Descansando"
 	if h.hp <= 0:
 		return "Incapacitado"
 	if h.fatigue >= 2:
@@ -451,9 +497,23 @@ func unmet_tags(mission: Dictionary, party: Array) -> Array:
 	return out
 
 
-func dispatch(mission: Dictionary, party: Array) -> Dictionary:
+## Descanso (dia inteiro): recupera fadiga, PV, magia e moral no fim do dia.
+func set_resting(id: String, on: bool) -> void:
+	var h: Dictionary = heroes[id]
+	if not h.busy:
+		h.resting = on
+
+
+## prepared: {id_do_herói: id_da_magia} para os conjuradores da party.
+func dispatch(mission: Dictionary, party: Array, prepared: Dictionary = {}) -> Dictionary:
+	var prep := {}
+	for id in prepared:
+		if party.has(id) and prepared[id] != "" and heroes[id].slots > 0 and heroes[id].spells_known.has(prepared[id]):
+			prep[id] = prepared[id]
 	var luck := rng.randi_range(-2, 2)
-	var sc := ScoreCalc.compute(self, mission, party, luck)
+	var sc := ScoreCalc.compute(self, mission, party, luck, prep)
+	var rpg_lines := HeroRPG.on_dispatch(self, party, prep)
+	HeroRPG.consume_on_dispatch(self, party)
 	var result := ScoreCalc.outcome(sc.total, mission.risk)
 	var actions: Array = sc.actions
 	var action_names := actions.map(func(x): return x.action)
@@ -489,7 +549,10 @@ func dispatch(mission: Dictionary, party: Array) -> Dictionary:
 		h.busy = true
 		if id == protected:
 			continue
-		h.fatigue = 2 if (mission.risk in ["alto", "lendario"] or h.fatigue >= 1) else 1
+		var fat := 2 if (mission.risk in ["alto", "lendario"] or h.fatigue >= 1) else 1
+		if HeroRPG.member_value(self, id, party, prep, "fatigue_resist") > 0:
+			fat -= 1
+		h.fatigue = max(h.fatigue, fat)
 	for act in actions:
 		if act.action == "Esforço Extra":
 			heroes[act.a].fatigue = 2
@@ -503,8 +566,12 @@ func dispatch(mission: Dictionary, party: Array) -> Dictionary:
 		hurt = party.filter(func(id): return id != protected)
 	var dmg: int = {"baixo": 1, "medio": 2, "alto": 3, "lendario": 4}[mission.risk]
 	for id in hurt:
-		heroes[id].hp = max(0, heroes[id].hp - dmg)
-		lines.append("%s voltou ferido (−%d PV)." % [heroes[id].name, dmg])
+		var taken: int = max(0, dmg - HeroRPG.member_value(self, id, party, prep, "damage_reduction"))
+		heroes[id].hp = max(0, heroes[id].hp - taken)
+		if taken > 0:
+			lines.append("%s voltou ferido (−%d PV)." % [heroes[id].name, taken])
+		else:
+			lines.append("%s levou um golpe, mas a proteção segurou." % heroes[id].name)
 
 	# Moral e reputação
 	var morale_delta: int = {"limpo": 1, "custo": 0, "falha": -1}[result]
@@ -547,8 +614,10 @@ func dispatch(mission: Dictionary, party: Array) -> Dictionary:
 
 	mission.status = "concluida"
 	mission.result = {"outcome": result, "party": party.duplicate(), "day": day}
+	lines = rpg_lines + lines
+	lines.append_array(HeroRPG.after_mission(self, mission, party, prep, result))
 	dispatched_today += 1
-	return {"mission": mission, "party": party, "score": sc, "outcome": result, "lines": lines, "affinity": aff_changes}
+	return {"mission": mission, "party": party, "score": sc, "outcome": result, "lines": lines, "affinity": aff_changes, "prepared": prep}
 
 
 ## Narração do Mapa Mágico: uma linha por waypoint (GDD §13).
@@ -583,7 +652,17 @@ func end_day() -> Array:
 	var infirmary := 1 if has_upgrade("enfermaria") else 0
 	for id in hero_order:
 		var h: Dictionary = heroes[id]
-		if not h.busy:
+		if h.rest_request and not h.resting:
+			h.morale = max(0, h.morale - 1)
+			lines.append("%s pediu descanso e não foi atendido(a) (moral −1)." % h.name)
+		if h.resting:
+			# Descanso de verdade: tudo volta, inclusive a magia
+			h.fatigue = 0
+			h.hp = min(h.hp_max, h.hp + max(1, h.hp_max / 2) * (1 + infirmary))
+			h.slots = HeroRPG.max_slots(self, id)
+			h.morale = min(10, h.morale + 1)
+			h.resting = false
+		elif not h.busy:
 			if h.fatigue > 0:
 				h.fatigue = max(0, h.fatigue - (2 if h.attrs.resistencia >= 7 else 1) - infirmary)
 			h.hp = min(h.hp_max, h.hp + max(1, h.hp_max / 4) * (1 + infirmary))
@@ -601,6 +680,11 @@ func end_day() -> Array:
 	if chapter_over:
 		_close_chapter()
 	_roll_backstage()
+	for id in hero_order:
+		var h: Dictionary = heroes[id]
+		h.rest_request = h.fatigue >= 2 or h.hp <= h.hp_max / 3
+		if h.rest_request:
+			lines.append("%s pede um dia de descanso." % h.name)
 	if not backstage_today.is_empty():
 		lines.append("Há movimento nos bastidores da guilda (%d cena(s))." % backstage_today.size())
 	for m in missions:

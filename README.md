@@ -19,8 +19,10 @@ O jogo é dividido em **capítulos**. Cada um abre com uma cena, dura alguns dia
 5. **Resolução** — Sucesso Limpo, Sucesso com Custo ou Falha com Revelação. Falhar nunca é beco sem saída: é gancho de história.
 6. **Vínculos** — quem vai junto se aproxima ou se afasta. Ao cruzar limiares, você decide o que existe entre eles (Amizade, Mentoria, Rivalidade, Romance...), e isso desbloqueia **Ações de Vínculo**.
 7. **Bastidores** — cenas curtas na guilda (taverna, treino, brigas, segredos). Você escolhe como reagir: pagar a rodada, tomar partido, mediar.
-8. **Guilda** — gaste o ouro das missões em melhorias: Quadro de Relações, Enfermaria, Arquivo e Salão de Treinamento.
-9. **Encerrar o dia** — aventureiros descansam, missões expiram, novos pedidos chegam. Quem não sai junto em missão vai se afastando (neglect).
+8. **Evolução** — heróis ganham XP, sobem de nível (você escolhe o atributo e, nos níveis 3/5/7/9, uma magia ou talento), trazem saque das missões e usam armas, armaduras, acessórios e consumíveis. Conjuradores preparam uma magia antes de cada despacho; o clérigo e outros curandeiros curam na guilda.
+9. **Descanso** — mande um herói descansar: ele fica o dia fora, mas recupera fadiga, PV, magias e moral. Quem está esgotado pede descanso; ignorar custa moral.
+10. **Guilda** — gaste o ouro das missões em melhorias: Quadro de Relações, Enfermaria, Arquivo e Salão de Treinamento.
+11. **Encerrar o dia** — aventureiros descansam, missões expiram, novos pedidos chegam. Quem não sai junto em missão vai se afastando (neglect).
 
 | Montagem de Party | Mapa Mágico |
 |---|---|
@@ -29,10 +31,24 @@ O jogo é dividido em **capítulos**. Cada um abre com uma cena, dura alguns dia
 | ![Livro da Guilda](docs/img/5_livro.png) | ![Resolução](docs/img/3_resultado.png) |
 | **Abertura de capítulo** | **Melhorias da Guilda** |
 | ![Capítulo](docs/img/10_capitulo.png) | ![Melhorias](docs/img/11_upgrades.png) |
+| **Subida de nível** | **Equipamento** |
+| ![Nível](docs/img/14_nivel.png) | ![Equipamento](docs/img/13_equipamento.png) |
+| **Mercado** | **Livro com magias** |
+| ![Mercado](docs/img/12_mercado.png) | ![Livro](docs/img/15_livro_mira.png) |
 | **Bastidores no hub** | **Cena de bastidor** |
 | ![Bastidores](docs/img/8_hub_bastidores.png) | ![Cena de bastidor](docs/img/9_bastidor.png) |
 
-## Estado atual — v0.4
+## Estado atual — v0.5 (RPG)
+
+- **XP e níveis**: XP por missão (risco × resultado; falha também ensina) e por treino. Cada nível dá PV pela classe e +1 atributo à escolha (máx. 10). Níveis 3/5/7/9: conjuradores escolhem 1 de 2 magias; os demais, 1 de 2 talentos.
+- **Equipamento**: Arma, Armadura, Acessório e 2 Consumíveis por herói; armaduras respeitam a classe (leve/média/pesada). Baú da Guilda guarda o saque.
+- **Saque e Mercado**: missões trazem itens (limpo sempre, custo 50%, falha 30%); o Mercado vende o básico e compra pela metade. Itens raros (★) só vêm de missões.
+- **Magias**: Mira (Maga), Theo (Paladino), Bram (Bardo) e Corin (Clérigo). Na montagem da party você escolhe a magia que cada conjurador leva; ela gasta 1 espaço. Magias de cura também são lançadas na guilda pelo Livro.
+- **Irmão Corin**, clérigo, entra no elenco no Capítulo 2.
+- **Poderes**: novo termo do score — itens, talentos e magias somam até **+3**, para não quebrar a calibragem.
+- **Descanso ativo**: descansar recupera tudo (inclusive magia); ficar parado recupera pouco e não recupera magia. Herói com fadiga máxima ou PV baixo pede descanso.
+
+## v0.4
 
 - **Capítulos (GDD §9)**: Ato 1 com "Herança de Cinzas" (objetivo: Reputação 6+) e "Ecos do Corvo" (objetivo: sobreviver à missão final *A Noite do Corvo*, que exige 3+ aventureiros). Abertura, encerramento com objetivo cumprido ou não, flags que mudam o texto do capítulo seguinte e tela de fim de ato. Falhar não encerra o jogo.
 - **Ouro**: missões pagam recompensa (limpo = inteira, custo = metade, falha = nada).
@@ -72,6 +88,9 @@ Requer **Godot 4.7**. Abra a pasta no editor e pressione **F5**.
 | `data/backstage.json` | Eventos de bastidor: condições, texto e escolhas com efeitos |
 | `data/chapters.json` | Atos e capítulos: abertura, duração, missões, objetivo, flags e encerramentos |
 | `data/upgrades.json` | Ouro inicial, recompensas por risco e melhorias da guilda |
+| `data/classes.json` | XP, níveis, classes, magias e talentos (com os tipos de efeito documentados) |
+| `data/items.json` | Itens, tabelas de saque e mercado |
+| `scripts/core/hero_rpg.gd` | Regras de RPG: XP, nível, efeitos, equipamento, magias, saque, mercado |
 | `data/book.json` | Seções trancadas do Livro (slots de expansão por versão) |
 | `scripts/ui/main.gd` | Telas, montadas por código |
 | `scripts/ui/magic_map.gd` | Mapa Mágico: desenho do bioma, rota, waypoints e marcadores |
@@ -123,7 +142,8 @@ godot --headless --path . -s res://tests/ui_smoke.gd
 - [x] **v0.2** — party, afinidade, Ações de Vínculo
 - [x] **v0.3** — Mapa Mágico, Livro da Guilda, eventos de bastidor, neglect
 - [x] **v0.4** — capítulos, Ato 1 completo, upgrades da guilda
-- [ ] **v0.5** — Ato 2, eventos de bastidor ligados aos capítulos, saída de aventureiros por moral baixa
+- [x] **v0.5** — níveis, equipamento, saque, mercado, magias, clérigo, descanso ativo
+- [ ] **v0.6** — Ato 2, eventos de bastidor ligados aos capítulos, saída de aventureiros por moral baixa
 - [ ] **v1.0** — arte, trilha sonora, minigame opcional, finais variáveis
 
 ## Créditos

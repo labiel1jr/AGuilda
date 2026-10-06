@@ -1,6 +1,7 @@
 class_name ScoreCalc
 ## Cálculo de score da missão (GDD §5.6).
-## Score = Base + Cobertura + Afinidade + Vínculo + Oculto + Sorte
+## Score = Base + Cobertura + Afinidade + Vínculo + Poderes + Oculto + Sorte
+## Poderes = itens, talentos e magias preparadas (HeroRPG), limitado a +3.
 
 const W_PRIMARY := 0.65
 const W_SECONDARY := 0.35
@@ -23,14 +24,14 @@ const BOND_BONUS := {
 
 
 ## Calcula o score. Se `luck` for null, devolve o estimado (sem sorte).
-static func compute(gs, mission: Dictionary, party: Array, luck = null) -> Dictionary:
+static func compute(gs, mission: Dictionary, party: Array, luck = null, prepared: Dictionary = {}) -> Dictionary:
 	var p: String = mission.primary
 	var s: String = mission.secondary
 	var actions: Array = gs.active_bond_actions(party)
 
 	var attrs := {}
 	for id in party:
-		attrs[id] = gs.heroes[id].attrs.duplicate()
+		attrs[id] = HeroRPG.effective_attrs(gs, id)
 
 	# Impulso do Mentor: o mais fraco do par ganha +3 nos atributos da missão
 	for act in actions:
@@ -72,6 +73,9 @@ static func compute(gs, mission: Dictionary, party: Array, luck = null) -> Dicti
 		for pr in pairs:
 			affinity += gs.band(gs.pair_value(pr[0], pr[1])).mod
 		affinity /= pairs.size()
+		affinity += HeroRPG.affinity_bonus(gs, party, prepared)
+
+	var powers := HeroRPG.power_bonus(gs, mission, party, prepared)
 
 	var bond := 0
 	for act in actions:
@@ -81,11 +85,11 @@ static func compute(gs, mission: Dictionary, party: Array, luck = null) -> Dicti
 	if mission.has("hidden") and party.has(mission.hidden.hero):
 		hidden = int(mission.hidden.mod)
 
-	var total := base + coverage + affinity + bond + hidden
+	var total := base + coverage + affinity + bond + powers + hidden
 	if luck != null:
 		total += luck
 	return {
-		"base": base, "coverage": coverage, "affinity": affinity, "bond": bond,
+		"base": base, "coverage": coverage, "affinity": affinity, "bond": bond, "powers": powers,
 		"hidden": hidden, "luck": luck, "total": total, "actions": actions,
 	}
 

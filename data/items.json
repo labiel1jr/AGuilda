@@ -1,0 +1,33 @@
+{
+  "_doc": "Itens. slot: arma | armadura | acessorio | consumivel. armor_type (armaduras): leve | media | pesada, conferido contra a classe. price = compra no mercado (shop: true); venda = metade. Consumíveis: use 'hub' (heal/restore, usado no Livro) e/ou 'auto' (on_dispatch: gasto ao despachar; after_damage: gasto se voltar com metade do PV ou menos). Loot por risco; chance por resultado.",
+  "loot_chance": {"limpo": 1.0, "custo": 0.5, "falha": 0.3},
+  "loot": {
+    "baixo":    ["pocao_cura", "gibao_couro", "adaga_elfica", "tonico", "pocao_cura"],
+    "medio":    ["espada_longa", "cajado_runico", "cota_malha", "amuleto_coragem", "pergaminho_forca", "insignia_corvo", "alaude_encantado", "pocao_cura"],
+    "alto":     ["machado_anao", "arco_longo", "placas", "anel_amizade", "brinco_sabio", "manto_viajante"],
+    "lendario": ["lamina_corvo", "placas", "anel_amizade"]
+  },
+  "items": {
+    "espada_longa":     {"name": "Espada Longa", "slot": "arma", "price": 40, "shop": true, "desc": "+1 Força.", "effects": [{"type": "attr", "attr": "forca", "value": 1}]},
+    "adaga_elfica":     {"name": "Adaga Élfica", "slot": "arma", "price": 40, "shop": true, "desc": "+1 Destreza.", "effects": [{"type": "attr", "attr": "destreza", "value": 1}]},
+    "cajado_runico":    {"name": "Cajado Rúnico", "slot": "arma", "price": 45, "shop": true, "desc": "+1 Conhecimento.", "effects": [{"type": "attr", "attr": "conhecimento", "value": 1}]},
+    "alaude_encantado": {"name": "Alaúde Encantado", "slot": "arma", "price": 45, "shop": true, "desc": "+1 Carisma.", "effects": [{"type": "attr", "attr": "carisma", "value": 1}]},
+    "machado_anao":     {"name": "Machado Anão", "slot": "arma", "price": 120, "rare": true, "desc": "+2 Força.", "effects": [{"type": "attr", "attr": "forca", "value": 2}]},
+    "arco_longo":       {"name": "Arco Longo de Teixo", "slot": "arma", "price": 110, "rare": true, "desc": "+1 Destreza; +1 em combate.", "effects": [{"type": "attr", "attr": "destreza", "value": 1}, {"type": "mission_type", "mission_type": "combate", "value": 1}]},
+    "lamina_corvo":     {"name": "Lâmina do Corvo", "slot": "arma", "price": 200, "rare": true, "desc": "Relíquia da guilda. +1 Força, +1 Carisma.", "effects": [{"type": "attr", "attr": "forca", "value": 1}, {"type": "attr", "attr": "carisma", "value": 1}]},
+
+    "gibao_couro":      {"name": "Gibão de Couro", "slot": "armadura", "armor_type": "leve", "price": 30, "shop": true, "desc": "Leve. −1 de dano.", "effects": [{"type": "damage_reduction", "value": 1}]},
+    "manto_viajante":   {"name": "Manto do Viajante", "slot": "armadura", "armor_type": "leve", "price": 60, "shop": true, "desc": "Leve. Volta menos cansado.", "effects": [{"type": "fatigue_resist"}]},
+    "cota_malha":       {"name": "Cota de Malha", "slot": "armadura", "armor_type": "media", "price": 70, "shop": true, "desc": "Média. −1 de dano, +1 Resistência.", "effects": [{"type": "damage_reduction", "value": 1}, {"type": "attr", "attr": "resistencia", "value": 1}]},
+    "placas":           {"name": "Armadura de Placas", "slot": "armadura", "armor_type": "pesada", "price": 150, "rare": true, "desc": "Pesada. −2 de dano.", "effects": [{"type": "damage_reduction", "value": 2}]},
+
+    "amuleto_coragem":  {"name": "Amuleto da Coragem", "slot": "acessorio", "price": 50, "shop": true, "desc": "Volta com +1 de moral.", "effects": [{"type": "morale_after", "value": 1}]},
+    "insignia_corvo":   {"name": "Insígnia do Corvo", "slot": "acessorio", "price": 50, "shop": true, "desc": "+1 em diplomacia.", "effects": [{"type": "mission_type", "mission_type": "diplomacia", "value": 1}]},
+    "brinco_sabio":     {"name": "Brinco do Sábio", "slot": "acessorio", "price": 60, "rare": true, "desc": "+25% de XP.", "effects": [{"type": "xp_pct", "value": 25}]},
+    "anel_amizade":     {"name": "Anel dos Laços", "slot": "acessorio", "price": 90, "rare": true, "desc": "+1 no termo de afinidade da party.", "effects": [{"type": "affinity", "value": 1}]},
+
+    "pocao_cura":       {"name": "Poção de Cura", "slot": "consumivel", "price": 15, "shop": true, "desc": "Cura 4 PV. Usada sozinha se voltar muito ferido.", "hub": {"heal": 4}, "auto": "after_damage"},
+    "tonico":           {"name": "Tônico Revigorante", "slot": "consumivel", "price": 20, "shop": true, "desc": "Na guilda: tira um nível de fadiga.", "hub": {"restore": true}},
+    "pergaminho_forca": {"name": "Pergaminho de Bravura", "slot": "consumivel", "price": 30, "shop": true, "desc": "+2 no score da próxima missão (gasto ao despachar).", "auto": "on_dispatch", "effects": [{"type": "score", "value": 2}]}
+  }
+}

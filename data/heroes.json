@@ -30,7 +30,10 @@
         "bond": "Devo minha vida a quem me tirou da masmorra — e ainda não sei quem foi.",
         "flaw": "Não recuo de uma ordem injusta... recuso. E recuso alto."
       },
-      "portrait": ""
+      "portrait": "",
+      "spells_known": [
+        "bencao"
+      ]
     },
     {
       "id": "lyssa",
@@ -62,7 +65,8 @@
         "bond": "Mira é a única que nunca me perguntou o que eu roubei.",
         "flaw": "Se alguém é gentil demais comigo, procuro o golpe."
       },
-      "portrait": ""
+      "portrait": "",
+      "spells_known": []
     },
     {
       "id": "mira",
@@ -94,7 +98,10 @@
         "bond": "O Arquivo da guilda guarda a última carta do meu mestre.",
         "flaw": "Subestimo o perigo quando há uma runa para decifrar."
       },
-      "portrait": ""
+      "portrait": "",
+      "spells_known": [
+        "detectar_magia"
+      ]
     },
     {
       "id": "senna",
@@ -126,7 +133,8 @@
         "bond": "Tenho um irmão em algum lugar ao sul. Ele me deve um adeus.",
         "flaw": "Trabalho melhor sozinha — e faço questão de que saibam disso."
       },
-      "portrait": ""
+      "portrait": "",
+      "spells_known": []
     },
     {
       "id": "bram",
@@ -158,7 +166,10 @@
         "bond": "Entrei na guilda por causa das histórias da Vera.",
         "flaw": "Quando alguém que admiro me decepciona, desmorono."
       },
-      "portrait": ""
+      "portrait": "",
+      "spells_known": [
+        "inspiracao"
+      ]
     },
     {
       "id": "vera",
@@ -190,7 +201,45 @@
         "bond": "Enterrei metade da antiga guilda. Não enterro a outra metade.",
         "flaw": "Confundo proteger com controlar."
       },
-      "portrait": ""
+      "portrait": "",
+      "spells_known": []
+    },
+    {
+      "id": "corin",
+      "name": "Corin",
+      "archetype": "O Clérigo Errante",
+      "color": "#4f9d9a",
+      "attrs": {
+        "forca": 4,
+        "destreza": 3,
+        "conhecimento": 7,
+        "carisma": 6,
+        "resistencia": 6
+      },
+      "trait": "Cura qualquer um que precise — e pergunta o nome só depois.",
+      "title": "Irmão Corin de Halvar",
+      "class": "Clérigo",
+      "race": "Humano",
+      "level": 3,
+      "hp_max": 10,
+      "proficiencies": [
+        "Medicina",
+        "Religião",
+        "Intuição",
+        "Escudos"
+      ],
+      "personality": {
+        "trait": "Ofereço pão antes de oferecer conselho.",
+        "ideal": "Misericórdia. Ninguém é tão perdido que não mereça uma mão.",
+        "bond": "Fui expulso do meu templo por curar um inimigo do bispo.",
+        "flaw": "Confio rápido demais em quem diz que mudou."
+      },
+      "portrait": "",
+      "spells_known": [
+        "cura"
+      ],
+      "recruit_chapter": "c2",
+      "joins_text": "Um clérigo de roupas gastas bate à porta pedindo abrigo. Diz que ouviu falar que a guilda acolhe quem não tem para onde ir. Irmão Corin se junta ao elenco."
     }
   ],
   "affinity": {
@@ -199,42 +248,56 @@
       "mira": 1,
       "senna": -2,
       "bram": 2,
-      "vera": 3
+      "vera": 3,
+      "corin": 1
     },
     "lyssa": {
       "theo": -3,
       "mira": 4,
       "senna": -1,
       "bram": 1,
-      "vera": 0
+      "vera": 0,
+      "corin": 0
     },
     "mira": {
       "theo": 1,
       "lyssa": 4,
       "senna": -2,
       "bram": 2,
-      "vera": 1
+      "vera": 1,
+      "corin": 2
     },
     "senna": {
       "theo": -2,
       "lyssa": -1,
       "mira": -2,
       "bram": -1,
-      "vera": 2
+      "vera": 2,
+      "corin": -1
     },
     "bram": {
       "theo": 2,
       "lyssa": 1,
       "mira": 2,
       "senna": -1,
-      "vera": 4
+      "vera": 4,
+      "corin": 3
     },
     "vera": {
       "theo": 3,
       "lyssa": 0,
       "mira": 1,
       "senna": 2,
-      "bram": 4
+      "bram": 4,
+      "corin": 1
+    },
+    "corin": {
+      "theo": 2,
+      "lyssa": 1,
+      "mira": 2,
+      "senna": 0,
+      "bram": 3,
+      "vera": 1
     }
   }
 }
