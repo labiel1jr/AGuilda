@@ -1,0 +1,63 @@
+{
+  "_doc": "Especificação de pixel art do inimigo Mercenário do Ninho. Herda de _estilo_inimigos.json. Não é imagem.",
+  "herda": "_estilo_inimigos.json",
+  "id": "mercenario_ninho",
+  "nome": "Mercenário do Ninho",
+  "titulo": "Cerco da Aldeia",
+  "nivel": "comum",
+  "risco": "alto",
+  "cor_do_selo": "#d1603d",
+  "missoes": [
+    "aldeia_cerco",
+    "torre_sinal"
+  ],
+  "bioma": "floresta",
+  "ato": 2,
+  "tipo": "humano",
+  "paleta": {
+    "_doc": "Cores próprias, somadas à paleta_global_inimigos (máx. 12).",
+    "armadura": [
+      "#5a5550",
+      "#3e3a36",
+      "#7d7670"
+    ],
+    "pele": [
+      "#a5734d",
+      "#7a4f32"
+    ],
+    "pintura_guerra": "#a8443c",
+    "machado": "#9aa1ad",
+    "peles": [
+      "#6b5440",
+      "#4a3a2c"
+    ]
+  },
+  "aparencia": {
+    "corpo": "mercenário alto e largo, peles de animal nos ombros, elmo de ferro amassado com chifres curtos",
+    "olhos": "visíveis pela fenda do elmo, cansados",
+    "detalhe_chave": "faixa de pano vermelho no braço com o corvo invertido; uma bolsa de moedas pendurada (pago para estar ali)"
+  },
+  "equipamento_ou_ataque": {
+    "arma": "machado de batalha e escudo de madeira",
+    "marcas": "pintura de guerra vermelha nos braços"
+  },
+  "pose": "parado de guarda, machado no ombro, escudo apoiado no chão",
+  "expressao": "entediado, profissional",
+  "leitura_narrativa": "Espelho sombrio da Senna: mercenário que luta pelo pagamento. Pode ser lido como 'o que Senna seria sem a guilda'.",
+  "ligacao_com_a_historia": "Missões 'aldeia_cerco' e 'torre_sinal'.",
+  "marcador_mapa_16px": {
+    "silhueta": "elmo com chifres curtos + escudo",
+    "destaque": "1 px vermelho (faixa no braço)"
+  },
+  "variacao_derrotado": "cartaz com X; a bolsa de moedas cortada, moedas espalhadas",
+  "arquivos": {
+    "cartaz": "res://art/enemies/mercenario_ninho.png",
+    "marcador": "res://art/enemies/mercenario_ninho_token.png",
+    "derrotado": "res://art/enemies/mercenario_ninho_derrotado.png"
+  },
+  "prompt_en": "pixel art enemy portrait on a torn aged parchment wanted poster, 64x64 pixels, 16-bit RPG style, dark medieval fantasy, cold desaturated palette, harsh light from top-left, 1px dark outline, iron nail at the top, wax seal in the bottom right corner, facing the viewer, menacing, crisp pixels, no anti-aliasing, tall broad mercenary with animal furs on shoulders, dented iron helmet with short horns, tired eyes in the visor slit, red war paint on arms, red armband with an upside-down crow, coin purse on belt, battle axe on shoulder, wooden shield resting on the ground, bored professional stance, wax seal color #d1603d",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, readable text, letters, watermark, signature, gore, explicit blood, cute, chibi, warm saturated palette, checkerboard transparency pattern, white background, jpeg artifacts",
+  "notas_para_o_artista": [
+    "Paralelo visual com Senna (bolsa de moedas), mas sem copiar o design dela."
+  ]
+}

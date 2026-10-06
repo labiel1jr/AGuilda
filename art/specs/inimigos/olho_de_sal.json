@@ -1,0 +1,61 @@
+{
+  "_doc": "Especificação de pixel art do inimigo Olho-de-Sal. Herda de _estilo_inimigos.json. Não é imagem.",
+  "herda": "_estilo_inimigos.json",
+  "id": "olho_de_sal",
+  "nome": "Olho-de-Sal",
+  "titulo": "Mestre do Porto",
+  "nivel": "elite",
+  "risco": "medio",
+  "cor_do_selo": "#d4a94a",
+  "missoes": [
+    "contrabando"
+  ],
+  "bioma": "cidade",
+  "ato": 2,
+  "tipo": "humano",
+  "paleta": {
+    "_doc": "Cores próprias, somadas à paleta_global_inimigos (máx. 12).",
+    "casaco": [
+      "#3a4a5c",
+      "#26323f"
+    ],
+    "pele": [
+      "#c99a6e",
+      "#9c6c48"
+    ],
+    "olho_vidro": "#b6f0ff",
+    "barba": [
+      "#5c4a3a",
+      "#3a2e24"
+    ],
+    "ouro": "#d4a94a"
+  },
+  "aparencia": {
+    "corpo": "contrabandista corpulento de casaco de marinheiro, barba trançada com contas",
+    "olhos": "um olho de vidro leitoso (o 'olho de sal'), o outro esperto",
+    "detalhe_chave": "caixote ao lado com o brasão do Corvo carimbado — as armas que seguem para as montanhas"
+  },
+  "equipamento_ou_ataque": {
+    "arma": "gancho de estiva e uma pistola de pederneira de cano curto no cinto",
+    "marcas": "anéis de ouro em todos os dedos"
+  },
+  "pose": "encostado no caixote, braços abertos como quem negocia",
+  "expressao": "sorriso largo de dente de ouro",
+  "leitura_narrativa": "Primeiro nome da lista no Ato 2. Ameaça de negócio, não de força.",
+  "ligacao_com_a_historia": "Missão 'contrabando'. A falha deixa o bilhete: 'sabemos quem vocês são'.",
+  "marcador_mapa_16px": {
+    "silhueta": "chapéu de marinheiro + barriga",
+    "destaque": "1 px azul-claro (olho de vidro)"
+  },
+  "variacao_derrotado": "cartaz com X; o caixote aberto e vazio",
+  "arquivos": {
+    "cartaz": "res://art/enemies/olho_de_sal.png",
+    "marcador": "res://art/enemies/olho_de_sal_token.png",
+    "derrotado": "res://art/enemies/olho_de_sal_derrotado.png"
+  },
+  "prompt_en": "pixel art enemy portrait on a torn aged parchment wanted poster, 64x64 pixels, 16-bit RPG style, dark medieval fantasy, cold desaturated palette, harsh light from top-left, 1px dark outline, iron nail at the top, wax seal in the bottom right corner, facing the viewer, menacing, crisp pixels, no anti-aliasing, burly harbor smuggler in a navy sailor coat, braided beard with beads, one milky glass eye and one shrewd eye, gold tooth grin, gold rings on every finger, cargo hook in hand, short flintlock pistol on belt, leaning on a crate stamped with a crow crest, arms open as if bargaining, wax seal color #d4a94a",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, readable text, letters, watermark, signature, gore, explicit blood, cute, chibi, warm saturated palette, checkerboard transparency pattern, white background, jpeg artifacts",
+  "notas_para_o_artista": [
+    "A pistola de pederneira é opcional — se o tom do mundo não tiver pólvora, trocar por uma besta de mão."
+  ]
+}

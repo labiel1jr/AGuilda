@@ -19,6 +19,7 @@ const BIOMES := {
 
 var biome := "estrada"
 var tokens: Array = []        # [{name, color}]
+var goal_texture: Texture2D = null   # cartaz do inimigo no destino (sem ele, um X)
 var progress := 0.0           # 0..1
 var speed := 1.0
 var running := false
@@ -124,8 +125,13 @@ func _draw() -> void:
 	draw_rect(Rect2(start - Vector2(12, 14), Vector2(24, 20)), Color("#6b5235"))
 	draw_colored_polygon(PackedVector2Array([start + Vector2(-15, -14), start + Vector2(15, -14), start + Vector2(0, -28)]), Color("#8a3b1f"))
 	var goal := route[-1]
-	draw_line(goal + Vector2(-10, -10), goal + Vector2(10, 10), Color("#d1603d"), 4.0)
-	draw_line(goal + Vector2(-10, 10), goal + Vector2(10, -10), Color("#d1603d"), 4.0)
+	if goal_texture != null:
+		var pulse := 0.5 + 0.5 * sin(_time * 2.5)
+		draw_circle(goal, 30.0 + pulse * 4.0, Color("#d1603d", 0.18 + pulse * 0.12))
+		draw_texture_rect(goal_texture, Rect2(goal - Vector2(26, 26), Vector2(52, 52)), false)
+	else:
+		draw_line(goal + Vector2(-10, -10), goal + Vector2(10, 10), Color("#d1603d"), 4.0)
+		draw_line(goal + Vector2(-10, 10), goal + Vector2(10, -10), Color("#d1603d"), 4.0)
 
 	# waypoints
 	for i in WAYPOINTS.size():

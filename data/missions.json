@@ -15,7 +15,10 @@
         "limpo": "{party} volta ao amanhecer com as peles e o agradecimento dos tropeiros.",
         "custo": "Os lobos foram dispersos, mas {party} volta com mordidas e roupas em farrapos.",
         "falha": "A alcateia era maior do que se dizia — e alguém a está alimentando de propósito."
-      }
+      },
+      "enemies": [
+        "lobo_alfa"
+      ]
     },
     {
       "id": "ratos",
@@ -32,7 +35,10 @@
         "limpo": "{party} limpa o celeiro. Odric paga com queijo e moedas.",
         "custo": "O celeiro pegou fogo na confusão. Os ratos se foram — o feno também.",
         "falha": "Os túneis dos ratos levam a uma adega selada com o brasão do Corvo Cinzento."
-      }
+      },
+      "enemies": [
+        "rato_rei"
+      ]
     },
     {
       "id": "caravana",
@@ -54,7 +60,10 @@
         "limpo": "{party} entrega a caravana sem um grão perdido. Os mercadores falam bem da guilda.",
         "custo": "A caravana chega, mas pagou pedágio a bandidos para passar.",
         "falha": "A caravana foi saqueada — e os saqueadores sabiam exatamente o que procurar."
-      }
+      },
+      "enemies": [
+        "saqueador"
+      ]
     },
     {
       "id": "febre",
@@ -96,7 +105,10 @@
         "limpo": "{party} decifra as runas: um selo de contenção, ainda intacto.",
         "custo": "As runas foram lidas, mas algo despertou e um dos aventureiros ouve sussurros desde então.",
         "falha": "O selo se rompeu. O que estava preso agora tem nome — e conhece o da guilda."
-      }
+      },
+      "enemies": [
+        "o_selado"
+      ]
     },
     {
       "id": "baroes",
@@ -171,7 +183,10 @@
         "limpo": "{party} retoma a ponte. Os bandidos fogem para o norte.",
         "custo": "A ponte foi liberada, mas a luta foi dura demais.",
         "falha": "Os bandidos usavam o tabardo antigo da guilda. Eram ex-membros do Corvo Cinzento."
-      }
+      },
+      "enemies": [
+        "desertor_corvo"
+      ]
     },
     {
       "id": "torre",
@@ -205,7 +220,10 @@
         "limpo": "{party} volta com uma escama do tamanho de um escudo. A guilda vira assunto nas tavernas.",
         "custo": "A serpe fugiu ferida. A mina está livre, por enquanto.",
         "falha": "A serpe protegia ovos. Alguém pagou pela morte dela — e não foi a mina."
-      }
+      },
+      "enemies": [
+        "serpe_karst"
+      ]
     },
     {
       "id": "noite_corvo",
@@ -230,7 +248,11 @@
         "limpo": "{party} segura os portões até o amanhecer. Os traidores recuam sem cruzar a soleira.",
         "custo": "Os portões resistem, mas o salão principal ardeu. A guilda tem cicatrizes novas.",
         "falha": "Os traidores entraram, levaram o Arquivo e deixaram um recado: o Corvo Cinzento nunca foi de vocês."
-      }
+      },
+      "enemies": [
+        "capitao_varek",
+        "desertor_corvo"
+      ]
     },
     {
       "id": "contrabando",
@@ -247,7 +269,10 @@
         "limpo": "{party} encontra os caixotes: armas com o brasão do Corvo, prontas para seguir para as montanhas.",
         "custo": "Os caixotes foram vistos, mas o contrabandista também viu a party.",
         "falha": "O navio zarpou. No cais, só um bilhete: \"Sabemos quem vocês são.\""
-      }
+      },
+      "enemies": [
+        "olho_de_sal"
+      ]
     },
     {
       "id": "irmao_senna",
@@ -385,7 +410,10 @@
         "limpo": "{party} expõe o juiz diante de toda a Ordem.",
         "custo": "{party} vence o debate, mas perde a plateia.",
         "falha": "A Ordem fecha as portas."
-      }
+      },
+      "enemies": [
+        "juiz_aldren"
+      ]
     },
     {
       "id": "mina_karst",
@@ -402,7 +430,10 @@
         "limpo": "{party} sela a mina com os mortos lá dentro.",
         "custo": "A mina foi selada, com um aventureiro a menos de pé.",
         "falha": "Os mortos carregavam o mesmo símbolo dos traidores."
-      }
+      },
+      "enemies": [
+        "mortos_mina"
+      ]
     },
     {
       "id": "emboscada_estrada",
@@ -419,7 +450,11 @@
         "limpo": "{party} chega antes da emboscada. O Conselho fica devendo um favor.",
         "custo": "A carruagem chega, crivada de flechas.",
         "falha": "A carruagem chegou vazia."
-      }
+      },
+      "enemies": [
+        "capa_preta",
+        "saqueador"
+      ]
     },
     {
       "id": "conselho",
@@ -461,7 +496,10 @@
         "limpo": "{party} segue o espião até o mensageiro. Era o cozinheiro. Ele nunca soube ler as cartas que entregava.",
         "custo": "O espião foi pego, mas avisou o Ninho antes.",
         "falha": "O espião fugiu com o mapa da sede."
-      }
+      },
+      "enemies": [
+        "capa_preta"
+      ]
     },
     {
       "id": "torre_sinal",
@@ -478,7 +516,10 @@
         "limpo": "{party} troca os sinais. O Ninho vai esperar a party pelo lado errado.",
         "custo": "A torre caiu, mas o sinal de alerta foi dado.",
         "falha": "A torre continua de pé, e agora vigia com mais atenção."
-      }
+      },
+      "enemies": [
+        "mercenario_ninho"
+      ]
     },
     {
       "id": "aldeia_cerco",
@@ -495,7 +536,10 @@
         "limpo": "{party} rompe o cerco. Os aldeões oferecem guias para a subida.",
         "custo": "O cerco cai, mas a aldeia ardeu em parte.",
         "falha": "A aldeia se rendeu ao Ninho."
-      }
+      },
+      "enemies": [
+        "mercenario_ninho"
+      ]
     },
     {
       "id": "pantano_rituais",
@@ -512,7 +556,10 @@
         "limpo": "{party} interrompe o ritual. As runas do Ninho se apagam.",
         "custo": "O ritual foi interrompido, mas cobrou seu preço de quem estava perto.",
         "falha": "O ritual se completou. O Ninho brilha à noite."
-      }
+      },
+      "enemies": [
+        "ritualista"
+      ]
     },
     {
       "id": "ninho_corvo",
@@ -540,8 +587,11 @@
         "limpo": "{party} toma o Ninho sem perder ninguém. Os fundadores se rendem diante do estandarte que abandonaram.",
         "custo": "O Ninho cai depois de uma noite inteira de luta.",
         "falha": "O Ninho resiste, mas os fundadores fogem e nunca mais voltam."
-      }
+      },
+      "enemies": [
+        "fundadores"
+      ]
     }
   ],
-  "_doc": "Missões. day relativo ao capítulo. tags: requires_attr, forbid_hero, min_party, requires_hero. effects (opcional, por resultado): morale {herói: delta}, flag, text."
+  "_doc": "Missões. day relativo ao capítulo. tags: requires_attr, forbid_hero, min_party, requires_hero. effects (opcional, por resultado): morale {herói: delta}, flag, text. enemies: inimigos da missão (ids de art/specs/inimigos), o primeiro com imagem em res://art/enemies/<id>.png aparece no cartaz, no mapa e no resultado."
 }

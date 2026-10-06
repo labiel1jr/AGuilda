@@ -1,0 +1,62 @@
+{
+  "_doc": "Especificação de pixel art do inimigo Saqueador da Estrada. Herda de _estilo_inimigos.json. Não é imagem.",
+  "herda": "_estilo_inimigos.json",
+  "id": "saqueador",
+  "nome": "Saqueador da Estrada",
+  "titulo": "Bando do Pedágio",
+  "nivel": "comum",
+  "risco": "medio",
+  "cor_do_selo": "#d4a94a",
+  "missoes": [
+    "caravana",
+    "emboscada_estrada"
+  ],
+  "bioma": "estrada",
+  "ato": 1,
+  "tipo": "humano",
+  "paleta": {
+    "_doc": "Cores próprias, somadas à paleta_global_inimigos (máx. 12).",
+    "capuz": [
+      "#4f5e4a",
+      "#36423a"
+    ],
+    "couro": [
+      "#5a4a3e",
+      "#3b3029"
+    ],
+    "pele": [
+      "#c99a6e",
+      "#9c6c48"
+    ],
+    "lenco": "#6b7280",
+    "lamina": "#9aa1ad"
+  },
+  "aparencia": {
+    "corpo": "homem magro de barba rala, lenço cinza cobrindo nariz e boca, capuz verde-musgo",
+    "olhos": "estreitos, olheiras",
+    "detalhe_chave": "uma lista de mercadorias amassada presa no cinto — eles sabiam exatamente o que procurar"
+  },
+  "equipamento_ou_ataque": {
+    "arma": "facão largo e uma besta pequena nas costas",
+    "marcas": "botas de qualidade roubadas, grandes demais"
+  },
+  "pose": "meio de lado, facão apontado para o observador",
+  "expressao": "olhos frios por cima do lenço",
+  "leitura_narrativa": "O inimigo genérico das estradas, mas com uma pista: estão bem informados demais.",
+  "ligacao_com_a_historia": "Texto de falha de 'caravana': 'os saqueadores sabiam exatamente o que procurar'.",
+  "marcador_mapa_16px": {
+    "silhueta": "capuz com lenço no rosto",
+    "destaque": "1 px cinza claro (lâmina)"
+  },
+  "variacao_derrotado": "cartaz com X; o lenço caído revela um rosto comum e assustado",
+  "arquivos": {
+    "cartaz": "res://art/enemies/saqueador.png",
+    "marcador": "res://art/enemies/saqueador_token.png",
+    "derrotado": "res://art/enemies/saqueador_derrotado.png"
+  },
+  "prompt_en": "pixel art enemy portrait on a torn aged parchment wanted poster, 64x64 pixels, 16-bit RPG style, dark medieval fantasy, cold desaturated palette, harsh light from top-left, 1px dark outline, iron nail at the top, wax seal in the bottom right corner, facing the viewer, menacing, crisp pixels, no anti-aliasing, lean road bandit with scraggly beard, grey scarf covering nose and mouth, moss green hood, narrow cold eyes, broad machete pointed at viewer, small crossbow on back, crumpled cargo list on belt, wax seal color #d4a94a",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, readable text, letters, watermark, signature, gore, explicit blood, cute, chibi, warm saturated palette, checkerboard transparency pattern, white background, jpeg artifacts",
+  "notas_para_o_artista": [
+    "É o inimigo mais 'comum' do jogo: manter simples e reaproveitável."
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "_doc": "Guia de estilo dos inimigos de A Guilda. Herda a técnica de ../_estilo.json (pixel art, contorno de 1 px, luz superior esquerda, enquadramento fixo) e muda moldura, paleta e saídas. Cada <id>.json desta pasta herda daqui. Não contém imagens.",
+  "versao": 1,
+  "herda": "../_estilo.json",
+  "contexto_de_jogo": "O jogo não tem combate (GDD §2 e §13: o jogador decide antes e assiste durante). Inimigos aparecem como ameaças: no cartaz da missão no Mural de Quests, como marcador no destino do Mapa Mágico e, derrotados, na tela de resultado.",
+  "diferenca_para_herois": {
+    "paleta": "fria e dessaturada (GDD §10: paleta quente para a guilda, fria para o mapa das missões). Pele, pelo e roupa puxam para cinza-azulado e verde-musgo; a única cor quente forte é a do selo de risco e, quando houver, olhos ou magia.",
+    "moldura": "cartaz de procurado em vez de medalhão: pergaminho retangular envelhecido, cantos rasgados, um prego de ferro no topo e um selo de cera na cor do risco no canto inferior direito",
+    "luz": "mesma direção (superior esquerda), mas mais dura e com sombra mais escura (#1c1a24), dando ar ameaçador",
+    "olhar": "inimigos olham direto para o observador (desafio); heróis olham levemente para o lado"
+  },
+  "paleta_global_inimigos": {
+    "pergaminho_cartaz": [
+      "#d8c9a3",
+      "#b8a47a",
+      "#8f7c55"
+    ],
+    "prego": [
+      "#4a4a52",
+      "#8a8a94"
+    ],
+    "sombra_dura": "#1c1a24",
+    "contorno": "#1a120c",
+    "cinza_frio": [
+      "#6b7280",
+      "#4a505c",
+      "#9aa1ad"
+    ],
+    "musgo_frio": [
+      "#4f5e4a",
+      "#36423a"
+    ],
+    "selo_por_risco": {
+      "baixo": "#7fb069",
+      "medio": "#d4a94a",
+      "alto": "#d1603d",
+      "lendario": "#a26ad1"
+    },
+    "_nota_selo": "Mesmas cores do jogo (RISK_COLORS em scripts/ui/main.gd), para o jogador ler o risco pela cor do selo."
+  },
+  "niveis": {
+    "comum": {
+      "moldura": "pergaminho simples, 1 rasgo",
+      "tamanho_figura": "busto, ocupa ~70% do quadro",
+      "detalhe": "médio"
+    },
+    "elite": {
+      "moldura": "pergaminho com borda queimada, 2 rasgos",
+      "tamanho_figura": "busto, ~80% do quadro",
+      "detalhe": "alto; um elemento brilhante (olhos, arma ou magia)"
+    },
+    "chefe": {
+      "moldura": "pergaminho grande com borda queimada e selo duplo; a figura ultrapassa a borda do cartaz (quebra a moldura)",
+      "tamanho_figura": "~95%, saindo do quadro",
+      "detalhe": "máximo"
+    },
+    "antagonista": {
+      "moldura": "pergaminho oficial com fita e selo de cera de uma instituição (não é cartaz de procurado: é um documento)",
+      "tamanho_figura": "busto, ~75%",
+      "detalhe": "alto; nada de monstruoso — a ameaça é social"
+    }
+  },
+  "saidas": {
+    "cartaz": {
+      "tamanho_px": [
+        64,
+        64
+      ],
+      "uso": "cartaz da missão no Mural de Quests e na Montagem de Party",
+      "fundo": "transparente fora do pergaminho"
+    },
+    "marcador_mapa": {
+      "tamanho_px": [
+        16,
+        16
+      ],
+      "uso": "ponto de destino da rota no Mapa Mágico (substitui o X vermelho)",
+      "fundo": "transparente",
+      "regra": "silhueta + 1 a 2 pixels da cor de destaque; legível sobre os 5 biomas do mapa"
+    },
+    "derrotado": {
+      "tamanho_px": [
+        64,
+        64
+      ],
+      "uso": "tela de resultado em Sucesso Limpo ou com Custo",
+      "regra": "mesmo cartaz com um X de tinta vermelha (#a8443c) riscando a figura, ou o cartaz arrancado pela metade; nunca sangue explícito"
+    }
+  },
+  "entrega": {
+    "formato": "PNG 32 bits com transparência (de verdade: sem xadrez desenhado nem fundo branco). Se a ferramenta só exportar JPEG, deixar o original em art/enemies/originais/<id>.jpg e o projeto converte.",
+    "pasta": "res://art/enemies/",
+    "nomes": "<id>.png (cartaz), <id>_token.png (mapa), <id>_derrotado.png",
+    "integracao_prevista": "campo \"enemy\": \"<id>\" nas missões de data/missions.json (cada spec lista as missões em 'missoes'); a ligação no código será feita quando as imagens existirem"
+  },
+  "prompt_base_en": "pixel art enemy portrait on a torn aged parchment wanted poster, 64x64 pixels, 16-bit RPG style, dark medieval fantasy, cold desaturated palette, harsh light from top-left, 1px dark outline, iron nail at the top, wax seal in the bottom right corner, facing the viewer, menacing, crisp pixels, no anti-aliasing",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, readable text, letters, watermark, signature, gore, explicit blood, cute, chibi, warm saturated palette, checkerboard transparency pattern, white background, jpeg artifacts"
+}

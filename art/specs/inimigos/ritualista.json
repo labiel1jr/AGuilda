@@ -1,0 +1,62 @@
+{
+  "_doc": "Especificação de pixel art do inimigo Ritualista do Pântano. Herda de _estilo_inimigos.json. Não é imagem.",
+  "herda": "_estilo_inimigos.json",
+  "id": "ritualista",
+  "nome": "Ritualista do Pântano",
+  "titulo": "Guardiã do Feitiço do Ninho",
+  "nivel": "elite",
+  "risco": "alto",
+  "cor_do_selo": "#d1603d",
+  "missoes": [
+    "pantano_rituais"
+  ],
+  "bioma": "pantano",
+  "ato": 2,
+  "tipo": "conjurador",
+  "paleta": {
+    "_doc": "Cores próprias, somadas à paleta_global_inimigos (máx. 12).",
+    "manto": [
+      "#3a4a3a",
+      "#26322a",
+      "#4f6b4f"
+    ],
+    "pele": [
+      "#d9ae8c",
+      "#b88566"
+    ],
+    "magia": [
+      "#a26ad1",
+      "#d4b0f0"
+    ],
+    "ossos": "#d8c9a3",
+    "lama": "#4a3a2c"
+  },
+  "aparencia": {
+    "corpo": "mulher magra de manto verde-escuro encharcado, capuz de musgo, colares de ossos de pássaro",
+    "olhos": "brancos, sem íris, durante o ritual",
+    "detalhe_chave": "uma pena de corvo preta presa em cada colar; o círculo do ritual brilha roxo no chão da lama"
+  },
+  "equipamento_ou_ataque": {
+    "magia": "mãos erguidas com chamas roxas frias e runas flutuando",
+    "cajado": "galho torto com um crânio de corvo na ponta"
+  },
+  "pose": "de pé dentro do círculo, braços erguidos",
+  "expressao": "transe, boca aberta entoando",
+  "leitura_narrativa": "Inimigo mágico do Ato 2. Contraste com Mira: magia como poder sobre os outros, não como conhecimento.",
+  "ligacao_com_a_historia": "Missão 'pantano_rituais'. A cor roxa casa com o selo lendário do Ninho (o ritual protege o chefe final).",
+  "marcador_mapa_16px": {
+    "silhueta": "figura encapuzada com braços erguidos",
+    "destaque": "2 px roxos (magia)"
+  },
+  "variacao_derrotado": "cartaz com X; o círculo apagado e o cajado partido",
+  "arquivos": {
+    "cartaz": "res://art/enemies/ritualista.png",
+    "marcador": "res://art/enemies/ritualista_token.png",
+    "derrotado": "res://art/enemies/ritualista_derrotado.png"
+  },
+  "prompt_en": "pixel art enemy portrait on a torn aged parchment wanted poster, 64x64 pixels, 16-bit RPG style, dark medieval fantasy, cold desaturated palette, harsh light from top-left, 1px dark outline, iron nail at the top, wax seal in the bottom right corner, facing the viewer, menacing, crisp pixels, no anti-aliasing, thin swamp ritualist woman in a soaked dark green robe with a moss hood, necklaces of bird bones with black crow feathers, white pupilless eyes in trance, arms raised with cold purple flames and floating runes, crooked branch staff topped with a crow skull, glowing purple ritual circle in the mud, chanting, wax seal color #d1603d",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, readable text, letters, watermark, signature, gore, explicit blood, cute, chibi, warm saturated palette, checkerboard transparency pattern, white background, jpeg artifacts",
+  "notas_para_o_artista": [
+    "Único inimigo com magia roxa — reservar o roxo para o Ninho."
+  ]
+}

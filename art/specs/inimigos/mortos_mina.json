@@ -1,0 +1,63 @@
+{
+  "_doc": "Especificação de pixel art do inimigo Os Mortos da Mina. Herda de _estilo_inimigos.json. Não é imagem.",
+  "herda": "_estilo_inimigos.json",
+  "id": "mortos_mina",
+  "nome": "Os Mortos da Mina",
+  "titulo": "Mineiros que Voltaram",
+  "nivel": "comum",
+  "risco": "alto",
+  "cor_do_selo": "#d1603d",
+  "missoes": [
+    "mina_karst"
+  ],
+  "bioma": "montanha",
+  "ato": 2,
+  "tipo": "morto-vivo",
+  "paleta": {
+    "_doc": "Cores próprias, somadas à paleta_global_inimigos (máx. 12).",
+    "pele_morta": [
+      "#7a8a80",
+      "#55633e",
+      "#9aa89c"
+    ],
+    "roupas": [
+      "#5a4a3e",
+      "#3b3029"
+    ],
+    "capacete": [
+      "#6b7280",
+      "#4a505c"
+    ],
+    "olhos": "#9fe0a0",
+    "simbolo": "#a8443c"
+  },
+  "aparencia": {
+    "corpo": "mineiro morto-vivo de pele cinza-esverdeada, roupa de trabalho rasgada, capacete de couro com vela apagada",
+    "olhos": "brilho verde fraco, sem pupila",
+    "detalhe_chave": "o símbolo dos traidores (um corvo de cabeça para baixo) pintado em vermelho no peito"
+  },
+  "equipamento_ou_ataque": {
+    "arma": "picareta enferrujada",
+    "marcas": "pó de carvão e terra"
+  },
+  "pose": "arrastando-se para a frente, picareta pendendo de uma mão",
+  "expressao": "boca aberta, mandíbula frouxa",
+  "leitura_narrativa": "Inimigo de grupo (desenhar 1, a ideia é que sejam muitos: 2 silhuetas escuras atrás no cartaz).",
+  "ligacao_com_a_historia": "Falha de 'mina_karst': 'os mortos carregavam o mesmo símbolo dos traidores'. Introduz o corvo invertido, que se repete no Ninho.",
+  "marcador_mapa_16px": {
+    "silhueta": "figura curvada com picareta",
+    "destaque": "2 px verdes (olhos)"
+  },
+  "variacao_derrotado": "cartaz com X; a vela do capacete acesa de novo (descanso)",
+  "arquivos": {
+    "cartaz": "res://art/enemies/mortos_mina.png",
+    "marcador": "res://art/enemies/mortos_mina_token.png",
+    "derrotado": "res://art/enemies/mortos_mina_derrotado.png"
+  },
+  "prompt_en": "pixel art enemy portrait on a torn aged parchment wanted poster, 64x64 pixels, 16-bit RPG style, dark medieval fantasy, cold desaturated palette, harsh light from top-left, 1px dark outline, iron nail at the top, wax seal in the bottom right corner, facing the viewer, menacing, crisp pixels, no anti-aliasing, undead miner zombie with grey-green skin, torn work clothes, leather helmet with an extinguished candle, faint glowing green eyes without pupils, rusty pickaxe hanging from one hand, slack open jaw, an upside-down crow symbol painted in red on the chest, two dark silhouettes of more undead behind, wax seal color #d1603d",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, readable text, letters, watermark, signature, gore, explicit blood, cute, chibi, warm saturated palette, checkerboard transparency pattern, white background, jpeg artifacts",
+  "notas_para_o_artista": [
+    "Morto-vivo sem gore: pele acinzentada e roupas rasgadas bastam.",
+    "O corvo invertido é um símbolo novo — anotar para reusar."
+  ]
+}

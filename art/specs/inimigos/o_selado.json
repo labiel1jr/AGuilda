@@ -1,0 +1,59 @@
+{
+  "_doc": "Especificação de pixel art do inimigo O Que Estava Selado. Herda de _estilo_inimigos.json. Não é imagem.",
+  "herda": "_estilo_inimigos.json",
+  "id": "o_selado",
+  "nome": "O Que Estava Selado",
+  "titulo": "Sussurros da Cripta de Hollen",
+  "nivel": "elite",
+  "risco": "medio",
+  "cor_do_selo": "#d4a94a",
+  "missoes": [
+    "cripta"
+  ],
+  "bioma": "pantano",
+  "ato": 1,
+  "tipo": "espírito",
+  "paleta": {
+    "_doc": "Cores próprias, somadas à paleta_global_inimigos (máx. 12).",
+    "nevoa": [
+      "#4f6b7a",
+      "#2e4450",
+      "#7fa3b3"
+    ],
+    "runas": [
+      "#9fd0ff",
+      "#d8f0ff"
+    ],
+    "correntes": "#5a5a64",
+    "olhos": "#b6f0ff"
+  },
+  "aparencia": {
+    "corpo": "figura translúcida e alongada, feita de névoa azul-acinzentada, sem pernas, presa por correntes de runas",
+    "rosto": "máscara rachada de pedra no lugar do rosto, olhos vazios brilhando",
+    "detalhe_chave": "as runas do selo, rachadas, ainda giram em volta dela"
+  },
+  "equipamento_ou_ataque": {
+    "ataque": "mãos longas de névoa estendidas para o observador",
+    "magia": "anel de runas azuis partido"
+  },
+  "pose": "flutuando, inclinada para a frente, correntes esticadas",
+  "expressao": "a máscara não tem boca; o 'sorriso' é a rachadura",
+  "leitura_narrativa": "A primeira ameaça sobrenatural. Se a missão falha, 'o que estava preso agora tem nome — e conhece o da guilda'.",
+  "ligacao_com_a_historia": "Texto de falha de 'cripta'. Combina com Mira e Detectar Magia (missão exige Conhecimento 7+).",
+  "marcador_mapa_16px": {
+    "silhueta": "fantasma alongado com máscara",
+    "destaque": "2 px azul-claros (olhos)"
+  },
+  "variacao_derrotado": "cartaz com X; as correntes de runa refeitas, a figura encolhida dentro do anel",
+  "arquivos": {
+    "cartaz": "res://art/enemies/o_selado.png",
+    "marcador": "res://art/enemies/o_selado_token.png",
+    "derrotado": "res://art/enemies/o_selado_derrotado.png"
+  },
+  "prompt_en": "pixel art enemy portrait on a torn aged parchment wanted poster, 64x64 pixels, 16-bit RPG style, dark medieval fantasy, cold desaturated palette, harsh light from top-left, 1px dark outline, iron nail at the top, wax seal in the bottom right corner, facing the viewer, menacing, crisp pixels, no anti-aliasing, translucent elongated wraith made of blue-grey mist, no legs, cracked stone mask for a face with glowing empty eyes, bound by broken chains of glowing blue runes, long misty hands reaching toward the viewer, floating, wax seal color #d4a94a",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, readable text, letters, watermark, signature, gore, explicit blood, cute, chibi, warm saturated palette, checkerboard transparency pattern, white background, jpeg artifacts",
+  "notas_para_o_artista": [
+    "Translúcido em pixel art: usar 2-3 tons e dithering leve, não transparência real.",
+    "Assustador, não grotesco."
+  ]
+}

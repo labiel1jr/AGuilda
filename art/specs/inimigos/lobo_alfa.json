@@ -1,0 +1,56 @@
+{
+  "_doc": "Especificação de pixel art do inimigo Alfa de Vaurel. Herda de _estilo_inimigos.json. Não é imagem.",
+  "herda": "_estilo_inimigos.json",
+  "id": "lobo_alfa",
+  "nome": "Alfa de Vaurel",
+  "titulo": "A Alcateia da Estrada",
+  "nivel": "comum",
+  "risco": "baixo",
+  "cor_do_selo": "#7fb069",
+  "missoes": [
+    "lobos"
+  ],
+  "bioma": "floresta",
+  "ato": 1,
+  "tipo": "fera",
+  "paleta": {
+    "_doc": "Cores próprias, somadas à paleta_global_inimigos (máx. 12).",
+    "pelo": [
+      "#5c6370",
+      "#3e434d",
+      "#8a919c"
+    ],
+    "olhos": "#e8c060",
+    "focinho": "#2a2a30",
+    "coleira": "#7a5134"
+  },
+  "aparencia": {
+    "corpo": "lobo grande, pelagem cinza-azulada eriçada no pescoço, orelha esquerda rasgada",
+    "olhos": "amarelos, brilhando no escuro (1 px de brilho cada)",
+    "detalhe_chave": "resto de coleira de couro com uma argola de ferro no pescoço — alguém criou este lobo"
+  },
+  "equipamento_ou_ataque": {
+    "ataque": "mandíbula aberta mostrando presas",
+    "marcas": "cicatriz de flecha no ombro"
+  },
+  "pose": "cabeça baixa, ombros altos, pronto para saltar",
+  "expressao": "rosnando, lábio superior repuxado",
+  "leitura_narrativa": "Ameaça simples de começo de jogo, mas a coleira levanta a pergunta da falha da missão: alguém está alimentando a alcateia de propósito.",
+  "ligacao_com_a_historia": "Texto de falha de 'lobos': 'a alcateia era maior do que se dizia — e alguém a está alimentando de propósito'.",
+  "marcador_mapa_16px": {
+    "silhueta": "cabeça de lobo de perfil com orelhas pontudas",
+    "destaque": "2 px amarelos (olhos)"
+  },
+  "variacao_derrotado": "cartaz com X vermelho; o lobo some do cartaz e só a coleira fica pendurada no prego",
+  "arquivos": {
+    "cartaz": "res://art/enemies/lobo_alfa.png",
+    "marcador": "res://art/enemies/lobo_alfa_token.png",
+    "derrotado": "res://art/enemies/lobo_alfa_derrotado.png"
+  },
+  "prompt_en": "pixel art enemy portrait on a torn aged parchment wanted poster, 64x64 pixels, 16-bit RPG style, dark medieval fantasy, cold desaturated palette, harsh light from top-left, 1px dark outline, iron nail at the top, wax seal in the bottom right corner, facing the viewer, menacing, crisp pixels, no anti-aliasing, large grey-blue wolf alpha, bristling neck fur, torn left ear, glowing yellow eyes, old leather collar with iron ring, snarling with bared fangs, head low ready to pounce, wax seal color #7fb069",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, readable text, letters, watermark, signature, gore, explicit blood, cute, chibi, warm saturated palette, checkerboard transparency pattern, white background, jpeg artifacts",
+  "notas_para_o_artista": [
+    "A coleira é a pista narrativa: precisa aparecer.",
+    "Lobo realista, não lobisomem."
+  ]
+}

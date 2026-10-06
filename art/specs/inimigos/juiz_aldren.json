@@ -1,0 +1,65 @@
+{
+  "_doc": "Especificação de pixel art do inimigo Juiz Aldren da Ordem. Herda de _estilo_inimigos.json. Não é imagem.",
+  "herda": "_estilo_inimigos.json",
+  "id": "juiz_aldren",
+  "nome": "Juiz Aldren da Ordem",
+  "titulo": "O Juiz que Expulsou Theo",
+  "nivel": "antagonista",
+  "risco": "alto",
+  "cor_do_selo": "#d1603d",
+  "missoes": [
+    "ordem_theo"
+  ],
+  "bioma": "cidade",
+  "ato": 2,
+  "tipo": "humano",
+  "paleta": {
+    "_doc": "Cores próprias, somadas à paleta_global_inimigos (máx. 12).",
+    "toga": [
+      "#e8e0c8",
+      "#b8ab8a"
+    ],
+    "faixa_ordem": [
+      "#c9a227",
+      "#8f7019"
+    ],
+    "pele": [
+      "#f0d2b4",
+      "#b88566"
+    ],
+    "cabelo": [
+      "#e8e8e8",
+      "#b3b0aa"
+    ],
+    "selo": "#a8443c"
+  },
+  "aparencia": {
+    "corpo": "homem idoso e magro, careca no topo com cabelo branco nas laterais, rosto severo e enrugado",
+    "olhos": "pequenos, cinzentos, por cima de óculos de leitura",
+    "detalhe_chave": "veste o SOL DOURADO intacto da Ordem no peito — o mesmo símbolo que Theo teve que raspar do tabardo"
+  },
+  "equipamento_ou_ataque": {
+    "arma": "nenhuma: segura um martelo de juiz e um pergaminho de sentença com o selo de cera vermelho",
+    "marcas": "anel com sinete"
+  },
+  "pose": "sentado numa cadeira alta de espaldar, como num tribunal",
+  "expressao": "desdém frio, lábios finos",
+  "leitura_narrativa": "Antagonista social: a ameaça é a autoridade, não a força. Moldura de documento oficial, não de procurado.",
+  "ligacao_com_a_historia": "Missão pessoal de Theo ('ordem_theo'). Nome inventado nesta spec. O sol dele deve ser o mesmo desenho do sol raspado do Theo.",
+  "marcador_mapa_16px": {
+    "silhueta": "figura sentada com martelo erguido",
+    "destaque": "1 px dourado (sol da Ordem)"
+  },
+  "variacao_derrotado": "o documento rasgado ao meio; o martelo caído",
+  "arquivos": {
+    "cartaz": "res://art/enemies/juiz_aldren.png",
+    "marcador": "res://art/enemies/juiz_aldren_token.png",
+    "derrotado": "res://art/enemies/juiz_aldren_derrotado.png"
+  },
+  "prompt_en": "pixel art enemy portrait on a torn aged parchment wanted poster, 64x64 pixels, 16-bit RPG style, dark medieval fantasy, cold desaturated palette, harsh light from top-left, 1px dark outline, iron nail at the top, wax seal in the bottom right corner, facing the viewer, menacing, crisp pixels, no anti-aliasing, elderly thin judge of a holy order, bald on top with white hair at the sides, stern wrinkled face, small grey eyes over reading glasses, cream judicial robe with an intact golden sun emblem on the chest, holding a gavel and a sentence scroll with a red wax seal, seated on a tall-backed chair, cold disdain, framed as an official document with ribbon instead of a wanted poster, wax seal color #d1603d",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, readable text, letters, watermark, signature, gore, explicit blood, cute, chibi, warm saturated palette, checkerboard transparency pattern, white background, jpeg artifacts",
+  "notas_para_o_artista": [
+    "Moldura diferente das outras (documento oficial com fita).",
+    "O sol dourado precisa casar com o símbolo raspado do Theo."
+  ]
+}

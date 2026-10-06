@@ -185,8 +185,15 @@ func show_hub() -> void:
 
 func _mission_card(m: Dictionary) -> Control:
 	var card := _panel(C_PARCHMENT)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	card.add_child(row)
+	var poster := _enemy_poster(m, 84)
+	if poster != null:
+		row.add_child(poster)
 	var col := VBoxContainer.new()
-	card.add_child(col)
+	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(col)
 	var head := HBoxContainer.new()
 	col.add_child(head)
 	head.add_child(_label(m.name, 17, C_INK))
@@ -230,6 +237,9 @@ func _render_party(m: Dictionary) -> void:
 	_clear()
 	var head := HBoxContainer.new()
 	root.add_child(head)
+	var poster := _enemy_poster(m, 56)
+	if poster != null:
+		head.add_child(poster)
 	head.add_child(_label("MISSÃO: " + m.name, 22, C_GOLD))
 	head.add_child(_spacer())
 	head.add_child(_label("[%s]" % gs.RISK_NAMES[m.risk], 18, RISK_COLORS[m.risk]))
@@ -425,6 +435,9 @@ func show_map(res: Dictionary) -> void:
 		go.visible = true)
 	map.set_process(true)
 	map.draw.connect(func(): bar.value = map.progress)
+	var et := _enemy_texture(m)
+	if et != null:
+		map.goal_texture = et
 	map.setup(m, tokens, gs.day * 1000 + gs.missions.find(m))
 
 
@@ -433,8 +446,17 @@ func show_map(res: Dictionary) -> void:
 func show_result(res: Dictionary) -> void:
 	_clear()
 	var m: Dictionary = res.mission
-	root.add_child(_label(m.name, 22, C_GOLD))
-	root.add_child(_para(gs.OUTCOME_NAMES[res.outcome], 30, OUTCOME_COLORS[res.outcome]))
+	var rhead := HBoxContainer.new()
+	rhead.add_theme_constant_override("separation", 14)
+	root.add_child(rhead)
+	var poster := _enemy_poster(m, 104, res.outcome != "falha")
+	if poster != null:
+		rhead.add_child(poster)
+	var rtitles := VBoxContainer.new()
+	rtitles.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	rhead.add_child(rtitles)
+	rtitles.add_child(_label(m.name, 22, C_GOLD))
+	rtitles.add_child(_para(gs.OUTCOME_NAMES[res.outcome], 30, OUTCOME_COLORS[res.outcome]))
 	var p := _panel(C_PARCHMENT)
 	root.add_child(p)
 	var col := VBoxContainer.new()
@@ -1128,6 +1150,40 @@ func show_load(from_title: bool) -> void:
 		root.add_child(b)
 	root.add_child(_spacer_v())
 	root.add_child(_button("◀ Voltar", show_title if from_title else show_menu))
+
+
+## Primeiro inimigo da missão que tem imagem (res://art/enemies/<id>.png), ou null.
+func _enemy_texture(m: Dictionary) -> Texture2D:
+	for eid in m.get("enemies", []):
+		var path := "res://art/enemies/%s.png" % eid
+		if ResourceLoader.exists(path):
+			return load(path)
+	return null
+
+
+## Cartaz do inimigo; "defeated" risca com um X de tinta vermelha.
+func _enemy_poster(m: Dictionary, px: int, defeated: bool = false) -> Control:
+	var tex := _enemy_texture(m)
+	if tex == null:
+		return null
+	var tr := TextureRect.new()
+	tr.texture = tex
+	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	tr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	tr.custom_minimum_size = Vector2(px, px)
+	tr.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	if defeated:
+		var ink := Color("#a8443c", 0.9)
+		for pts in [[Vector2(0.18, 0.2), Vector2(0.82, 0.8)], [Vector2(0.82, 0.2), Vector2(0.18, 0.8)]]:
+			var ln := Line2D.new()
+			ln.points = PackedVector2Array([pts[0] * px, pts[1] * px])
+			ln.width = max(3.0, px / 14.0)
+			ln.default_color = ink
+			ln.begin_cap_mode = Line2D.LINE_CAP_ROUND
+			ln.end_cap_mode = Line2D.LINE_CAP_ROUND
+			tr.add_child(ln)
+	return tr
 
 
 func _portrait(h: Dictionary, px: int) -> Control:

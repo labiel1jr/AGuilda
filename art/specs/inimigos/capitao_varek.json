@@ -1,0 +1,70 @@
+{
+  "_doc": "Especificação de pixel art do inimigo Capitão Varek. Herda de _estilo_inimigos.json. Não é imagem.",
+  "herda": "_estilo_inimigos.json",
+  "id": "capitao_varek",
+  "nome": "Capitão Varek",
+  "titulo": "Líder da Noite do Corvo",
+  "nivel": "chefe",
+  "risco": "alto",
+  "cor_do_selo": "#d1603d",
+  "missoes": [
+    "noite_corvo"
+  ],
+  "bioma": "cidade",
+  "ato": 1,
+  "tipo": "humano",
+  "paleta": {
+    "_doc": "Cores próprias, somadas à paleta_global_inimigos (máx. 12).",
+    "capa": [
+      "#2e2430",
+      "#1f1c24"
+    ],
+    "armadura": [
+      "#4a505c",
+      "#2f343c",
+      "#7d838e"
+    ],
+    "pele": [
+      "#e8c4a0",
+      "#b88566"
+    ],
+    "cabelo": [
+      "#8a8892",
+      "#5e5c66"
+    ],
+    "tocha": [
+      "#f2b25c",
+      "#d1603d"
+    ],
+    "insignia": "#d4a94a"
+  },
+  "aparencia": {
+    "corpo": "homem alto e magro, cinquenta anos, cabelo grisalho comprido preso, rosto fino e elegante",
+    "olhos": "azul-gelo, calmos",
+    "detalhe_chave": "usa a insígnia DOURADA de capitão da guilda antiga no peito — ele já foi um dos líderes do Corvo Cinzento"
+  },
+  "equipamento_ou_ataque": {
+    "arma": "rapieira fina numa mão, tocha na outra (a noite em que tentam queimar a sede)",
+    "marcas": "capa preta com a borda chamuscada"
+  },
+  "pose": "de pé, tranquilo, tocha erguida iluminando o rosto de baixo",
+  "expressao": "meio sorriso educado, que é o mais assustador",
+  "leitura_narrativa": "Chefe do fim do Ato 1. Não é um bruto: é alguém que acredita que a guilda é dele por direito.",
+  "ligacao_com_a_historia": "Falha de 'noite_corvo': 'o Corvo Cinzento nunca foi de vocês'. Nome inventado nesta spec (o jogo ainda não o nomeia) — pode virar fala futura.",
+  "marcador_mapa_16px": {
+    "silhueta": "figura alta de capa com tocha",
+    "destaque": "2 px laranja (chama)"
+  },
+  "variacao_derrotado": "cartaz queimado nas bordas com X; a tocha apagada",
+  "arquivos": {
+    "cartaz": "res://art/enemies/capitao_varek.png",
+    "marcador": "res://art/enemies/capitao_varek_token.png",
+    "derrotado": "res://art/enemies/capitao_varek_derrotado.png"
+  },
+  "prompt_en": "pixel art enemy portrait on a torn aged parchment wanted poster, 64x64 pixels, 16-bit RPG style, dark medieval fantasy, cold desaturated palette, harsh light from top-left, 1px dark outline, iron nail at the top, wax seal in the bottom right corner, facing the viewer, menacing, crisp pixels, no anti-aliasing, tall lean man in his fifties, long grey hair tied back, thin elegant face, calm ice-blue eyes, black cape with singed edges, dark plate armor, golden captain insignia of an old guild with a crow on the chest, slender rapier in one hand and a raised torch lighting his face from below, polite unsettling half smile, wax seal color #d1603d",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, readable text, letters, watermark, signature, gore, explicit blood, cute, chibi, warm saturated palette, checkerboard transparency pattern, white background, jpeg artifacts",
+  "notas_para_o_artista": [
+    "Iluminação de baixo pela tocha é obrigatória (luz de vilão).",
+    "Nome 'Varek' é sugestão desta spec; trocar se preferir."
+  ]
+}

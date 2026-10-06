@@ -1,0 +1,60 @@
+{
+  "_doc": "Especificação de pixel art do inimigo Lâmina de Capa Preta. Herda de _estilo_inimigos.json. Não é imagem.",
+  "herda": "_estilo_inimigos.json",
+  "id": "capa_preta",
+  "nome": "Lâmina de Capa Preta",
+  "titulo": "Assassino do Ninho",
+  "nivel": "elite",
+  "risco": "alto",
+  "cor_do_selo": "#d1603d",
+  "missoes": [
+    "emboscada_estrada",
+    "espiao"
+  ],
+  "bioma": "cidade",
+  "ato": 2,
+  "tipo": "humano",
+  "paleta": {
+    "_doc": "Cores próprias, somadas à paleta_global_inimigos (máx. 12).",
+    "capa": [
+      "#1f1c24",
+      "#2e2a36",
+      "#3e3a48"
+    ],
+    "mascara": [
+      "#4a505c",
+      "#6b7280"
+    ],
+    "laminas": "#c8ccd4",
+    "olhos": "#d1603d",
+    "simbolo": "#a8443c"
+  },
+  "aparencia": {
+    "corpo": "figura esguia toda de preto, rosto coberto por máscara de metal lisa com fendas",
+    "olhos": "só um brilho vermelho nas fendas",
+    "detalhe_chave": "corvo invertido bordado em vermelho na gola da capa (mesmo símbolo dos mortos da mina)"
+  },
+  "equipamento_ou_ataque": {
+    "arma": "duas adagas longas cruzadas à frente do peito",
+    "marcas": "capa rasgada em tiras na barra"
+  },
+  "pose": "agachada, adagas cruzadas, capa aberta como asas",
+  "expressao": "ilegível — máscara sem expressão",
+  "leitura_narrativa": "Os braços armados dos fundadores na cidade. Contraste direto com Lyssa: ladina que não confia vs. assassino que não tem rosto.",
+  "ligacao_com_a_historia": "Missões 'emboscada_estrada' (os atacantes de capa preta) e 'espiao'.",
+  "marcador_mapa_16px": {
+    "silhueta": "capa aberta em asas com 2 adagas",
+    "destaque": "2 px vermelhos (olhos)"
+  },
+  "variacao_derrotado": "cartaz com X; a máscara caída e partida",
+  "arquivos": {
+    "cartaz": "res://art/enemies/capa_preta.png",
+    "marcador": "res://art/enemies/capa_preta_token.png",
+    "derrotado": "res://art/enemies/capa_preta_derrotado.png"
+  },
+  "prompt_en": "pixel art enemy portrait on a torn aged parchment wanted poster, 64x64 pixels, 16-bit RPG style, dark medieval fantasy, cold desaturated palette, harsh light from top-left, 1px dark outline, iron nail at the top, wax seal in the bottom right corner, facing the viewer, menacing, crisp pixels, no anti-aliasing, slender black-cloaked assassin, smooth metal mask with eye slits glowing faint red, crouched with two long daggers crossed in front of the chest, cloak spread like wings with tattered strip edges, upside-down red crow embroidered on the collar, faceless and menacing, wax seal color #d1603d",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, readable text, letters, watermark, signature, gore, explicit blood, cute, chibi, warm saturated palette, checkerboard transparency pattern, white background, jpeg artifacts",
+  "notas_para_o_artista": [
+    "Silhueta de corvo humano: a capa aberta deve lembrar asas."
+  ]
+}

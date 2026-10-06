@@ -1,0 +1,64 @@
+{
+  "_doc": "Especificação de pixel art do inimigo Desertor do Corvo. Herda de _estilo_inimigos.json. Não é imagem.",
+  "herda": "_estilo_inimigos.json",
+  "id": "desertor_corvo",
+  "nome": "Desertor do Corvo",
+  "titulo": "Ex-membro da Guilda",
+  "nivel": "elite",
+  "risco": "alto",
+  "cor_do_selo": "#d1603d",
+  "missoes": [
+    "ponte",
+    "noite_corvo"
+  ],
+  "bioma": "estrada",
+  "ato": 1,
+  "tipo": "humano",
+  "paleta": {
+    "_doc": "Cores próprias, somadas à paleta_global_inimigos (máx. 12).",
+    "tabardo_antigo": [
+      "#5e5c66",
+      "#3f3d45"
+    ],
+    "armadura": [
+      "#6b7280",
+      "#4a505c",
+      "#9aa1ad"
+    ],
+    "pele": [
+      "#d9ae8c",
+      "#b88566"
+    ],
+    "cicatriz": "#8f5a4a",
+    "pena": "#1f1c24"
+  },
+  "aparencia": {
+    "corpo": "ex-soldado de meia-idade, cabelo grisalho raspado, barba curta",
+    "olhos": "cansados e amargos",
+    "detalhe_chave": "veste o TABARDO ANTIGO da Guilda do Corvo Cinzento — o mesmo corvo do estandarte da fachada, mas desbotado e com uma faixa preta de luto atravessada"
+  },
+  "equipamento_ou_ataque": {
+    "arma": "espada curta militar e escudo pequeno com o corvo raspado a faca",
+    "marcas": "cota de malha enferrujada"
+  },
+  "pose": "postura militar, escudo à frente",
+  "expressao": "boca torta, desprezo",
+  "leitura_narrativa": "O choque do Ato 1: os inimigos usam o mesmo símbolo que os heróis. Precisa ser reconhecível como 'um dos nossos'.",
+  "ligacao_com_a_historia": "Texto de falha de 'ponte': 'os bandidos usavam o tabardo antigo da guilda'. Vera enterrou metade da guilda antiga — ela pode conhecê-lo.",
+  "marcador_mapa_16px": {
+    "silhueta": "elmo aberto + escudo redondo",
+    "destaque": "1 px cinza claro (corvo do tabardo)"
+  },
+  "variacao_derrotado": "cartaz com X; o tabardo rasgado no corvo",
+  "arquivos": {
+    "cartaz": "res://art/enemies/desertor_corvo.png",
+    "marcador": "res://art/enemies/desertor_corvo_token.png",
+    "derrotado": "res://art/enemies/desertor_corvo_derrotado.png"
+  },
+  "prompt_en": "pixel art enemy portrait on a torn aged parchment wanted poster, 64x64 pixels, 16-bit RPG style, dark medieval fantasy, cold desaturated palette, harsh light from top-left, 1px dark outline, iron nail at the top, wax seal in the bottom right corner, facing the viewer, menacing, crisp pixels, no anti-aliasing, middle-aged deserter soldier with shaved grey hair and short beard, bitter tired eyes, faded grey tabard with a crow emblem crossed by a black mourning band, rusty chainmail, short military sword, small shield with a crow scratched off with a knife, sneer of contempt, wax seal color #d1603d",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, readable text, letters, watermark, signature, gore, explicit blood, cute, chibi, warm saturated palette, checkerboard transparency pattern, white background, jpeg artifacts",
+  "notas_para_o_artista": [
+    "O corvo do tabardo deve ser o MESMO desenho do estandarte da arte de título (consistência).",
+    "Ele é humano e cansado, não um vilão de desenho."
+  ]
+}

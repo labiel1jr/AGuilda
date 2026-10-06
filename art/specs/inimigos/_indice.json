@@ -1,0 +1,201 @@
+{
+  "_doc": "Índice dos inimigos por missão (para preencher \"enemy\" em data/missions.json quando as imagens existirem).",
+  "por_missao": {
+    "lobos": [
+      "lobo_alfa"
+    ],
+    "ratos": [
+      "rato_rei"
+    ],
+    "caravana": [
+      "saqueador"
+    ],
+    "emboscada_estrada": [
+      "saqueador",
+      "capa_preta"
+    ],
+    "cripta": [
+      "o_selado"
+    ],
+    "ponte": [
+      "desertor_corvo"
+    ],
+    "noite_corvo": [
+      "desertor_corvo",
+      "capitao_varek"
+    ],
+    "serpe": [
+      "serpe_karst"
+    ],
+    "contrabando": [
+      "olho_de_sal"
+    ],
+    "ordem_theo": [
+      "juiz_aldren"
+    ],
+    "mina_karst": [
+      "mortos_mina"
+    ],
+    "espiao": [
+      "capa_preta"
+    ],
+    "aldeia_cerco": [
+      "mercenario_ninho"
+    ],
+    "torre_sinal": [
+      "mercenario_ninho"
+    ],
+    "pantano_rituais": [
+      "ritualista"
+    ],
+    "ninho_corvo": [
+      "fundadores"
+    ]
+  },
+  "inimigos": [
+    {
+      "id": "lobo_alfa",
+      "nome": "Alfa de Vaurel",
+      "nivel": "comum",
+      "risco": "baixo",
+      "ato": 1,
+      "missoes": [
+        "lobos"
+      ]
+    },
+    {
+      "id": "rato_rei",
+      "nome": "Rato-Rei do Celeiro",
+      "nivel": "comum",
+      "risco": "baixo",
+      "ato": 1,
+      "missoes": [
+        "ratos"
+      ]
+    },
+    {
+      "id": "saqueador",
+      "nome": "Saqueador da Estrada",
+      "nivel": "comum",
+      "risco": "medio",
+      "ato": 1,
+      "missoes": [
+        "caravana",
+        "emboscada_estrada"
+      ]
+    },
+    {
+      "id": "o_selado",
+      "nome": "O Que Estava Selado",
+      "nivel": "elite",
+      "risco": "medio",
+      "ato": 1,
+      "missoes": [
+        "cripta"
+      ]
+    },
+    {
+      "id": "desertor_corvo",
+      "nome": "Desertor do Corvo",
+      "nivel": "elite",
+      "risco": "alto",
+      "ato": 1,
+      "missoes": [
+        "ponte",
+        "noite_corvo"
+      ]
+    },
+    {
+      "id": "serpe_karst",
+      "nome": "A Serpe de Karst",
+      "nivel": "chefe",
+      "risco": "alto",
+      "ato": 1,
+      "missoes": [
+        "serpe"
+      ]
+    },
+    {
+      "id": "capitao_varek",
+      "nome": "Capitão Varek",
+      "nivel": "chefe",
+      "risco": "alto",
+      "ato": 1,
+      "missoes": [
+        "noite_corvo"
+      ]
+    },
+    {
+      "id": "olho_de_sal",
+      "nome": "Olho-de-Sal",
+      "nivel": "elite",
+      "risco": "medio",
+      "ato": 2,
+      "missoes": [
+        "contrabando"
+      ]
+    },
+    {
+      "id": "juiz_aldren",
+      "nome": "Juiz Aldren da Ordem",
+      "nivel": "antagonista",
+      "risco": "alto",
+      "ato": 2,
+      "missoes": [
+        "ordem_theo"
+      ]
+    },
+    {
+      "id": "mortos_mina",
+      "nome": "Os Mortos da Mina",
+      "nivel": "comum",
+      "risco": "alto",
+      "ato": 2,
+      "missoes": [
+        "mina_karst"
+      ]
+    },
+    {
+      "id": "capa_preta",
+      "nome": "Lâmina de Capa Preta",
+      "nivel": "elite",
+      "risco": "alto",
+      "ato": 2,
+      "missoes": [
+        "emboscada_estrada",
+        "espiao"
+      ]
+    },
+    {
+      "id": "mercenario_ninho",
+      "nome": "Mercenário do Ninho",
+      "nivel": "comum",
+      "risco": "alto",
+      "ato": 2,
+      "missoes": [
+        "aldeia_cerco",
+        "torre_sinal"
+      ]
+    },
+    {
+      "id": "ritualista",
+      "nome": "Ritualista do Pântano",
+      "nivel": "elite",
+      "risco": "alto",
+      "ato": 2,
+      "missoes": [
+        "pantano_rituais"
+      ]
+    },
+    {
+      "id": "fundadores",
+      "nome": "Os Fundadores do Corvo",
+      "nivel": "chefe",
+      "risco": "lendario",
+      "ato": 2,
+      "missoes": [
+        "ninho_corvo"
+      ]
+    }
+  ]
+}

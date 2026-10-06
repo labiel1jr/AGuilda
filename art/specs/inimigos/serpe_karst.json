@@ -1,0 +1,60 @@
+{
+  "_doc": "Especificação de pixel art do inimigo A Serpe de Karst. Herda de _estilo_inimigos.json. Não é imagem.",
+  "herda": "_estilo_inimigos.json",
+  "id": "serpe_karst",
+  "nome": "A Serpe de Karst",
+  "titulo": "Terror da Mina",
+  "nivel": "chefe",
+  "risco": "alto",
+  "cor_do_selo": "#d1603d",
+  "missoes": [
+    "serpe"
+  ],
+  "bioma": "montanha",
+  "ato": 1,
+  "tipo": "fera",
+  "paleta": {
+    "_doc": "Cores próprias, somadas à paleta_global_inimigos (máx. 12).",
+    "escamas": [
+      "#4a5a54",
+      "#2f3a36",
+      "#6d8078"
+    ],
+    "barriga": "#8f8a6e",
+    "asas": [
+      "#5c4a54",
+      "#3a2e36"
+    ],
+    "olhos": "#e8c060",
+    "chamas_bafo": "#d1603d"
+  },
+  "aparencia": {
+    "corpo": "serpe (dragão de duas patas) de escamas verde-acinzentadas, asas membranosas abertas saindo do cartaz, cauda com ferrão",
+    "cabeca": "chifres para trás, olhos amarelos de pupila fina",
+    "detalhe_chave": "uma ferida antiga de lança no pescoço, com uma ponta de lança ainda cravada — alguém já tentou matá-la antes"
+  },
+  "equipamento_ou_ataque": {
+    "ataque": "ferrão venenoso na cauda erguido acima da cabeça",
+    "marcas": "pedras e ossos presos nas garras"
+  },
+  "pose": "asas abertas, rugindo, garras sobre uma pedra",
+  "expressao": "rugido de boca aberta",
+  "leitura_narrativa": "Chefe do Capítulo 2. A falha revela que ela protegia ovos e que alguém pagou pela morte dela.",
+  "ligacao_com_a_historia": "Texto de falha de 'serpe'. A escama dela é o saque em Sucesso Limpo.",
+  "marcador_mapa_16px": {
+    "silhueta": "asas abertas em V",
+    "destaque": "2 px amarelos (olhos)"
+  },
+  "variacao_derrotado": "cartaz arrancado pela metade; só uma escama do tamanho de um escudo pregada no lugar",
+  "arquivos": {
+    "cartaz": "res://art/enemies/serpe_karst.png",
+    "marcador": "res://art/enemies/serpe_karst_token.png",
+    "derrotado": "res://art/enemies/serpe_karst_derrotado.png"
+  },
+  "prompt_en": "pixel art enemy portrait on a torn aged parchment wanted poster, 64x64 pixels, 16-bit RPG style, dark medieval fantasy, cold desaturated palette, harsh light from top-left, 1px dark outline, iron nail at the top, wax seal in the bottom right corner, facing the viewer, menacing, crisp pixels, no anti-aliasing, wyvern boss, two-legged dragon with grey-green scales, membranous wings spread breaking out of the poster frame, swept-back horns, yellow slit eyes, venomous stinger tail raised above its head, old spearhead still stuck in its neck, roaring with open jaws, claws on a rock, wax seal color #d1603d",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, readable text, letters, watermark, signature, gore, explicit blood, cute, chibi, warm saturated palette, checkerboard transparency pattern, white background, jpeg artifacts",
+  "notas_para_o_artista": [
+    "Chefe: quebra a moldura do cartaz (asas para fora).",
+    "Serpe = duas patas + asas, não quatro patas."
+  ]
+}

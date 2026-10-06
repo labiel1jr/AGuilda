@@ -1,0 +1,55 @@
+{
+  "_doc": "Especificação de pixel art do inimigo Rato-Rei do Celeiro. Herda de _estilo_inimigos.json. Não é imagem.",
+  "herda": "_estilo_inimigos.json",
+  "id": "rato_rei",
+  "nome": "Rato-Rei do Celeiro",
+  "titulo": "O Rato que Levou uma Ovelha",
+  "nivel": "comum",
+  "risco": "baixo",
+  "cor_do_selo": "#7fb069",
+  "missoes": [
+    "ratos"
+  ],
+  "bioma": "estrada",
+  "ato": 1,
+  "tipo": "fera",
+  "paleta": {
+    "_doc": "Cores próprias, somadas à paleta_global_inimigos (máx. 12).",
+    "pelo": [
+      "#6b5e55",
+      "#4a3f38",
+      "#8c7e72"
+    ],
+    "rabo": "#b0807a",
+    "olhos": "#d1603d",
+    "dentes": "#e8d9a0"
+  },
+  "aparencia": {
+    "corpo": "rato do tamanho de um cão, gordo, pelo sarnento, rabo enrolado em volta do corpo",
+    "olhos": "vermelhos pequenos",
+    "detalhe_chave": "uma coroa improvisada de palha e um anel enferrujado com o brasão do Corvo Cinzento preso à orelha"
+  },
+  "equipamento_ou_ataque": {
+    "ataque": "dentes da frente enormes e amarelados",
+    "marcas": "feno e grãos presos no pelo"
+  },
+  "pose": "sentado nas patas traseiras em cima de um saco de grãos rasgado",
+  "expressao": "dentes à mostra, nariz farejando",
+  "leitura_narrativa": "Inimigo cômico-nojento do começo. O anel com o brasão do Corvo liga à revelação da falha: os túneis levam a uma adega selada da guilda.",
+  "ligacao_com_a_historia": "Texto de falha de 'ratos': 'os túneis dos ratos levam a uma adega selada com o brasão do Corvo Cinzento'.",
+  "marcador_mapa_16px": {
+    "silhueta": "rato gordo com rabo em espiral",
+    "destaque": "1 px vermelho (olho)"
+  },
+  "variacao_derrotado": "cartaz com X; o rato fugindo pela borda, só o rabo dentro do quadro",
+  "arquivos": {
+    "cartaz": "res://art/enemies/rato_rei.png",
+    "marcador": "res://art/enemies/rato_rei_token.png",
+    "derrotado": "res://art/enemies/rato_rei_derrotado.png"
+  },
+  "prompt_en": "pixel art enemy portrait on a torn aged parchment wanted poster, 64x64 pixels, 16-bit RPG style, dark medieval fantasy, cold desaturated palette, harsh light from top-left, 1px dark outline, iron nail at the top, wax seal in the bottom right corner, facing the viewer, menacing, crisp pixels, no anti-aliasing, giant dog-sized plague rat king, fat mangy brown-grey fur, long pink tail coiled around, small red eyes, huge yellow front teeth, makeshift straw crown, rusty ring with a crow crest on its ear, sitting on a torn grain sack, wax seal color #7fb069",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, readable text, letters, watermark, signature, gore, explicit blood, cute, chibi, warm saturated palette, checkerboard transparency pattern, white background, jpeg artifacts",
+  "notas_para_o_artista": [
+    "Tom levemente cômico, mas nojento; sem ser fofo."
+  ]
+}

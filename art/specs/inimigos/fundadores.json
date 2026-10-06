@@ -1,0 +1,69 @@
+{
+  "_doc": "Especificação de pixel art do inimigo Os Fundadores do Corvo. Herda de _estilo_inimigos.json. Não é imagem.",
+  "herda": "_estilo_inimigos.json",
+  "id": "fundadores",
+  "nome": "Os Fundadores do Corvo",
+  "titulo": "Senhores do Ninho",
+  "nivel": "chefe",
+  "risco": "lendario",
+  "cor_do_selo": "#a26ad1",
+  "missoes": [
+    "ninho_corvo"
+  ],
+  "bioma": "montanha",
+  "ato": 2,
+  "tipo": "humano",
+  "paleta": {
+    "_doc": "Cores próprias, somadas à paleta_global_inimigos (máx. 12).",
+    "mantos": [
+      "#2e2430",
+      "#1f1c24",
+      "#4a3a4a"
+    ],
+    "ouro_antigo": [
+      "#b8892e",
+      "#8f6a1f",
+      "#d4a94a"
+    ],
+    "pele": [
+      "#e8c4a0",
+      "#b88566",
+      "#8f5d3b"
+    ],
+    "estandarte": [
+      "#5e5c66",
+      "#3f3d45"
+    ],
+    "magia": "#a26ad1"
+  },
+  "aparencia": {
+    "corpo": "TRÊS figuras idosas lado a lado, mantos escuros com bordas de ouro antigo: no centro um homem de barba branca com uma coroa de penas de corvo, à esquerda uma mulher de cabelo prateado com um cajado, à direita um homem corpulento de armadura antiga",
+    "olhos": "os três olham direto para o observador",
+    "detalhe_chave": "atrás deles, o ESTANDARTE ORIGINAL do Corvo Cinzento — o mesmo do epílogo de vitória — rasgado e preso de cabeça para baixo"
+  },
+  "equipamento_ou_ataque": {
+    "arma": "centro: cetro com cabeça de corvo; esquerda: cajado com magia roxa; direita: espada larga antiga",
+    "marcas": "joias e anéis com o corvo original (não invertido)"
+  },
+  "pose": "os três de pé numa plataforma de pedra, o do centro um degrau acima",
+  "expressao": "orgulho frio; o do centro com um leve sorriso de quem acha que ainda manda",
+  "leitura_narrativa": "Chefe final do jogo. Eles fundaram a guilda e a abandonaram — a pose de 'retrato de família nobre' contrasta com a arte de título (o grupo do jogador na porta da guilda).",
+  "ligacao_com_a_historia": "Missão final 'ninho_corvo' (lendária, exige 4 heróis). Saque garantido: Lâmina do Corvo. O estandarte que eles prendem invertido é o que volta 'intacto' no final de vitória.",
+  "marcador_mapa_16px": {
+    "silhueta": "três figuras, a do meio mais alta com coroa de penas",
+    "destaque": "1 px roxo + 1 px dourado"
+  },
+  "variacao_derrotado": "cartaz arrancado; o estandarte original desvirado e pendurado direito no prego",
+  "arquivos": {
+    "cartaz": "res://art/enemies/fundadores.png",
+    "marcador": "res://art/enemies/fundadores_token.png",
+    "derrotado": "res://art/enemies/fundadores_derrotado.png"
+  },
+  "prompt_en": "pixel art enemy portrait on a torn aged parchment wanted poster, 64x64 pixels, 16-bit RPG style, dark medieval fantasy, cold desaturated palette, harsh light from top-left, 1px dark outline, iron nail at the top, wax seal in the bottom right corner, facing the viewer, menacing, crisp pixels, no anti-aliasing, three elderly guild founders standing side by side on a stone platform like a noble family portrait, dark robes with old gold trim, center a white-bearded man with a crown of black crow feathers and a crow-headed scepter one step higher, left a silver-haired woman with a staff glowing purple, right a stout man in antique armor with a broad old sword, all staring at the viewer with cold pride, the original grey crow guild banner hanging torn and upside down behind them, legendary boss breaking out of the poster frame, wax seal color #a26ad1",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, readable text, letters, watermark, signature, gore, explicit blood, cute, chibi, warm saturated palette, checkerboard transparency pattern, white background, jpeg artifacts",
+  "notas_para_o_artista": [
+    "Chefe lendário: maior detalhe do conjunto e quebra a moldura.",
+    "Os três devem ser distinguíveis no marcador de 16 px por altura (meio mais alto).",
+    "Coerência com a arte de título: mesmo desenho de corvo do estandarte."
+  ]
+}
