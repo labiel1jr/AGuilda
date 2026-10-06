@@ -1,0 +1,30 @@
+{
+  "heroes": [
+    {"id": "theo",  "name": "Theo",  "archetype": "O Paladino Caído",        "color": "#c9a227",
+     "attrs": {"forca": 8, "destreza": 4, "conhecimento": 5, "carisma": 5, "resistencia": 7},
+     "trait": "Forma laços lentos mas leais; recusa ordens que contradizem seu código."},
+    {"id": "lyssa", "name": "Lyssa", "archetype": "A Ladina Cética",          "color": "#6a9a5b",
+     "attrs": {"forca": 3, "destreza": 9, "conhecimento": 6, "carisma": 4, "resistencia": 5},
+     "trait": "Desconfia, mas lembra cada ato de honestidade."},
+    {"id": "mira",  "name": "Mira",  "archetype": "A Erudita Frágil",         "color": "#5b7fbf",
+     "attrs": {"forca": 2, "destreza": 4, "conhecimento": 9, "carisma": 6, "resistencia": 3},
+     "trait": "Cria laços intelectuais; insiste em ir a missões perigosas."},
+    {"id": "senna", "name": "Senna", "archetype": "A Mercenária Pragmática",  "color": "#a8443c",
+     "attrs": {"forca": 7, "destreza": 6, "conhecimento": 3, "carisma": 3, "resistencia": 6},
+     "trait": "Nunca inicia vínculo; responde a provas de lealdade."},
+    {"id": "bram",  "name": "Bram",  "archetype": "O Novato Idealista",       "color": "#d9823b",
+     "attrs": {"forca": 5, "destreza": 5, "conhecimento": 5, "carisma": 7, "resistencia": 3},
+     "trait": "Afinidade cresce rápido, mas regride se decepcionado."},
+    {"id": "vera",  "name": "Vera",  "archetype": "A Guerreira Veterana",     "color": "#8a6fb0",
+     "attrs": {"forca": 9, "destreza": 4, "conhecimento": 3, "carisma": 3, "resistencia": 8},
+     "trait": "Liderança intimidante; o vínculo de Mentoria com Bram é o mais acessível."}
+  ],
+  "affinity": {
+    "theo":  {"lyssa": -3, "mira": 1, "senna": -2, "bram": 2, "vera": 3},
+    "lyssa": {"theo": -3, "mira": 4, "senna": -1, "bram": 1, "vera": 0},
+    "mira":  {"theo": 1, "lyssa": 4, "senna": -2, "bram": 2, "vera": 1},
+    "senna": {"theo": -2, "lyssa": -1, "mira": -2, "bram": -1, "vera": 2},
+    "bram":  {"theo": 2, "lyssa": 1, "mira": 2, "senna": -1, "vera": 4},
+    "vera":  {"theo": 3, "lyssa": 0, "mira": 1, "senna": 2, "bram": 4}
+  }
+}
