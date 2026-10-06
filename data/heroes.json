@@ -1,30 +1,240 @@
 {
   "heroes": [
-    {"id": "theo",  "name": "Theo",  "archetype": "O Paladino Caído",        "color": "#c9a227",
-     "attrs": {"forca": 8, "destreza": 4, "conhecimento": 5, "carisma": 5, "resistencia": 7},
-     "trait": "Forma laços lentos mas leais; recusa ordens que contradizem seu código."},
-    {"id": "lyssa", "name": "Lyssa", "archetype": "A Ladina Cética",          "color": "#6a9a5b",
-     "attrs": {"forca": 3, "destreza": 9, "conhecimento": 6, "carisma": 4, "resistencia": 5},
-     "trait": "Desconfia, mas lembra cada ato de honestidade."},
-    {"id": "mira",  "name": "Mira",  "archetype": "A Erudita Frágil",         "color": "#5b7fbf",
-     "attrs": {"forca": 2, "destreza": 4, "conhecimento": 9, "carisma": 6, "resistencia": 3},
-     "trait": "Cria laços intelectuais; insiste em ir a missões perigosas."},
-    {"id": "senna", "name": "Senna", "archetype": "A Mercenária Pragmática",  "color": "#a8443c",
-     "attrs": {"forca": 7, "destreza": 6, "conhecimento": 3, "carisma": 3, "resistencia": 6},
-     "trait": "Nunca inicia vínculo; responde a provas de lealdade."},
-    {"id": "bram",  "name": "Bram",  "archetype": "O Novato Idealista",       "color": "#d9823b",
-     "attrs": {"forca": 5, "destreza": 5, "conhecimento": 5, "carisma": 7, "resistencia": 3},
-     "trait": "Afinidade cresce rápido, mas regride se decepcionado."},
-    {"id": "vera",  "name": "Vera",  "archetype": "A Guerreira Veterana",     "color": "#8a6fb0",
-     "attrs": {"forca": 9, "destreza": 4, "conhecimento": 3, "carisma": 3, "resistencia": 8},
-     "trait": "Liderança intimidante; o vínculo de Mentoria com Bram é o mais acessível."}
+    {
+      "id": "theo",
+      "name": "Theo",
+      "archetype": "O Paladino Caído",
+      "color": "#c9a227",
+      "attrs": {
+        "forca": 8,
+        "destreza": 4,
+        "conhecimento": 5,
+        "carisma": 5,
+        "resistencia": 7
+      },
+      "trait": "Forma laços lentos mas leais; recusa ordens que contradizem seu código.",
+      "title": "Sir Theo de Valmor",
+      "class": "Paladino",
+      "race": "Humano",
+      "level": 4,
+      "hp_max": 12,
+      "proficiencies": [
+        "Atletismo",
+        "Intimidação",
+        "Religião",
+        "Escudos"
+      ],
+      "personality": {
+        "trait": "Falo pouco e cumpro tudo. Palavra dada é dívida.",
+        "ideal": "Justiça. Mesmo quando a Ordem esqueceu o que ela significa.",
+        "bond": "Devo minha vida a quem me tirou da masmorra — e ainda não sei quem foi.",
+        "flaw": "Não recuo de uma ordem injusta... recuso. E recuso alto."
+      },
+      "portrait": ""
+    },
+    {
+      "id": "lyssa",
+      "name": "Lyssa",
+      "archetype": "A Ladina Cética",
+      "color": "#6a9a5b",
+      "attrs": {
+        "forca": 3,
+        "destreza": 9,
+        "conhecimento": 6,
+        "carisma": 4,
+        "resistencia": 5
+      },
+      "trait": "Desconfia, mas lembra cada ato de honestidade.",
+      "title": "Lyssa Mãos-Leves",
+      "class": "Ladina",
+      "race": "Meio-elfa",
+      "level": 3,
+      "hp_max": 8,
+      "proficiencies": [
+        "Furtividade",
+        "Prestidigitação",
+        "Percepção",
+        "Ferramentas de ladrão"
+      ],
+      "personality": {
+        "trait": "Conto as saídas de cada sala antes de contar as pessoas.",
+        "ideal": "Liberdade. Correntes são para quem acredita nelas.",
+        "bond": "Mira é a única que nunca me perguntou o que eu roubei.",
+        "flaw": "Se alguém é gentil demais comigo, procuro o golpe."
+      },
+      "portrait": ""
+    },
+    {
+      "id": "mira",
+      "name": "Mira",
+      "archetype": "A Erudita Frágil",
+      "color": "#5b7fbf",
+      "attrs": {
+        "forca": 2,
+        "destreza": 4,
+        "conhecimento": 9,
+        "carisma": 6,
+        "resistencia": 3
+      },
+      "trait": "Cria laços intelectuais; insiste em ir a missões perigosas.",
+      "title": "Mira Vellacourt",
+      "class": "Maga",
+      "race": "Humana",
+      "level": 3,
+      "hp_max": 6,
+      "proficiencies": [
+        "Arcanismo",
+        "História",
+        "Investigação",
+        "Línguas antigas"
+      ],
+      "personality": {
+        "trait": "Faço anotações sobre tudo, inclusive durante uma emboscada.",
+        "ideal": "Conhecimento. Nenhum saber deveria ficar trancado.",
+        "bond": "O Arquivo da guilda guarda a última carta do meu mestre.",
+        "flaw": "Subestimo o perigo quando há uma runa para decifrar."
+      },
+      "portrait": ""
+    },
+    {
+      "id": "senna",
+      "name": "Senna",
+      "archetype": "A Mercenária Pragmática",
+      "color": "#a8443c",
+      "attrs": {
+        "forca": 7,
+        "destreza": 6,
+        "conhecimento": 3,
+        "carisma": 3,
+        "resistencia": 6
+      },
+      "trait": "Nunca inicia vínculo; responde a provas de lealdade.",
+      "title": "Senna, a Lâmina Alugada",
+      "class": "Guerreira",
+      "race": "Meio-orc",
+      "level": 4,
+      "hp_max": 11,
+      "proficiencies": [
+        "Atletismo",
+        "Sobrevivência",
+        "Intimidação",
+        "Armas marciais"
+      ],
+      "personality": {
+        "trait": "Pago minhas contas e espero que paguem as suas.",
+        "ideal": "Pragmatismo. Honra não enche o estômago.",
+        "bond": "Tenho um irmão em algum lugar ao sul. Ele me deve um adeus.",
+        "flaw": "Trabalho melhor sozinha — e faço questão de que saibam disso."
+      },
+      "portrait": ""
+    },
+    {
+      "id": "bram",
+      "name": "Bram",
+      "archetype": "O Novato Idealista",
+      "color": "#d9823b",
+      "attrs": {
+        "forca": 5,
+        "destreza": 5,
+        "conhecimento": 5,
+        "carisma": 7,
+        "resistencia": 3
+      },
+      "trait": "Afinidade cresce rápido, mas regride se decepcionado.",
+      "title": "Bram Pé-de-Vento",
+      "class": "Bardo",
+      "race": "Halfling",
+      "level": 1,
+      "hp_max": 7,
+      "proficiencies": [
+        "Persuasão",
+        "Atuação",
+        "Intuição",
+        "Alaúde"
+      ],
+      "personality": {
+        "trait": "Acredito que toda briga acaba se alguém cantar alto o bastante.",
+        "ideal": "Esperança. A guilda pode voltar a ser o que era.",
+        "bond": "Entrei na guilda por causa das histórias da Vera.",
+        "flaw": "Quando alguém que admiro me decepciona, desmorono."
+      },
+      "portrait": ""
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "archetype": "A Guerreira Veterana",
+      "color": "#8a6fb0",
+      "attrs": {
+        "forca": 9,
+        "destreza": 4,
+        "conhecimento": 3,
+        "carisma": 3,
+        "resistencia": 8
+      },
+      "trait": "Liderança intimidante; o vínculo de Mentoria com Bram é o mais acessível.",
+      "title": "Vera Punho-de-Ferro",
+      "class": "Guerreira",
+      "race": "Anã",
+      "level": 6,
+      "hp_max": 14,
+      "proficiencies": [
+        "Atletismo",
+        "Intimidação",
+        "Medicina de campo",
+        "Armaduras pesadas"
+      ],
+      "personality": {
+        "trait": "Dou ordens como quem respira. Elogios, nem tanto.",
+        "ideal": "Dever. A guilda é a última muralha entre a vila e o escuro.",
+        "bond": "Enterrei metade da antiga guilda. Não enterro a outra metade.",
+        "flaw": "Confundo proteger com controlar."
+      },
+      "portrait": ""
+    }
   ],
   "affinity": {
-    "theo":  {"lyssa": -3, "mira": 1, "senna": -2, "bram": 2, "vera": 3},
-    "lyssa": {"theo": -3, "mira": 4, "senna": -1, "bram": 1, "vera": 0},
-    "mira":  {"theo": 1, "lyssa": 4, "senna": -2, "bram": 2, "vera": 1},
-    "senna": {"theo": -2, "lyssa": -1, "mira": -2, "bram": -1, "vera": 2},
-    "bram":  {"theo": 2, "lyssa": 1, "mira": 2, "senna": -1, "vera": 4},
-    "vera":  {"theo": 3, "lyssa": 0, "mira": 1, "senna": 2, "bram": 4}
+    "theo": {
+      "lyssa": -3,
+      "mira": 1,
+      "senna": -2,
+      "bram": 2,
+      "vera": 3
+    },
+    "lyssa": {
+      "theo": -3,
+      "mira": 4,
+      "senna": -1,
+      "bram": 1,
+      "vera": 0
+    },
+    "mira": {
+      "theo": 1,
+      "lyssa": 4,
+      "senna": -2,
+      "bram": 2,
+      "vera": 1
+    },
+    "senna": {
+      "theo": -2,
+      "lyssa": -1,
+      "mira": -2,
+      "bram": -1,
+      "vera": 2
+    },
+    "bram": {
+      "theo": 2,
+      "lyssa": 1,
+      "mira": 2,
+      "senna": -1,
+      "vera": 4
+    },
+    "vera": {
+      "theo": 3,
+      "lyssa": 0,
+      "mira": 1,
+      "senna": 2,
+      "bram": 4
+    }
   }
 }

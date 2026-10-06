@@ -14,11 +14,17 @@ func _initialize() -> void:
 	main._toggle_hero(m, "theo")
 	await _shot("2_party")
 	main._on_dispatch(m)
+	for i in 160:
+		await process_frame
+	await _shot("6_mapa")
+	main.show_result(main.last_result)
 	await _shot("3_resultado")
 	main.show_relations()
 	await _shot("4_relacoes")
 	main.show_book(5)
 	await _shot("5_livro")
+	main.show_book(2)
+	await _shot("7_livro_mira")
 	quit()
 
 func _shot(name: String) -> void:

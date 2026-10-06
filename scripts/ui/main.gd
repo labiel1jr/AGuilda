@@ -14,9 +14,13 @@ const C_BAD := Color("#d1603d")
 const RISK_COLORS := {"baixo": Color("#7fb069"), "medio": Color("#d4a94a"), "alto": Color("#d1603d"), "lendario": Color("#a26ad1")}
 const OUTCOME_COLORS := {"limpo": Color("#7fb069"), "custo": Color("#d4a94a"), "falha": Color("#d1603d")}
 
+const MagicMap := preload("res://scripts/ui/magic_map.gd")
+const GuildBook := preload("res://scripts/ui/guild_book.gd")
+
 var gs  # GameState
 var root: VBoxContainer
 var selected: Array = []
+var last_result := {}
 
 
 func _ready() -> void:
@@ -94,8 +98,9 @@ func show_hub() -> void:
 		row.add_child(_swatch(h.color))
 		row.add_child(_label("%s — %s" % [h.name, h.archetype], 14, C_TEXT))
 		row.add_child(_spacer())
-		var state: String = "Em missão" if h.busy else gs.FATIGUE_NAMES[h.fatigue]
+		var state: String = gs.hero_status(id)
 		row.add_child(_label(state, 13, _fatigue_color(h)))
+		row.add_child(_label("  PV %d/%d" % [h.hp, h.hp_max], 13, C_MUTED))
 		row.add_child(_label("  Moral %d" % h.morale, 13, C_MUTED))
 
 
@@ -177,7 +182,7 @@ func _render_party(m: Dictionary) -> void:
 		row.add_child(b)
 		row.add_child(_label("%s %d / %s %d" % [gs.ATTR_NAMES[m.primary].left(3), h.attrs[m.primary], gs.ATTR_NAMES[m.secondary].left(3), h.attrs[m.secondary]], 13, C_TEXT))
 		row.add_child(_spacer())
-		var state: String = reason if reason != "" else gs.FATIGUE_NAMES[h.fatigue]
+		var state: String = reason if reason != "" else gs.hero_status(id)
 		row.add_child(_label(state, 13, C_BAD if reason != "" else _fatigue_color(h)))
 
 	# Party selecionada
@@ -254,7 +259,80 @@ func _toggle_hero(m: Dictionary, id: String) -> void:
 func _on_dispatch(m: Dictionary) -> void:
 	var res: Dictionary = gs.dispatch(m, selected.duplicate())
 	selected = []
-	show_result(res)
+	last_result = res
+	show_map(res)
+
+
+# ================= Mapa Mágico =================
+
+func show_map(res: Dictionary) -> void:
+	_clear()
+	var m: Dictionary = res.mission
+	var body := HBoxContainer.new()
+	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	body.add_theme_constant_override("separation", 16)
+	root.add_child(body)
+
+	var frame := _panel(Color("#1a1420"))
+	frame.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	frame.size_flags_stretch_ratio = 2.6
+	body.add_child(frame)
+	var map = MagicMap.new()
+	map.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	map.clip_contents = true
+	frame.add_child(map)
+
+	var side := _panel(C_PANEL)
+	side.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	body.add_child(side)
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 8)
+	side.add_child(col)
+	col.add_child(_label("Mapa Mágico de Escrutínio", 13, C_MUTED))
+	col.add_child(_para(m.name, 20, C_GOLD))
+	col.add_child(_badge(gs.RISK_NAMES[m.risk], RISK_COLORS[m.risk].darkened(0.2)))
+	var chips := HFlowContainer.new()
+	chips.add_theme_constant_override("h_separation", 6)
+	chips.add_theme_constant_override("v_separation", 6)
+	col.add_child(chips)
+	var tokens := []
+	for id in res.party:
+		var h: Dictionary = gs.heroes[id]
+		chips.add_child(_badge(h.name, h.color.darkened(0.2)))
+		tokens.append({"name": h.name, "color": h.color})
+	var bar := ProgressBar.new()
+	bar.show_percentage = false
+	bar.max_value = 1.0
+	bar.custom_minimum_size.y = 10
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = C_GOLD
+	bar.add_theme_stylebox_override("fill", fill)
+	col.add_child(bar)
+	var narr := VBoxContainer.new()
+	narr.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	narr.add_theme_constant_override("separation", 10)
+	col.add_child(narr)
+	var foot := HBoxContainer.new()
+	col.add_child(foot)
+	var fast := _button("Acelerar ⏩", map.skip)
+	foot.add_child(fast)
+	foot.add_child(_spacer())
+	var go := _button("Ver Resultado", show_result.bind(res))
+	go.visible = false
+	foot.add_child(go)
+
+	var lines: Array = gs.map_narration(res)
+	map.waypoint_reached.connect(func(i: int):
+		var l := _para(lines[i], 15, C_TEXT)
+		l.modulate.a = 0.0
+		narr.add_child(l)
+		create_tween().tween_property(l, "modulate:a", 1.0, 0.8))
+	map.finished.connect(func():
+		fast.visible = false
+		go.visible = true)
+	map.set_process(true)
+	map.draw.connect(func(): bar.value = map.progress)
+	map.setup(m, tokens, gs.day * 1000 + gs.missions.find(m))
 
 
 # ================= Resolução =================
@@ -345,58 +423,10 @@ func show_relations() -> void:
 
 func show_book(index: int) -> void:
 	_clear()
-	var id: String = gs.hero_order[index]
-	var h: Dictionary = gs.heroes[id]
-	var nav := HBoxContainer.new()
-	root.add_child(nav)
-	nav.add_child(_button("◀", show_book.bind(posmod(index - 1, gs.hero_order.size()))))
-	nav.add_child(_label("  %s (%d/%d)  " % [h.name, index + 1, gs.hero_order.size()], 18, C_GOLD))
-	nav.add_child(_button("▶", show_book.bind(posmod(index + 1, gs.hero_order.size()))))
-	nav.add_child(_spacer())
-	nav.add_child(_button("Fechar o livro", show_hub))
-
-	var spread := HBoxContainer.new()
-	spread.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	spread.add_theme_constant_override("separation", 4)
-	root.add_child(spread)
-
-	var left := _panel(C_PARCHMENT)
-	left.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	spread.add_child(left)
-	var lc := VBoxContainer.new()
-	left.add_child(lc)
-	var title := HBoxContainer.new()
-	lc.add_child(title)
-	title.add_child(_swatch(h.color, 40))
-	title.add_child(_label("  " + h.name, 26, C_INK))
-	lc.add_child(_label(h.archetype, 16, C_INK.lightened(0.3)))
-	lc.add_child(_label("Moral: " + "●".repeat(h.morale) + "○".repeat(10 - h.morale), 16, Color("#8a6a1f")))
-	lc.add_child(_label("Status: " + ("Em missão" if h.busy else gs.FATIGUE_NAMES[h.fatigue]), 15, C_INK))
-	lc.add_child(_para(h.trait, 14, C_INK))
-	lc.add_child(_label("Histórico de missões", 16, C_INK))
-	if h.history.is_empty():
-		lc.add_child(_label("Ainda não foi despachado.", 13, C_INK.lightened(0.4)))
-	for e in h.history:
-		var icon: String = {"limpo": "✓", "custo": "~", "falha": "✗"}[e.result]
-		lc.add_child(_label("%s  Dia %d — %s" % [icon, e.day, e.mission], 13, C_INK))
-
-	var right := _panel(C_PARCHMENT)
-	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	spread.add_child(right)
-	var rc := VBoxContainer.new()
-	right.add_child(rc)
-	rc.add_child(_label("Atributos", 16, C_INK))
-	var attrs := HBoxContainer.new()
-	rc.add_child(attrs)
-	for k in gs.ATTRS:
-		attrs.add_child(_cell("%s\n%d" % [gs.ATTR_NAMES[k].left(3).to_upper(), h.attrs[k]], C_INK.lightened(0.15), C_PARCHMENT, gs.ATTR_NAMES[k]))
-	rc.add_child(_label("Afinidades", 16, C_INK))
-	for other in gs.hero_order:
-		if other == id:
-			continue
-		var v: int = gs.pair_value(id, other)
-		var lbl: String = gs.bond_label(id, other)
-		rc.add_child(_label("%s  %+d  [%s]%s" % [gs.heroes[other].name, v, gs.band(v).label, ("  · " + lbl) if lbl != "" else ""], 14, _aff_color(v).darkened(0.4)))
+	var book = GuildBook.new()
+	root.add_child(book)
+	book.setup(self, gs, index)
+	book.closed.connect(show_hub)
 
 
 # ================= Fim =================
@@ -440,6 +470,21 @@ func _para(text: String, size: int, color: Color) -> Label:
 	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	return l
+
+
+func _badge(text: String, color: Color) -> PanelContainer:
+	var p := PanelContainer.new()
+	p.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = color
+	sb.set_corner_radius_all(4)
+	sb.content_margin_left = 8
+	sb.content_margin_right = 8
+	sb.content_margin_top = 2
+	sb.content_margin_bottom = 2
+	p.add_theme_stylebox_override("panel", sb)
+	p.add_child(_label(text, 13, Color.WHITE))
+	return p
 
 
 func _button(text: String, cb: Callable) -> Button:

@@ -1,0 +1,8 @@
+{
+  "_doc": "Livro da Guilda (GDD §14). Seções trancadas são slots de expansão: quando a versão chegar, a seção ganha conteúdo e sai desta lista.",
+  "locked_sections": [
+    {"page": "left",  "title": "Inventário Detalhado", "version": "v0.4", "desc": "Equipamento, itens de missão e relíquias da guilda."},
+    {"page": "right", "title": "Árvore de Habilidades", "version": "v0.4", "desc": "Talentos desbloqueados por nível e por vínculos."},
+    {"page": "right", "title": "Conquistas",            "version": "v1.0", "desc": "Feitos marcantes e títulos conquistados nas missões."}
+  ]
+}

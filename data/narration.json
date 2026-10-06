@@ -1,0 +1,21 @@
+{
+  "_doc": "Narração do Mapa Mágico (GDD §13). Um texto por waypoint: 1 = partida, 2 = bioma, 3 = presságio do resultado. {party} e {lider} são substituídos.",
+  "start": [
+    "O mapa se acende. {party} cruza os portões da guilda.",
+    "A tinta dourada se move: {party} toma a estrada.",
+    "{lider} assume a frente. O pergaminho acompanha cada passo."
+  ],
+  "biomes": {
+    "floresta": ["As copas fecham o céu. Os marcadores avançam devagar entre as árvores.", "Algo se move entre os troncos, acompanhando a party."],
+    "pantano":  ["A névoa do pântano embaça o mapa. Os passos afundam na lama.", "Luzes fracas piscam sobre a água parada."],
+    "montanha": ["A trilha sobe em zigue-zague. O vento apaga as vozes.", "Pedras rolam do alto. Alguém olha para cima tarde demais."],
+    "estrada":  ["Poeira e carroças. A estrada parece tranquila demais.", "Uma taverna à beira da estrada; ninguém para."],
+    "cidade":   ["Becos e telhados. O mapa mostra mais olhos do que rostos.", "Os guardas da cidade trocam de turno. É agora ou nunca."]
+  },
+  "outcome": {
+    "limpo": ["Os marcadores brilham firmes. O plano está funcionando.", "{lider} dá o sinal — e todos se movem como um só."],
+    "custo": ["Um dos marcadores tremula. Algo saiu do plano.", "O avanço continua, mas mais lento. Alguém está ferido."],
+    "falha": ["O brilho dos marcadores enfraquece. O pergaminho esfria nas suas mãos.", "Os marcadores se separam. Ninguém deveria estar sozinho agora."]
+  },
+  "hidden": "Uma mancha escura surge no mapa perto de {heroi}. Algo que não estava no pergaminho."
+}

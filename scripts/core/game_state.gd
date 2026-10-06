@@ -57,6 +57,8 @@ var reputation := 0
 var dispatched_today := 0
 var pending_events := []  # eventos de vínculo aguardando escolha do jogador
 var rng := RandomNumberGenerator.new()
+var narration := {}
+var book := {}
 
 
 func _ready() -> void:
@@ -78,8 +80,14 @@ func new_game(seed_value: int = -1) -> void:
 		heroes[h.id] = {
 			"id": h.id, "name": h.name, "archetype": h.archetype, "color": Color(h.color),
 			"trait": h.trait, "attrs": attrs,
+			# Ficha (GDD §14) — campos opcionais no JSON para permitir expansão
+			"title": h.get("title", h.name), "class": h.get("class", ""), "race": h.get("race", ""),
+			"level": int(h.get("level", 1)), "hp_max": int(h.get("hp_max", 8)),
+			"proficiencies": h.get("proficiencies", []), "personality": h.get("personality", {}),
+			"portrait": h.get("portrait", ""),
 			"fatigue": 0, "morale": 6, "busy": false, "history": [],
 		}
+		heroes[h.id].hp = heroes[h.id].hp_max
 		hero_order.append(h.id)
 	affinity.clear()
 	for a in hd.affinity:
@@ -96,6 +104,8 @@ func new_game(seed_value: int = -1) -> void:
 		mm.status = "aberta"
 		mm.result = {}
 		missions.append(mm)
+	narration = _load_json("res://data/narration.json")
+	book = _load_json("res://data/book.json")
 	day = 1
 	reputation = 0
 	dispatched_today = 0
@@ -190,11 +200,32 @@ func is_over() -> bool:
 	return true
 
 
+## Modificador estilo D&D para a escala 1–10 do jogo: 1–2 → −2 · 3–4 → −1 · 5–6 → 0 · 7–8 → +1 · 9–10 → +2
+static func attr_mod(v: int) -> int:
+	return floori((v - 5) / 2.0)
+
+
+## Status exibido (Livro e elenco).
+func hero_status(id: String) -> String:
+	var h: Dictionary = heroes[id]
+	if h.busy:
+		return "Em missão"
+	if h.hp <= 0:
+		return "Incapacitado"
+	if h.fatigue >= 2:
+		return "Exausto"
+	if h.hp < h.hp_max:
+		return "Ferido"
+	return FATIGUE_NAMES[h.fatigue]
+
+
 ## "" se pode ir; senão, o motivo.
 func unavailable_reason(id: String, mission: Dictionary) -> String:
 	var h: Dictionary = heroes[id]
 	if h.busy:
 		return "Em missão"
+	if h.hp <= 0:
+		return "Incapacitado"
 	if h.fatigue >= 2:
 		return "Exausto"
 	if h.morale <= 1:
@@ -263,6 +294,17 @@ func dispatch(mission: Dictionary, party: Array) -> Dictionary:
 			heroes[act.a].fatigue = 2
 			heroes[act.b].fatigue = 2
 
+	# Dano (PV): custo fere um membro; falha fere todos (exceto o protegido)
+	var hurt := []
+	if result == "custo":
+		hurt.append(party[rng.randi_range(0, party.size() - 1)])
+	elif result == "falha":
+		hurt = party.filter(func(id): return id != protected)
+	var dmg: int = {"baixo": 1, "medio": 2, "alto": 3, "lendario": 4}[mission.risk]
+	for id in hurt:
+		heroes[id].hp = max(0, heroes[id].hp - dmg)
+		lines.append("%s voltou ferido (−%d PV)." % [heroes[id].name, dmg])
+
 	# Moral e reputação
 	var morale_delta: int = {"limpo": 1, "custo": 0, "falha": -1}[result]
 	for id in party:
@@ -296,6 +338,26 @@ func dispatch(mission: Dictionary, party: Array) -> Dictionary:
 	return {"mission": mission, "party": party, "score": sc, "outcome": result, "lines": lines, "affinity": aff_changes}
 
 
+## Narração do Mapa Mágico: uma linha por waypoint (GDD §13).
+func map_narration(res: Dictionary) -> Array:
+	var m: Dictionary = res.mission
+	var party: Array = res.party
+	var names := ", ".join(party.map(func(id): return heroes[id].name))
+	var lider: String = heroes[party[0]].name
+	var lines := []
+	lines.append(_pick(narration.start))
+	lines.append(_pick(narration.biomes.get(m.get("biome", "estrada"), narration.biomes.estrada)))
+	var third: String = _pick(narration.outcome[res.outcome])
+	if res.score.hidden != 0:
+		third = String(narration.hidden).replace("{heroi}", heroes[m.hidden.hero].name) + " " + third
+	lines.append(third)
+	return lines.map(func(l): return String(l).replace("{party}", names).replace("{lider}", lider))
+
+
+func _pick(arr: Array) -> String:
+	return arr[rng.randi_range(0, arr.size() - 1)]
+
+
 func _change_logged(a: String, b: String, dab: int, dba: int, log_out: Array) -> void:
 	var before := pair_value(a, b)
 	change_affinity(a, b, dab, dba)
@@ -307,8 +369,10 @@ func end_day() -> Array:
 	var lines := []
 	for id in hero_order:
 		var h: Dictionary = heroes[id]
-		if not h.busy and h.fatigue > 0:
-			h.fatigue = max(0, h.fatigue - (2 if h.attrs.resistencia >= 7 else 1))
+		if not h.busy:
+			if h.fatigue > 0:
+				h.fatigue = max(0, h.fatigue - (2 if h.attrs.resistencia >= 7 else 1))
+			h.hp = min(h.hp_max, h.hp + max(1, h.hp_max / 4))
 		h.busy = false
 	for m in missions:
 		if m.status == "aberta" and m.day <= day and day >= expires_on(m):
