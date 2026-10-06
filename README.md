@@ -41,6 +41,8 @@ O jogo é dividido em **atos** e **capítulos**. Cada capítulo abre com uma cen
 | ![Ultimato](docs/img/16_ultimato.png) | ![Ato 2](docs/img/17_ato2.png) |
 | **Epílogo** | **Livro com retrato** |
 | ![Epílogo](docs/img/19_epilogo.png) | ![Livro](docs/img/5_livro.png) |
+| **Mapa Mágico — floresta** | **Resultado com o cartaz riscado** |
+| ![Mapa floresta](docs/img/20_mapa_floresta.png) | ![Resultado](docs/img/3_resultado.png) |
 | **Bastidores no hub** | **Cena de bastidor** |
 | ![Bastidores](docs/img/8_hub_bastidores.png) | ![Cena de bastidor](docs/img/9_bastidor.png) |
 
@@ -113,6 +115,9 @@ Requer **Godot 4.7**. Abra a pasta no editor e pressione **F5**.
 | `data/ultimatum.json` | Texto e escolhas do ultimato por moral baixa |
 | `data/endings.json` | Finais, desfechos por herói e por vínculo |
 | `scripts/ui/portrait.gd` | Retrato procedural dos heróis |
+| `art/MapParts/<tipo>/` | Peças de mapa a nanquim (trees, hills, mountains, towns, cities) usadas pelo Mapa Mágico |
+| `art/enemies/` | Cartazes dos inimigos (mural, destino do mapa, resultado) |
+| `art/tools/` | Scripts que preparam retratos e cartazes (conversão e remoção de fundo) |
 | `data/book.json` | Seções trancadas do Livro (slots de expansão por versão) |
 | `scripts/ui/main.gd` | Telas, montadas por código |
 | `scripts/ui/magic_map.gd` | Mapa Mágico: desenho do bioma, rota, waypoints e marcadores |
