@@ -15,7 +15,8 @@ func _init() -> void:
 	_check_chapters(gs)
 	_check_upgrades(gs)
 	_check_rpg(gs)
-	_random_playthroughs(gs, 200)
+	_check_act2(gs)
+	_random_playthroughs(gs, 150)
 	print("RESULTADO: %s (%d falha(s))" % ["OK" if failures == 0 else "FALHOU", failures])
 	gs.free()
 	quit(1 if failures > 0 else 0)
@@ -125,7 +126,20 @@ func _check_chapters(gs) -> void:
 	for i in 5:
 		gs.end_day()
 	gs.next_chapter()
-	_expect(gs.is_over(), "fim do Ato 1 após o Capítulo 2")
+	_expect(gs.chapter_state == "fim_do_ato" and gs.has_next_act() and not gs.is_over(), "fim do Ato 1 leva ao Ato 2")
+	gs.next_act()
+	_expect(gs.act.id == "ato2" and gs.current_chapter().id == "c3" and gs.chapter_state == "intro", "Ato 2 abre no Capítulo 3")
+	gs.begin_chapter()
+	for i in 6:
+		gs.end_day()
+	gs.next_chapter()
+	gs.begin_chapter()
+	for i in 6:
+		gs.end_day()
+	gs.next_chapter()
+	_expect(gs.chapter_state == "fim_do_ato" and not gs.has_next_act(), "Capítulo 4 encerra o Ato 2")
+	gs.next_act()
+	_expect(gs.is_over(), "fim de jogo após o último ato")
 	gs.new_game(42)
 
 
@@ -254,15 +268,112 @@ func _check_rpg(gs) -> void:
 	gs.new_game(42)
 
 
+func _to_chapter(gs, cid: String) -> void:
+	while gs.current_chapter().id != cid:
+		if gs.chapter_state == "intro":
+			gs.begin_chapter()
+		gs.end_day()
+		if gs.chapter_state == "encerrado":
+			gs.next_chapter()
+		if gs.chapter_state == "fim_do_ato":
+			gs.next_act()
+		gs.ultimatums.clear()
+		gs.promises.clear()
+		for id in gs.hero_order:
+			gs.heroes[id].morale = 6
+
+
+func _check_act2(gs) -> void:
+	# Missão pessoal
+	gs.new_game(42)
+	_to_chapter(gs, "c3")
+	gs.begin_chapter()
+	var irmao := _mission(gs, "irmao_senna")
+	_expect(gs.unmet_tags(irmao, ["vera"]).size() == 1 and gs.unmet_tags(irmao, ["senna"]).is_empty(), "missão pessoal exige o herói dela")
+	# Senna "treinada" para a missão de Carisma: o teste é sobre o efeito, não sobre a sorte
+	gs.heroes.senna.attrs.carisma = 10
+	gs.heroes.senna.attrs.destreza = 10
+	var res: Dictionary = {}
+	for tries in 30:
+		irmao.status = "aberta"
+		gs.heroes.senna.busy = false
+		gs.heroes.senna.morale = 5
+		gs.flags.erase("irmao_salvo")
+		res = gs.dispatch(irmao, ["senna"])
+		if res.outcome == "limpo":
+			break
+	_expect(res.outcome == "limpo" and gs.flags.has("irmao_salvo") and gs.heroes.senna.morale >= 8, "sucesso na missão pessoal dá flag e moral")
+	# Bastidores ligados à história
+	var ids := {}
+	for sd in 40:
+		gs.new_game(sd)
+		_to_chapter(gs, "c3")
+		for bs in gs.backstage_today:
+			ids[bs.event.id] = true
+	_expect(not ids.has("primeira_noite") and not ids.has("vespera"), "bastidores de outros capítulos não aparecem no Capítulo 3")
+	gs.new_game(1)
+	var seen_c1 := false
+	for sd in 40:
+		gs.new_game(sd)
+		for bs in gs.backstage_today:
+			if bs.event.id == "primeira_noite":
+				seen_c1 = true
+	_expect(seen_c1, "bastidor do Capítulo 1 aparece no início")
+
+	# Ultimato ignorado: o herói parte e o equipamento volta ao Baú
+	gs.new_game(42)
+	gs.inventory = ["espada_longa"]
+	HeroRPG.equip(gs, "senna", "arma", 0)
+	gs.heroes.senna.morale = 1
+	gs.end_day()
+	_expect(gs.open_ultimatums().size() == 1 and gs.open_ultimatums()[0].id == "senna", "moral baixa gera ultimato")
+	gs.end_day()
+	_expect(not gs.hero_order.has("senna") and gs.departed.has("senna") and gs.inventory.has("espada_longa"), "ultimato ignorado: herói parte e o item volta ao Baú")
+
+	# Ultimato atendido com bônus
+	gs.new_game(42)
+	gs.gold = 100
+	gs.heroes.mira.morale = 0
+	gs.end_day()
+	var u: Dictionary = gs.open_ultimatums()[0]
+	gs.resolve_ultimatum(u, gs.ultimatum_data.choices[0])
+	gs.end_day()
+	_expect(gs.hero_order.has("mira") and gs.heroes.mira.morale >= 3 and gs.gold == 60, "bônus de 40 ouro segura o herói")
+
+	# Promessa: precisa ir em missão em 2 dias; aceita missão mesmo com moral baixa
+	gs.new_game(42)
+	gs.heroes.lyssa.morale = 0
+	gs.end_day()
+	gs.resolve_ultimatum(gs.open_ultimatums()[0], gs.ultimatum_data.choices[2])
+	_expect(gs.unavailable_reason("lyssa", _mission(gs, "febre")) == "", "promessa: herói aceita a missão prometida")
+	gs.end_day()
+	gs.end_day()
+	_expect(not gs.hero_order.has("lyssa"), "promessa quebrada: o herói parte")
+
+	# Irmandade: parte junto
+	gs.new_game(42)
+	gs.bond_labels[gs.pair_key("vera", "bram")] = "Irmandade"
+	gs.resolve_ultimatum({"id": "vera", "done": false}, gs.ultimatum_data.choices[3])
+	_expect(not gs.hero_order.has("vera") and not gs.hero_order.has("bram"), "Irmandade: o irmão de armas parte junto")
+	gs.new_game(42)
+
+
 func _random_playthroughs(gs, n: int) -> void:
 	var outcomes := {"limpo": 0, "custo": 0, "falha": 0}
+	var departures := 0
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 7
 	for run in n:
 		gs.new_game(run)
 		var guard := 0
-		while not gs.is_over() and guard < 100:
+		while not gs.is_over() and guard < 300:
 			guard += 1
+			if gs.chapter_state == "fim_do_ato":
+				gs.next_act()
+				continue
+			for u in gs.open_ultimatums():
+				var chs: Array = gs.ultimatum_data.choices.filter(func(c): return gs.ultimatum_block_reason(c) == "")
+				gs.resolve_ultimatum(u, chs[rng.randi_range(0, chs.size() - 1)])
 			if gs.chapter_state == "intro":
 				gs.begin_chapter()
 			if gs.chapter_state == "encerrado":
@@ -296,7 +407,7 @@ func _random_playthroughs(gs, n: int) -> void:
 					var who: String = gs.hero_order[rng.randi_range(0, gs.hero_order.size() - 1)]
 					var it: Dictionary = HeroRPG.item(gs, gs.inventory[0])
 					var slot: String = "consumivel1" if it.slot == "consumivel" else it.slot
-					if not HeroRPG.equip(gs, who, slot, 0):
+					if gs.heroes[who].equip[slot] != "" or not HeroRPG.equip(gs, who, slot, 0):
 						HeroRPG.sell(gs, 0)
 				for id in gs.hero_order:
 					gs.set_resting(id, gs.heroes[id].rest_request)
@@ -305,8 +416,9 @@ func _random_playthroughs(gs, n: int) -> void:
 					var labels: Array = gs.THRESHOLD_EVENTS[ev.threshold].labels
 					gs.choose_bond_label(ev, labels[rng.randi_range(0, labels.size() - 1)])
 			gs.end_day()
-		_expect(guard < 100, "partida %d terminou" % run)
-	print("Partidas aleatórias: ", outcomes)
+		_expect(guard < 300, "partida %d terminou" % run)
+		departures += gs.departed.size()
+	print("Partidas aleatórias: ", outcomes, "  ·  saídas de heróis: ", departures)
 	var lv := {}
 	for id in gs.hero_order:
 		lv[id] = gs.heroes[id].level

@@ -52,7 +52,7 @@ func show_hub() -> void:
 		"encerrado":
 			show_chapter_end()
 			return
-		"fim_do_ato":
+		"fim_do_ato", "fim_de_jogo":
 			show_ending()
 			return
 	var ch: Dictionary = gs.current_chapter()
@@ -137,6 +137,19 @@ func show_hub() -> void:
 		ccol.add_child(tb)
 
 	# Bastidores
+	# Ultimatos (moral baixa) vêm antes de tudo
+	for u in gs.open_ultimatums():
+		var uc := _panel(Color("#5a2a22"))
+		ccol.add_child(uc)
+		var ur := HBoxContainer.new()
+		uc.add_child(ur)
+		ur.add_child(_swatch(gs.heroes[u.id].color))
+		ur.add_child(_label(" ⚠ Ultimato: %s quer ir embora" % gs.heroes[u.id].name, 15, C_TEXT))
+		ur.add_child(_spacer())
+		ur.add_child(_button("Conversar", show_ultimatum.bind(u)))
+	for pid in gs.promises:
+		ccol.add_child(_label("⏳ Prometido: %s precisa ir em missão até o dia %d do capítulo" % [gs.heroes[pid].name, int(gs.promises[pid]) - gs.chapter_start + 1], 12, C_GOLD))
+
 	ccol.add_child(_label("Bastidores", 20, C_GOLD))
 	var pending: Array = gs.backstage_today.filter(func(bs): return not bs.done)
 	if pending.is_empty():
@@ -917,6 +930,32 @@ func _toast(msg: String, next: Callable) -> void:
 	root.add_child(_button("Continuar", next))
 
 
+# ================= Ultimato =================
+
+func show_ultimatum(u: Dictionary) -> void:
+	_clear()
+	var h: Dictionary = gs.heroes[u.id]
+	root.add_child(_label("Ultimato", 16, C_BAD))
+	var head := HBoxContainer.new()
+	root.add_child(head)
+	head.add_child(_swatch(h.color, 28))
+	head.add_child(_label("  %s está no limite" % h.name, 28, C_GOLD))
+	root.add_child(_label("Moral %d/10   ·   %s   ·   Nível %d" % [h.morale, gs.hero_status(u.id), h.level], 15, C_TEXT))
+	var p := _panel(C_PARCHMENT)
+	root.add_child(p)
+	p.add_child(_para(gs.ultimatum_text(u.id, gs.ultimatum_data.text), 17, C_INK))
+	root.add_child(_para("Se você não responder hoje, %s parte amanhã — e o equipamento fica no Baú." % h.name, 13, C_MUTED))
+	for choice in gs.ultimatum_data.choices:
+		var reason: String = gs.ultimatum_block_reason(choice)
+		var b := _button(gs.ultimatum_text(u.id, choice.label) + ("" if reason == "" else "  (%s)" % reason), func():
+			_toast("\n".join(gs.resolve_ultimatum(u, choice)), show_hub))
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.disabled = reason != ""
+		root.add_child(b)
+	root.add_child(_spacer_v())
+	root.add_child(_button("◀ Voltar (decidir depois)", show_hub))
+
+
 # ================= Fim do Ato =================
 
 func show_ending() -> void:
@@ -934,8 +973,17 @@ func show_ending() -> void:
 	for key in gs.bond_labels:
 		var ids: PackedStringArray = key.split("|")
 		root.add_child(_label("✦ %s & %s — %s" % [gs.heroes[ids[0]].name, gs.heroes[ids[1]].name, gs.bond_labels[key]], 15, C_TEXT))
+	for did in gs.departed:
+		root.add_child(_label("✗ %s deixou a guilda" % gs.heroes[did].name, 15, C_BAD))
 	root.add_child(_spacer_v())
-	root.add_child(_button("Novo jogo", _on_new_game))
+	if gs.chapter_state == "fim_do_ato" and gs.has_next_act():
+		var nxt: Dictionary = gs.chapters_data.acts[gs.act_index + 1]
+		root.add_child(_button("Continuar: " + nxt.title, func():
+			gs.next_act()
+			show_hub()))
+	else:
+		root.add_child(_label("Fim do jogo — por enquanto. Obrigado por comandar o Corvo Cinzento.", 16, C_GOLD))
+		root.add_child(_button("Novo jogo", _on_new_game))
 
 
 func _on_new_game() -> void:

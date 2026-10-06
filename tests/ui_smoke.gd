@@ -88,6 +88,19 @@ func _initialize() -> void:
 	gs.chapter_state = "fim_do_ato"
 	main.show_hub()
 	await process_frame
+	gs.next_act()
+	main.show_hub()
+	await process_frame
+	gs.begin_chapter()
+	gs.heroes.senna.morale = 0
+	gs.ultimatums = [{"id": "senna", "done": false}]
+	main.show_hub()
+	await process_frame
+	main.show_ultimatum(gs.ultimatums[0])
+	await process_frame
+	gs.chapter_state = "fim_de_jogo"
+	main.show_hub()
+	await process_frame
 	# PV e incapacitado
 	gs.heroes.mira.hp = 0
 	assert(gs.unavailable_reason("mira", m) == "Incapacitado")

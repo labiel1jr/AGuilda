@@ -1,0 +1,30 @@
+{
+  "_doc": "Ultimato (GDD §5.7): herói com moral <= threshold ameaça sair. Ignorado por um dia, ele parte. Escolhas: cost (ouro), morale, rest (descansa hoje), promise (precisa ir em missão em até N dias), leave (parte agora).",
+  "threshold": 1,
+  "text": "{a} deixa uma mochila arrumada ao lado da porta do seu escritório. \"Ou algo muda aqui, ou eu vou embora amanhã.\"",
+  "choices": [
+    {
+      "label": "Pagar um bônus pelo serviço (40 ouro)",
+      "cost": 40,
+      "morale": 3,
+      "result": "{a} conta as moedas devagar. \"Isso não resolve tudo. Mas é um começo.\""
+    },
+    {
+      "label": "Dar uma folga paga hoje",
+      "rest": true,
+      "morale": 2,
+      "result": "{a} passa o dia longe de tudo. Volta mais leve."
+    },
+    {
+      "label": "Prometer a próxima missão importante",
+      "promise": 2,
+      "morale": 1,
+      "result": "\"Dois dias\", diz {a}. \"Se eu não sair desta porta em dois dias, eu saio de vez.\""
+    },
+    {
+      "label": "Deixar partir",
+      "leave": true,
+      "result": "{a} pega a mochila. Não olha para trás."
+    }
+  ]
+}

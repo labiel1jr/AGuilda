@@ -62,6 +62,13 @@ var classes_data := {}
 var items_data := {}
 var inventory := []        # Baú da Guilda: ids de itens
 var recruits := []         # heróis que ainda vão entrar (recruit_chapter)
+
+# Atos e saída por moral (GDD §5.7)
+var act_index := 0
+var ultimatum_data := {}
+var ultimatums := []       # [{id, done}] — ultimatos abertos hoje
+var promises := {}         # id -> último dia para ser despachado
+var departed := []         # ids de quem deixou a guilda
 var rng := RandomNumberGenerator.new()
 var narration := {}
 var book := {}
@@ -178,7 +185,12 @@ func new_game(seed_value: int = -1) -> void:
 	trained_today = false
 	pair_history.clear()
 	chapters_data = _load_json("res://data/chapters.json")
+	act_index = 0
 	act = chapters_data.acts[0]
+	ultimatum_data = _load_json("res://data/ultimatum.json")
+	ultimatums.clear()
+	promises.clear()
+	departed.clear()
 	flags.clear()
 	chapter_result = {}
 	_start_chapter(0)
@@ -265,7 +277,21 @@ func board() -> Array:
 
 
 func is_over() -> bool:
-	return chapter_state == "fim_do_ato"
+	return chapter_state == "fim_de_jogo"
+
+
+func has_next_act() -> bool:
+	return act_index + 1 < chapters_data.acts.size()
+
+
+## Depois da tela de fim de ato: próximo ato ou fim de jogo.
+func next_act() -> void:
+	if has_next_act():
+		act_index += 1
+		act = chapters_data.acts[act_index]
+		_start_chapter(0)
+	else:
+		chapter_state = "fim_de_jogo"
 
 
 # ---------- capítulos ----------
@@ -473,7 +499,7 @@ func unavailable_reason(id: String, mission: Dictionary) -> String:
 		return "Incapacitado"
 	if h.fatigue >= 2:
 		return "Exausto"
-	if h.morale <= 1:
+	if h.morale <= 1 and not promises.has(id):
 		return "Recusa (moral baixa)"
 	for tag in mission.get("tags", []):
 		if tag.type == "forbid_hero" and tag.hero == id:
@@ -492,6 +518,8 @@ func unmet_tags(mission: Dictionary, party: Array) -> Array:
 					ok = true
 			if not ok:
 				out.append(tag.text)
+		elif tag.type == "requires_hero" and not party.has(tag.hero):
+			out.append(tag.text)
 		elif tag.type == "min_party" and party.size() < int(tag.min):
 			out.append(tag.text)
 	return out
@@ -612,6 +640,17 @@ func dispatch(mission: Dictionary, party: Array, prepared: Dictionary = {}) -> D
 		lines.append("%s culpa %s pelo fracasso." % [heroes[pr[0]].name, heroes[pr[1]].name])
 		_change_logged(pr[0], pr[1], -2, -1, aff_changes)
 
+	var fx: Dictionary = mission.get("effects", {}).get(result, {})
+	for hid in fx.get("morale", {}):
+		if heroes.has(hid):
+			heroes[hid].morale = clampi(heroes[hid].morale + int(fx.morale[hid]), 0, 10)
+	if fx.has("flag") and not flags.has(fx.flag):
+		flags.append(fx.flag)
+	if fx.has("text"):
+		lines.append(fx.text)
+	for id in party:
+		promises.erase(id)
+
 	mission.status = "concluida"
 	mission.result = {"outcome": result, "party": party.duplicate(), "day": day}
 	lines = rpg_lines + lines
@@ -675,6 +714,7 @@ func end_day() -> Array:
 			reputation = max(0, reputation - 1)
 			lines.append("A missão \"%s\" expirou. A reputação da guilda caiu." % m.name)
 	lines.append_array(_apply_neglect())
+	lines.append_array(_process_departures())
 	day += 1
 	dispatched_today = 0
 	if chapter_over:
@@ -685,11 +725,82 @@ func end_day() -> Array:
 		h.rest_request = h.fatigue >= 2 or h.hp <= h.hp_max / 3
 		if h.rest_request:
 			lines.append("%s pede um dia de descanso." % h.name)
+	for id in hero_order:
+		if heroes[id].morale <= int(ultimatum_data.threshold) and not promises.has(id):
+			ultimatums.append({"id": id, "done": false})
+			lines.append("⚠ %s ameaça deixar a guilda!" % heroes[id].name)
 	if not backstage_today.is_empty():
 		lines.append("Há movimento nos bastidores da guilda (%d cena(s))." % backstage_today.size())
 	for m in missions:
 		if m.status == "aberta" and m.day == day:
 			lines.append("Novo pedido no mural: \"%s\"." % m.name)
+	return lines
+
+
+# ---------- saída por moral baixa (GDD §5.7) ----------
+
+func open_ultimatums() -> Array:
+	return ultimatums.filter(func(u): return not u.done)
+
+
+func ultimatum_text(id: String, text: String) -> String:
+	return text.replace("{a}", heroes[id].name)
+
+
+func ultimatum_block_reason(choice: Dictionary) -> String:
+	if gold < int(choice.get("cost", 0)):
+		return "Ouro insuficiente"
+	return ""
+
+
+func resolve_ultimatum(u: Dictionary, choice: Dictionary) -> Array:
+	var id: String = u.id
+	var h: Dictionary = heroes[id]
+	var lines := [ultimatum_text(id, choice.result)]
+	u.done = true
+	if choice.get("leave", false):
+		lines.append_array(_depart(id))
+		return lines
+	gold -= int(choice.get("cost", 0))
+	h.morale = clampi(h.morale + int(choice.get("morale", 0)), 0, 10)
+	if choice.get("rest", false):
+		set_resting(id, true)
+	if choice.has("promise"):
+		promises[id] = day + int(choice.promise) - 1
+	return lines
+
+
+## Ultimatos ignorados e promessas vencidas viram partida.
+func _process_departures() -> Array:
+	var lines := []
+	for u in ultimatums:
+		if not u.done and hero_order.has(u.id):
+			lines.append("%s cansou de esperar uma resposta." % heroes[u.id].name)
+			lines.append_array(_depart(u.id))
+	ultimatums.clear()
+	for id in promises.keys():
+		if day >= int(promises[id]) and hero_order.has(id):
+			lines.append("%s esperou a missão prometida. Ela não veio." % heroes[id].name)
+			lines.append_array(_depart(id))
+	return lines
+
+
+func _depart(id: String) -> Array:
+	if not hero_order.has(id):
+		return []
+	var h: Dictionary = heroes[id]
+	for slot in HeroRPG.SLOTS:
+		HeroRPG.unequip(self, id, slot)
+	hero_order.erase(id)
+	departed.append(id)
+	promises.erase(id)
+	h.resting = false
+	var lines := ["%s deixou a Guilda do Corvo Cinzento. O equipamento ficou no Baú." % h.name]
+	# Irmandade — "Até o Fim" (GDD §5.5): o irmão de armas parte junto
+	for other in hero_order.duplicate():
+		if bond_label(id, other) == "Irmandade":
+			lines.append("Até o Fim: %s não fica onde %s não está." % [heroes[other].name, h.name])
+			lines.append_array(_depart(other))
 	return lines
 
 
@@ -774,6 +885,10 @@ func _candidate_pairs(ev: Dictionary) -> Array:
 				continue
 			var v := pair_value(a, b)
 			if ev.has("min") and v < int(ev.min):
+				continue
+			if ev.has("chapters") and not ev.chapters.has(current_chapter().id):
+				continue
+			if ev.has("requires_flag") and not flags.has(ev.requires_flag):
 				continue
 			if ev.has("max") and v > int(ev.max):
 				continue

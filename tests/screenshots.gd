@@ -59,6 +59,15 @@ func _initialize() -> void:
 	await _shot("5_livro")
 	main.show_book(2)
 	await _shot("7_livro_mira")
+	gs.heroes.senna.morale = 1
+	gs.ultimatums = [{"id": "senna", "done": false}]
+	main.show_ultimatum(gs.ultimatums[0])
+	await _shot("16_ultimato")
+	gs.flags.append("noite_vencida")
+	gs.chapter_state = "fim_do_ato"
+	gs.next_act()
+	main.show_hub()
+	await _shot("17_ato2")
 	quit()
 
 func _shot(name: String) -> void:

@@ -231,6 +231,317 @@
         "custo": "Os portões resistem, mas o salão principal ardeu. A guilda tem cicatrizes novas.",
         "falha": "Os traidores entraram, levaram o Arquivo e deixaram um recado: o Corvo Cinzento nunca foi de vocês."
       }
+    },
+    {
+      "id": "contrabando",
+      "name": "Contrabando no Porto",
+      "type": "furtividade",
+      "risk": "medio",
+      "biome": "cidade",
+      "primary": "destreza",
+      "secondary": "carisma",
+      "day": 1,
+      "deadline": 3,
+      "desc": "Um dos nomes da lista controla o porto. Descubra o que ele embarca à noite.",
+      "texts": {
+        "limpo": "{party} encontra os caixotes: armas com o brasão do Corvo, prontas para seguir para as montanhas.",
+        "custo": "Os caixotes foram vistos, mas o contrabandista também viu a party.",
+        "falha": "O navio zarpou. No cais, só um bilhete: \"Sabemos quem vocês são.\""
+      }
+    },
+    {
+      "id": "irmao_senna",
+      "name": "O Irmão de Senna",
+      "type": "diplomacia",
+      "risk": "medio",
+      "biome": "estrada",
+      "primary": "carisma",
+      "secondary": "destreza",
+      "day": 1,
+      "deadline": 4,
+      "desc": "Um dos nomes da lista é Dario — o irmão que Senna procura há anos.",
+      "tags": [
+        {
+          "type": "requires_hero",
+          "hero": "senna",
+          "text": "Missão pessoal: Senna precisa ir"
+        }
+      ],
+      "effects": {
+        "limpo": {
+          "morale": {
+            "senna": 3
+          },
+          "flag": "irmao_salvo",
+          "text": "Senna e Dario se abraçam na estrada. Ela não diz nada, mas não solta o irmão por um bom tempo."
+        },
+        "custo": {
+          "morale": {
+            "senna": 1
+          },
+          "flag": "irmao_salvo",
+          "text": "Dario volta, ferido e calado. Senna fica de guarda na porta do quarto dele a noite toda."
+        },
+        "falha": {
+          "morale": {
+            "senna": -3
+          },
+          "text": "Dario escolheu ficar com os traidores. Senna volta sozinha e não fala com ninguém."
+        }
+      },
+      "texts": {
+        "limpo": "{party} encontra Dario numa estalagem e o convence a sair da lista.",
+        "custo": "{party} tira Dario de lá à força. Ele não agradece.",
+        "falha": "Dario não quis ouvir."
+      }
+    },
+    {
+      "id": "carta_mestre",
+      "name": "A Última Carta",
+      "type": "exploracao",
+      "risk": "medio",
+      "biome": "pantano",
+      "primary": "conhecimento",
+      "secondary": "destreza",
+      "day": 2,
+      "deadline": 3,
+      "desc": "O mestre de Mira deixou uma carta cifrada apontando para uma torre afundada no pântano.",
+      "tags": [
+        {
+          "type": "requires_hero",
+          "hero": "mira",
+          "text": "Missão pessoal: Mira precisa ir"
+        }
+      ],
+      "effects": {
+        "limpo": {
+          "morale": {
+            "mira": 3
+          },
+          "flag": "carta_lida",
+          "text": "A carta revela quem traiu o mestre de Mira — um nome da lista. Ela finalmente entende por que ele morreu."
+        },
+        "custo": {
+          "morale": {
+            "mira": 1
+          },
+          "flag": "carta_lida",
+          "text": "Metade da carta se desfez na água. A outra metade basta."
+        },
+        "falha": {
+          "morale": {
+            "mira": -3
+          },
+          "text": "A torre desabou com a carta dentro. Mira fica dias trancada no Arquivo."
+        }
+      },
+      "texts": {
+        "limpo": "{party} desce à torre afundada e volta com a carta seca.",
+        "custo": "{party} recupera a carta, encharcada.",
+        "falha": "A torre afundou de vez."
+      }
+    },
+    {
+      "id": "ordem_theo",
+      "name": "O Julgamento da Ordem",
+      "type": "diplomacia",
+      "risk": "alto",
+      "biome": "cidade",
+      "primary": "carisma",
+      "secondary": "conhecimento",
+      "day": 2,
+      "deadline": 3,
+      "desc": "O juiz da Ordem que expulsou Theo está na lista. Ele aceita uma audiência — se Theo comparecer.",
+      "tags": [
+        {
+          "type": "requires_hero",
+          "hero": "theo",
+          "text": "Missão pessoal: Theo precisa ir"
+        }
+      ],
+      "effects": {
+        "limpo": {
+          "morale": {
+            "theo": 3
+          },
+          "flag": "theo_redimido",
+          "text": "O juiz confessa a armação. Theo recebe de volta o escudo da Ordem — e o devolve. \"Meu lugar é aqui.\""
+        },
+        "custo": {
+          "morale": {
+            "theo": 1
+          },
+          "flag": "theo_redimido",
+          "text": "O juiz cai, mas a Ordem não pede desculpas. Theo diz que isso basta."
+        },
+        "falha": {
+          "morale": {
+            "theo": -3
+          },
+          "text": "A Ordem reafirma a sentença. Theo passa a noite polindo uma espada que não precisa de polimento."
+        }
+      },
+      "texts": {
+        "limpo": "{party} expõe o juiz diante de toda a Ordem.",
+        "custo": "{party} vence o debate, mas perde a plateia.",
+        "falha": "A Ordem fecha as portas."
+      }
+    },
+    {
+      "id": "mina_karst",
+      "name": "Os Mortos da Mina",
+      "type": "combate",
+      "risk": "alto",
+      "biome": "montanha",
+      "primary": "forca",
+      "secondary": "resistencia",
+      "day": 3,
+      "deadline": 3,
+      "desc": "Mineiros desaparecidos voltaram — e não estão mais vivos.",
+      "texts": {
+        "limpo": "{party} sela a mina com os mortos lá dentro.",
+        "custo": "A mina foi selada, com um aventureiro a menos de pé.",
+        "falha": "Os mortos carregavam o mesmo símbolo dos traidores."
+      }
+    },
+    {
+      "id": "emboscada_estrada",
+      "name": "Emboscada na Estrada Real",
+      "type": "combate",
+      "risk": "medio",
+      "biome": "estrada",
+      "primary": "forca",
+      "secondary": "destreza",
+      "day": 4,
+      "deadline": 2,
+      "desc": "Uma carruagem do Conselho será atacada. Os atacantes usam capas pretas.",
+      "texts": {
+        "limpo": "{party} chega antes da emboscada. O Conselho fica devendo um favor.",
+        "custo": "A carruagem chega, crivada de flechas.",
+        "falha": "A carruagem chegou vazia."
+      }
+    },
+    {
+      "id": "conselho",
+      "name": "Audiência no Conselho",
+      "type": "diplomacia",
+      "risk": "alto",
+      "biome": "cidade",
+      "primary": "carisma",
+      "secondary": "conhecimento",
+      "day": 5,
+      "deadline": 2,
+      "reward": 120,
+      "desc": "Com as provas da lista, você pede ao Conselho que reconheça a guilda e entregue o último nome.",
+      "tags": [
+        {
+          "type": "min_party",
+          "min": 2,
+          "text": "Leve pelo menos 2 aventureiros como testemunhas"
+        }
+      ],
+      "texts": {
+        "limpo": "{party} expõe a lista inteira. O Conselho vota a favor da guilda.",
+        "custo": "O voto passa por um só conselheiro.",
+        "falha": "O Conselho decide esperar. Há gente dele na lista."
+      }
+    },
+    {
+      "id": "espiao",
+      "name": "O Espião na Guilda",
+      "type": "furtividade",
+      "risk": "alto",
+      "biome": "cidade",
+      "primary": "destreza",
+      "secondary": "conhecimento",
+      "day": 1,
+      "deadline": 3,
+      "desc": "Alguém dentro da guilda passa informações ao Ninho. Descubra quem — sem que ele perceba.",
+      "texts": {
+        "limpo": "{party} segue o espião até o mensageiro. Era o cozinheiro. Ele nunca soube ler as cartas que entregava.",
+        "custo": "O espião foi pego, mas avisou o Ninho antes.",
+        "falha": "O espião fugiu com o mapa da sede."
+      }
+    },
+    {
+      "id": "torre_sinal",
+      "name": "A Torre de Sinais",
+      "type": "exploracao",
+      "risk": "alto",
+      "biome": "montanha",
+      "primary": "conhecimento",
+      "secondary": "resistencia",
+      "day": 2,
+      "deadline": 3,
+      "desc": "Uma torre de sinais avisa o Ninho de tudo que sobe a montanha.",
+      "texts": {
+        "limpo": "{party} troca os sinais. O Ninho vai esperar a party pelo lado errado.",
+        "custo": "A torre caiu, mas o sinal de alerta foi dado.",
+        "falha": "A torre continua de pé, e agora vigia com mais atenção."
+      }
+    },
+    {
+      "id": "aldeia_cerco",
+      "name": "Aldeia Sitiada",
+      "type": "combate",
+      "risk": "alto",
+      "biome": "floresta",
+      "primary": "forca",
+      "secondary": "carisma",
+      "day": 2,
+      "deadline": 2,
+      "desc": "Os mercenários do Ninho cercaram a aldeia que abastece a montanha.",
+      "texts": {
+        "limpo": "{party} rompe o cerco. Os aldeões oferecem guias para a subida.",
+        "custo": "O cerco cai, mas a aldeia ardeu em parte.",
+        "falha": "A aldeia se rendeu ao Ninho."
+      }
+    },
+    {
+      "id": "pantano_rituais",
+      "name": "Rituais no Pântano",
+      "type": "exploracao",
+      "risk": "alto",
+      "biome": "pantano",
+      "primary": "conhecimento",
+      "secondary": "carisma",
+      "day": 3,
+      "deadline": 3,
+      "desc": "Os fundadores do Corvo usam um ritual antigo para proteger o Ninho.",
+      "texts": {
+        "limpo": "{party} interrompe o ritual. As runas do Ninho se apagam.",
+        "custo": "O ritual foi interrompido, mas cobrou seu preço de quem estava perto.",
+        "falha": "O ritual se completou. O Ninho brilha à noite."
+      }
+    },
+    {
+      "id": "ninho_corvo",
+      "name": "O Ninho do Corvo",
+      "type": "combate",
+      "risk": "lendario",
+      "biome": "montanha",
+      "primary": "forca",
+      "secondary": "conhecimento",
+      "day": 4,
+      "deadline": 3,
+      "reward": 200,
+      "desc": "O assalto final ao refúgio dos fundadores da guilda.",
+      "loot": [
+        "lamina_corvo"
+      ],
+      "tags": [
+        {
+          "type": "min_party",
+          "min": 4,
+          "text": "Assalto final: envie 4 aventureiros"
+        }
+      ],
+      "texts": {
+        "limpo": "{party} toma o Ninho sem perder ninguém. Os fundadores se rendem diante do estandarte que abandonaram.",
+        "custo": "O Ninho cai depois de uma noite inteira de luta.",
+        "falha": "O Ninho resiste, mas os fundadores fogem e nunca mais voltam."
+      }
     }
-  ]
+  ],
+  "_doc": "Missões. day relativo ao capítulo. tags: requires_attr, forbid_hero, min_party, requires_hero. effects (opcional, por resultado): morale {herói: delta}, flag, text."
 }

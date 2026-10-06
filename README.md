@@ -10,7 +10,7 @@ O jogo não é sobre combate. É sobre gestão de gente complicada com poder de 
 
 ## Como se joga
 
-O jogo é dividido em **capítulos**. Cada um abre com uma cena, dura alguns dias e tem um objetivo; o resultado muda o texto dos capítulos seguintes. O Ato 1 tem dois capítulos.
+O jogo é dividido em **atos** e **capítulos**. Cada capítulo abre com uma cena, dura alguns dias e tem um objetivo; o resultado muda o texto dos capítulos seguintes. São dois atos, com dois capítulos cada.
 
 1. **Mural de Quests** — pedidos chegam a cada dia, com risco, prazo e atributos exigidos.
 2. **Montagem de Party** — escolha de 1 a 4 aventureiros. O preview mostra a afinidade entre eles, mas nunca o resultado.
@@ -35,10 +35,19 @@ O jogo é dividido em **capítulos**. Cada um abre com uma cena, dura alguns dia
 | ![Nível](docs/img/14_nivel.png) | ![Equipamento](docs/img/13_equipamento.png) |
 | **Mercado** | **Livro com magias** |
 | ![Mercado](docs/img/12_mercado.png) | ![Livro](docs/img/15_livro_mira.png) |
+| **Ultimato** | **Abertura do Ato 2** |
+| ![Ultimato](docs/img/16_ultimato.png) | ![Ato 2](docs/img/17_ato2.png) |
 | **Bastidores no hub** | **Cena de bastidor** |
 | ![Bastidores](docs/img/8_hub_bastidores.png) | ![Cena de bastidor](docs/img/9_bastidor.png) |
 
-## Estado atual — v0.5 (RPG)
+## Estado atual — v0.6 (Ato 2)
+
+- **Ato 2 — A Lista de Nomes**: Capítulo 3 "Nomes na Lista" (objetivo: convencer o Conselho) e Capítulo 4 "O Ninho do Corvo" (missão final **lendária**, exige 4 aventureiros). 12 missões novas. Ao fim de um ato, o jogo segue para o próximo.
+- **Missões pessoais**: *O Irmão de Senna*, *A Última Carta* (Mira) e *O Julgamento da Ordem* (Theo) exigem o herói e mudam a moral dele e as flags da história.
+- **Bastidores ligados à história**: eventos com condição de capítulo (`chapters`) ou de flag (`requires_flag`) — a primeira noite na guilda, a chegada de Corin, Senna encontrando o nome do irmão, a véspera do Ninho...
+- **Saída por moral baixa (GDD §5.7)**: herói com moral ≤ 1 dá um **ultimato**. Pagar bônus, dar folga, prometer a próxima missão ou deixar partir. Ignorado por um dia, ele vai embora; promessa não cumprida em 2 dias também. O equipamento volta ao Baú. Vínculo de **Irmandade** ("Até o Fim"): o par parte junto.
+
+## v0.5 (RPG)
 
 - **XP e níveis**: XP por missão (risco × resultado; falha também ensina) e por treino. Cada nível dá PV pela classe e +1 atributo à escolha (máx. 10). Níveis 3/5/7/9: conjuradores escolhem 1 de 2 magias; os demais, 1 de 2 talentos.
 - **Equipamento**: Arma, Armadura, Acessório e 2 Consumíveis por herói; armaduras respeitam a classe (leve/média/pesada). Baú da Guilda guarda o saque.
@@ -70,7 +79,7 @@ O jogo é dividido em **capítulos**. Cada um abre com uma cena, dura alguns dia
 - PV: missões com custo ou falha ferem; o descanso cura; com 0 PV o herói fica Incapacitado.
 - **Eventos de bastidor**: até 2 cenas por dia, sorteadas por afinidade do par, com escolhas que mudam afinidade, moral e fadiga. Inclui cenas exclusivas de duplas (Vera & Bram, Theo & Lyssa, Mira & Lyssa) e a regra "escolher um lado" (+2 / −1 de moral).
 - **Neglect**: par com afinidade +3 ou mais perde 1 a cada 3 dias sem missão juntos, nunca abaixo do valor inicial. Herói 4 dias sem missão perde 1 de moral.
-- Quadro de Relações (com dias sem missão juntos no tooltip) e fim de capítulo no dia 8.
+- Quadro de Relações (com dias sem missão juntos no tooltip).
 
 ## Rodar
 
@@ -91,6 +100,7 @@ Requer **Godot 4.7**. Abra a pasta no editor e pressione **F5**.
 | `data/classes.json` | XP, níveis, classes, magias e talentos (com os tipos de efeito documentados) |
 | `data/items.json` | Itens, tabelas de saque e mercado |
 | `scripts/core/hero_rpg.gd` | Regras de RPG: XP, nível, efeitos, equipamento, magias, saque, mercado |
+| `data/ultimatum.json` | Texto e escolhas do ultimato por moral baixa |
 | `data/book.json` | Seções trancadas do Livro (slots de expansão por versão) |
 | `scripts/ui/main.gd` | Telas, montadas por código |
 | `scripts/ui/magic_map.gd` | Mapa Mágico: desenho do bioma, rota, waypoints e marcadores |
@@ -134,7 +144,7 @@ godot --headless --path . -s res://tests/sim_test.gd
 godot --headless --path . -s res://tests/ui_smoke.gd
 ```
 
-`sim_test.gd` confere a tabela de calibragem do GDD, as regras de assimetria, fadiga e Mentoria, e joga 200 partidas aleatórias. `tests/screenshots.gd` (com janela, sem `--headless`) regenera as imagens em `user://shots`.
+`sim_test.gd` confere a tabela de calibragem do GDD, as regras de assimetria, fadiga e Mentoria, e joga 150 partidas aleatórias (2 atos). `tests/screenshots.gd` (com janela, sem `--headless`) regenera as imagens em `user://shots`.
 
 ## Roadmap
 
@@ -143,7 +153,8 @@ godot --headless --path . -s res://tests/ui_smoke.gd
 - [x] **v0.3** — Mapa Mágico, Livro da Guilda, eventos de bastidor, neglect
 - [x] **v0.4** — capítulos, Ato 1 completo, upgrades da guilda
 - [x] **v0.5** — níveis, equipamento, saque, mercado, magias, clérigo, descanso ativo
-- [ ] **v0.6** — Ato 2, eventos de bastidor ligados aos capítulos, saída de aventureiros por moral baixa
+- [x] **v0.6** — Ato 2, missões pessoais, bastidores ligados à história, saída de aventureiros por moral baixa
+- [ ] **v0.7** — salvar/carregar, finais variáveis, arte e retratos
 - [ ] **v1.0** — arte, trilha sonora, minigame opcional, finais variáveis
 
 ## Créditos

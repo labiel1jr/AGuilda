@@ -1,38 +1,150 @@
 {
-  "_doc": "Capítulos (GDD §9). Missões de cada capítulo usam 'day' relativo ao início do capítulo. goal.type: reputation (min) ou mission (sucesso na missão). intro_flags acrescenta texto conforme flags de capítulos anteriores ('!flag' = flag ausente).",
+  "_doc": "Capítulos (GDD §9). Missões de cada capítulo usam 'day' relativo ao início do capítulo. goal.type: reputation (min) ou mission (sucesso na missão). intro_flags acrescenta texto conforme flags de capítulos anteriores ('!flag' = flag ausente). Ao fim de um ato, o jogo segue para o próximo ato da lista.",
   "acts": [
-    {"id": "ato1", "title": "Ato 1 — A Herança do Corvo", "chapters": ["c1", "c2"],
-     "ending": "Fim do Ato 1. A Guilda do Corvo Cinzento ainda respira — e agora você sabe que alguém quer que ela pare."}
+    {
+      "id": "ato1",
+      "title": "Ato 1 — A Herança do Corvo",
+      "chapters": [
+        "c1",
+        "c2"
+      ],
+      "ending": "Fim do Ato 1. A Guilda do Corvo Cinzento ainda respira — e agora você tem uma lista de nomes nas mãos. O seu está no topo."
+    },
+    {
+      "id": "ato2",
+      "title": "Ato 2 — A Lista de Nomes",
+      "chapters": [
+        "c3",
+        "c4"
+      ],
+      "ending": "Fim do Ato 2. O Ninho do Corvo está vazio, a lista virou cinzas e a guilda é sua de verdade. Pela primeira vez, o mural amanhece cheio de pedidos — e ninguém mais ri do nome do Corvo Cinzento."
+    }
   ],
   "chapters": [
-    {"id": "c1", "number": 1, "title": "Herança de Cinzas", "days": 5,
-     "intro": [
-       "A carta do Conselho de Guildas chegou junto com as chaves: a Guilda do Corvo Cinzento é sua. As dívidas também.",
-       "Seis aventureiros ainda dormem sob este teto. Nenhum deles confia em você. Poucos confiam uns nos outros.",
-       "O Conselho dá cinco dias. Mostre que a guilda ainda serve para alguma coisa."
-     ],
-     "missions": ["lobos", "ratos", "caravana", "febre", "cripta", "baroes"],
-     "goal": {"type": "reputation", "min": 6, "text": "Recuperar a confiança do Conselho (Reputação 6+)"},
-     "flag_success": "conselho_confia",
-     "outro": {
-       "success": "O emissário do Conselho deixa um selo de cera na mesa: a guilda tem mais tempo. Nas tavernas, voltam a pronunciar o nome do Corvo sem rir.",
-       "failure": "O emissário do Conselho sai sem se despedir. A guilda continua aberta — por enquanto — mas cada passo agora será vigiado."
-     }},
-    {"id": "c2", "number": 2, "title": "Ecos do Corvo", "days": 5,
-     "intro": [
-       "Os pedidos mudaram. Não são mais ratos e lobos: são selos roubados, pontes tomadas e nomes antigos da guilda aparecendo onde não deveriam.",
-       "Alguém está usando o passado do Corvo Cinzento contra ele."
-     ],
-     "intro_flags": {
-       "conselho_confia": "O Conselho, ao menos, está do seu lado. Por enquanto.",
-       "!conselho_confia": "O Conselho mandou um observador. Ele anota cada missão que você despacha."
-     },
-     "missions": ["credores", "selo", "ponte", "torre", "serpe", "noite_corvo"],
-     "goal": {"type": "mission", "mission": "noite_corvo", "text": "Sobreviver à Noite do Corvo"},
-     "flag_success": "noite_vencida",
-     "outro": {
-       "success": "Ao amanhecer, o estandarte do Corvo ainda está no telhado. Os traidores fugiram — mas deixaram para trás uma lista de nomes. O seu está no topo.",
-       "failure": "A guilda sobreviveu à noite, mas não inteira. Entre os escombros, alguém encontrou uma lista de nomes. O seu está no topo."
-     }}
+    {
+      "id": "c1",
+      "number": 1,
+      "title": "Herança de Cinzas",
+      "days": 5,
+      "intro": [
+        "A carta do Conselho de Guildas chegou junto com as chaves: a Guilda do Corvo Cinzento é sua. As dívidas também.",
+        "Seis aventureiros ainda dormem sob este teto. Nenhum deles confia em você. Poucos confiam uns nos outros.",
+        "O Conselho dá cinco dias. Mostre que a guilda ainda serve para alguma coisa."
+      ],
+      "missions": [
+        "lobos",
+        "ratos",
+        "caravana",
+        "febre",
+        "cripta",
+        "baroes"
+      ],
+      "goal": {
+        "type": "reputation",
+        "min": 6,
+        "text": "Recuperar a confiança do Conselho (Reputação 6+)"
+      },
+      "flag_success": "conselho_confia",
+      "outro": {
+        "success": "O emissário do Conselho deixa um selo de cera na mesa: a guilda tem mais tempo. Nas tavernas, voltam a pronunciar o nome do Corvo sem rir.",
+        "failure": "O emissário do Conselho sai sem se despedir. A guilda continua aberta — por enquanto — mas cada passo agora será vigiado."
+      }
+    },
+    {
+      "id": "c2",
+      "number": 2,
+      "title": "Ecos do Corvo",
+      "days": 5,
+      "intro": [
+        "Os pedidos mudaram. Não são mais ratos e lobos: são selos roubados, pontes tomadas e nomes antigos da guilda aparecendo onde não deveriam.",
+        "Alguém está usando o passado do Corvo Cinzento contra ele."
+      ],
+      "intro_flags": {
+        "conselho_confia": "O Conselho, ao menos, está do seu lado. Por enquanto.",
+        "!conselho_confia": "O Conselho mandou um observador. Ele anota cada missão que você despacha."
+      },
+      "missions": [
+        "credores",
+        "selo",
+        "ponte",
+        "torre",
+        "serpe",
+        "noite_corvo"
+      ],
+      "goal": {
+        "type": "mission",
+        "mission": "noite_corvo",
+        "text": "Sobreviver à Noite do Corvo"
+      },
+      "flag_success": "noite_vencida",
+      "outro": {
+        "success": "Ao amanhecer, o estandarte do Corvo ainda está no telhado. Os traidores fugiram — mas deixaram para trás uma lista de nomes. O seu está no topo.",
+        "failure": "A guilda sobreviveu à noite, mas não inteira. Entre os escombros, alguém encontrou uma lista de nomes. O seu está no topo."
+      }
+    },
+    {
+      "id": "c3",
+      "number": 3,
+      "title": "Nomes na Lista",
+      "days": 6,
+      "intro": [
+        "A lista tem doze nomes. Ex-membros da guilda, credores, um juiz da Ordem — e alguns rostos que dormem sob o seu teto.",
+        "Cada nome é um fio. Puxe os certos e você chega a quem quer o Corvo morto. Puxe os errados e a guilda se desfaz por dentro."
+      ],
+      "intro_flags": {
+        "noite_vencida": "Depois da Noite do Corvo, os traidores têm medo de você. Isso abre portas.",
+        "!noite_vencida": "Depois da Noite do Corvo, a cidade acha que a guilda está acabada. Ninguém atende quando você bate."
+      },
+      "missions": [
+        "contrabando",
+        "irmao_senna",
+        "carta_mestre",
+        "ordem_theo",
+        "mina_karst",
+        "emboscada_estrada",
+        "conselho"
+      ],
+      "goal": {
+        "type": "mission",
+        "mission": "conselho",
+        "text": "Convencer o Conselho na Audiência"
+      },
+      "flag_success": "conselho_aliado",
+      "outro": {
+        "success": "O Conselho reconhece a guilda e entrega o último nome da lista: um abrigo nas montanhas chamado o Ninho do Corvo.",
+        "failure": "O Conselho se recusa a ajudar, mas um escrivão deixa cair um papel ao sair: um mapa para o Ninho do Corvo."
+      }
+    },
+    {
+      "id": "c4",
+      "number": 4,
+      "title": "O Ninho do Corvo",
+      "days": 6,
+      "intro": [
+        "O Ninho do Corvo fica onde o mapa acaba. Lá se escondem os que fundaram a guilda — e a abandonaram para morrer.",
+        "Antes de subir a montanha, é preciso cortar os olhos e os braços que eles ainda têm na cidade."
+      ],
+      "intro_flags": {
+        "conselho_aliado": "Os guardas do Conselho vão segurar a cidade enquanto você sobe.",
+        "irmao_salvo": "O irmão de Senna conhece a trilha. Ele vai guiar a party até a entrada."
+      },
+      "missions": [
+        "espiao",
+        "torre_sinal",
+        "aldeia_cerco",
+        "pantano_rituais",
+        "ninho_corvo"
+      ],
+      "goal": {
+        "type": "mission",
+        "mission": "ninho_corvo",
+        "text": "Tomar o Ninho do Corvo"
+      },
+      "flag_success": "corvo_derrotado",
+      "outro": {
+        "success": "Os fundadores se rendem. Entre as relíquias do Ninho está o estandarte original do Corvo Cinzento, intacto.",
+        "failure": "Os fundadores fogem pelos túneis, mas o Ninho cai. Eles nunca mais vão se esconder atrás do nome da guilda."
+      }
+    }
   ]
 }
