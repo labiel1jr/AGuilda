@@ -1,0 +1,94 @@
+{
+  "_doc": "Especificação de pixel art de Mira. Herda de _estilo.json (contorno, luz, saídas, variações). Não é imagem.",
+  "herda": "_estilo.json",
+  "id": "mira",
+  "nome": "Mira",
+  "titulo": "Mira Vellacourt",
+  "arquetipo": "A Erudita Frágil",
+  "ficha": {
+    "classe": "Maga",
+    "raca": "Humana",
+    "nivel_inicial": 3
+  },
+  "cor_do_jogo": "#5b7fbf",
+  "paleta": {
+    "_doc": "Cores próprias (somadas à paleta_global). Papel de cada uma.",
+    "pele": [
+      "#f0d2b4",
+      "#d9ae8c",
+      "#b88566"
+    ],
+    "medalhao": [
+      "#5b7fbf",
+      "#3d5788"
+    ],
+    "manto": [
+      "#33467a",
+      "#22305a",
+      "#4d63a3"
+    ],
+    "detalhes_runicos": [
+      "#9fd0ff",
+      "#d8f0ff"
+    ],
+    "cabelo": [
+      "#2a2238",
+      "#17121f"
+    ],
+    "oculos": "#b8a06a",
+    "tinta": "#1f2a44"
+  },
+  "aparencia": {
+    "rosto": "rosto oval, delicado, olheiras leves de quem lê à noite",
+    "cabelo": "preto-azulado, preso num coque bagunçado atravessado por uma pena e um lápis, mechas soltas nas laterais",
+    "olhos": "castanho-escuros, grandes e atentos",
+    "oculos": "pequenos óculos redondos de armação dourada, apoiados na ponta do nariz",
+    "marca": "mancha de tinta no dedo e na bochecha (2 px)",
+    "idade_aparente": "24 anos"
+  },
+  "roupa": {
+    "base": "manto azul-índigo de estudiosa, gola alta bordada com runas que brilham levemente em azul-claro",
+    "detalhes": "cinto com bolsinhas e um pergaminho enrolado saindo de uma delas"
+  },
+  "equipamento_visivel": {
+    "mao_dominante": "direita",
+    "arma": "cajado fino de madeira com um cristal azul na ponta, entrando pelo canto inferior esquerdo",
+    "acessorio": "livro aberto segurado contra o peito (opcional se couber)"
+  },
+  "emblema_da_classe": {
+    "forma": "cajado com orbe",
+    "onde": "medalhão inferior direito",
+    "cor": "#9fd0ff"
+  },
+  "pose": "cabeça inclinada, como quem lê ou analisa algo fora do quadro",
+  "expressao": "curiosa, lábios entreabertos de quem acabou de ter uma ideia; nenhuma preocupação com o perigo",
+  "personalidade_visual": "Frágil no corpo, intensa na cabeça: ombros estreitos, mas o brilho das runas e do cristal é a parte mais luminosa do retrato.",
+  "marcador_mapa_16px": {
+    "silhueta": "coque com pena espetada + manto azul",
+    "cor_dominante": "#33467a com aro #5b7fbf",
+    "detalhe": "1 px azul-claro (cristal)"
+  },
+  "corpo_inteiro_32x48": {
+    "pose": "em pé, cajado na mão, livro debaixo do braço",
+    "pes": "sapatilhas sob o manto longo",
+    "manto": "arrasta no chão"
+  },
+  "variacoes": {
+    "concentrada": "opcional (magia preparada): runas da gola e cristal com brilho máximo (#d8f0ff)"
+  },
+  "arquivos": {
+    "retrato": "res://art/portraits/mira.png",
+    "marcador": "res://art/portraits/mira_token.png",
+    "corpo_inteiro": "res://art/portraits/mira_full.png",
+    "variacoes": [
+      "res://art/portraits/mira_ferido.png",
+      "res://art/portraits/mira_exausto.png",
+      "res://art/portraits/mira_moral_baixa.png"
+    ]
+  },
+  "prompt_en": "pixel art character portrait, 64x64 pixels, 16-bit RPG style, medieval fantasy, bust shot, 3/4 view facing left, limited palette, crisp pixels, 1px dark outline, light from top-left, circular colored medallion background, no anti-aliasing, frail human scholar mage woman, mid twenties, oval delicate face, slight under-eye shadows, blue-black hair in a messy bun pierced by a quill and pencil, small round gold glasses on the tip of her nose, ink smudge on cheek, indigo scholar robe with high collar embroidered with faintly glowing light blue runes, thin wooden staff with blue crystal, curious expression lips slightly parted, blue medallion background #5b7fbf",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, text, watermark, signature, extra limbs, deformed hands, modern clothing, high resolution painting, noise, jpeg artifacts",
+  "notas_para_o_artista": [
+    "A pena no coque e os óculos são a identidade dela; mantê-los legíveis no token de 16 px (pena = 1 px claro acima da cabeça)."
+  ]
+}

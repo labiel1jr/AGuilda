@@ -1,0 +1,95 @@
+{
+  "_doc": "Especificação de pixel art de Corin. Herda de _estilo.json (contorno, luz, saídas, variações). Não é imagem.",
+  "herda": "_estilo.json",
+  "id": "corin",
+  "nome": "Corin",
+  "titulo": "Irmão Corin de Halvar",
+  "arquetipo": "O Clérigo Errante",
+  "ficha": {
+    "classe": "Clérigo",
+    "raca": "Humano",
+    "nivel_inicial": 3
+  },
+  "cor_do_jogo": "#4f9d9a",
+  "paleta": {
+    "_doc": "Cores próprias (somadas à paleta_global). Papel de cada uma.",
+    "pele": [
+      "#a5734d",
+      "#8f5d3b",
+      "#5e3a22"
+    ],
+    "medalhao": [
+      "#4f9d9a",
+      "#346b69"
+    ],
+    "habito": [
+      "#7a6a55",
+      "#56493a",
+      "#9c8b72"
+    ],
+    "estola": [
+      "#e8e0c8",
+      "#4f9d9a"
+    ],
+    "cabelo_barba": [
+      "#2a211b",
+      "#4a3a2e"
+    ],
+    "olhos": "#4a3020",
+    "simbolo_sagrado": "#d4a94a"
+  },
+  "aparencia": {
+    "rosto": "rosto gentil, olhos com rugas de riso, barba curta bem aparada",
+    "cabelo": "raspado nas laterais, curto em cima (tonsura discreta, não caricata)",
+    "olhos": "castanhos, calorosos",
+    "marca": "pequena marca de queimadura antiga na mão (visível no corpo inteiro)",
+    "idade_aparente": "40 anos"
+  },
+  "roupa": {
+    "base": "hábito de viagem marrom, gasto e remendado nos cotovelos",
+    "estola": "estola creme com bordas verde-azuladas (a cor dele) sobre os ombros",
+    "detalhes": "corda simples na cintura; bolsa de pão a tiracolo"
+  },
+  "equipamento_visivel": {
+    "mao_dominante": "direita",
+    "arma": "maça simples de madeira com cabeça de ferro, discreta, pendurada na corda",
+    "simbolo": "sol sagrado de madeira pendurado no pescoço, segurado na mão aberta à altura do peito"
+  },
+  "emblema_da_classe": {
+    "forma": "sol com raios",
+    "onde": "medalhão inferior direito",
+    "cor": "#d4a94a"
+  },
+  "pose": "levemente curvado para a frente, mão no peito segurando o símbolo, gesto de acolhimento",
+  "expressao": "sorriso suave e caloroso, olhos semicerrados de bondade",
+  "personalidade_visual": "Expulso do templo por curar um inimigo do bispo: nada de ouro ou ostentação clerical; o símbolo é de madeira, o hábito é pobre. Ele é calor humano, não autoridade.",
+  "marcador_mapa_16px": {
+    "silhueta": "estola clara sobre ombros marrons",
+    "cor_dominante": "#7a6a55 com aro #4f9d9a",
+    "detalhe": "1 px dourado (símbolo)"
+  },
+  "corpo_inteiro_32x48": {
+    "pose": "em pé, uma mão estendida oferecendo um pão, outra no símbolo sagrado",
+    "pes": "sandálias gastas",
+    "bolsa": "a tiracolo, com pão aparecendo"
+  },
+  "variacoes": {
+    "curando": "opcional (ao lançar Curar Ferimentos): brilho suave dourado (#f2d27a) nas mãos e no símbolo"
+  },
+  "arquivos": {
+    "retrato": "res://art/portraits/corin.png",
+    "marcador": "res://art/portraits/corin_token.png",
+    "corpo_inteiro": "res://art/portraits/corin_full.png",
+    "variacoes": [
+      "res://art/portraits/corin_ferido.png",
+      "res://art/portraits/corin_exausto.png",
+      "res://art/portraits/corin_moral_baixa.png"
+    ]
+  },
+  "prompt_en": "pixel art character portrait, 64x64 pixels, 16-bit RPG style, medieval fantasy, bust shot, 3/4 view facing left, limited palette, crisp pixels, 1px dark outline, light from top-left, circular colored medallion background, no anti-aliasing, humble human cleric man, around forty, dark skin, kind face with laugh-line wrinkles, short neat dark beard, short hair, warm brown eyes, worn patched brown traveling habit, cream stole with teal edges, simple wooden sun holy symbol held in open hand at chest, rope belt, bread bag, gentle warm smile, teal medallion background #4f9d9a",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, text, watermark, signature, extra limbs, deformed hands, modern clothing, high resolution painting, noise, jpeg artifacts",
+  "notas_para_o_artista": [
+    "Clérigo pobre e errante: evitar vestes douradas ou mitra.",
+    "Entra no jogo no Capítulo 2 — manter o mesmo enquadramento dos outros seis."
+  ]
+}

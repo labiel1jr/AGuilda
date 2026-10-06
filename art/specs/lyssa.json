@@ -1,0 +1,95 @@
+{
+  "_doc": "Especificação de pixel art de Lyssa. Herda de _estilo.json (contorno, luz, saídas, variações). Não é imagem.",
+  "herda": "_estilo.json",
+  "id": "lyssa",
+  "nome": "Lyssa",
+  "titulo": "Lyssa Mãos-Leves",
+  "arquetipo": "A Ladina Cética",
+  "ficha": {
+    "classe": "Ladina",
+    "raca": "Meio-elfa",
+    "nivel_inicial": 3
+  },
+  "cor_do_jogo": "#6a9a5b",
+  "paleta": {
+    "_doc": "Cores próprias (somadas à paleta_global). Papel de cada uma.",
+    "pele": [
+      "#f0d2b4",
+      "#d9ae8c",
+      "#b88566"
+    ],
+    "medalhao": [
+      "#6a9a5b",
+      "#466b3b"
+    ],
+    "capuz": [
+      "#3e4a3a",
+      "#283126",
+      "#5a6b55"
+    ],
+    "couro": [
+      "#6b4a33",
+      "#4a321f"
+    ],
+    "cabelo": [
+      "#b5462e",
+      "#7e2f1d",
+      "#d9694a"
+    ],
+    "olhos": "#7fae5a"
+  },
+  "aparencia": {
+    "rosto": "rosto fino, maçãs altas, queixo pontudo, sardas leves (3-4 px na ponte do nariz)",
+    "orelhas": "pontudas de meio-elfa, aparecendo pela abertura do capuz",
+    "cabelo": "ruivo acobreado, franja assimétrica cobrindo parte do olho direito, resto preso sob o capuz",
+    "olhos": "verdes, levemente semicerrados",
+    "idade_aparente": "26 anos"
+  },
+  "roupa": {
+    "base": "gibão de couro escuro com cintas cruzadas no peito",
+    "capuz": "capuz verde-musgo baixado até a testa, sombra cobrindo o topo do rosto",
+    "detalhes": "fivela de latão no ombro, gola alta"
+  },
+  "equipamento_visivel": {
+    "mao_dominante": "esquerda",
+    "arma": "adaga com lâmina curva visível perto do ombro, segurada de forma casual",
+    "acessorio": "gazua presa na cinta do peito (2x5 px, brilho de metal)"
+  },
+  "emblema_da_classe": {
+    "forma": "adaga apontada para cima",
+    "onde": "medalhão inferior direito",
+    "cor": "#d4a94a"
+  },
+  "pose": "corpo levemente virado, um ombro à frente, como quem está de saída",
+  "expressao": "meio sorriso torto de canto de boca, sobrancelha erguida, desconfiada",
+  "personalidade_visual": "Ela conta as saídas antes das pessoas: o enquadramento pode cortar um pouco do lado direito, como se ela estivesse saindo do quadro.",
+  "marcador_mapa_16px": {
+    "silhueta": "capuz pontudo verde + mecha ruiva",
+    "cor_dominante": "#3e4a3a com aro #6a9a5b",
+    "detalhe": "1 px ruivo na franja"
+  },
+  "corpo_inteiro_32x48": {
+    "pose": "agachada meio de lado, adaga baixa",
+    "pes": "botas macias de couro",
+    "capa": "curta, até a cintura"
+  },
+  "variacoes": {
+    "confianca": "opcional (moral >= 7 no epílogo): capuz abaixado, cabelo solto, sorriso aberto"
+  },
+  "arquivos": {
+    "retrato": "res://art/portraits/lyssa.png",
+    "marcador": "res://art/portraits/lyssa_token.png",
+    "corpo_inteiro": "res://art/portraits/lyssa_full.png",
+    "variacoes": [
+      "res://art/portraits/lyssa_ferido.png",
+      "res://art/portraits/lyssa_exausto.png",
+      "res://art/portraits/lyssa_moral_baixa.png"
+    ]
+  },
+  "prompt_en": "pixel art character portrait, 64x64 pixels, 16-bit RPG style, medieval fantasy, bust shot, 3/4 view facing left, limited palette, crisp pixels, 1px dark outline, light from top-left, circular colored medallion background, no anti-aliasing, half-elf rogue woman, mid twenties, thin face with high cheekbones and light freckles, pointed ears, copper red asymmetric bangs over one eye, sly green eyes, moss green hood pulled low, dark leather jerkin with crossed straps, lockpick on chest strap, curved dagger near shoulder, crooked half smile, skeptical raised eyebrow, green medallion background #6a9a5b",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, text, watermark, signature, extra limbs, deformed hands, modern clothing, high resolution painting, noise, jpeg artifacts",
+  "notas_para_o_artista": [
+    "As orelhas pontudas são a única pista de raça: garantir que apareçam mesmo com o capuz.",
+    "Sorriso assimétrico: só um canto da boca sobe."
+  ]
+}

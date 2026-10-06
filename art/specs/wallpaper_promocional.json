@@ -1,0 +1,188 @@
+{
+  "_doc": "Especificação do wallpaper promocional de A Guilda: o elenco reunido posando diante da fachada da Guilda do Corvo Cinzento. Não é imagem. Herda as regras de _estilo.json e a aparência de cada herói dos arquivos <id>.json desta pasta — este arquivo define só cena, composição, poses e entrega.",
+  "herda": ["_estilo.json", "theo.json", "lyssa.json", "mira.json", "senna.json", "bram.json", "vera.json", "corin.json"],
+  "id": "wallpaper_promocional",
+  "titulo_da_peca": "A Guilda — O Corvo Cinzento Reunido",
+  "objetivo": "Peça promocional (página do jogo, redes, papel de parede). Precisa vender a ideia central do GDD: não é sobre um herói, é sobre um grupo de gente complicada — cada um com sua postura, juntos mas não iguais.",
+
+  "resolucao": {
+    "nativa_pixel_art_px": [480, 270],
+    "_nota": "Desenhar em 480x270 e ampliar com vizinho mais próximo (nearest), sem filtro. Todas as coordenadas abaixo são da tela nativa (x da esquerda, y de cima).",
+    "exportacoes": [
+      {"nome": "wallpaper_1080p.png", "px": [1920, 1080], "escala": 4},
+      {"nome": "wallpaper_1440p.png", "px": [2560, 1440], "escala": "5.333 — exportar 4K e reduzir, ou recortar 480x270 para 2560 com borda"},
+      {"nome": "wallpaper_4k.png", "px": [3840, 2160], "escala": 8},
+      {"nome": "wallpaper_ultrawide.png", "px": [3440, 1440], "regra": "estender céu e ruas laterais; personagens não mudam de posição"},
+      {"nome": "wallpaper_celular.png", "px": [1080, 1920], "regra": "recorte vertical centrado em x=240 da tela nativa (faixa de 152x270, escala ~7.1); ver recorte_vertical"}
+    ],
+    "versoes": ["com_logo", "sem_logo"]
+  },
+
+  "momento_e_clima": {
+    "hora": "fim de tarde, hora dourada, poucos minutos antes do pôr do sol",
+    "luz_principal": {"direcao": "sol baixo vindo da esquerda", "cor": "#f2b25c", "efeito": "contorno quente (rim light de 1 px) no lado esquerdo de cada personagem"},
+    "luz_secundaria": {"fonte": "janelas e lampião da porta da guilda, já acesos", "cor": "#ffcf7a", "efeito": "luz quente de trás, iluminando as costas e o chão de pedra perto da porta"},
+    "sombra": {"cor": "#3a2a3f", "direcao": "alongadas para a direita", "regra": "sombras roxas-acinzentadas, nunca preto"},
+    "atmosfera": "poeira dourada no ar (pixels isolados de #f2d27a, poucos, só no céu e na luz da porta)",
+    "sentimento": "a guilda que estava em ruínas agora tem gente na porta — esperança cansada, orgulho contido"
+  },
+
+  "paleta": {
+    "_doc": "Paleta da cena (cenário + luz). Personagens usam as paletas dos próprios arquivos, com a luz dourada aplicada como cor de destaque. Total recomendado: até 48 cores.",
+    "ceu": ["#f6c27a", "#e8956a", "#b8637a", "#6d4f7e"],
+    "nuvens": ["#ffd9a0", "#d98a72"],
+    "pedra_fachada": ["#8c7e70", "#6a5e53", "#4a413a", "#b3a594"],
+    "madeira": ["#7a5134", "#56371f", "#9c6b45"],
+    "telhado": ["#4a3a4a", "#2e2430"],
+    "estandarte": ["#5e5c66", "#3f3d45", "#8a8892"],
+    "corvo": ["#1f1c24", "#3a3644"],
+    "janelas_luz": ["#ffcf7a", "#ffe8b0", "#c98a3a"],
+    "chao_paralelepipedo": ["#7a6e66", "#5a504a", "#9a8e84"],
+    "vegetacao": ["#4f6b3a", "#34492a"],
+    "ouro_destaque": "#d4a94a",
+    "contorno": "#1a120c"
+  },
+
+  "cenario": {
+    "camera": "levemente de baixo para cima (contra-plongée suave), horizonte em y=150, dando imponência à fachada e ao grupo",
+    "fachada": {
+      "posicao": "ocupa a faixa central de x=110 a x=370, do chão (y=230) até o telhado (y=40)",
+      "estilo": "casarão medieval de 2 andares, térreo de pedra, andar de cima em enxaimel (madeira escura + reboco), telhado de ardósia íngreme com uma chaminé soltando fumaça",
+      "estado": "reformado pela metade: lado esquerdo restaurado (pedra limpa, janela nova, flores na sacada), lado direito ainda com rachaduras, uma tábua pregada numa janela e um andaime de madeira encostado — a história do jogo (guilda reconstruída) contada no cenário",
+      "porta": "porta dupla de carvalho arqueada no centro (x=222 a x=258, y=168 a y=230), uma folha aberta mostrando o interior quente e iluminado",
+      "placa": "placa de madeira pendurada em suporte de ferro sobre a porta (x=225 a x=255, y=150 a y=164) com um corvo cinza entalhado; sem texto legível",
+      "estandarte": "estandarte vertical cinza do Corvo Cinzento pendurado à esquerda da porta (x=180 a x=196, y=90 a y=150), tecido levemente ondulado pelo vento, corvo de asas abertas bordado",
+      "corvo_vivo": "um corvo de verdade pousado na ponta da placa, olhando para o observador (6x5 px) — detalhe de assinatura da peça",
+      "mural_de_quests": "à direita da porta (x=272 a x=300, y=172 a y=205), quadro de madeira cheio de pergaminhos pregados (GDD §10: mural como quadro físico com pergaminhos), um deles esvoaçando",
+      "janelas": "6 janelas com luz quente; numa delas, no andar de cima, a silhueta pequena de alguém observando (o(a) Mestre(a) de Despacho, sem rosto — o jogador)",
+      "detalhes": ["lampião aceso ao lado da porta", "barril e caixotes à direita", "vaso com flores no parapeito restaurado", "escada de 2 degraus de pedra na porta"]
+    },
+    "laterais": {
+      "esquerda": "rua de paralelepípedo descendo para a cidade, casas menores em silhueta contra o céu, torre distante com bandeira (x=0 a x=110)",
+      "direita": "árvore antiga de folhas outonais parcialmente cobrindo a casa vizinha, carroça parada (x=370 a x=480)"
+    },
+    "primeiro_plano": "chão de paralelepípedo de y=230 a y=270, com folhas secas e uma poça refletindo o céu laranja à esquerda (x=40 a x=90)",
+    "profundidade": [
+      {"camada": 1, "conteudo": "céu e nuvens", "detalhe": "baixo"},
+      {"camada": 2, "conteudo": "silhuetas da cidade e torre", "detalhe": "baixo, dessaturado"},
+      {"camada": 3, "conteudo": "fachada da guilda, árvore, carroça", "detalhe": "médio"},
+      {"camada": 4, "conteudo": "o grupo", "detalhe": "máximo — maior contraste e saturação da cena"},
+      {"camada": 5, "conteudo": "chão, folhas, poça", "detalhe": "médio"}
+    ]
+  },
+
+  "grupo": {
+    "_doc": "Personagens em corpo inteiro, escala ~2x do sprite de 32x48 (altura humana ~92 px na tela nativa). Pés alinhados entre y=236 e y=246 (fila de trás mais alta, fila da frente mais baixa). Ordem da esquerda para a direita. Aparência, roupa e paleta conforme o arquivo de cada um.",
+    "composicao": "pirâmide suave: Theo e Vera como colunas centrais, os outros abrindo para os lados; o grupo ocupa de x=70 a x=410 e cobre a parte de baixo da fachada sem esconder a porta aberta (o vão da porta fica entre Theo e Vera, emoldurando os dois com a luz de dentro)",
+    "escala_por_raca": {"humanos_meio_elfa_meio_orc": "~92 px", "ana": "~70 px (mais larga)", "halfling": "~62 px"},
+    "personagens": [
+      {
+        "id": "senna", "spec": "senna.json",
+        "posicao": {"x_centro": 88, "y_pes": 238, "fila": "trás, ponta esquerda"},
+        "pose": "encostada de costas na parede de pedra, um pé apoiado na parede, braços cruzados com a espada bastarda presa nas costas; um pouco afastada do grupo (8-10 px de vão para o vizinho)",
+        "olhar": "de canto, para o grupo, não para o observador",
+        "expressao": "neutra, a ponta de um meio sorriso que ela tenta esconder",
+        "leitura": "nunca inicia vínculo — está com o grupo, mas na beirada"
+      },
+      {
+        "id": "lyssa", "spec": "lyssa.json",
+        "posicao": {"x_centro": 128, "y_pes": 244, "fila": "frente"},
+        "pose": "sentada na borda de um barril, uma perna cruzada, girando a adaga entre os dedos; capuz abaixado",
+        "olhar": "para o observador, sobrancelha erguida",
+        "expressao": "sorriso torto, desafiador",
+        "leitura": "ladina à vontade; o capuz abaixado indica que ela confia neste grupo"
+      },
+      {
+        "id": "mira", "spec": "mira.json",
+        "posicao": {"x_centro": 160, "y_pes": 240, "fila": "meio, logo atrás de Lyssa"},
+        "pose": "de pé, livro aberto numa mão, cajado apoiado no ombro; a outra mão no ombro de Lyssa, como quem mostra algo no livro a ela",
+        "olhar": "para o livro, distraída da pose",
+        "expressao": "concentrada, boca entreaberta",
+        "efeito": "runas da gola e cristal do cajado com brilho azul suave (#9fd0ff) — único ponto de cor fria da cena, chamando o olho",
+        "leitura": "não percebeu que estão posando; vínculo com Lyssa (afinidade inicial +4)"
+      },
+      {
+        "id": "theo", "spec": "theo.json",
+        "posicao": {"x_centro": 205, "y_pes": 236, "fila": "trás, centro-esquerda, ao lado da porta"},
+        "pose": "de pé, ereto, as duas mãos sobre o pomo da espada longa cravada na pedra à frente dele; escudo redondo nas costas",
+        "olhar": "para o horizonte à esquerda (o sol)",
+        "expressao": "sério, sereno",
+        "detalhe_obrigatorio": "tabardo com o símbolo da Ordem raspado, iluminado pelo sol",
+        "leitura": "o pilar moral do grupo — firme, mas sem brilho heroico"
+      },
+      {
+        "id": "vera", "spec": "vera.json",
+        "posicao": {"x_centro": 278, "y_pes": 240, "fila": "meio, centro-direita, do outro lado da porta"},
+        "pose": "pernas afastadas, machado de guerra apoiado no chão como bengala, a outra mão (manopla) pousada no ombro de Bram ao lado dela",
+        "olhar": "direto para o observador",
+        "expressao": "severa — mas os olhos sorriem (2 px de ruga de riso)",
+        "detalhe_obrigatorio": "plaquinhas das companheiras mortas brilhando no peito com o sol",
+        "leitura": "a muralha da guilda; a mão no ombro de Bram é a Mentoria (o vínculo mais acessível do jogo)"
+      },
+      {
+        "id": "bram", "spec": "bram.json",
+        "posicao": {"x_centro": 306, "y_pes": 246, "fila": "frente, colado em Vera"},
+        "pose": "no meio de um passo de dança, tocando o alaúde, chapéu com pena torto, um pé descalço levantado",
+        "olhar": "para cima, para Vera, com admiração",
+        "expressao": "sorriso enorme, boca aberta cantando",
+        "efeito": "3 notas musicais em pixel saindo do alaúde (ouro #d4a94a), subindo em direção ao estandarte",
+        "leitura": "o coração otimista do grupo — único personagem em movimento"
+      },
+      {
+        "id": "corin", "spec": "corin.json",
+        "posicao": {"x_centro": 352, "y_pes": 238, "fila": "trás, direita"},
+        "pose": "de pé, levemente curvado, estendendo um pão para fora do quadro à direita (para alguém que não vemos — um passante, uma criança); símbolo de sol de madeira na outra mão",
+        "olhar": "para fora do quadro, à direita, para quem recebe o pão",
+        "expressao": "sorriso caloroso",
+        "leitura": "a guilda que acolhe quem não tem para onde ir — e o clérigo que chegou depois"
+      }
+    ],
+    "interacoes_obrigatorias": [
+      "Vera com a mão no ombro de Bram (Mentoria)",
+      "Mira com a mão no ombro de Lyssa (afinidade alta inicial)",
+      "Senna levemente afastada, mas virada para o grupo (aprende a confiar)",
+      "Theo e Lyssa sem contato e de lados opostos da Mira (conflito inicial −3) — Theo olha para longe, Lyssa para o observador"
+    ],
+    "regra_de_leitura": "cada personagem precisa ser identificável só pela silhueta e pela cor do jogo: Theo #c9a227, Lyssa #6a9a5b, Mira #5b7fbf, Senna #a8443c, Bram #d9823b, Vera #8a6fb0, Corin #4f9d9a. Repetir a cor do herói em pelo menos um elemento grande da roupa."
+  },
+
+  "logo_e_texto": {
+    "versao": "com_logo",
+    "area_segura_logo": {"x": [140, 340], "y": [12, 52], "_nota": "céu acima do telhado; nada importante do cenário nessa faixa além do céu e da fumaça da chaminé (a fumaça pode passar por trás)"},
+    "logo": {"texto": "A GUILDA", "estilo": "letras em pixel art serifadas, ouro #d4a94a com contorno #1a120c de 1 px e sombra #56371f deslocada 1 px para baixo; um corvo pequeno pousado na letra G", "altura_px": 24},
+    "tagline": {"texto": "Quem você envia define quem eles se tornam", "posicao": "logo abaixo do logo, centralizada", "cor": "#fff6e0", "altura_px": 7, "fonte": "pixel sem serifa legível"},
+    "sem_logo": "versão sem texto: o céu continua livre na área segura (o próprio jogador pode pôr ícones de área de trabalho sobre ele)"
+  },
+
+  "areas_seguras": {
+    "_doc": "Para uso como papel de parede e em redes.",
+    "icones_area_de_trabalho": "faixa esquerda x=0 a x=60 sem detalhes importantes (só rua e céu)",
+    "barra_de_tarefas": "faixa inferior y=255 a y=270 só com chão",
+    "recorte_vertical": "versão celular recorta x=164 a x=316: precisa conter Mira (parcial), Theo, a porta com a placa e o corvo, Vera e Bram; logo empilhado em 2 linhas no céu",
+    "recorte_quadrado_redes": "x=105 a x=375 (270x270): o grupo inteiro, logo no topo"
+  },
+
+  "variacoes": {
+    "noite": "opcional — mesma cena à noite, céu #1f2440 com estrelas, só a luz da porta e das janelas iluminando o grupo de trás (silhuetas fortes, ar de véspera do Ninho do Corvo)",
+    "ato_2": "opcional — fachada totalmente restaurada (sem andaime e sem tábua), estandarte novo, Senna com Dario ao lado, Theo com o tabardo restaurado"
+  },
+
+  "prompt_en": "wide pixel art promotional wallpaper, 16:9, native 480x270 upscaled, 16-bit RPG style, medieval fantasy, golden hour sunset light from the left, group of seven adventurers posing in front of a half-restored two-story medieval guild hall with stone ground floor and timber-framed upper floor, slate roof with smoking chimney, arched oak double door half open with warm light inside, wooden sign with a carved grey crow and a real crow perched on it, grey crow banner, quest board covered in parchments beside the door, scaffolding and a boarded window on the right side, cobblestone street; from left to right: half-orc mercenary woman leaning on the wall with arms crossed slightly apart from the group, half-elf rogue woman sitting on a barrel spinning a dagger with sly smile, scholar mage woman reading an open book with glowing blue runes and crystal staff, stern human fallen paladin with scratched-out sun tabard resting both hands on a sword pommel, broad grey-bearded dwarf veteran warrior woman with war axe resting a gauntlet on the shoulder of a cheerful halfling bard dancing and playing a lute with musical notes, kind dark-skinned human cleric in brown habit offering bread off-frame; warm rim light, purple shadows, crisp pixels, limited palette, 1px dark outlines, title space in the sky",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, watermark, signature, illegible random text, extra characters, extra limbs, deformed hands, modern clothing, chibi, oversaturated neon, noise, jpeg artifacts, characters overlapping faces",
+
+  "entrega": {
+    "pasta": "art/promo/",
+    "arquivos": ["wallpaper_1080p.png", "wallpaper_4k.png", "wallpaper_ultrawide.png", "wallpaper_celular.png", "wallpaper_quadrado.png", "wallpaper_nativo_480x270.png"],
+    "formato": "PNG sem perda; guardar também o arquivo-fonte em camadas (cenário, grupo, luz, logo) para gerar as variações",
+    "checklist": [
+      "7 personagens presentes e identificáveis pela silhueta e pela cor",
+      "símbolo raspado no tabardo de Theo e plaquinhas de Vera visíveis",
+      "Vera com a mão no ombro de Bram; Mira com a mão no ombro de Lyssa",
+      "corvo vivo na placa",
+      "porta aberta com luz quente entre Theo e Vera",
+      "lado direito da fachada ainda em reforma",
+      "área do logo livre no céu",
+      "nenhum anti-aliasing ao ampliar"
+    ]
+  }
+}

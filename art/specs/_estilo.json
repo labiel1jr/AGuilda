@@ -1,0 +1,109 @@
+{
+  "_doc": "Guia de estilo comum a todos os personagens de A Guilda. Cada arquivo <id>.json herda daqui e só define o que é próprio do herói. Não contém imagens: é a especificação para um artista ou para uma IA de imagem.",
+  "versao": 1,
+  "projeto": "A Guilda — fantasia medieval, tom de campanha de RPG de mesa (GDD §10)",
+  "estilo": {
+    "tecnica": "pixel art à mão, sem anti-aliasing, sem gradiente suave, sem desfoque",
+    "referencias_de_clima": [
+      "retratos de RPG 16-bit",
+      "ilustração de pergaminho",
+      "paleta quente para a guilda (lar)"
+    ],
+    "contorno": {
+      "usar": true,
+      "cor": "#1a120c",
+      "espessura_px": 1,
+      "regra": "contorno externo escuro; contornos internos na cor de sombra do material, nunca preto puro"
+    },
+    "luz": {
+      "direcao": "superior esquerda",
+      "niveis_por_material": 3,
+      "regra": "base + sombra + luz; brilho especular só em metal e olhos"
+    },
+    "dithering": "mínimo, só em tecidos grandes ou na névoa do fundo; nunca no rosto",
+    "pixels_orfaos": "evitar pixels isolados; formas legíveis em 1x",
+    "proporcao_retrato": "busto 3/4 virado levemente para a esquerda do observador, cabeça ocupando ~40% da altura",
+    "consistencia": "mesma altura de olhos (linha 26 de 64) e mesmo enquadramento em todos os retratos, para ficarem bem lado a lado no título e no epílogo"
+  },
+  "paleta_global": {
+    "_doc": "Cores compartilhadas por todos. Cada personagem soma no máximo 12 cores próprias (total <= 20).",
+    "contorno": "#1a120c",
+    "fundo_escuro": "#2b2118",
+    "fundo_medio": "#3d2f22",
+    "pergaminho": "#e8d9b5",
+    "pergaminho_sombra": "#c9b083",
+    "ouro": "#d4a94a",
+    "ouro_luz": "#f2d27a",
+    "branco_brilho": "#fff6e0",
+    "pele_tons": {
+      "clara": [
+        "#f0d2b4",
+        "#d9ae8c",
+        "#b88566"
+      ],
+      "media": [
+        "#e8c4a0",
+        "#c99a6e",
+        "#9c6c48"
+      ],
+      "morena": [
+        "#c99a6e",
+        "#a5734d",
+        "#7a4f32"
+      ],
+      "escura": [
+        "#a5734d",
+        "#8f5d3b",
+        "#5e3a22"
+      ],
+      "meio_orc": [
+        "#9caa78",
+        "#7a8a5a",
+        "#55633e"
+      ]
+    }
+  },
+  "saidas": {
+    "retrato": {
+      "tamanho_px": [
+        64,
+        64
+      ],
+      "uso": "Livro da Guilda, título, epílogo, ultimato, subida de nível",
+      "fundo": "medalhão circular na cor do herói sobre transparente",
+      "escala_no_jogo": "2x a 3x, filtro nearest"
+    },
+    "marcador_mapa": {
+      "tamanho_px": [
+        16,
+        16
+      ],
+      "uso": "token do herói no Mapa Mágico (GDD §13)",
+      "fundo": "transparente",
+      "regra": "cabeça + ombros, silhueta reconhecível só pela cor e pelo cabelo/elmo"
+    },
+    "corpo_inteiro": {
+      "tamanho_px": [
+        32,
+        48
+      ],
+      "uso": "opcional — futuras cenas de bastidor e tela de equipamento",
+      "fundo": "transparente",
+      "pose": "parado, 3/4, arma na mão dominante"
+    }
+  },
+  "variacoes_de_estado": {
+    "_doc": "Ligadas às mecânicas do jogo. Arquivo: <id>_<variacao>.png. São ajustes sobre o retrato base, não redesenhos.",
+    "ferido": "curativo ou corte visível no rosto/braço, uma mancha de sangue escuro discreta (status Ferido, PV abaixo do máximo)",
+    "exausto": "olheiras (1 px na cor de sombra da pele), ombros mais baixos 1-2 px, cabelo desalinhado (status Exausto)",
+    "moral_baixa": "olhar para baixo, boca reta ou triste, cores do medalhão 20% dessaturadas (ultimato, moral <= 1)"
+  },
+  "entrega": {
+    "formato": "PNG 32 bits com transparência, sem compressão com perda",
+    "pasta": "res://art/portraits/",
+    "nomes": "<id>.png (retrato), <id>_token.png (mapa), <id>_full.png (corpo inteiro), <id>_<variacao>.png",
+    "integracao": "preencher \"portrait\": \"res://art/portraits/<id>.png\" em data/heroes.json; o jogo troca o retrato gerado por código pela imagem"
+  },
+  "prompt_base_en": "pixel art character portrait, 64x64 pixels, 16-bit RPG style, medieval fantasy, bust shot, 3/4 view facing left, limited palette, crisp pixels, 1px dark outline, light from top-left, circular colored medallion background, no anti-aliasing",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, text, watermark, signature, extra limbs, deformed hands, modern clothing, high resolution painting, noise, jpeg artifacts"
+}

@@ -1,0 +1,96 @@
+{
+  "_doc": "Especificação de pixel art de Senna. Herda de _estilo.json (contorno, luz, saídas, variações). Não é imagem.",
+  "herda": "_estilo.json",
+  "id": "senna",
+  "nome": "Senna",
+  "titulo": "Senna, a Lâmina Alugada",
+  "arquetipo": "A Mercenária Pragmática",
+  "ficha": {
+    "classe": "Guerreira",
+    "raca": "Meio-orc",
+    "nivel_inicial": 4
+  },
+  "cor_do_jogo": "#a8443c",
+  "paleta": {
+    "_doc": "Cores próprias (somadas à paleta_global). Papel de cada uma.",
+    "pele": [
+      "#9caa78",
+      "#7a8a5a",
+      "#55633e"
+    ],
+    "medalhao": [
+      "#a8443c",
+      "#74302a"
+    ],
+    "couro_e_cota": [
+      "#5a4a3e",
+      "#3b3029",
+      "#8c8478"
+    ],
+    "lenco": [
+      "#a8443c",
+      "#74302a"
+    ],
+    "cabelo": [
+      "#1f1a17",
+      "#3a312b"
+    ],
+    "olhos": "#c99a2e",
+    "presas": "#f0e6d0"
+  },
+  "aparencia": {
+    "rosto": "rosto largo, maçãs fortes, nariz achatado, pele verde-acinzentada",
+    "presas": "duas presas inferiores pequenas saindo do lábio (2x2 px cada, marfim)",
+    "cabelo": "preto, laterais raspadas, faixa central presa numa trança grossa caída sobre o ombro",
+    "olhos": "âmbar, pálpebras pesadas, olhar avaliador",
+    "marca": "orelha esquerda com três argolas de ferro; cicatriz antiga atravessando a sobrancelha",
+    "idade_aparente": "30 anos"
+  },
+  "roupa": {
+    "base": "couraça de couro com placas de cota de malha nos ombros, remendada",
+    "lenco": "lenço vermelho-ferrugem amarrado no pescoço (a cor dela)",
+    "detalhes": "bolsa de moedas presa no cinto, visível no canto"
+  },
+  "equipamento_visivel": {
+    "mao_dominante": "direita",
+    "arma": "espada bastarda apoiada no ombro, lâmina com entalhes",
+    "acessorio": "bolsa de moedas (pagamento) — referência ao traço 'pago minhas contas'"
+  },
+  "emblema_da_classe": {
+    "forma": "duas espadas cruzadas",
+    "onde": "medalhão inferior direito",
+    "cor": "#d4a94a"
+  },
+  "pose": "ombros largos, espada no ombro, peso numa perna só",
+  "expressao": "neutra, entediada; boca fechada mostrando as presas; não sorri",
+  "personalidade_visual": "Ela nunca inicia vínculo: corpo fechado, braço cruzando o peito segurando a espada. Distância do observador.",
+  "marcador_mapa_16px": {
+    "silhueta": "trança caída + espada no ombro",
+    "cor_dominante": "#5a4a3e com aro #a8443c",
+    "detalhe": "1 px vermelho do lenço"
+  },
+  "corpo_inteiro_32x48": {
+    "pose": "em pé, espada no ombro, mão livre na bolsa de moedas",
+    "pes": "botas pesadas com grevas",
+    "capa": "nenhuma"
+  },
+  "variacoes": {
+    "irmao_salvo": "opcional (flag irmao_salvo, epílogo): sorriso pequeno, trança com uma fita nova presa por Dario"
+  },
+  "arquivos": {
+    "retrato": "res://art/portraits/senna.png",
+    "marcador": "res://art/portraits/senna_token.png",
+    "corpo_inteiro": "res://art/portraits/senna_full.png",
+    "variacoes": [
+      "res://art/portraits/senna_ferido.png",
+      "res://art/portraits/senna_exausto.png",
+      "res://art/portraits/senna_moral_baixa.png"
+    ]
+  },
+  "prompt_en": "pixel art character portrait, 64x64 pixels, 16-bit RPG style, medieval fantasy, bust shot, 3/4 view facing left, limited palette, crisp pixels, 1px dark outline, light from top-left, circular colored medallion background, no anti-aliasing, half-orc mercenary woman, around thirty, broad face, grey-green skin, two small ivory lower tusks, black hair with shaved sides and a thick braid over the shoulder, heavy-lidded amber eyes, old scar across eyebrow, three iron rings on left ear, patched leather cuirass with chainmail shoulders, rust red scarf around neck, bastard sword resting on shoulder, coin purse on belt, bored neutral expression, red medallion background #a8443c",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, text, watermark, signature, extra limbs, deformed hands, modern clothing, high resolution painting, noise, jpeg artifacts",
+  "notas_para_o_artista": [
+    "Pele verde-acinzentada dessaturada; evitar verde vivo de 'goblin'.",
+    "Presas pequenas e discretas, não caricatas."
+  ]
+}

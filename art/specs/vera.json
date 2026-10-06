@@ -1,0 +1,97 @@
+{
+  "_doc": "Especificação de pixel art de Vera. Herda de _estilo.json (contorno, luz, saídas, variações). Não é imagem.",
+  "herda": "_estilo.json",
+  "id": "vera",
+  "nome": "Vera",
+  "titulo": "Vera Punho-de-Ferro",
+  "arquetipo": "A Guerreira Veterana",
+  "ficha": {
+    "classe": "Guerreira",
+    "raca": "Anã",
+    "nivel_inicial": 6
+  },
+  "cor_do_jogo": "#8a6fb0",
+  "paleta": {
+    "_doc": "Cores próprias (somadas à paleta_global). Papel de cada uma.",
+    "pele": [
+      "#c99a6e",
+      "#a5734d",
+      "#7a4f32"
+    ],
+    "medalhao": [
+      "#8a6fb0",
+      "#5f4a7d"
+    ],
+    "armadura": [
+      "#7d7f86",
+      "#54565c",
+      "#b3b5ba"
+    ],
+    "peles": [
+      "#6b5440",
+      "#4a3a2c"
+    ],
+    "cabelo_barba": [
+      "#8c8a86",
+      "#5e5c59",
+      "#b3b0aa"
+    ],
+    "olhos": "#3a2a1f",
+    "tranca_metal": "#c9a227"
+  },
+  "aparencia": {
+    "rosto": "rosto largo e marcado, nariz grande, rugas de expressão na testa e nos olhos",
+    "barba": "barba grisalha trançada em duas tranças grossas com anéis de metal dourado, cobrindo a boca (anã)",
+    "cabelo": "grisalho, preso em trança para trás sob o elmo",
+    "olhos": "castanho-escuros, pequenos, duros",
+    "marca": "cicatriz atravessando o nariz",
+    "idade_aparente": "veterana (equivalente a 50 anos humanos)"
+  },
+  "roupa": {
+    "base": "armadura pesada de placas, amassada e reparada muitas vezes",
+    "elmo": "elmo aberto com proteção nasal, sem chifres",
+    "detalhes": "gola de pele marrom sobre os ombros; correntes com plaquinhas de identificação (das companheiras mortas da antiga guilda) penduradas no peito"
+  },
+  "equipamento_visivel": {
+    "mao_dominante": "direita",
+    "arma": "machado de guerra de lâmina dupla apoiado no ombro, cabo saindo do quadro",
+    "punho": "manopla de ferro em punho fechado visível (o 'Punho-de-Ferro')"
+  },
+  "emblema_da_classe": {
+    "forma": "duas espadas cruzadas",
+    "onde": "medalhão inferior direito",
+    "cor": "#d4a94a"
+  },
+  "pose": "frontal, larga, sólida como uma muralha; ocupa o quadro inteiro de ombro a ombro",
+  "expressao": "severa, sobrancelhas franzidas; a barba esconde a boca, a emoção está só nos olhos",
+  "personalidade_visual": "As plaquinhas no peito são o vínculo dela ('enterrei metade da antiga guilda'). Escala: baixa e larga — anã; a cabeça fica mais baixa no quadro que a dos humanos, com o elmo chegando à mesma linha.",
+  "marcador_mapa_16px": {
+    "silhueta": "elmo com nasal + barba trançada larga",
+    "cor_dominante": "#7d7f86 com aro #8a6fb0",
+    "detalhe": "2 px dourados (anéis da barba)"
+  },
+  "corpo_inteiro_32x48": {
+    "pose": "em pé, pernas afastadas, machado nas duas mãos à frente do corpo",
+    "pes": "botas de ferro largas",
+    "altura": "38 px em vez de 48 px, mas mais larga"
+  },
+  "variacoes": {
+    "orgulhosa": "opcional (moral >= 7 no epílogo): sem elmo, um sorriso quase invisível no canto dos olhos"
+  },
+  "arquivos": {
+    "retrato": "res://art/portraits/vera.png",
+    "marcador": "res://art/portraits/vera_token.png",
+    "corpo_inteiro": "res://art/portraits/vera_full.png",
+    "variacoes": [
+      "res://art/portraits/vera_ferido.png",
+      "res://art/portraits/vera_exausto.png",
+      "res://art/portraits/vera_moral_baixa.png"
+    ]
+  },
+  "prompt_en": "pixel art character portrait, 64x64 pixels, 16-bit RPG style, medieval fantasy, bust shot, 3/4 view facing left, limited palette, crisp pixels, 1px dark outline, light from top-left, circular colored medallion background, no anti-aliasing, dwarf veteran warrior woman, broad weathered face with wrinkles, big nose with scar across it, grey braided beard in two thick braids with golden rings covering the mouth, grey hair under an open helmet with nose guard, small hard dark eyes, dented repaired heavy plate armor, brown fur collar, chains with small metal tags on chest, double-bladed war axe on shoulder, iron gauntlet clenched fist, stern frown, purple medallion background #8a6fb0",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, text, watermark, signature, extra limbs, deformed hands, modern clothing, high resolution painting, noise, jpeg artifacts",
+  "notas_para_o_artista": [
+    "Anã com barba: escolha intencional do mundo do jogo, retratar com naturalidade e dignidade, sem ser piada.",
+    "As plaquinhas de identificação precisam aparecer (3-4 px metálicos)."
+  ]
+}

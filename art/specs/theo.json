@@ -1,0 +1,95 @@
+{
+  "_doc": "Especificação de pixel art de Theo. Herda de _estilo.json (contorno, luz, saídas, variações). Não é imagem.",
+  "herda": "_estilo.json",
+  "id": "theo",
+  "nome": "Theo",
+  "titulo": "Sir Theo de Valmor",
+  "arquetipo": "O Paladino Caído",
+  "ficha": {
+    "classe": "Paladino",
+    "raca": "Humano",
+    "nivel_inicial": 4
+  },
+  "cor_do_jogo": "#c9a227",
+  "paleta": {
+    "_doc": "Cores próprias (somadas à paleta_global). Papel de cada uma.",
+    "pele": [
+      "#e8c4a0",
+      "#c99a6e",
+      "#9c6c48"
+    ],
+    "medalhao": [
+      "#c9a227",
+      "#8f7019"
+    ],
+    "armadura": [
+      "#9aa3ad",
+      "#6b737d",
+      "#cdd5dc"
+    ],
+    "tabardo": [
+      "#e8e0c8",
+      "#b8ab8a"
+    ],
+    "cabelo": [
+      "#4a3524",
+      "#2e2016"
+    ],
+    "olhos": "#3f5a6b",
+    "cicatriz": "#b06a52"
+  },
+  "aparencia": {
+    "rosto": "mandíbula quadrada, nariz reto, barba por fazer (2-3 px de sombra no queixo)",
+    "cabelo": "curto, castanho-escuro, penteado para trás com uma mecha caída na testa",
+    "olhos": "cinza-azulados, sobrancelhas grossas e retas",
+    "marca": "cicatriz diagonal fina na bochecha esquerda (do observador)",
+    "idade_aparente": "35 anos"
+  },
+  "roupa": {
+    "base": "armadura de placas gasta, ombreiras arredondadas com riscos",
+    "tabardo": "tabardo bege por cima da armadura, com o símbolo da Ordem RASPADO no peito (contorno de um sol apagado, ainda visível)",
+    "detalhes": "rebites dourados nas ombreiras"
+  },
+  "equipamento_visivel": {
+    "mao_dominante": "direita",
+    "arma": "espada longa embainhada, só o pomo visível no canto inferior",
+    "escudo": "não aparece no retrato; no corpo inteiro, escudo redondo sem brasão nas costas"
+  },
+  "emblema_da_classe": {
+    "forma": "escudo com cruz",
+    "onde": "medalhão pequeno no canto inferior direito, 12x12 px, ouro sobre contorno",
+    "cor": "#d4a94a"
+  },
+  "pose": "postura ereta, ombros alinhados, queixo levemente erguido",
+  "expressao": "sério, contido; lábios fechados em linha reta; olhar firme direto ao observador",
+  "personalidade_visual": "O símbolo raspado do tabardo é a história dele: expulso da Ordem, mas ainda carrega o código. Nada de brilho heroico demais — metal fosco, gasto.",
+  "marcador_mapa_16px": {
+    "silhueta": "cabeça castanha + ombreiras cinza largas",
+    "cor_dominante": "#9aa3ad com aro #c9a227",
+    "detalhe": "1 px dourado no peito"
+  },
+  "corpo_inteiro_32x48": {
+    "pose": "em pé, mão no pomo da espada",
+    "pes": "botas de metal",
+    "escudo": "nas costas, redondo e liso"
+  },
+  "variacoes": {
+    "redimido": "opcional (flag theo_redimido): tabardo com o sol da Ordem restaurado em dourado, expressão um pouco mais leve"
+  },
+  "arquivos": {
+    "retrato": "res://art/portraits/theo.png",
+    "marcador": "res://art/portraits/theo_token.png",
+    "corpo_inteiro": "res://art/portraits/theo_full.png",
+    "variacoes": [
+      "res://art/portraits/theo_ferido.png",
+      "res://art/portraits/theo_exausto.png",
+      "res://art/portraits/theo_moral_baixa.png"
+    ]
+  },
+  "prompt_en": "pixel art character portrait, 64x64 pixels, 16-bit RPG style, medieval fantasy, bust shot, 3/4 view facing left, limited palette, crisp pixels, 1px dark outline, light from top-left, circular colored medallion background, no anti-aliasing, fallen paladin, human man in his thirties, square jaw, short dark brown hair swept back with a loose strand, stubble, thin diagonal scar on left cheek, grey-blue eyes, worn matte plate armor with rounded pauldrons, beige tabard with a scratched-out sun emblem on the chest, stern restrained expression, golden medallion background #c9a227",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, text, watermark, signature, extra limbs, deformed hands, modern clothing, high resolution painting, noise, jpeg artifacts",
+  "notas_para_o_artista": [
+    "O símbolo raspado é obrigatório e precisa ser legível em 64 px.",
+    "Evitar aparência de 'cavaleiro brilhante': ele caiu em desgraça."
+  ]
+}

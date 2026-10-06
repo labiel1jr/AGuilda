@@ -1,0 +1,96 @@
+{
+  "_doc": "Especificação de pixel art de Bram. Herda de _estilo.json (contorno, luz, saídas, variações). Não é imagem.",
+  "herda": "_estilo.json",
+  "id": "bram",
+  "nome": "Bram",
+  "titulo": "Bram Pé-de-Vento",
+  "arquetipo": "O Novato Idealista",
+  "ficha": {
+    "classe": "Bardo",
+    "raca": "Halfling",
+    "nivel_inicial": 1
+  },
+  "cor_do_jogo": "#d9823b",
+  "paleta": {
+    "_doc": "Cores próprias (somadas à paleta_global). Papel de cada uma.",
+    "pele": [
+      "#e8c4a0",
+      "#c99a6e",
+      "#9c6c48"
+    ],
+    "medalhao": [
+      "#d9823b",
+      "#a35d24"
+    ],
+    "gibao": [
+      "#2f6b5a",
+      "#1f4a3e",
+      "#4a9480"
+    ],
+    "camisa": [
+      "#efe3c6",
+      "#c7b893"
+    ],
+    "cabelo": [
+      "#a8642c",
+      "#7a451c",
+      "#cc8448"
+    ],
+    "olhos": "#5a7a3a",
+    "chapeu_pena": "#c23b2e"
+  },
+  "aparencia": {
+    "rosto": "rosto redondo e jovem, bochechas coradas (1-2 px rosados), sardas",
+    "proporcao": "halfling: cabeça proporcionalmente maior, ombros estreitos; ocupar ~85% da altura dos outros retratos (o jogo também reduz o retrato gerado)",
+    "cabelo": "castanho-avermelhado cacheado e volumoso, escapando por baixo do chapéu",
+    "olhos": "verdes, grandes, brilhantes (brilho especular de 1 px em cada)",
+    "idade_aparente": "jovem adulto (equivalente a 20 anos)"
+  },
+  "roupa": {
+    "base": "gibão verde-petróleo de bardo com mangas bufantes",
+    "camisa": "camisa creme com gola aberta",
+    "chapeu": "chapéu de aba curta inclinado, com uma pena vermelha longa"
+  },
+  "equipamento_visivel": {
+    "mao_dominante": "esquerda",
+    "instrumento": "alaúde de madeira clara segurado na diagonal, braço do instrumento saindo do quadro pela direita",
+    "arma": "nenhuma visível — ele acha que vai resolver tudo cantando"
+  },
+  "emblema_da_classe": {
+    "forma": "alaúde",
+    "onde": "medalhão inferior direito",
+    "cor": "#d4a94a"
+  },
+  "pose": "corpo inclinado para a frente, entusiasmado",
+  "expressao": "sorriso largo mostrando os dentes, olhos bem abertos, otimismo total",
+  "personalidade_visual": "Novato: roupas limpas demais, chapéu ainda sem amassados. É o único retrato de expressão aberta e alegre no elenco inicial.",
+  "marcador_mapa_16px": {
+    "silhueta": "chapéu com pena longa",
+    "cor_dominante": "#2f6b5a com aro #d9823b",
+    "detalhe": "1 px vermelho da pena"
+  },
+  "corpo_inteiro_32x48": {
+    "pose": "tocando o alaúde, um pé levantado no meio de um passo de dança",
+    "pes": "descalço (pés de halfling peludos)",
+    "altura": "36 px em vez de 48 px no mesmo canvas"
+  },
+  "variacoes": {
+    "veterano": "opcional (nível 5+ ou Mentoria): chapéu amassado, cicatriz pequena no queixo, espada curta na cintura"
+  },
+  "arquivos": {
+    "retrato": "res://art/portraits/bram.png",
+    "marcador": "res://art/portraits/bram_token.png",
+    "corpo_inteiro": "res://art/portraits/bram_full.png",
+    "variacoes": [
+      "res://art/portraits/bram_ferido.png",
+      "res://art/portraits/bram_exausto.png",
+      "res://art/portraits/bram_moral_baixa.png"
+    ]
+  },
+  "prompt_en": "pixel art character portrait, 64x64 pixels, 16-bit RPG style, medieval fantasy, bust shot, 3/4 view facing left, limited palette, crisp pixels, 1px dark outline, light from top-left, circular colored medallion background, no anti-aliasing, halfling bard young man, round youthful face with rosy cheeks and freckles, big bright green eyes, curly voluminous auburn hair under a tilted short-brimmed hat with a long red feather, teal doublet with puffy sleeves over cream open-collar shirt, light wood lute held diagonally, wide enthusiastic toothy smile, slightly smaller figure, orange medallion background #d9823b",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, text, watermark, signature, extra limbs, deformed hands, modern clothing, high resolution painting, noise, jpeg artifacts",
+  "notas_para_o_artista": [
+    "Halfling deve ler como adulto jovem, não criança: proporção de cabeça maior, mas traços de adulto.",
+    "Pés peludos só no corpo inteiro."
+  ]
+}
