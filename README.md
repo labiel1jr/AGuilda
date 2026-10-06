@@ -6,6 +6,8 @@ Jogo de gerenciamento narrativo em fantasia medieval, inspirado no loop de despa
 
 O jogo não é sobre combate. É sobre gestão de gente complicada com poder de matar dragões: egos, rivalidades, dívidas de honra e vínculos que mudam conforme você monta as parties.
 
+![Tela de título](docs/img/18_titulo.png)
+
 ![Tela da Guilda](docs/img/1_hub.png)
 
 ## Como se joga
@@ -37,10 +39,18 @@ O jogo é dividido em **atos** e **capítulos**. Cada capítulo abre com uma cen
 | ![Mercado](docs/img/12_mercado.png) | ![Livro](docs/img/15_livro_mira.png) |
 | **Ultimato** | **Abertura do Ato 2** |
 | ![Ultimato](docs/img/16_ultimato.png) | ![Ato 2](docs/img/17_ato2.png) |
+| **Epílogo** | **Livro com retrato** |
+| ![Epílogo](docs/img/19_epilogo.png) | ![Livro](docs/img/5_livro.png) |
 | **Bastidores no hub** | **Cena de bastidor** |
 | ![Bastidores](docs/img/8_hub_bastidores.png) | ![Cena de bastidor](docs/img/9_bastidor.png) |
 
-## Estado atual — v0.6 (Ato 2)
+## Estado atual — v0.7 (salvar, finais e retratos)
+
+- **Salvar e carregar**: tela de título (Continuar / Novo jogo / Carregar), 3 espaços de save e salvamento automático ao fim de cada dia. Menu ☰ no hub. O save usa `var_to_str` (preserva inteiros e cores) e guarda só o estado mutável — os JSON de conteúdo são recarregados, então correções de texto valem para saves antigos.
+- **Finais variáveis**: epílogo ao fim do Ato 2 — quatro finais (*A Lenda do Corvo Cinzento*, *A Guilda Reconstruída*, *Os Que Ficaram*, *Cinzas e Recomeço*) conforme flags, reputação e quem deixou a guilda; um desfecho por herói (inclusive quem saiu) e uma linha por vínculo formado (Romance, Mentoria, Irmandade...). Tudo em `data/endings.json`.
+- **Retratos gerados por código**: busto na cor do herói, detalhe de raça (barba anã, orelhas élficas, presas de meio-orc, halfling menor) e emblema da classe. Aparecem no título, no Livro, no ultimato, na subida de nível e no epílogo. Um `portrait` com imagem em `heroes.json` substitui o retrato gerado.
+
+## v0.6 (Ato 2)
 
 - **Ato 2 — A Lista de Nomes**: Capítulo 3 "Nomes na Lista" (objetivo: convencer o Conselho) e Capítulo 4 "O Ninho do Corvo" (missão final **lendária**, exige 4 aventureiros). 12 missões novas. Ao fim de um ato, o jogo segue para o próximo.
 - **Missões pessoais**: *O Irmão de Senna*, *A Última Carta* (Mira) e *O Julgamento da Ordem* (Theo) exigem o herói e mudam a moral dele e as flags da história.
@@ -101,6 +111,8 @@ Requer **Godot 4.7**. Abra a pasta no editor e pressione **F5**.
 | `data/items.json` | Itens, tabelas de saque e mercado |
 | `scripts/core/hero_rpg.gd` | Regras de RPG: XP, nível, efeitos, equipamento, magias, saque, mercado |
 | `data/ultimatum.json` | Texto e escolhas do ultimato por moral baixa |
+| `data/endings.json` | Finais, desfechos por herói e por vínculo |
+| `scripts/ui/portrait.gd` | Retrato procedural dos heróis |
 | `data/book.json` | Seções trancadas do Livro (slots de expansão por versão) |
 | `scripts/ui/main.gd` | Telas, montadas por código |
 | `scripts/ui/magic_map.gd` | Mapa Mágico: desenho do bioma, rota, waypoints e marcadores |
@@ -154,7 +166,8 @@ godot --headless --path . -s res://tests/ui_smoke.gd
 - [x] **v0.4** — capítulos, Ato 1 completo, upgrades da guilda
 - [x] **v0.5** — níveis, equipamento, saque, mercado, magias, clérigo, descanso ativo
 - [x] **v0.6** — Ato 2, missões pessoais, bastidores ligados à história, saída de aventureiros por moral baixa
-- [ ] **v0.7** — salvar/carregar, finais variáveis, arte e retratos
+- [x] **v0.7** — salvar/carregar, finais variáveis, retratos gerados por código
+- [ ] **v0.8** — trilha e efeitos sonoros, arte ilustrada, minigame opcional (GDD §5.9), opções (volume, velocidade do mapa)
 - [ ] **v1.0** — arte, trilha sonora, minigame opcional, finais variáveis
 
 ## Créditos

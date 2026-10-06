@@ -300,10 +300,9 @@ func _portrait(h: Dictionary) -> Control:
 		tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		frame.add_child(tex)
 	else:
-		var l := _text(String(h.name).left(1), 44, Color.WHITE, false)
-		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		frame.add_child(l)
+		var por = load("res://scripts/ui/portrait.gd").new()
+		por.setup(h)
+		frame.add_child(por)
 	return frame
 
 

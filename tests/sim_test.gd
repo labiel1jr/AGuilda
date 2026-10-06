@@ -16,6 +16,8 @@ func _init() -> void:
 	_check_upgrades(gs)
 	_check_rpg(gs)
 	_check_act2(gs)
+	_check_save(gs)
+	_check_endings(gs)
 	_random_playthroughs(gs, 150)
 	print("RESULTADO: %s (%d falha(s))" % ["OK" if failures == 0 else "FALHOU", failures])
 	gs.free()
@@ -355,6 +357,69 @@ func _check_act2(gs) -> void:
 	gs.bond_labels[gs.pair_key("vera", "bram")] = "Irmandade"
 	gs.resolve_ultimatum({"id": "vera", "done": false}, gs.ultimatum_data.choices[3])
 	_expect(not gs.hero_order.has("vera") and not gs.hero_order.has("bram"), "Irmandade: o irmão de armas parte junto")
+	gs.new_game(42)
+
+
+func _snapshot(gs) -> String:
+	var st := {}
+	for k in gs.SAVE_KEYS:
+		st[k] = gs.get(k)
+	return var_to_str(st)
+
+
+func _check_save(gs) -> void:
+	gs.new_game(42)
+	gs.begin_chapter()
+	gs.gold = 200
+	HeroRPG.buy(gs, "espada_longa")
+	HeroRPG.equip(gs, "vera", "arma", 0)
+	gs.buy_upgrade("quadro")
+	gs.dispatch(_mission(gs, "lobos"), ["vera", "bram"])
+	gs.change_affinity("lyssa", "mira", 2, 1)
+	gs.end_day()
+	gs.end_day()
+	var snap := _snapshot(gs)
+	_expect(gs.save_game("teste"), "salvar em arquivo")
+	var next_roll: int = gs.rng.randi()
+	gs.new_game(7)
+	gs.end_day()
+	_expect(_snapshot(gs) != snap, "estado mudou depois do novo jogo")
+	_expect(gs.load_game("teste"), "carregar o arquivo")
+	_expect(_snapshot(gs) == snap, "estado carregado é idêntico ao salvo")
+	_expect(gs.rng.randi() == next_roll, "sorte continua de onde parou")
+	_expect(typeof(gs.missions[0].day) == TYPE_INT and typeof(gs.heroes.vera.level) == TYPE_INT, "inteiros continuam inteiros depois de carregar")
+	_expect(gs.heroes.vera.color is Color, "cores preservadas")
+	_expect(gs.act.id == "ato1" and gs.current_chapter().id == "c1", "ato e capítulo restaurados")
+	var meta: Dictionary = gs.save_meta("teste")
+	_expect(meta.chapter == "Herança de Cinzas" and meta.chapter_day == 3, "metadados do save (capítulo e dia)")
+	# Continua jogável depois de carregar
+	gs.end_day()
+	_expect(gs.chapter_day() == 4, "jogo segue normalmente depois de carregar")
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(gs.save_path("teste")))
+	_expect(not gs.load_game("teste"), "carregar espaço vazio falha sem quebrar")
+	gs.new_game(42)
+
+
+func _check_endings(gs) -> void:
+	gs.new_game(42)
+	gs.flags = ["noite_vencida", "conselho_aliado", "corvo_derrotado", "irmao_salvo"]
+	gs.reputation = 25
+	var ep: Dictionary = gs.epilogue()
+	_expect(ep.title == "A Lenda do Corvo Cinzento", "final Lenda: tudo cumprido, ninguém saiu")
+	var senna: Array = ep.heroes.filter(func(e): return e.id == "senna")
+	_expect(senna.size() == 1 and String(senna[0].text).contains("Dario"), "epílogo de Senna reflete o irmão salvo")
+	gs.departed = ["lyssa"]
+	gs.hero_order.erase("lyssa")
+	ep = gs.epilogue()
+	_expect(ep.title == "A Guilda Reconstruída", "alguém saiu: final Reconstrução")
+	var ly: Array = ep.heroes.filter(func(e): return e.id == "lyssa")
+	_expect(ly.size() == 1 and String(ly[0].text).contains("sumiu"), "epílogo de quem saiu da guilda")
+	gs.flags = []
+	_expect(gs.epilogue().title == "Cinzas e Recomeço", "nada cumprido: final Cinzas")
+	gs.bond_labels[gs.pair_key("vera", "bram")] = "Mentoria"
+	ep = gs.epilogue()
+	var bram: Array = ep.heroes.filter(func(e): return e.id == "bram")
+	_expect(ep.bonds.size() == 1 and String(bram[0].text).contains("aprendeu"), "vínculos aparecem no epílogo")
 	gs.new_game(42)
 
 

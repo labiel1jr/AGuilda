@@ -101,6 +101,18 @@ func _initialize() -> void:
 	gs.chapter_state = "fim_de_jogo"
 	main.show_hub()
 	await process_frame
+	main.show_epilogue()
+	await process_frame
+	# Título, menu, salvar e carregar
+	main.show_title()
+	await process_frame
+	main.show_menu()
+	await process_frame
+	gs.save_game("3")
+	main.show_load(false)
+	await process_frame
+	assert(gs.load_game("3"))
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(gs.save_path("3")))
 	# PV e incapacitado
 	gs.heroes.mira.hp = 0
 	assert(gs.unavailable_reason("mira", m) == "Incapacitado")

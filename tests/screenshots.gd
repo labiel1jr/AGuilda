@@ -7,6 +7,8 @@ func _initialize() -> void:
 	var gs = root.get_node("GameState")
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("user://shots"))
 	await process_frame
+	main.show_title()
+	await _shot("18_titulo")
 	main.show_hub()
 	await _shot("10_capitulo")
 	gs.begin_chapter()
@@ -68,6 +70,16 @@ func _initialize() -> void:
 	gs.next_act()
 	main.show_hub()
 	await _shot("17_ato2")
+	main.show_book(5)
+	await _shot("5_livro")
+	gs.flags = ["noite_vencida", "conselho_aliado", "corvo_derrotado", "irmao_salvo", "carta_lida"]
+	gs.reputation = 18
+	gs.departed = ["lyssa"]
+	gs.hero_order.erase("lyssa")
+	gs.bond_labels[gs.pair_key("vera", "bram")] = "Mentoria"
+	gs.chapter_state = "fim_de_jogo"
+	main.show_epilogue()
+	await _shot("19_epilogo")
 	quit()
 
 func _shot(name: String) -> void:

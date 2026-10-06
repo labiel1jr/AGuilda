@@ -1,0 +1,46 @@
+{
+  "_doc": "Epílogo (fim do último ato). Condições: all_flags, any_flags, no_flags, min_reputation, max_departed. 'endings': o primeiro que casa define o final. 'heroes': por herói, o primeiro texto que casa (departed = herói saiu da guilda; min_morale; bond = rótulo de vínculo com qualquer um). 'bonds': uma linha por par com esse rótulo; {a} e {b} viram os nomes.",
+  "endings": [
+    {"id": "lenda", "title": "A Lenda do Corvo Cinzento",
+     "all_flags": ["corvo_derrotado", "conselho_aliado"], "max_departed": 0, "min_reputation": 20,
+     "text": "Ninguém deixou a guilda. Ninguém ficou para trás. Em um ano, o Corvo Cinzento volta a ser a primeira guilda da região — e o Conselho pede a você que treine os novos Mestres de Despacho."},
+    {"id": "reconstrucao", "title": "A Guilda Reconstruída",
+     "all_flags": ["corvo_derrotado"],
+     "text": "O Ninho caiu e a dívida foi paga. A guilda carrega cicatrizes, mas é sua — e o mural nunca mais ficou vazio."},
+    {"id": "sobrevivencia", "title": "Os Que Ficaram",
+     "any_flags": ["noite_vencida", "conselho_aliado"],
+     "text": "Os fundadores escaparam, mas não voltaram. A guilda sobrevive de pedido em pedido, mais pobre e mais unida do que nunca."},
+    {"id": "cinzas", "title": "Cinzas e Recomeço",
+     "text": "O Corvo Cinzento quase acabou. Mas uma guilda é feita de gente, não de paredes — e os que ficaram juram que ainda vão reconstruí-la."}
+  ],
+  "heroes": {
+    "theo":  [{"departed": true, "text": "Theo partiu sem se despedir. Dizem que voltou à estrada, sozinho, sem ordem a quem servir."},
+              {"all_flags": ["theo_redimido"], "text": "Theo recusou o lugar de volta na Ordem. Hoje ensina os novatos da guilda que um código só vale se for seu."},
+              {"text": "Theo continua na guilda. Ainda recusa ordens injustas — mas agora você sabe que pode contar com isso."}],
+    "lyssa": [{"departed": true, "text": "Lyssa sumiu numa noite sem lua. O cofre da guilda, curiosamente, ficou intacto."},
+              {"min_morale": 7, "text": "Lyssa trocou a gazua por uma chave — a do arsenal. Confiou em alguém, enfim."},
+              {"text": "Lyssa ainda conta as saídas de cada sala. Mas agora fica para o jantar."}],
+    "mira":  [{"departed": true, "text": "Mira levou seus cadernos e partiu para a capital. Ainda escreve, mas nunca menciona a guilda."},
+              {"all_flags": ["carta_lida"], "text": "Mira terminou o trabalho do mestre. O Arquivo da guilda virou a maior biblioteca da região."},
+              {"text": "Mira continua decifrando runas — e insistindo em ir às missões perigosas."}],
+    "senna": [{"departed": true, "text": "Senna voltou a vender a espada. Ninguém sabe a quem."},
+              {"all_flags": ["irmao_salvo"], "text": "Senna e Dario abriram uma escola de esgrima ao lado da guilda. Ela ainda diz que trabalha melhor sozinha. Ninguém acredita."},
+              {"text": "Senna ficou. Diz que é pelo pagamento. Faz tempo que não confere as moedas."}],
+    "bram":  [{"departed": true, "text": "Bram foi embora cantando uma música triste. A taverna ficou silenciosa por semanas."},
+              {"bond": "Mentoria", "text": "Bram é hoje um aventureiro de verdade — e conta a todos que aprendeu com a melhor."},
+              {"text": "Bram compôs uma balada sobre a guilda. É longa demais e todos a sabem de cor."}],
+    "vera":  [{"departed": true, "text": "Vera pendurou a espada e foi embora. A metade da guilda que ela queria proteger não precisou dela."},
+              {"min_morale": 7, "text": "Vera assumiu o treino dos novatos. Ainda não elogia ninguém. Mas sorri quando acham que ela não está olhando."},
+              {"text": "Vera continua de guarda no portão. Alguém precisa."}],
+    "corin": [{"departed": true, "text": "Corin seguiu viagem, como sempre fez. Deixou pão na mesa e uma bênção na porta."},
+              {"text": "Corin transformou a enfermaria da guilda em um abrigo para quem não tem para onde ir. Ninguém pergunta o nome antes."}]
+  },
+  "bonds": {
+    "Romance": "{a} e {b} se casaram no salão da guilda. A festa durou três dias.",
+    "Parceria Lendária": "As canções contam as façanhas de {a} e {b} — e erram todos os detalhes.",
+    "Irmandade": "{a} e {b} juraram nunca mais lutar separados. Cumprem a promessa.",
+    "Mentoria": "{a} e {b}: mestre e aprendiz, até que o aprendiz passou a ensinar também.",
+    "Amizade Profunda": "{a} e {b} ainda dividem a mesma mesa na taverna, todas as noites.",
+    "Inimizade Declarada": "{a} e {b} nunca fizeram as pazes. A guilda aprendeu a escalá-los em dias diferentes."
+  }
+}

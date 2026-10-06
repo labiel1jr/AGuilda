@@ -923,6 +923,144 @@ func resolve_backstage(bs: Dictionary, choice: Dictionary) -> Array:
 	return lines
 
 
+# ---------- salvar / carregar ----------
+
+const SAVE_VERSION := 1
+const SAVE_SLOTS := ["auto", "1", "2", "3"]
+## Estado mutável. Dados estáticos (JSON de conteúdo) são recarregados por new_game.
+const SAVE_KEYS := [
+	"heroes", "hero_order", "affinity", "bond_labels", "fired", "missions",
+	"day", "reputation", "dispatched_today", "pending_events", "pending_levelups",
+	"inventory", "recruits", "act_index", "chapter_index", "chapter_start",
+	"chapter_state", "chapter_result", "flags", "gold", "upgrades_owned",
+	"trained_today", "pair_history", "initial_affinity", "last_together",
+	"backstage_today", "backstage_once", "ultimatums", "promises", "departed",
+]
+
+
+static func save_path(slot: String) -> String:
+	return "user://saves/save_%s.sav" % slot
+
+
+## Salva com var_to_str: preserva int, float e Color (JSON transformaria int em float).
+func save_game(slot: String) -> bool:
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("user://saves"))
+	var state := {}
+	for k in SAVE_KEYS:
+		state[k] = get(k)
+	var data := {
+		"version": SAVE_VERSION,
+		"meta": {
+			"act": act.title, "chapter": current_chapter().get("title", ""),
+			"chapter_day": chapter_day(), "reputation": reputation, "gold": gold,
+			"saved_at": Time.get_datetime_string_from_system(false, true),
+		},
+		"rng_state": rng.state,
+		"state": state,
+	}
+	var f := FileAccess.open(save_path(slot), FileAccess.WRITE)
+	if f == null:
+		return false
+	f.store_string(var_to_str(data))
+	return true
+
+
+func load_game(slot: String) -> bool:
+	if not FileAccess.file_exists(save_path(slot)):
+		return false
+	var data = str_to_var(FileAccess.get_file_as_string(save_path(slot)))
+	if not (data is Dictionary) or int(data.get("version", 0)) != SAVE_VERSION:
+		return false
+	new_game()   # recarrega os dados estáticos
+	for k in SAVE_KEYS:
+		if data.state.has(k):
+			set(k, data.state[k])
+	act = chapters_data.acts[act_index]
+	rng.state = data.rng_state
+	return true
+
+
+func save_meta(slot: String) -> Dictionary:
+	if not FileAccess.file_exists(save_path(slot)):
+		return {}
+	var data = str_to_var(FileAccess.get_file_as_string(save_path(slot)))
+	if not (data is Dictionary) or int(data.get("version", 0)) != SAVE_VERSION:
+		return {}
+	return data.meta
+
+
+func has_any_save() -> bool:
+	for s in SAVE_SLOTS:
+		if not save_meta(s).is_empty():
+			return true
+	return false
+
+
+## Save mais recente (para "Continuar").
+func latest_save() -> String:
+	var best := ""
+	var best_at := ""
+	for s in SAVE_SLOTS:
+		var m := save_meta(s)
+		if not m.is_empty() and String(m.saved_at) > best_at:
+			best = s
+			best_at = m.saved_at
+	return best
+
+
+# ---------- epílogo (finais variáveis) ----------
+
+func _ending_matches(c: Dictionary, hero_id: String = "") -> bool:
+	for f in c.get("all_flags", []):
+		if not flags.has(f):
+			return false
+	if c.has("any_flags") and not c.any_flags.any(func(f): return flags.has(f)):
+		return false
+	for f in c.get("no_flags", []):
+		if flags.has(f):
+			return false
+	if c.has("min_reputation") and reputation < int(c.min_reputation):
+		return false
+	if c.has("max_departed") and departed.size() > int(c.max_departed):
+		return false
+	if hero_id != "":
+		if c.has("departed") and bool(c.departed) != departed.has(hero_id):
+			return false
+		if c.has("min_morale") and heroes[hero_id].morale < int(c.min_morale):
+			return false
+		if c.has("bond"):
+			var found := false
+			for other in heroes:
+				if other != hero_id and bond_label(hero_id, other) == c.bond:
+					found = true
+			if not found:
+				return false
+	return true
+
+
+## {title, text, heroes: [{id, text}], bonds: [texto]}
+func epilogue() -> Dictionary:
+	var ed: Dictionary = _load_json("res://data/endings.json")
+	var out := {"title": "", "text": "", "heroes": [], "bonds": []}
+	for e in ed.endings:
+		if _ending_matches(e):
+			out.title = e.title
+			out.text = e.text
+			break
+	var everyone: Array = hero_order + departed
+	for id in everyone:
+		for c in ed.heroes.get(id, []):
+			if _ending_matches(c, id):
+				out.heroes.append({"id": id, "text": c.text})
+				break
+	for key in bond_labels:
+		var t: String = ed.bonds.get(bond_labels[key], "")
+		if t != "":
+			var ids: PackedStringArray = key.split("|")
+			out.bonds.append(t.replace("{a}", heroes[ids[0]].name).replace("{b}", heroes[ids[1]].name))
+	return out
+
+
 func _load_json(path: String) -> Dictionary:
 	var txt := FileAccess.get_file_as_string(path)
 	var data = JSON.parse_string(txt)

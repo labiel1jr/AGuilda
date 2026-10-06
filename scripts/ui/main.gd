@@ -16,6 +16,7 @@ const OUTCOME_COLORS := {"limpo": Color("#7fb069"), "custo": Color("#d4a94a"), "
 
 const MagicMap := preload("res://scripts/ui/magic_map.gd")
 const GuildBook := preload("res://scripts/ui/guild_book.gd")
+const Portrait := preload("res://scripts/ui/portrait.gd")
 
 var gs  # GameState
 var root: VBoxContainer
@@ -38,7 +39,7 @@ func _ready() -> void:
 	root = VBoxContainer.new()
 	root.add_theme_constant_override("separation", 12)
 	margin.add_child(root)
-	show_hub()
+	show_title()
 
 
 # ================= Tela da Guilda =================
@@ -72,6 +73,7 @@ func show_hub() -> void:
 	top.add_child(rel)
 	top.add_child(_button("Livro", show_book.bind(0)))
 	top.add_child(_button("Encerrar dia ▶", _on_end_day))
+	top.add_child(_button("☰", show_menu))
 
 	var body := HBoxContainer.new()
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -195,6 +197,7 @@ func _mission_card(m: Dictionary) -> Control:
 
 func _on_end_day() -> void:
 	var lines: Array = gs.end_day()
+	gs.save_game("auto")
 	_clear()
 	root.add_child(_label("Fim do dia" if gs.chapter_state == "encerrado" else "Dia %d do capítulo" % gs.chapter_day(), 28, C_GOLD))
 	root.add_child(_para("Os aventureiros descansam. A taverna esvazia. O mural range com pergaminhos novos.", 15, C_TEXT))
@@ -725,7 +728,7 @@ func show_levelup(entry: Dictionary) -> void:
 	var pick := {"attr": "", "choice": {}}
 	var head := HBoxContainer.new()
 	root.add_child(head)
-	head.add_child(_swatch(h.color, 28))
+	head.add_child(_portrait(h, 72))
 	head.add_child(_label("  %s chegou ao nível %d!" % [h.name, entry.level], 28, C_GOLD))
 	root.add_child(_label("%s · %s" % [h["class"], h.archetype], 15, C_MUTED))
 
@@ -938,7 +941,7 @@ func show_ultimatum(u: Dictionary) -> void:
 	root.add_child(_label("Ultimato", 16, C_BAD))
 	var head := HBoxContainer.new()
 	root.add_child(head)
-	head.add_child(_swatch(h.color, 28))
+	head.add_child(_portrait(h, 72))
 	head.add_child(_label("  %s está no limite" % h.name, 28, C_GOLD))
 	root.add_child(_label("Moral %d/10   ·   %s   ·   Nível %d" % [h.morale, gs.hero_status(u.id), h.level], 15, C_TEXT))
 	var p := _panel(C_PARCHMENT)
@@ -982,8 +985,130 @@ func show_ending() -> void:
 			gs.next_act()
 			show_hub()))
 	else:
-		root.add_child(_label("Fim do jogo — por enquanto. Obrigado por comandar o Corvo Cinzento.", 16, C_GOLD))
-		root.add_child(_button("Novo jogo", _on_new_game))
+		root.add_child(_button("Ver o epílogo", show_epilogue))
+
+
+# ================= Epílogo =================
+
+func show_epilogue() -> void:
+	_clear()
+	if gs.chapter_state != "fim_de_jogo":
+		gs.next_act()   # fecha o último ato
+	gs.save_game("auto")
+	var ep: Dictionary = gs.epilogue()
+	root.add_child(_label("Epílogo", 16, C_MUTED))
+	root.add_child(_label(ep.title, 32, C_GOLD))
+	var p := _panel(C_PARCHMENT)
+	root.add_child(p)
+	p.add_child(_para(ep.text, 17, C_INK))
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	root.add_child(scroll)
+	var col := VBoxContainer.new()
+	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	col.add_theme_constant_override("separation", 8)
+	scroll.add_child(col)
+	for e in ep.heroes:
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 12)
+		col.add_child(row)
+		var h: Dictionary = gs.heroes[e.id]
+		var por := _portrait(h, 48)
+		if gs.departed.has(e.id):
+			por.modulate = Color(1, 1, 1, 0.45)
+		row.add_child(por)
+		row.add_child(_para(e.text, 15, C_MUTED if gs.departed.has(e.id) else C_TEXT))
+	for b in ep.bonds:
+		col.add_child(_para("✦ " + b, 15, C_GOLD))
+	var foot := HBoxContainer.new()
+	root.add_child(foot)
+	foot.add_child(_label("Reputação final %d   ·   Ouro %d" % [gs.reputation, gs.gold], 14, C_MUTED))
+	foot.add_child(_spacer())
+	foot.add_child(_button("Voltar ao título", show_title))
+
+
+# ================= Título, menu, salvar e carregar =================
+
+func show_title() -> void:
+	_clear()
+	root.add_child(_spacer_v())
+	var t := _label("A Guilda", 64, C_GOLD)
+	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	root.add_child(t)
+	var st := _label("Quem você envia define quem eles se tornam", 18, C_MUTED)
+	st.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	root.add_child(st)
+	var faces := HBoxContainer.new()
+	faces.alignment = BoxContainer.ALIGNMENT_CENTER
+	faces.add_theme_constant_override("separation", 10)
+	root.add_child(faces)
+	for id in gs.hero_order:
+		faces.add_child(_portrait(gs.heroes[id], 64))
+	var box := VBoxContainer.new()
+	box.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	box.custom_minimum_size.x = 320
+	box.add_theme_constant_override("separation", 8)
+	root.add_child(box)
+	var latest: String = gs.latest_save()
+	var cont := _button("Continuar", func():
+		if gs.load_game(latest):
+			show_hub())
+	cont.disabled = latest == ""
+	if latest != "":
+		var m: Dictionary = gs.save_meta(latest)
+		cont.tooltip_text = "%s — %s, dia %d" % [m.act, m.chapter, m.chapter_day]
+	box.add_child(cont)
+	box.add_child(_button("Novo jogo", _on_new_game))
+	var ld := _button("Carregar", show_load.bind(true))
+	ld.disabled = not gs.has_any_save()
+	box.add_child(ld)
+	box.add_child(_button("Sair", func(): get_tree().quit()))
+	root.add_child(_spacer_v())
+
+
+func show_menu() -> void:
+	_clear()
+	root.add_child(_label("Menu", 28, C_GOLD))
+	root.add_child(_label("Salvar o jogo", 18, C_TEXT))
+	for slot in ["1", "2", "3"]:
+		var m: Dictionary = gs.save_meta(slot)
+		var desc := "vazio" if m.is_empty() else "%s — %s, dia %d · %s" % [m.act, m.chapter, m.chapter_day, m.saved_at]
+		var b := _button("Espaço %s:  %s" % [slot, desc], func():
+			var ok: bool = gs.save_game(slot)
+			_toast("Jogo salvo no espaço %s." % slot if ok else "Não foi possível salvar.", show_menu))
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		root.add_child(b)
+	root.add_child(_label("O jogo também salva sozinho ao fim de cada dia (espaço automático).", 13, C_MUTED))
+	root.add_child(_button("Carregar um jogo", show_load.bind(false)))
+	root.add_child(_button("Voltar ao título", show_title))
+	root.add_child(_spacer_v())
+	root.add_child(_button("◀ Voltar ao jogo", show_hub))
+
+
+func show_load(from_title: bool) -> void:
+	_clear()
+	root.add_child(_label("Carregar", 28, C_GOLD))
+	for slot in gs.SAVE_SLOTS:
+		var m: Dictionary = gs.save_meta(slot)
+		var name: String = "Automático" if slot == "auto" else "Espaço " + slot
+		var desc := "vazio" if m.is_empty() else "%s — %s, dia %d · Rep. %d · Ouro %d · %s" % [m.act, m.chapter, m.chapter_day, m.reputation, m.gold, m.saved_at]
+		var b := _button("%s:  %s" % [name, desc], func():
+			if gs.load_game(slot):
+				show_hub())
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.disabled = m.is_empty()
+		root.add_child(b)
+	root.add_child(_spacer_v())
+	root.add_child(_button("◀ Voltar", show_title if from_title else show_menu))
+
+
+func _portrait(h: Dictionary, px: int) -> Control:
+	var p = Portrait.new()
+	p.custom_minimum_size = Vector2(px, px)
+	p.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	p.setup(h)
+	return p
 
 
 func _on_new_game() -> void:
