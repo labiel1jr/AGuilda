@@ -44,10 +44,24 @@ func _initialize() -> void:
 	main._toggle_hero(m, "theo")
 	await _shot("2_party")
 	main._on_dispatch(m)
-	for i in 160:
+	main._map.speed = 200.0
+	for k in 2:
+		if gs.expedition.pending != "":
+			var nd: Dictionary = Expedition.node_at(gs, gs.expedition.cur)
+			main._on_call_choice(Expedition.event_by_id(gs, nd.type, nd.event).options[0])
+		main._on_node_chosen(Expedition.choices(gs)[0])
+		for i in 8:
+			await process_frame
+	main._map.speed = 1.0
+	for i in 30:
 		await process_frame
 	await _shot("6_mapa")
-	main.show_result(main.last_result)
+	while not Expedition.at_boss(gs):
+		if gs.expedition.pending != "":
+			var nd: Dictionary = Expedition.node_at(gs, gs.expedition.cur)
+			main._on_call_choice(Expedition.event_by_id(gs, nd.type, nd.event).options[0])
+		Expedition.enter(gs, Expedition.choices(gs)[0])
+	main._on_face_boss()
 	await _shot("3_resultado")
 	gs.backstage_today = [{"event": gs.backstage_data.events[6], "a": "theo", "b": "lyssa", "done": false},
 		{"event": gs.backstage_data.events[0], "a": "mira", "b": "bram", "done": false}]
@@ -55,6 +69,8 @@ func _initialize() -> void:
 	await _shot("8_hub_bastidores")
 	main.show_backstage(gs.backstage_today[0])
 	await _shot("9_bastidor")
+	gs.gold = 200
+	gs.buy_upgrade("quadro")
 	main.show_relations()
 	await _shot("4_relacoes")
 	main.show_book(5)

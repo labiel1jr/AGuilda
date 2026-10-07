@@ -1,0 +1,118 @@
+{
+  "_doc": "Mapa de expedição (v0.8). A missão vira camadas de nós; o líder escolhe o próximo nó quando o grupo chama pelo Mapa Mágico. layers: camadas intermediárias por risco (o chefe é a última). provisions_start: comida na partida; cada passo gasta 1, sem comida é fome (−1 no score do alvo, até −2). weights: peso de cada tipo de nó por bioma (missions.json pode sobrescrever com route.weights). dc: CD base por risco; opção pode somar dc. Efeitos (fx): gold (bolsa da rota: chega inteira no sucesso, metade no custo, nada na falha... ver finish), provisions, hp (todo o grupo), hp_one (um membro), bonus (preparação contra o chefe, até +3), item ('loot' sorteia pela tabela de risco), days (dias a mais longe da guilda), affinity (um par do grupo). Texto aceita {heroi} e {party}.",
+  "layers": {"baixo": 3, "medio": 3, "alto": 4, "lendario": 4},
+  "provisions_start": {"baixo": 4, "medio": 3, "alto": 4, "lendario": 4},
+  "dc": {"baixo": 9, "medio": 11, "alto": 13, "lendario": 15},
+  "bonus_cap": 3,
+  "shop_provisions": {"amount": 2, "price": 10},
+  "types": {
+    "combate":     {"name": "Combate",     "desc": "Inimigos no caminho: saque e preparação, com risco de ferimentos."},
+    "tesouro":     {"name": "Tesouro",     "desc": "Ouro e itens esquecidos — às vezes com armadilha."},
+    "loja":        {"name": "Mercador",    "desc": "Compra de itens e provisões com o ouro da guilda."},
+    "acampamento": {"name": "Acampamento", "desc": "Descanso, comida e conversa ao redor do fogo."},
+    "evento":      {"name": "Encontro",    "desc": "Algo inesperado. Cada escolha tem um preço."},
+    "atalho":      {"name": "Atalho",      "desc": "Pula uma etapa do caminho, mas é arriscado."},
+    "chefe":       {"name": "Objetivo",    "desc": "O alvo da missão."}
+  },
+  "weights": {
+    "default":  {"combate": 3, "evento": 3, "tesouro": 2, "acampamento": 2, "loja": 1, "atalho": 1},
+    "floresta": {"combate": 3, "evento": 2, "tesouro": 2, "acampamento": 3, "loja": 1, "atalho": 1},
+    "pantano":  {"combate": 2, "evento": 4, "tesouro": 1, "acampamento": 2, "loja": 1, "atalho": 1},
+    "montanha": {"combate": 3, "evento": 2, "tesouro": 2, "acampamento": 2, "loja": 1, "atalho": 2},
+    "estrada":  {"combate": 3, "evento": 3, "tesouro": 2, "acampamento": 2, "loja": 2, "atalho": 1},
+    "cidade":   {"combate": 2, "evento": 4, "tesouro": 1, "acampamento": 1, "loja": 3, "atalho": 2}
+  },
+  "events": {
+    "combate": [
+      {"id": "batedores", "title": "Batedores inimigos", "text": "{heroi} avista sentinelas do inimigo à frente. Se derem o alarme, o alvo saberá que vocês estão chegando.",
+        "options": [
+          {"label": "Atacar de frente", "test": {"attr": "forca"}, "ok": {"text": "Os batedores caem antes de soar a trompa. O alvo não sabe que vocês vêm.", "fx": {"bonus": 1, "gold": 10}}, "fail": {"text": "A luta é feia e a trompa soa ao longe.", "fx": {"hp_one": -2}}},
+          {"label": "Emboscar das sombras", "test": {"attr": "destreza", "dc": 1}, "ok": {"text": "Silêncio total. Nas mochilas deles, um mapa das defesas.", "fx": {"bonus": 1, "item": "loot"}}, "fail": {"text": "Um galho estala. Flechas para todo lado.", "fx": {"hp": -1}}},
+          {"label": "Contornar em silêncio", "text": "Uma volta longa: ninguém se fere, mas a comida rende menos.", "fx": {"provisions": -1}}
+        ]},
+      {"id": "saqueadores", "title": "Saqueadores na estrada", "text": "Um bando bloqueia o caminho e exige pedágio.",
+        "options": [
+          {"label": "Lutar", "test": {"attr": "forca"}, "ok": {"text": "O bando foge e deixa a bolsa para trás.", "fx": {"gold": 25}}, "fail": {"text": "Vencem, mas a um preço.", "fx": {"hp_one": -2}}},
+          {"label": "Intimidar", "test": {"attr": "carisma"}, "ok": {"text": "{heroi} fala baixo e firme. Eles abrem caminho.", "fx": {"gold": 5}}, "fail": {"text": "Eles riem. Depois, atacam.", "fx": {"hp": -1}}},
+          {"label": "Pagar o pedágio", "text": "Algumas moedas a menos na bolsa da rota.", "fx": {"gold": -15}}
+        ]},
+      {"id": "fera", "title": "Fera faminta", "text": "Algo grande ronda o acampamento da noite anterior. {heroi} sente o cheiro antes de ver.",
+        "options": [
+          {"label": "Enfrentar a fera", "test": {"attr": "forca", "dc": 1}, "ok": {"text": "Carne para vários dias.", "fx": {"provisions": 2}}, "fail": {"text": "As garras acertam {heroi}.", "fx": {"hp_one": -3}}},
+          {"label": "Espantar com fogo", "test": {"attr": "conhecimento"}, "ok": {"text": "A fera recua para a escuridão.", "fx": {}}, "fail": {"text": "Ela foge levando parte da comida.", "fx": {"provisions": -1, "hp_one": -1}}}
+        ]}
+    ],
+    "tesouro": [
+      {"id": "bau", "title": "Baú esquecido", "text": "Entre as raízes, um baú com fechadura enferrujada.",
+        "options": [
+          {"label": "Abrir com cuidado", "test": {"attr": "destreza"}, "ok": {"text": "Clique. Lá dentro, algo que vale a viagem.", "fx": {"item": "loot", "gold": 15}}, "fail": {"text": "Uma agulha envenenada pega {heroi}.", "fx": {"hp_one": -2, "gold": 10}}},
+          {"label": "Arrombar", "test": {"attr": "forca"}, "ok": {"text": "A tampa cede. Moedas!", "fx": {"gold": 20}}, "fail": {"text": "O que havia de frágil se quebrou. Sobram moedas.", "fx": {"gold": 5}}},
+          {"label": "Deixar para trás", "text": "Nem todo baú vale o risco.", "fx": {}}
+        ]},
+      {"id": "ruinas", "title": "Ruínas antigas", "text": "Pedras com inscrições num idioma esquecido.",
+        "options": [
+          {"label": "Decifrar as inscrições", "test": {"attr": "conhecimento"}, "ok": {"text": "{heroi} descobre um ponto fraco do inimigo.", "fx": {"bonus": 1}}, "fail": {"text": "Horas perdidas entre as pedras.", "fx": {"days": 1}}},
+          {"label": "Vasculhar os escombros", "text": "Moedas antigas entre o pó.", "fx": {"gold": 15}}
+        ]},
+      {"id": "carroca", "title": "Carroça tombada", "text": "Uma carroça virada na vala. Nenhum sinal do dono.",
+        "options": [
+          {"label": "Recolher provisões", "text": "Pão duro e carne seca. Vai servir.", "fx": {"provisions": 2}},
+          {"label": "Procurar o dono", "test": {"attr": "carisma"}, "ok": {"text": "O mercador, grato, paga bem pela ajuda.", "fx": {"gold": 30, "affinity": 1}}, "fail": {"text": "Ninguém. Só tempo perdido.", "fx": {}}}
+        ]}
+    ],
+    "acampamento": [
+      {"id": "fogueira", "title": "Fogueira na clareira", "text": "Um bom lugar para passar a noite.",
+        "options": [
+          {"label": "Descansar", "text": "Uma noite inteira de sono. Os ferimentos fecham.", "fx": {"hp": 3}},
+          {"label": "Conversar ao redor do fogo", "text": "Histórias antigas, risadas, um pouco de confiança.", "fx": {"hp": 1, "affinity": 1}},
+          {"label": "Caçar antes de dormir", "test": {"attr": "destreza"}, "ok": {"text": "Uma boa caça. Comida para a viagem.", "fx": {"provisions": 2, "hp": 1}}, "fail": {"text": "Nada. Dormem com fome.", "fx": {"hp": 1}}}
+        ]},
+      {"id": "gruta", "title": "Gruta seca", "text": "Uma gruta protegida do vento.",
+        "options": [
+          {"label": "Cozinhar e dormir", "text": "Comida quente e descanso de verdade.", "fx": {"provisions": -1, "hp": 4}},
+          {"label": "Afiar as armas e planejar", "text": "Repassam o plano até o fim da noite.", "fx": {"bonus": 1}},
+          {"label": "Contar histórias", "text": "A noite aproxima o grupo.", "fx": {"affinity": 1, "hp": 1}}
+        ]}
+    ],
+    "evento": [
+      {"id": "viajante", "title": "Viajante ferido", "text": "Um homem ferido pede ajuda à beira do caminho.",
+        "options": [
+          {"label": "Cuidar dos ferimentos", "test": {"attr": "conhecimento"}, "ok": {"text": "Agradecido, ele conta onde o inimigo monta guarda.", "fx": {"bonus": 1}}, "fail": {"text": "Ele piora. Gastam comida e tempo tentando.", "fx": {"provisions": -1}}},
+          {"label": "Dividir a comida e seguir", "text": "Não é muito, mas é alguma coisa.", "fx": {"provisions": -1, "affinity": 1}},
+          {"label": "Seguir viagem", "text": "Não há tempo para todos.", "fx": {}}
+        ]},
+      {"id": "ponte", "title": "Ponte caída", "text": "A ponte sobre o desfiladeiro desabou. Só restou uma corda.",
+        "options": [
+          {"label": "Atravessar pela corda", "test": {"attr": "destreza"}, "ok": {"text": "Um por um, todos do outro lado.", "fx": {}}, "fail": {"text": "{heroi} escorrega e bate nas pedras.", "fx": {"hp_one": -2}}},
+          {"label": "Contornar pelo vale", "text": "Seguro, mas leva um dia a mais.", "fx": {"days": 1}}
+        ]},
+      {"id": "mercador_suspeito", "title": "Mercador suspeito", "text": "Um homem de capa oferece \"algo especial\" a preço de amigo.",
+        "options": [
+          {"label": "Negociar", "test": {"attr": "carisma"}, "ok": {"text": "Era mesmo especial.", "fx": {"item": "loot"}}, "fail": {"text": "Pagaram por uma pedra pintada.", "fx": {"gold": -15}}},
+          {"label": "Recusar", "text": "{heroi} não gosta do sorriso dele.", "fx": {}}
+        ]},
+      {"id": "santuario", "title": "Santuário à beira do caminho", "text": "Um pequeno altar com velas ainda acesas e algumas oferendas.",
+        "options": [
+          {"label": "Rezar", "text": "Uma paz estranha. As dores diminuem.", "fx": {"hp": 2}},
+          {"label": "Pegar as oferendas", "text": "Moedas fáceis... e um peso no peito.", "fx": {"gold": 20, "bonus": -1}}
+        ]},
+      {"id": "nevoa", "title": "Névoa que confunde", "text": "Uma névoa espessa cobre o caminho. As trilhas parecem todas iguais.",
+        "options": [
+          {"label": "Guiar pelas estrelas", "test": {"attr": "conhecimento"}, "ok": {"text": "{heroi} encontra o rumo certo.", "fx": {}}, "fail": {"text": "Andam em círculos.", "fx": {"days": 1, "provisions": -1}}},
+          {"label": "Esperar a névoa passar", "text": "Um dia parado, mas em segurança.", "fx": {"days": 1}}
+        ]}
+    ],
+    "atalho": [
+      {"id": "trilha", "title": "Trilha de contrabandistas", "text": "Uma trilha escondida que corta caminho até o alvo.",
+        "options": [
+          {"label": "Seguir pela trilha", "test": {"attr": "destreza"}, "ok": {"text": "Chegam por onde ninguém espera.", "fx": {"bonus": 1}}, "fail": {"text": "Os contrabandistas não gostam de visitas.", "fx": {"hp": -1}}},
+          {"label": "Forçar o passo", "test": {"attr": "resistencia"}, "ok": {"text": "Exaustos, mas na frente.", "fx": {"bonus": 1}}, "fail": {"text": "O cansaço cobra seu preço.", "fx": {"hp": -1, "provisions": -1}}}
+        ]},
+      {"id": "passagem", "title": "Passagem estreita", "text": "Uma fenda entre as rochas encurta a viagem.",
+        "options": [
+          {"label": "Escalar", "test": {"attr": "forca"}, "ok": {"text": "Do alto, enxergam o alvo antes de serem vistos.", "fx": {"bonus": 1}}, "fail": {"text": "Uma pedra solta acerta {heroi}.", "fx": {"hp_one": -2}}},
+          {"label": "Ir com cuidado", "test": {"attr": "resistencia", "dc": -2}, "ok": {"text": "Devagar e sempre.", "fx": {}}, "fail": {"text": "Arranhões e um tornozelo torcido.", "fx": {"hp_one": -1}}}
+        ]}
+    ]
+  }
+}

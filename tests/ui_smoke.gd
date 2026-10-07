@@ -50,15 +50,27 @@ func _initialize() -> void:
 	await process_frame
 	main._on_dispatch(m)
 	await process_frame
-	# Mapa Mágico: acelera até o fim e abre o resultado
-	var map = _find(main, "MagicMap")
+	# Mapa de expedição: escolhe caminhos, responde chamadas e enfrenta o alvo
+	var map = main._map
 	assert(map != null, "mapa não criado")
 	map.speed = 200.0
-	for i in 10:
-		await process_frame
-	assert(not map.running, "mapa não terminou")
-	main.show_result(main.last_result)
+	main._show_shop(["espada_longa", "pocao_cura"])
 	await process_frame
+	var steps := 0
+	while not Expedition.at_boss(gs) and steps < 12:
+		if gs.expedition.pending != "":
+			var node: Dictionary = Expedition.node_at(gs, gs.expedition.cur)
+			main._on_call_choice(Expedition.event_by_id(gs, node.type, node.event).options[0])
+		var ch: Array = Expedition.choices(gs)
+		main._on_node_chosen(ch[0])
+		for i in 6:
+			await process_frame
+		assert(not map.moving, "grupo não chegou ao nó")
+		steps += 1
+	assert(Expedition.at_boss(gs), "expedição não chegou ao alvo")
+	main._on_face_boss()
+	await process_frame
+	assert(main.last_result.has("route"))
 	gs.pending_events.append({"a": "vera", "b": "bram", "threshold": 6})
 	main._after_result()
 	await process_frame

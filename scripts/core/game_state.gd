@@ -99,6 +99,8 @@ var upgrades_data := {}
 var gold := 0
 var upgrades_owned := []
 var trained_today := false
+var route_data := {}
+var expedition := {}         # expedição em andamento (Expedition), vazia fora do mapa
 var pair_history := {}         # "a|b" -> [{day, mission, outcome}] (exibido com o Arquivo)
 
 const AFF_PHRASES := {
@@ -171,6 +173,8 @@ func new_game(seed_value: int = -1) -> void:
 		mm.status = "futura"   # vira "aberta" quando o capítulo dela começa
 		mm.result = {}
 		missions.append(mm)
+	route_data = _load_json("res://data/route.json")
+	expedition = {}
 	narration = _load_json("res://data/narration.json")
 	book = _load_json("res://data/book.json")
 	day = 1
@@ -533,13 +537,14 @@ func set_resting(id: String, on: bool) -> void:
 
 
 ## prepared: {id_do_herói: id_da_magia} para os conjuradores da party.
-func dispatch(mission: Dictionary, party: Array, prepared: Dictionary = {}) -> Dictionary:
+## route: resultado do mapa de expedição {mod, gold, items, days} (vazio = despacho direto).
+func dispatch(mission: Dictionary, party: Array, prepared: Dictionary = {}, route: Dictionary = {}) -> Dictionary:
 	var prep := {}
 	for id in prepared:
 		if party.has(id) and prepared[id] != "" and heroes[id].slots > 0 and heroes[id].spells_known.has(prepared[id]):
 			prep[id] = prepared[id]
 	var luck := rng.randi_range(-2, 2)
-	var sc := ScoreCalc.compute(self, mission, party, luck, prep)
+	var sc := ScoreCalc.compute(self, mission, party, luck, prep, int(route.get("mod", 0)))
 	var rpg_lines := HeroRPG.on_dispatch(self, party, prep)
 	HeroRPG.consume_on_dispatch(self, party)
 	var result := ScoreCalc.outcome(sc.total, mission.risk)
@@ -616,6 +621,23 @@ func dispatch(mission: Dictionary, party: Array, prepared: Dictionary = {}) -> D
 	gold += earned
 	if earned > 0:
 		lines.append("A guilda recebe %d de ouro." % earned)
+	# Saque da rota: inteiro no sucesso, metade no custo; na falha fica pelo caminho
+	if not route.is_empty():
+		var rg: int = {"limpo": int(route.gold), "custo": int(route.gold) / 2, "falha": 0}[result]
+		gold += rg
+		if rg > 0:
+			lines.append("Saque da rota: %d de ouro." % rg)
+		if result == "falha":
+			if int(route.gold) > 0 or not route.items.is_empty():
+				lines.append("Na fuga, o saque da rota ficou para trás.")
+		else:
+			for it in route.items:
+				inventory.append(it)
+				lines.append("Saque da rota: %s vai para o Baú." % HeroRPG.item(self, it).name)
+		if int(route.days) > 0:
+			for id in party:
+				heroes[id].away_until = day + int(route.days)
+			lines.append("A viagem atrasou: o grupo fica fora da guilda por mais %d dia(s)." % int(route.days))
 
 	for pr in ScoreCalc.pairs_of(party):
 		var key := pair_key(pr[0], pr[1])
@@ -705,7 +727,7 @@ func end_day() -> Array:
 			if h.fatigue > 0:
 				h.fatigue = max(0, h.fatigue - (2 if h.attrs.resistencia >= 7 else 1) - infirmary)
 			h.hp = min(h.hp_max, h.hp + max(1, h.hp_max / 4) * (1 + infirmary))
-		h.busy = false
+		h.busy = int(h.get("away_until", 0)) > day   # ainda na estrada
 	trained_today = false
 	var chapter_over: bool = day >= chapter_end_day() and chapter_state in ["intro", "jogando"]
 	for m in missions:
@@ -722,7 +744,7 @@ func end_day() -> Array:
 	_roll_backstage()
 	for id in hero_order:
 		var h: Dictionary = heroes[id]
-		h.rest_request = h.fatigue >= 2 or h.hp <= h.hp_max / 3
+		h.rest_request = not h.busy and (h.fatigue >= 2 or h.hp <= h.hp_max / 3)   # na estrada não dá para pedir
 		if h.rest_request:
 			lines.append("%s pede um dia de descanso." % h.name)
 	for id in hero_order:

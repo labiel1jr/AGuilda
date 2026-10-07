@@ -17,7 +17,7 @@ O jogo é dividido em **atos** e **capítulos**. Cada capítulo abre com uma cen
 1. **Mural de Quests** — pedidos chegam a cada dia, com risco, prazo e atributos exigidos.
 2. **Montagem de Party** — escolha de 1 a 4 aventureiros. O preview mostra a afinidade entre eles, mas nunca o resultado.
 3. **Despacho** — confirme com o Selo de Cera.
-4. **Mapa Mágico** — você acompanha a party pelo mapa: a rota se revela em dourado, os marcadores avançam e cada ponto de interesse narra o que acontece. Você assiste, não controla.
+4. **Mapa Mágico (expedição)** — a missão vira um mapa de caminhos com bifurcações. Quando o grupo chega a uma encruzilhada, um herói chama pelo Mapa Mágico e você escolhe o próximo ponto: combate, tesouro, mercador, acampamento, encontro ou atalho. Cada escolha muda a preparação contra o alvo, o saque, os ferimentos, a comida e os dias de viagem.
 5. **Resolução** — Sucesso Limpo, Sucesso com Custo ou Falha com Revelação. Falhar nunca é beco sem saída: é gancho de história.
 6. **Vínculos** — quem vai junto se aproxima ou se afasta. Ao cruzar limiares, você decide o que existe entre eles (Amizade, Mentoria, Rivalidade, Romance...), e isso desbloqueia **Ações de Vínculo**.
 7. **Bastidores** — cenas curtas na guilda (taverna, treino, brigas, segredos). Você escolhe como reagir: pagar a rodada, tomar partido, mediar.
@@ -46,7 +46,16 @@ O jogo é dividido em **atos** e **capítulos**. Cada capítulo abre com uma cen
 | **Bastidores no hub** | **Cena de bastidor** |
 | ![Bastidores](docs/img/8_hub_bastidores.png) | ![Cena de bastidor](docs/img/9_bastidor.png) |
 
-## Estado atual — v0.7 (salvar, finais e retratos)
+## Estado atual — v0.8 (mapa de expedição)
+
+- **Rotas com escolhas** (inspiradas em Darkest Dungeon, Slay the Spire e Cult of the Lamb): cada missão gera de 3 a 4 camadas de nós com bifurcações até o alvo, sorteadas pelo bioma e pelo risco. Névoa: só a próxima camada aparece.
+- **Chamadas ao vivo** (inspiradas em Dispatch): ao chegar a um nó, o herói mais apto chama o líder e mostra as opções. Testes com **d20 + (atributo − 5)** contra uma CD por risco, com a rolagem visível.
+- **Tipos de nó**: combate, tesouro, mercador de estrada (compra com o ouro da guilda), acampamento (cura, comida, conversa que aproxima o grupo), encontro e atalho (pula uma camada, com risco).
+- **Estado da expedição**: provisões (cada passo gasta 1; sem comida é fome), bolsa da rota, itens achados, preparação contra o alvo e dias de atraso.
+- **Rota no score**: `Rota = preparação (até +3) − desgaste (membros com ⅓ do PV ou menos) − fome`, nunca abaixo de −2. O saque da rota chega inteiro no sucesso, pela metade no custo e se perde na falha. Atrasos deixam o grupo fora da guilda por mais dias.
+- Conteúdo em `data/route.json` (tipos, pesos por bioma, eventos e efeitos). Uma missão pode mudar os pesos com `route.weights`.
+
+## v0.7 (salvar, finais e retratos)
 
 - **Salvar e carregar**: tela de título (Continuar / Novo jogo / Carregar), 3 espaços de save e salvamento automático ao fim de cada dia. Menu ☰ no hub. O save usa `var_to_str` (preserva inteiros e cores) e guarda só o estado mutável — os JSON de conteúdo são recarregados, então correções de texto valem para saves antigos.
 - **Finais variáveis**: epílogo ao fim do Ato 2 — quatro finais (*A Lenda do Corvo Cinzento*, *A Guilda Reconstruída*, *Os Que Ficaram*, *Cinzas e Recomeço*) conforme flags, reputação e quem deixou a guilda; um desfecho por herói (inclusive quem saiu) e uma linha por vínculo formado (Romance, Mentoria, Irmandade...). Tudo em `data/endings.json`.
@@ -120,7 +129,9 @@ Requer **Godot 4.7**. Abra a pasta no editor e pressione **F5**.
 | `art/tools/` | Scripts que preparam retratos e cartazes (conversão e remoção de fundo) |
 | `data/book.json` | Seções trancadas do Livro (slots de expansão por versão) |
 | `scripts/ui/main.gd` | Telas, montadas por código |
-| `scripts/ui/magic_map.gd` | Mapa Mágico: desenho do bioma, rota, waypoints e marcadores |
+| `data/route.json` | Mapa de expedição: tipos de nó, pesos por bioma, eventos com testes e efeitos |
+| `scripts/core/expedition.gd` | Expedição: geração do grafo, nós, testes d20, efeitos e modificador da rota |
+| `scripts/ui/magic_map.gd` | Mapa Mágico: desenho do bioma, grafo de caminhos clicável, névoa e marcadores |
 | `scripts/ui/guild_book.gd` | Livro da Guilda: ficha em duas páginas |
 | `tests/` | Testes headless de regras e telas, e gerador de screenshots |
 | `docs/GDD.md` | Game Design Document |
@@ -172,8 +183,9 @@ godot --headless --path . -s res://tests/ui_smoke.gd
 - [x] **v0.5** — níveis, equipamento, saque, mercado, magias, clérigo, descanso ativo
 - [x] **v0.6** — Ato 2, missões pessoais, bastidores ligados à história, saída de aventureiros por moral baixa
 - [x] **v0.7** — salvar/carregar, finais variáveis, retratos gerados por código
-- [ ] **v0.8** — trilha e efeitos sonoros, arte ilustrada, minigame opcional (GDD §5.9), opções (volume, velocidade do mapa)
-- [ ] **v1.0** — arte, trilha sonora, minigame opcional, finais variáveis
+- [x] **v0.8** — mapa de expedição: rotas com bifurcações, chamadas ao vivo, testes d20, provisões, saque e preparação contra o alvo
+- [ ] **v0.9** — estresse, aflições e virtudes, traços, miniboss, NPCs, santuário, eventos de perda
+- [ ] **v1.0** — políticas da guilda, habilidades de acampamento por classe, trilha e efeitos sonoros, opções
 
 ## Créditos
 

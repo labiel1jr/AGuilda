@@ -359,18 +359,24 @@ func _toggle_hero(m: Dictionary, id: String) -> void:
 
 
 func _on_dispatch(m: Dictionary) -> void:
-	var res: Dictionary = gs.dispatch(m, selected.duplicate(), prepared.duplicate())
+	Expedition.start(gs, m, selected.duplicate(), prepared.duplicate())
 	selected = []
 	prepared = {}
-	last_result = res
-	show_map(res)
+	show_map(m)
 
 
-# ================= Mapa Mágico =================
+# ================= Mapa Mágico (expedição) =================
 
-func show_map(res: Dictionary) -> void:
+var _map
+var _map_party: VBoxContainer
+var _map_status: Label
+var _map_log: VBoxContainer
+var _map_scroll: ScrollContainer
+var _map_action: VBoxContainer
+
+
+func show_map(m: Dictionary) -> void:
 	_clear()
-	var m: Dictionary = res.mission
 	var body := HBoxContainer.new()
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	body.add_theme_constant_override("separation", 16)
@@ -378,12 +384,12 @@ func show_map(res: Dictionary) -> void:
 
 	var frame := _panel(Color("#1a1420"))
 	frame.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	frame.size_flags_stretch_ratio = 2.6
+	frame.size_flags_stretch_ratio = 2.2
 	body.add_child(frame)
-	var map = MagicMap.new()
-	map.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	map.clip_contents = true
-	frame.add_child(map)
+	_map = MagicMap.new()
+	_map.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_map.clip_contents = true
+	frame.add_child(_map)
 
 	var side := _panel(C_PANEL)
 	side.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -392,53 +398,171 @@ func show_map(res: Dictionary) -> void:
 	col.add_theme_constant_override("separation", 8)
 	side.add_child(col)
 	col.add_child(_label("Mapa Mágico de Escrutínio", 13, C_MUTED))
-	col.add_child(_para(m.name, 20, C_GOLD))
-	col.add_child(_badge(gs.RISK_NAMES[m.risk], RISK_COLORS[m.risk].darkened(0.2)))
-	var chips := HFlowContainer.new()
-	chips.add_theme_constant_override("h_separation", 6)
-	chips.add_theme_constant_override("v_separation", 6)
-	col.add_child(chips)
-	var tokens := []
-	for id in res.party:
-		var h: Dictionary = gs.heroes[id]
-		chips.add_child(_badge(h.name, h.color.darkened(0.2)))
-		tokens.append({"name": h.name, "color": h.color})
-	var bar := ProgressBar.new()
-	bar.show_percentage = false
-	bar.max_value = 1.0
-	bar.custom_minimum_size.y = 10
-	var fill := StyleBoxFlat.new()
-	fill.bg_color = C_GOLD
-	bar.add_theme_stylebox_override("fill", fill)
-	col.add_child(bar)
-	var narr := VBoxContainer.new()
-	narr.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	narr.add_theme_constant_override("separation", 10)
-	col.add_child(narr)
-	var foot := HBoxContainer.new()
-	col.add_child(foot)
-	var fast := _button("Acelerar ⏩", map.skip)
-	foot.add_child(fast)
-	foot.add_child(_spacer())
-	var go := _button("Ver Resultado", show_result.bind(res))
-	go.visible = false
-	foot.add_child(go)
+	var head := HBoxContainer.new()
+	head.add_theme_constant_override("separation", 8)
+	col.add_child(head)
+	head.add_child(_para(m.name, 20, C_GOLD))
+	head.add_child(_badge(gs.RISK_NAMES[m.risk], RISK_COLORS[m.risk].darkened(0.2)))
+	_map_party = VBoxContainer.new()
+	_map_party.add_theme_constant_override("separation", 2)
+	col.add_child(_map_party)
+	_map_status = _para("", 13, C_TEXT)
+	col.add_child(_map_status)
+	col.add_child(HSeparator.new())
+	_map_scroll = ScrollContainer.new()
+	_map_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_map_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	col.add_child(_map_scroll)
+	_map_log = VBoxContainer.new()
+	_map_log.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_map_log.add_theme_constant_override("separation", 6)
+	_map_scroll.add_child(_map_log)
+	_map_action = VBoxContainer.new()
+	_map_action.add_theme_constant_override("separation", 6)
+	col.add_child(_map_action)
 
-	var lines: Array = gs.map_narration(res)
-	map.waypoint_reached.connect(func(i: int):
-		var l := _para(lines[i], 15, C_TEXT)
-		l.modulate.a = 0.0
-		narr.add_child(l)
-		create_tween().tween_property(l, "modulate:a", 1.0, 0.8))
-	map.finished.connect(func():
-		fast.visible = false
-		go.visible = true)
-	map.set_process(true)
-	map.draw.connect(func(): bar.value = map.progress)
+	var tokens := []
+	for id in gs.expedition.party:
+		var h: Dictionary = gs.heroes[id]
+		tokens.append({"name": h.name, "color": h.color})
 	var et := _enemy_texture(m)
 	if et != null:
-		map.goal_texture = et
-	map.setup(m, tokens, gs.day * 1000 + gs.missions.find(m))
+		_map.goal_texture = et
+	_map.type_info = gs.route_data.types
+	_map.setup(m, tokens, gs.day * 1000 + gs.missions.find(m), gs.expedition)
+	_map.node_chosen.connect(_on_node_chosen)
+	_map.arrived.connect(_on_node_arrived)
+	_log_lines([String(gs.narration.start[0]).replace("{party}", ", ".join(gs.expedition.party.map(func(id): return gs.heroes[id].name)))], C_TEXT)
+	_map_refresh()
+
+
+func _map_refresh() -> void:
+	var exp: Dictionary = gs.expedition
+	for c in _map_party.get_children():
+		c.queue_free()
+	for id in exp.party:
+		var h: Dictionary = gs.heroes[id]
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 6)
+		_map_party.add_child(row)
+		row.add_child(_portrait(h, 26))
+		row.add_child(_label(h.name, 14, h.color.lightened(0.25)))
+		row.add_child(_spacer())
+		var low: bool = h.hp <= h.hp_max / 3
+		row.add_child(_label("PV %d/%d" % [h.hp, h.hp_max], 13, C_BAD if low else C_MUTED))
+	var mod := Expedition.route_mod(gs)
+	_map_status.text = "Provisões %d   ·   Bolsa da rota %d ouro   ·   Itens %d\nPreparação %+d   ·   Desgaste −%d   ·   Fome −%d   →   Rota no score %+d" % [
+		exp.provisions, exp.gold, exp.items.size(), exp.bonus, Expedition.wear(gs), mini(exp.hunger, 2), mod]
+	_map.reachable = Expedition.choices(gs)
+	if exp.pending == "" and not Expedition.at_boss(gs) and _map_action.get_child_count() == 0:
+		var hint := "Escolha o próximo caminho no mapa (passe o mouse para ver o que há em cada ponto)."
+		if exp.provisions == 0:
+			hint += "\nSem provisões: o próximo passo será com fome."
+		_map_action.add_child(_para(hint, 14, C_GOLD))
+
+
+func _log_lines(lines: Array, color: Color = C_TEXT) -> void:
+	for l in lines:
+		var lbl := _para(l, 14, color)
+		lbl.modulate.a = 0.0
+		_map_log.add_child(lbl)
+		create_tween().tween_property(lbl, "modulate:a", 1.0, 0.5)
+	await get_tree().process_frame
+	if is_instance_valid(_map_scroll):
+		_map_scroll.scroll_vertical = int(_map_scroll.get_v_scroll_bar().max_value)
+
+
+func _clear_action() -> void:
+	for c in _map_action.get_children():
+		_map_action.remove_child(c)
+		c.queue_free()
+
+
+func _on_node_chosen(pos: Array) -> void:
+	_clear_action()
+	_map.move_to(pos)
+
+
+func _on_node_arrived(pos: Array) -> void:
+	var out: Dictionary = Expedition.enter(gs, pos)
+	var node: Dictionary = Expedition.node_at(gs, pos)
+	_log_lines(["— %s —" % gs.route_data.types[node.type].name], C_GOLD)
+	_log_lines(out.lines, C_MUTED)
+	_clear_action()
+	if out.get("boss", false):
+		var m := Expedition.mission(gs)
+		_map_action.add_child(_para("O grupo chegou ao alvo. Rota no score: %+d." % Expedition.route_mod(gs), 14, C_GOLD))
+		_map_action.add_child(_button("Enfrentar: " + m.name, _on_face_boss))
+	elif out.has("event"):
+		_show_call(out.event, out.caller)
+	elif out.has("shop"):
+		_show_shop(out.shop)
+	_map_refresh()
+
+
+## O herói chama pelo Mapa Mágico e pede uma decisão.
+func _show_call(ev: Dictionary, caller: String) -> void:
+	_clear_action()
+	var h: Dictionary = gs.heroes[caller]
+	var call := _panel(C_PARCHMENT)
+	_map_action.add_child(call)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	call.add_child(row)
+	row.add_child(_portrait(h, 56))
+	var txt := VBoxContainer.new()
+	txt.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(txt)
+	txt.add_child(_label("%s chama pelo Mapa Mágico:" % h.name, 12, C_INK.lightened(0.3)))
+	txt.add_child(_label(ev.title, 17, C_INK))
+	txt.add_child(_para(Expedition._fill(gs, ev.text, caller), 14, C_INK))
+	for opt in ev.options:
+		var hint := Expedition.test_hint(gs, opt)
+		var b := _button(opt.label + ("   [%s]" % hint if hint != "" else ""), _on_call_choice.bind(opt))
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		_map_action.add_child(b)
+
+
+func _on_call_choice(opt: Dictionary) -> void:
+	var r: Dictionary = Expedition.choose(gs, opt)
+	_log_lines(["» " + opt.label], C_GOLD)
+	_log_lines(r.lines, C_TEXT)
+	_clear_action()
+	_map_refresh()
+
+
+func _show_shop(stock: Array) -> void:
+	_clear_action()
+	_map_action.add_child(_label("Mercador de estrada — ouro da guilda: %d" % gs.gold, 15, C_GOLD))
+	for iid in stock:
+		var it: Dictionary = HeroRPG.item(gs, iid)
+		var b := _button("%s — %d ouro" % [it.name, int(it.price)], func():
+			if HeroRPG.buy(gs, iid):
+				_log_lines(["Comprado: %s (vai para o Baú)." % it.name], C_TEXT)
+				stock.erase(iid)
+			_show_shop(stock))
+		b.tooltip_text = it.get("desc", "")
+		b.disabled = gs.gold < int(it.price)
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		_map_action.add_child(b)
+	var sp: Dictionary = gs.route_data.shop_provisions
+	var pb := _button("Provisões (+%d) — %d ouro" % [int(sp.amount), int(sp.price)], func():
+		if Expedition.buy_provisions(gs):
+			_log_lines(["Provisões compradas (+%d)." % int(sp.amount)], C_TEXT)
+		_show_shop(stock)
+		_map_refresh())
+	pb.disabled = gs.gold < int(sp.price)
+	pb.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	_map_action.add_child(pb)
+	_map_action.add_child(_button("Seguir viagem ▶", func():
+		_clear_action()
+		_map_refresh()))
+
+
+func _on_face_boss() -> void:
+	var res: Dictionary = Expedition.finish(gs)
+	last_result = res
+	show_result(res)
 
 
 # ================= Resolução =================
@@ -466,7 +590,10 @@ func show_result(res: Dictionary) -> void:
 
 	var sc: Dictionary = res.score
 	var t: Array = ScoreCalc.THRESHOLDS[m.risk]
-	root.add_child(_para("Score %.1f  =  Base %.1f  + Cobertura %d  + Afinidade %+.1f  + Vínculo %d  + Poderes %d  + Oculto %d  + Sorte %+d      (custo ≥ %d · limpo ≥ %d)" % [sc.total, sc.base, sc.coverage, sc.affinity, sc.bond, sc.powers, sc.hidden, sc.luck, t[0], t[1]], 13, C_MUTED))
+	root.add_child(_para("Score %.1f  =  Base %.1f  + Cobertura %d  + Afinidade %+.1f  + Vínculo %d  + Poderes %d  + Oculto %d  + Rota %+d  + Sorte %+d      (custo ≥ %d · limpo ≥ %d)" % [sc.total, sc.base, sc.coverage, sc.affinity, sc.bond, sc.powers, sc.hidden, int(sc.get("route", 0)), sc.luck, t[0], t[1]], 13, C_MUTED))
+	if res.has("route"):
+		var rt: Dictionary = res.route
+		root.add_child(_para("Rota: preparação %+d · desgaste −%d · fome −%d" % [rt.bonus, rt.wear, mini(rt.hunger, 2)], 13, C_MUTED))
 
 	if not res.affinity.is_empty():
 		root.add_child(_label("Vínculos", 16, C_GOLD))
@@ -559,12 +686,14 @@ func show_relations() -> void:
 	root.add_child(grid)
 	grid.add_child(_label("", 14, C_TEXT))
 	for id in gs.hero_order:
-		grid.add_child(_cell(gs.heroes[id].name, C_PANEL, C_GOLD, ""))
+		grid.add_child(_hero_header(id, true))
 	for a in gs.hero_order:
-		grid.add_child(_cell(gs.heroes[a].name, C_PANEL, C_GOLD, ""))
+		grid.add_child(_hero_header(a, false))
 		for b in gs.hero_order:
 			if a == b:
-				grid.add_child(_cell("—", C_PANEL, C_MUTED, ""))
+				var self_cell := _cell("—", C_PANEL, C_MUTED, "")
+				self_cell.custom_minimum_size = Vector2(96, 52)
+				grid.add_child(self_cell)
 				continue
 			var v: int = gs.pair_value(a, b)
 			var lbl: String = gs.bond_label(a, b)
@@ -575,7 +704,9 @@ func show_relations() -> void:
 				tip += "\n— Arquivo: %d missão(ões) juntos —" % hist.size()
 				for e in hist:
 					tip += "\nDia %d · %s · %s" % [e.day, e.mission, gs.OUTCOME_NAMES[e.outcome]]
-			grid.add_child(_cell("%+d%s" % [v, " ✦" if lbl != "" else ""], _aff_color(v).darkened(0.55), C_TEXT, tip))
+			var cell := _cell("%+d%s" % [v, " ✦" if lbl != "" else ""], _aff_color(v).darkened(0.55), C_TEXT, tip)
+			cell.custom_minimum_size = Vector2(96, 52)
+			grid.add_child(cell)
 	root.add_child(_spacer_v())
 	root.add_child(_button("◀ Voltar", show_hub))
 
@@ -1184,6 +1315,31 @@ func _enemy_poster(m: Dictionary, px: int, defeated: bool = false) -> Control:
 			ln.end_cap_mode = Line2D.LINE_CAP_ROUND
 			tr.add_child(ln)
 	return tr
+
+
+## Cabeçalho do Quadro de Relações: retrato + nome (coluna = empilhado, linha = lado a lado).
+func _hero_header(id: String, column: bool) -> Control:
+	var h: Dictionary = gs.heroes[id]
+	var p := _panel(C_PANEL)
+	p.tooltip_text = "%s — %s" % [h.name, h.archetype]
+	var box: BoxContainer = VBoxContainer.new() if column else HBoxContainer.new()
+	box.add_theme_constant_override("separation", 2 if column else 8)
+	if column:
+		box.alignment = BoxContainer.ALIGNMENT_CENTER
+	p.add_child(box)
+	var por := _portrait(h, 44)
+	por.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if column:
+		por.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	box.add_child(por)
+	var l := _label(h.name, 13, h.color.lightened(0.25))
+	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	if column:
+		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	box.add_child(l)
+	p.custom_minimum_size = Vector2(96, 0) if column else Vector2(120, 52)
+	return p
 
 
 func _portrait(h: Dictionary, px: int) -> Control:

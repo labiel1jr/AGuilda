@@ -1,17 +1,21 @@
 extends Control
-## Mapa Mágico de Escrutínio (GDD §13): o jogador assiste, não controla.
-## Pergaminho com peças de nanquim (art/MapParts/<tipo>/*.png) escolhidas pelo bioma,
-## rota revelada em dourado e um marcador por herói.
+## Mapa Mágico de Escrutínio (GDD §13) — mapa de expedição (v0.8).
+## Pergaminho com peças de nanquim (art/MapParts/<tipo>/*.png) escolhidas pelo bioma.
+## A rota é um grafo em camadas (Expedition): o líder clica no próximo nó quando
+## o grupo chama; o marcador anda até lá e o nó se resolve.
 
-signal waypoint_reached(index: int)
-signal finished
+signal node_chosen(pos: Array)
+signal arrived(pos: Array)
 
-const DURATION := 10.0
-const WAYPOINTS := [0.22, 0.52, 0.82]
+const MOVE_TIME := 1.4
 const C_GOLD := Color("#e8c060")
 const C_INK := Color("#3a2a1c")
+const C_RED := Color("#a8443c")
 const PARTS_DIR := "res://art/MapParts/"
 const REF_SIZE := Vector2(860, 660)   # tamanho de referência para espaçar as peças
+const START_P := Vector2(0.07, 0.56)
+const BOSS_P := Vector2(0.91, 0.44)
+const NODE_R := 15.0
 
 ## Tinta do pergaminho por bioma
 const PAPER := {
@@ -35,13 +39,20 @@ static var _parts := {}   # tipo -> [Texture2D] (carregado uma vez)
 
 var biome := "estrada"
 var tokens: Array = []        # [{name, color}]
-var goal_texture: Texture2D = null   # cartaz do inimigo no destino (sem ele, um X)
-var progress := 0.0           # 0..1
+var goal_texture: Texture2D = null   # cartaz do inimigo no alvo (sem ele, um X)
+var type_info := {}           # tipo de nó -> {name, desc} (tooltip)
+var exp: Dictionary = {}      # gs.expedition (mesmo objeto, atualizado pelo jogo)
+var reachable: Array = []     # [[camada, índice]] clicáveis agora
 var speed := 1.0
-var running := false
-var _reached := 0
+var moving := false
+var _from := Vector2.ZERO     # posição normalizada do grupo
+var _to := Vector2.ZERO
+var _to_pos: Array = []
+var _t := 1.0
+var _hover := []
 var _time := 0.0
-var _route_n: PackedVector2Array = []   # rota em coordenadas normalizadas (0..1)
+var _pos := {}                          # "l:i" -> posição normalizada (partida "-1:0")
+var _edges: Array = []                  # [[pts normalizados], chave_a, chave_b]
 var _decor: Array = []                  # [{p, tex, s}] em coordenadas normalizadas, ordenado por y
 var _stains: Array = []                 # manchas do pergaminho
 var _puddles: Array = []                # poças e névoa (pântano)
@@ -49,16 +60,29 @@ var _home: Texture2D = null             # peça usada para a guilda (ponto de pa
 var _rng := RandomNumberGenerator.new()
 
 
-func setup(mission: Dictionary, party: Array, seed_value: int) -> void:
+func setup(mission: Dictionary, party: Array, seed_value: int, expedition: Dictionary) -> void:
 	biome = mission.get("biome", "estrada")
 	tokens = party
+	exp = expedition
 	_rng.seed = seed_value
-	_build_route()
+	tooltip_text = " "
+	mouse_filter = Control.MOUSE_FILTER_STOP
+	_build_graph()
 	_build_decor()
-	progress = 0.0
-	_reached = 0
-	running = true
+	_from = _pos[_key(exp.cur)]
+	_to = _from
+	_t = 1.0
 	queue_redraw()
+
+
+## Anda até o nó; emite arrived ao chegar.
+func move_to(pos: Array) -> void:
+	_from = _group_pos()
+	_to = _pos[_key(pos)]
+	_to_pos = pos
+	_t = 0.0
+	moving = true
+	reachable = []
 
 
 func skip() -> void:
@@ -67,15 +91,83 @@ func skip() -> void:
 
 func _process(delta: float) -> void:
 	_time += delta
-	if running:
-		progress = minf(1.0, progress + delta * speed / DURATION)
-		while _reached < WAYPOINTS.size() and progress >= WAYPOINTS[_reached]:
-			waypoint_reached.emit(_reached)
-			_reached += 1
-		if progress >= 1.0:
-			running = false
-			finished.emit()
+	if moving:
+		_t = minf(1.0, _t + delta * speed / MOVE_TIME)
+		if _t >= 1.0:
+			moving = false
+			_from = _to
+			arrived.emit(_to_pos)
 	queue_redraw()
+
+
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		_hover = _node_under(event.position)
+	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		var hit := _node_under(event.position)
+		if not hit.is_empty() and _is_reachable(hit) and not moving:
+			node_chosen.emit(hit)
+			accept_event()
+
+
+func _get_tooltip(at_position: Vector2) -> String:
+	var hit := _node_under(at_position)
+	if hit.is_empty():
+		return ""
+	if not _revealed(hit):
+		return "Caminho ainda encoberto pela névoa."
+	var t: String = exp.layers[hit[0]][hit[1]].type
+	var info: Dictionary = type_info.get(t, {})
+	var tip := "%s — %s" % [info.get("name", t), info.get("desc", "")]
+	if _is_reachable(hit):
+		tip += "\n(clique para seguir por aqui)"
+	return tip
+
+
+func _node_under(p: Vector2) -> Array:
+	for k in _pos:
+		var pos := _split(k)
+		if pos[0] < 0:
+			continue
+		var r := 34.0 if pos[0] == exp.layers.size() - 1 else NODE_R + 6.0
+		if (_pos[k] * size).distance_to(p) <= r:
+			return pos
+	return []
+
+
+func _is_reachable(pos: Array) -> bool:
+	for r in reachable:
+		if r[0] == pos[0] and r[1] == pos[1]:
+			return true
+	return false
+
+
+## Névoa: só a camada atual, a seguinte e o que dá para alcançar aparecem. O alvo sempre aparece.
+func _revealed(pos: Array) -> bool:
+	if pos[0] >= exp.layers.size() - 1:
+		return true
+	return pos[0] <= int(exp.cur[0]) + 1 or _is_reachable(pos) or _visited(pos)
+
+
+func _visited(pos: Array) -> bool:
+	for v in exp.path:
+		if v[0] == pos[0] and v[1] == pos[1]:
+			return true
+	return false
+
+
+static func _key(pos: Array) -> String:
+	return "%d:%d" % [pos[0], pos[1]]
+
+
+func _split(k: String) -> Array:
+	var p := k.split(":")
+	return [int(p[0]), int(p[1])]
+
+
+func _group_pos() -> Vector2:
+	var t := _t * _t * (3.0 - 2.0 * _t)
+	return _from.lerp(_to, t)
 
 
 # ---------- peças de mapa ----------
@@ -105,25 +197,40 @@ static func parts(kind: String) -> Array:
 
 # ---------- geração ----------
 
-func _build_route() -> void:
-	var ctrl := [Vector2(0.08, 0.80)]
-	for i in WAYPOINTS.size():
-		var x := lerpf(0.08, 0.9, WAYPOINTS[i])
-		ctrl.append(Vector2(x, _rng.randf_range(0.22, 0.78)))
-	ctrl.append(Vector2(0.90, 0.20))
-	# Catmull-Rom para uma estrada sinuosa
-	_route_n = PackedVector2Array()
-	for i in ctrl.size() - 1:
-		var p0: Vector2 = ctrl[max(i - 1, 0)]
-		var p1: Vector2 = ctrl[i]
-		var p2: Vector2 = ctrl[i + 1]
-		var p3: Vector2 = ctrl[min(i + 2, ctrl.size() - 1)]
-		for k in 30:
-			var t := k / 30.0
-			var t2 := t * t
-			var t3 := t2 * t
-			_route_n.append(0.5 * ((2.0 * p1) + (-p0 + p2) * t + (2.0 * p0 - 5.0 * p1 + 4.0 * p2 - p3) * t2 + (-p0 + 3.0 * p1 - 3.0 * p2 + p3) * t3))
-	_route_n.append(ctrl[-1])
+func _build_graph() -> void:
+	_pos.clear()
+	_edges.clear()
+	_pos["-1:0"] = START_P
+	var layers: Array = exp.layers
+	var last := layers.size() - 1
+	for l in layers.size():
+		var n: int = layers[l].size()
+		for i in n:
+			var p := BOSS_P
+			if l < last:
+				var x := lerpf(0.22, 0.76, float(l) / max(1, last - 1))
+				var y := lerpf(0.12, 0.88, (i + 0.5) / n)
+				p = Vector2(x + _rng.randf_range(-0.025, 0.025), y + _rng.randf_range(-0.04, 0.04))
+			_pos[_key([l, i])] = p
+	for i in layers[0].size():
+		_add_edge("-1:0", _key([0, i]))
+	for l in last:
+		for i in layers[l].size():
+			var node: Dictionary = layers[l][i]
+			var tl := l + (2 if node.type == "atalho" else 1)
+			for j in node.next:
+				_add_edge(_key([l, i]), _key([tl, j]))
+
+
+func _add_edge(ka: String, kb: String) -> void:
+	var a: Vector2 = _pos[ka]
+	var b: Vector2 = _pos[kb]
+	var mid := (a + b) / 2.0 + (b - a).orthogonal().normalized() * _rng.randf_range(-0.04, 0.04)
+	var pts := PackedVector2Array()
+	for k in 21:
+		var t := k / 20.0
+		pts.append(a.lerp(mid, t).lerp(mid.lerp(b, t), t))
+	_edges.append([pts, ka, kb])
 
 
 func _build_decor() -> void:
@@ -158,7 +265,7 @@ func _build_decor() -> void:
 					continue
 				if absf(p.x - _river_x(p.y - half.y)) < half.x + 0.02:
 					continue
-				if p.x > 0.88 and p.y > 0.82:
+				if p.x > 0.86 and p.y > 0.80:
 					continue   # canto da rosa dos ventos
 				var r := Rect2(p - Vector2(half.x, half.y * 2.0), half * 2.0).grow(-0.004)
 				if taken.any(func(o): return o.intersects(r)):
@@ -185,8 +292,11 @@ func _river_x(y: float) -> float:
 
 func _dist_to_route(p: Vector2) -> float:
 	var best := 9.0
-	for q in _route_n:
-		best = minf(best, p.distance_to(q))
+	for e in _edges:
+		for q in e[0]:
+			best = minf(best, p.distance_to(q))
+	for k in _pos:
+		best = minf(best, p.distance_to(_pos[k]) - 0.025)
 	return best
 
 
@@ -216,21 +326,30 @@ func _draw() -> void:
 		var base: Vector2 = d.p * sz
 		draw_texture_rect(tex, Rect2(base - Vector2(tsz.x / 2.0, tsz.y), tsz), false, Color(1, 1, 1, 0.92))
 
-	var route := PackedVector2Array()
-	for q in _route_n:
-		route.append(q * sz)
+	# caminhos: tracejado de tinta; percorridos em dourado; as saídas atuais brilham
+	var walked := {}
+	for i in range(1, exp.path.size()):
+		walked[_key(exp.path[i - 1]) + ">" + _key(exp.path[i])] = true
+	var cur_key := _key(exp.cur)
+	for e in _edges:
+		var pts := PackedVector2Array()
+		for q in e[0]:
+			pts.append(q * sz)
+		if walked.has(e[1] + ">" + e[2]):
+			draw_polyline(pts, Color(C_GOLD, 0.35), 9.0, true)
+			draw_polyline(pts, Color("#b8892e"), 3.0, true)
+		elif e[1] == cur_key and not moving and _is_reachable(_split(e[2])):
+			var glow := 0.5 + 0.5 * sin(_time * 3.0)
+			draw_polyline(pts, Color(C_GOLD, 0.25 + glow * 0.3), 7.0, true)
+			for i in range(0, pts.size() - 1, 2):
+				draw_line(pts[i], pts[i + 1], Color(C_INK, 0.85), 2.0, true)
+		else:
+			var hidden: bool = not _revealed(_split(e[2]))
+			for i in range(0, pts.size() - 1, 2):
+				draw_line(pts[i], pts[i + 1], Color(C_INK, 0.18 if hidden else 0.5), 1.4, true)
 
-	# trilha ainda não percorrida (tracejado de tinta) e trecho revelado em dourado
-	for i in range(0, route.size() - 2, 4):
-		draw_line(route[i], route[i + 1], Color(C_INK, 0.55), 1.6, true)
-	var lead := _point_at(progress, route)
-	var revealed := _slice(progress, route)
-	if revealed.size() >= 2:
-		draw_polyline(revealed, Color(C_GOLD, 0.35), 9.0, true)
-		draw_polyline(revealed, Color("#b8892e"), 3.0, true)
-
-	# guilda (partida) e destino
-	var start := route[0]
+	# guilda (partida)
+	var start: Vector2 = START_P * sz
 	if _home != null:
 		var hs := Vector2(_home.get_width(), _home.get_height()) * 1.6 * scale_k
 		draw_texture_rect(_home, Rect2(start - Vector2(hs.x / 2.0, hs.y - 4), hs), false)
@@ -238,38 +357,23 @@ func _draw() -> void:
 	draw_colored_polygon(PackedVector2Array([start + Vector2(10, -54 * scale_k), start + Vector2(24, -50 * scale_k), start + Vector2(10, -46 * scale_k)]), Color("#b8892e"))
 	var font := ThemeDB.fallback_font
 	draw_string(font, start + Vector2(-26, 18), "a Guilda", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, C_INK)
-	var goal := route[-1]
-	if goal_texture != null:
-		var pulse := 0.5 + 0.5 * sin(_time * 2.5)
-		draw_circle(goal, 30.0 + pulse * 4.0, Color("#a8443c", 0.12 + pulse * 0.10))
-		draw_texture_rect(goal_texture, Rect2(goal - Vector2(26, 26), Vector2(52, 52)), false)
-	else:
-		draw_line(goal + Vector2(-10, -10), goal + Vector2(10, 10), Color("#a8443c"), 4.0)
-		draw_line(goal + Vector2(-10, 10), goal + Vector2(10, -10), Color("#a8443c"), 4.0)
 
-	# waypoints
-	for i in WAYPOINTS.size():
-		var wp := _point_at(WAYPOINTS[i], route)
-		var reached := i < _reached
-		draw_circle(wp, 7.0, C_GOLD if reached else Color(paper.darkened(0.15)))
-		draw_arc(wp, 7.0, 0, TAU, 20, C_INK, 1.2, true)
-		draw_circle(wp, 2.5, C_INK)
-		if reached:
-			var ph := fmod(_time * 0.9 + i * 0.3, 1.0)
-			draw_arc(wp, 8.0 + ph * 22.0, 0, TAU, 32, Color("#b8892e", 1.0 - ph), 2.0, true)
+	for k in _pos:
+		var pos := _split(k)
+		if pos[0] >= 0:
+			_draw_node(pos, _pos[k] * sz, paper)
 
-	# marcadores dos heróis (levemente defasados para ler como grupo)
+	# marcadores dos heróis em volta da posição do grupo
+	var g := _group_pos() * sz + Vector2(0, -30)
 	for i in tokens.size():
-		var t := maxf(0.0, progress - i * 0.012)
-		var pos := _point_at(t, route) + Vector2(0, (i - (tokens.size() - 1) / 2.0) * 9.0)
+		var ang: float = TAU * i / max(1, tokens.size()) - PI / 2.0
+		var pos := g + (Vector2(cos(ang), sin(ang)) * 12.0 if tokens.size() > 1 else Vector2.ZERO)
 		var col: Color = tokens[i].color
 		var glow := 0.5 + 0.5 * sin(_time * 4.0 + i)
-		draw_circle(pos, 14.0 + glow * 3.0, Color(col, 0.30))
-		draw_circle(pos, 9.0, col)
-		draw_arc(pos, 9.0, 0, TAU, 24, C_INK, 1.5, true)
-		draw_string(font, pos + Vector2(-4, 5), String(tokens[i].name).left(1), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color.WHITE)
-	if progress > 0.0 and progress < 1.0:
-		draw_circle(lead, 3.0, C_INK)
+		draw_circle(pos, 11.0 + glow * 2.0, Color(col, 0.30))
+		draw_circle(pos, 8.0, col)
+		draw_arc(pos, 8.0, 0, TAU, 24, C_INK, 1.5, true)
+		draw_string(font, pos + Vector2(-4, 5), String(tokens[i].name).left(1), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color.WHITE)
 
 	_draw_compass(Vector2(sz.x - 46, sz.y - 46), 26.0)
 	# bordas envelhecidas + brilho mágico
@@ -277,6 +381,63 @@ func _draw() -> void:
 		var a := 0.10 * (10 - k) / 10.0
 		draw_rect(Rect2(Vector2(k * 3, k * 3), sz - Vector2(k * 6, k * 6)), Color(0.35, 0.22, 0.10, a), false, 3.0)
 	draw_rect(Rect2(Vector2(1, 1), sz - Vector2(2, 2)), Color(0.55, 0.4, 0.9, 0.35 + 0.15 * sin(_time * 1.5)), false, 2.0)
+
+
+func _draw_node(pos: Array, c: Vector2, paper: Color) -> void:
+	var node: Dictionary = exp.layers[pos[0]][pos[1]]
+	var reach := _is_reachable(pos) and not moving
+	if node.type == "chefe":
+		var pulse := 0.5 + 0.5 * sin(_time * 2.5)
+		draw_circle(c, 30.0 + pulse * 4.0, Color(C_RED, 0.12 + pulse * 0.10))
+		if goal_texture != null:
+			draw_texture_rect(goal_texture, Rect2(c - Vector2(30, 30), Vector2(60, 60)), false)
+		else:
+			draw_line(c + Vector2(-10, -10), c + Vector2(10, 10), C_RED, 4.0)
+			draw_line(c + Vector2(-10, 10), c + Vector2(10, -10), C_RED, 4.0)
+		if reach:
+			draw_arc(c, 34.0 + pulse * 3.0, 0, TAU, 40, Color("#b8892e"), 3.0, true)
+		return
+	var visited := _visited(pos)
+	var r := NODE_R + (3.0 if reach and _hover == pos else 0.0)
+	if reach:
+		var ph := fmod(_time * 0.9, 1.0)
+		draw_arc(c, r + 3.0 + ph * 12.0, 0, TAU, 32, Color("#b8892e", 1.0 - ph), 2.0, true)
+	var fill := C_GOLD if visited else (Color("#f3ead0") if reach else paper.darkened(0.08))
+	draw_circle(c, r, fill)
+	draw_arc(c, r, 0, TAU, 28, C_INK, 2.0 if reach else 1.3, true)
+	if not _revealed(pos):
+		draw_string(ThemeDB.fallback_font, c + Vector2(-4, 6), "?", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color(C_INK, 0.45))
+		return
+	_draw_icon(node.type, c, Color(C_INK, 0.95 if (reach or visited) else 0.6))
+
+
+## Ícones a nanquim para cada tipo de nó.
+func _draw_icon(t: String, c: Vector2, ink: Color) -> void:
+	var font := ThemeDB.fallback_font
+	match t:
+		"combate":
+			draw_line(c + Vector2(-7, -7), c + Vector2(7, 7), ink, 2.2)
+			draw_line(c + Vector2(7, -7), c + Vector2(-7, 7), ink, 2.2)
+			draw_line(c + Vector2(-8, -2), c + Vector2(-2, -8), ink, 1.6)
+			draw_line(c + Vector2(8, -2), c + Vector2(2, -8), ink, 1.6)
+		"tesouro":
+			draw_rect(Rect2(c + Vector2(-8, -3), Vector2(16, 10)), ink, false, 1.8)
+			draw_arc(c + Vector2(0, -3), 8.0, PI, TAU, 12, ink, 1.8)
+			draw_rect(Rect2(c + Vector2(-2, -1), Vector2(4, 4)), ink)
+		"loja":
+			draw_arc(c, 7.5, 0, TAU, 20, ink, 1.6, true)
+			draw_string(font, c + Vector2(-4, 5), "$", HORIZONTAL_ALIGNMENT_LEFT, -1, 13, ink)
+		"acampamento":
+			draw_colored_polygon(PackedVector2Array([c + Vector2(0, -9), c + Vector2(5, 3), c + Vector2(0, 0), c + Vector2(-5, 3)]), Color(Color("#c0602d"), ink.a))
+			draw_line(c + Vector2(-8, 7), c + Vector2(8, 3), ink, 2.0)
+			draw_line(c + Vector2(-8, 3), c + Vector2(8, 7), ink, 2.0)
+		"evento":
+			draw_string(font, c + Vector2(-4, 7), "?", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, ink)
+		"atalho":
+			draw_line(c + Vector2(-8, 0), c + Vector2(5, 0), ink, 2.0)
+			draw_colored_polygon(PackedVector2Array([c + Vector2(9, 0), c + Vector2(3, -5), c + Vector2(3, 5)]), ink)
+			draw_line(c + Vector2(-8, -5), c + Vector2(-2, -5), Color(ink, 0.6), 1.2)
+			draw_line(c + Vector2(-8, 5), c + Vector2(-2, 5), Color(ink, 0.6), 1.2)
 
 
 func _draw_river(sz: Vector2) -> void:
@@ -304,20 +465,3 @@ func _draw_compass(c: Vector2, r: float) -> void:
 	draw_string(ThemeDB.fallback_font, c + Vector2(-4, -r - 4), "N", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, C_INK)
 
 
-func _point_at(t: float, route: PackedVector2Array) -> Vector2:
-	if route.is_empty():
-		return Vector2.ZERO
-	var f := clampf(t, 0.0, 1.0) * (route.size() - 1)
-	var i := int(f)
-	if i >= route.size() - 1:
-		return route[-1]
-	return route[i].lerp(route[i + 1], f - i)
-
-
-func _slice(t: float, route: PackedVector2Array) -> PackedVector2Array:
-	var out := PackedVector2Array()
-	var f := clampf(t, 0.0, 1.0) * (route.size() - 1)
-	for i in int(f) + 1:
-		out.append(route[i])
-	out.append(_point_at(t, route))
-	return out

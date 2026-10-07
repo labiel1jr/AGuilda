@@ -18,6 +18,7 @@ func _init() -> void:
 	_check_act2(gs)
 	_check_save(gs)
 	_check_endings(gs)
+	_check_expedition(gs)
 	_random_playthroughs(gs, 150)
 	print("RESULTADO: %s (%d falha(s))" % ["OK" if failures == 0 else "FALHOU", failures])
 	gs.free()
@@ -425,6 +426,7 @@ func _check_endings(gs) -> void:
 
 func _random_playthroughs(gs, n: int) -> void:
 	var outcomes := {"limpo": 0, "custo": 0, "falha": 0}
+	var route_mods := {}
 	var departures := 0
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 7
@@ -458,8 +460,9 @@ func _random_playthroughs(gs, n: int) -> void:
 				for id in party:
 					if HeroRPG.is_caster(gs, id) and gs.heroes[id].slots > 0:
 						prep[id] = gs.heroes[id].spells_known[rng.randi_range(0, gs.heroes[id].spells_known.size() - 1)]
-				var res: Dictionary = gs.dispatch(m, party, prep)
+				var res: Dictionary = _run_expedition(gs, m, party, prep, rng)
 				outcomes[res.outcome] += 1
+				route_mods[res.route.mod] = route_mods.get(res.route.mod, 0) + 1
 				for bs in gs.backstage_today:
 					if not bs.done:
 						var chs: Array = bs.event.choices
@@ -484,10 +487,93 @@ func _random_playthroughs(gs, n: int) -> void:
 		_expect(guard < 300, "partida %d terminou" % run)
 		departures += gs.departed.size()
 	print("Partidas aleatórias: ", outcomes, "  ·  saídas de heróis: ", departures)
+	print("  modificador da rota (valor: vezes): ", route_mods)
 	var lv := {}
 	for id in gs.hero_order:
 		lv[id] = gs.heroes[id].level
 	print("  níveis ao fim da última partida: ", lv)
+
+
+## Percorre a expedição escolhendo caminhos e opções ao acaso.
+func _run_expedition(gs, m: Dictionary, party: Array, prep: Dictionary, rng: RandomNumberGenerator) -> Dictionary:
+	Expedition.start(gs, m, party, prep)
+	var steps := 0
+	while not Expedition.at_boss(gs) and steps < 20:
+		var ch: Array = Expedition.choices(gs)
+		var out: Dictionary = Expedition.enter(gs, ch[rng.randi_range(0, ch.size() - 1)])
+		if out.has("event"):
+			var ops: Array = out.event.options
+			Expedition.choose(gs, ops[rng.randi_range(0, ops.size() - 1)])
+		elif out.has("shop") and not out.shop.is_empty() and rng.randf() < 0.5:
+			HeroRPG.buy(gs, out.shop[0])
+		steps += 1
+	return Expedition.finish(gs)
+
+
+func _check_expedition(gs) -> void:
+	gs.new_game(7)
+	var bad := 0
+	var types := {}
+	for m in gs.missions:
+		for d in 6:
+			gs.day = d + 1
+			var exp: Dictionary = Expedition.start(gs, m, ["vera", "bram"], {})
+			var layers: Array = exp.layers
+			# todo nó intermediário tem entrada e saída válida; todo caminho chega ao alvo
+			var reach := {}
+			for i in layers[0].size():
+				reach["0:%d" % i] = true
+			for l in layers.size() - 1:
+				for i in layers[l].size():
+					var node: Dictionary = layers[l][i]
+					types[node.type] = types.get(node.type, 0) + 1
+					if not reach.has("%d:%d" % [l, i]):
+						bad += 1
+					var tl := l + (2 if node.type == "atalho" else 1)
+					if node.next.is_empty() or tl >= layers.size():
+						bad += 1
+					for j in node.next:
+						if j >= layers[tl].size():
+							bad += 1
+						reach["%d:%d" % [tl, j]] = true
+			if not reach.has("%d:0" % (layers.size() - 1)):
+				bad += 1
+	_expect(bad == 0, "mapas de expedição: grafo conexo, sem nós órfãos (%d problema(s))" % bad)
+	_expect(types.size() >= 6, "mapas usam todos os tipos de nó: %s" % [types])
+	gs.expedition = {}
+	# efeitos e teste de dado
+	var m := _mission(gs, "lobos")
+	Expedition.start(gs, m, ["vera", "bram"], {})
+	var hp_before: int = gs.heroes.bram.hp
+	Expedition.apply(gs, {"gold": 20, "provisions": 1, "bonus": 2, "hp_one": -3, "item": "loot", "days": 1}, "bram")
+	_expect(gs.expedition.gold == 20 and gs.expedition.bonus == 2 and gs.expedition.items.size() == 1, "efeitos da rota somam na bolsa, preparação e itens")
+	_expect(gs.heroes.bram.hp == maxi(1, hp_before - 3), "dano da rota fere sem derrubar")
+	var opt := {"label": "x", "test": {"attr": "forca"}, "ok": {"fx": {"gold": 5}}, "fail": {"fx": {}}}
+	var r: Dictionary = Expedition.choose(gs, opt)
+	_expect(r.dice.hero == "vera" and r.dice.mod == int(HeroRPG.effective_attrs(gs, "vera").forca) - 5, "teste usa o herói mais apto e mod = atributo − 5")
+	gs.expedition.provisions = 0
+	gs.expedition.cur = [0, 0]
+	gs.expedition.hunger = 0
+	var tgt: Array = Expedition.choices(gs)[0]
+	Expedition.enter(gs, tgt)
+	_expect(gs.expedition.hunger == 1, "sem provisões, o passo é com fome")
+	var mod_expected: int = mini(2, 3) - Expedition.wear(gs) - 1
+	_expect(Expedition.route_mod(gs) == mod_expected, "modificador da rota = preparação − desgaste − fome")
+	var gold0: int = gs.gold
+	var inv0: int = gs.inventory.size()
+	var res: Dictionary = Expedition.finish(gs)
+	_expect(res.score.route == mod_expected, "rota entra no score")
+	if res.outcome == "falha":
+		_expect(gs.inventory.size() == inv0, "na falha, saque da rota se perde")
+	else:
+		_expect(gs.inventory.size() >= inv0 + 1, "no sucesso, itens da rota vão para o Baú")
+	_expect(gs.gold > gold0 or res.outcome == "falha", "ouro da rota e recompensa entram na guilda")
+	_expect(gs.heroes.vera.away_until == gs.day + 1, "atraso deixa o grupo fora por mais um dia")
+	gs.end_day()
+	_expect(gs.heroes.vera.busy, "no dia seguinte, o grupo ainda está na estrada")
+	gs.end_day()
+	_expect(not gs.heroes.vera.busy, "depois volta à guilda")
+	_expect(gs.expedition.is_empty(), "expedição encerrada")
 
 
 func _expect(ok: bool, msg: String) -> void:
