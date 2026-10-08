@@ -56,6 +56,14 @@ func _initialize() -> void:
 	map.speed = 200.0
 	main._show_shop(["espada_longa", "pocao_cura"])
 	await process_frame
+	gs.heroes.vera.stress = 10
+	gs.heroes.vera.condition = "paranoico"
+	gs.heroes.vera.condition_kind = "aflicao"
+	gs.heroes.vera.traits = ["sangue_frio", "medo_do_escuro"]
+	main._show_call(gs.route_data.events.npc[0], "vera")
+	await process_frame
+	main._map_refresh()
+	await process_frame
 	var steps := 0
 	while not Expedition.at_boss(gs) and steps < 12:
 		if gs.expedition.pending != "":
@@ -85,6 +93,9 @@ func _initialize() -> void:
 	assert(gs.backstage_today[0].done)
 	main.show_relations()
 	await process_frame
+	gs.heroes.theo.condition = "corajoso"
+	gs.heroes.theo.condition_kind = "virtude"
+	gs.heroes.theo.traits = ["pele_dura"]
 	for i in 6:
 		main.show_book(i)
 		await process_frame

@@ -34,6 +34,9 @@ static func start(gs, mission: Dictionary, party: Array, prepared: Dictionary) -
 				pool.erase("atalho")
 			layer.append({"type": t, "next": [], "event": "", "done": false})
 		layers.append(layer)
+	# guarda do alvo: missões de risco médio para cima têm um miniboss na última camada
+	if mission.risk != "baixo" and not layers[n_layers - 1].any(func(n): return n.type == "miniboss"):
+		layers[n_layers - 1][rng.randi_range(0, layers[n_layers - 1].size() - 1)].type = "miniboss"
 	layers.append([{"type": "chefe", "next": [], "event": "", "done": false}])
 
 	# ligações: cada nó aponta para 1–2 nós da camada seguinte (atalho: duas adiante)
@@ -129,7 +132,9 @@ static func enter(gs, pos: Array) -> Dictionary:
 		exp.provisions -= 1
 	else:
 		exp.hunger += 1
-		out.lines.append("Sem comida, o grupo segue com fome (−1 no score do alvo).")
+		out.lines.append("Sem comida, o grupo segue com fome (−1 no score do alvo, +1 de estresse).")
+		for id in exp.party:
+			out.lines.append_array(Mind.add_stress(gs, id, 1, exp.party, exp.prepared))
 	match node.type:
 		"chefe":
 			out.boss = true
@@ -190,6 +195,18 @@ static func test_hint(gs, opt: Dictionary) -> String:
 	var attr: String = opt.test.attr
 	var id := best_for(gs, attr)
 	return "%s CD %d · %s %+d" % [attr.capitalize(), dc(gs, opt), gs.heroes[id].name, modifier(gs, id, attr)]
+
+
+## "" se a opção pode ser escolhida; senão, o motivo.
+static func option_block(gs, opt: Dictionary) -> String:
+	var req: Dictionary = opt.get("requires", {})
+	if req.has("guild_gold") and gs.gold < int(req.guild_gold):
+		return "Precisa de %d de ouro da guilda" % int(req.guild_gold)
+	if req.has("gold") and gs.expedition.gold < int(req.gold):
+		return "Precisa de %d de ouro na bolsa da rota" % int(req.gold)
+	if req.has("provisions") and gs.expedition.provisions < int(req.provisions):
+		return "Precisa de %d provisão(ões)" % int(req.provisions)
+	return ""
 
 
 ## Resolve a opção do evento pendente. Devolve {lines, dice?}
@@ -264,12 +281,54 @@ static func apply(gs, fx: Dictionary, hero: String = "") -> Array:
 	if fx.has("days"):
 		exp.days = mini(2, exp.days + int(fx.days))
 		lines.append("A volta vai atrasar (+%d dia)." % int(fx.days))
+	if fx.has("guild_gold"):
+		gs.gold = maxi(0, gs.gold + int(fx.guild_gold))
+		lines.append("Ouro da guilda: %+d." % int(fx.guild_gold))
+	if fx.has("stress"):
+		var v := int(fx.stress)
+		for id in party:
+			if v > 0:
+				lines.append_array(Mind.add_stress(gs, id, v, party, exp.prepared))
+			else:
+				Mind.relieve(gs, id, -v)
+		lines.append(("Todos ganham %d de estresse." if v > 0 else "O estresse de todos cai %d.") % absi(v))
+	if fx.has("stress_one"):
+		var id: String = hero if hero != "" else party[gs.rng.randi_range(0, party.size() - 1)]
+		var v := int(fx.stress_one)
+		if v > 0:
+			lines.append("%s ganha %d de estresse." % [gs.heroes[id].name, v])
+			lines.append_array(Mind.add_stress(gs, id, v, party, exp.prepared))
+		else:
+			Mind.relieve(gs, id, -v)
+			lines.append("O estresse de %s cai %d." % [gs.heroes[id].name, -v])
+	if fx.has("lose_item"):
+		lines.append_array(_lose_item(gs, String(fx.lose_item), hero))
+	if fx.has("trait"):
+		var id: String = hero if hero != "" else party[gs.rng.randi_range(0, party.size() - 1)]
+		var t := String(fx.trait)
+		lines.append_array(Mind.gain_trait(gs, id, t == "pos", "" if t in ["pos", "neg"] else t))
 	if fx.has("affinity") and party.size() >= 2:
 		var pairs := ScoreCalc.pairs_of(party)
 		var pr: Array = pairs[gs.rng.randi_range(0, pairs.size() - 1)]
 		gs.change_affinity(pr[0], pr[1], int(fx.affinity), int(fx.affinity))
 		lines.append("%s e %s se aproximam." % [gs.heroes[pr[0]].name, gs.heroes[pr[1]].name])
 	return lines
+
+
+## Perde um item equipado no slot (preferindo o herói do evento). Item some de vez.
+static func _lose_item(gs, slot: String, hero: String) -> Array:
+	var party: Array = gs.expedition.party
+	var order := party.duplicate()
+	if hero != "":
+		order.erase(hero)
+		order.push_front(hero)
+	for id in order:
+		var h: Dictionary = gs.heroes[id]
+		if h.equip.get(slot, "") != "":
+			var it := HeroRPG.item(gs, h.equip[slot])
+			h.equip[slot] = ""
+			return ["%s perdeu %s." % [h.name, it.name]]
+	return ["Por sorte, ninguém tinha nada a perder ali."]
 
 
 ## Estoque do mercador de estrada (fixo por nó).

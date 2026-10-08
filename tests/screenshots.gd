@@ -43,6 +43,11 @@ func _initialize() -> void:
 	main._toggle_hero(m, "bram")
 	main._toggle_hero(m, "theo")
 	await _shot("2_party")
+	gs.heroes.vera.stress = 6
+	gs.heroes.theo.stress = 10
+	gs.heroes.theo.condition = "paranoico"
+	gs.heroes.theo.condition_kind = "aflicao"
+	gs.heroes.theo.traits = ["pele_dura", "medo_do_escuro"]
 	main._on_dispatch(m)
 	main._map.speed = 200.0
 	for k in 2:

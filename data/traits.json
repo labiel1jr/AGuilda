@@ -1,0 +1,42 @@
+{
+  "_doc": "Estresse, aflições, virtudes e traços (v0.9). Estresse vai de 0 a stress_max. Ao chegar no máximo sem condição, o herói testa a vontade: virtue_chance + virtue_per_res × (resistência − 5) de virar Virtude; senão, Aflição. Aflição dura até um dia de descanso na guilda; virtude dura virtue_missions missões. Efeitos usam o mesmo formato de itens/talentos (attr, affinity, mission_type, damage_reduction...) e mais: mind (soma no termo Mente do score), biome {biome, value} (Mente quando a missão é naquele bioma), stress_resist (reduz cada ganho de estresse; negativo aumenta). Traços são permanentes (até max_traits).",
+  "stress_max": 10,
+  "virtue_chance": 0.25,
+  "virtue_per_res": 0.05,
+  "virtue_missions": 2,
+  "virtue_stress": 4,
+  "mind_cap": 3,
+  "max_traits": 4,
+  "mission_stress": {"limpo": 0, "custo": 1, "falha": 2},
+  "risk_stress": {"baixo": 0, "medio": 0, "alto": 1, "lendario": 2},
+  "rest_relief": 5,
+  "idle_relief": 1,
+  "trait_chance": {"limpo": 0.12, "custo": 0.0, "falha": 0.2},
+  "afflictions": {
+    "paranoico":   {"name": "Paranoico",   "desc": "Vê traição em cada olhar. −1 Mente, −1 Afinidade do grupo.", "effects": [{"type": "mind", "value": -1}, {"type": "affinity", "value": -1}], "text": "{heroi} começa a desconfiar de todos. \"Quem de vocês contou a eles?\""},
+    "egoista":     {"name": "Egoísta",     "desc": "Pensa primeiro em si. −1 Mente, −1 Afinidade do grupo.", "effects": [{"type": "mind", "value": -1}, {"type": "affinity", "value": -1}], "text": "{heroi} pega a melhor parte da comida e não pede desculpas."},
+    "desesperado": {"name": "Desesperado", "desc": "Não vê saída. −2 Mente.", "effects": [{"type": "mind", "value": -2}], "text": "{heroi} senta no chão e diz que vão todos morrer."},
+    "irracional":  {"name": "Irracional",  "desc": "Age por impulso. −1 Mente, −2 Conhecimento.", "effects": [{"type": "mind", "value": -1}, {"type": "attr", "attr": "conhecimento", "value": -2}], "text": "{heroi} ri sozinho e corre na direção errada."},
+    "medroso":     {"name": "Medroso",     "desc": "O medo trava os braços. −1 Mente, −1 Força, −1 Destreza.", "effects": [{"type": "mind", "value": -1}, {"type": "attr", "attr": "forca", "value": -1}, {"type": "attr", "attr": "destreza", "value": -1}], "text": "As mãos de {heroi} não param de tremer."}
+  },
+  "virtues": {
+    "corajoso":    {"name": "Corajoso",    "desc": "O medo virou fúria. +2 Mente.", "effects": [{"type": "mind", "value": 2}], "text": "{heroi} se levanta: \"Hoje não.\""},
+    "focado":      {"name": "Focado",      "desc": "Tudo fica claro. +1 Mente, +1 Conhecimento, +1 Destreza.", "effects": [{"type": "mind", "value": 1}, {"type": "attr", "attr": "conhecimento", "value": 1}, {"type": "attr", "attr": "destreza", "value": 1}], "text": "{heroi} respira fundo. O mundo fica lento e nítido."},
+    "estoico":     {"name": "Estoico",     "desc": "Uma rocha para o grupo. +1 Mente, o grupo ganha 1 a menos de estresse.", "effects": [{"type": "mind", "value": 1}, {"type": "stress_resist", "value": 1, "party": true}], "text": "{heroi} não diz nada. Mas todos se acalmam ao olhar para ele."},
+    "inspirador":  {"name": "Inspirador",  "desc": "Levanta o ânimo de todos. +1 Mente, +1 Afinidade do grupo.", "effects": [{"type": "mind", "value": 1}, {"type": "affinity", "value": 1}], "text": "{heroi} canta alto, desafinado — e o grupo ri pela primeira vez em dias."}
+  },
+  "traits": {
+    "matador_de_feras": {"name": "Matador de Feras",    "positive": true,  "desc": "+1 em missões de combate.", "effects": [{"type": "mission_type", "mission_type": "combate", "value": 1}]},
+    "andarilho":        {"name": "Andarilho da Mata",   "positive": true,  "desc": "+1 Mente em florestas.", "effects": [{"type": "biome", "biome": "floresta", "value": 1}]},
+    "pele_dura":        {"name": "Pele Dura",           "positive": true,  "desc": "−1 de dano recebido.", "effects": [{"type": "damage_reduction", "value": 1}]},
+    "sangue_frio":      {"name": "Sangue-Frio",         "positive": true,  "desc": "Ganha 1 a menos de estresse.", "effects": [{"type": "stress_resist", "value": 1}]},
+    "olho_vivo":        {"name": "Olho Vivo",           "positive": true,  "desc": "+1 Destreza.", "effects": [{"type": "attr", "attr": "destreza", "value": 1}]},
+    "voz_firme":        {"name": "Voz Firme",           "positive": true,  "desc": "+1 Carisma.", "effects": [{"type": "attr", "attr": "carisma", "value": 1}]},
+    "medo_do_escuro":   {"name": "Medo do Escuro",      "positive": false, "desc": "−1 Mente em pântanos.", "effects": [{"type": "biome", "biome": "pantano", "value": -1}]},
+    "claustrofobico":   {"name": "Claustrofóbico",      "positive": false, "desc": "−1 Mente em montanhas e minas.", "effects": [{"type": "biome", "biome": "montanha", "value": -1}]},
+    "mao_tremula":      {"name": "Mão Trêmula",         "positive": false, "desc": "−1 Destreza.", "effects": [{"type": "attr", "attr": "destreza", "value": -1}]},
+    "rancoroso":        {"name": "Rancoroso",           "positive": false, "desc": "−1 Afinidade do grupo.", "effects": [{"type": "affinity", "value": -1}]},
+    "nervoso":          {"name": "Nervoso",             "positive": false, "desc": "Ganha 1 a mais de estresse.", "effects": [{"type": "stress_resist", "value": -1}]},
+    "pulmao_fraco":     {"name": "Pulmão Fraco",        "positive": false, "desc": "−1 Resistência.", "effects": [{"type": "attr", "attr": "resistencia", "value": -1}]}
+  }
+}

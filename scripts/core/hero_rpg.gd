@@ -23,6 +23,7 @@ static func init_hero(gs, h: Dictionary, src: Dictionary) -> void:
 	h.resting = false
 	h.rest_request = false
 	h.slots = max_slots(gs, h.id, h)
+	Mind.ensure(h)
 
 
 # ---------- classe e níveis ----------
@@ -134,6 +135,7 @@ static func hero_effects(gs, id: String, prepared_spell: String = "") -> Array:
 			out.append_array(item(gs, h.equip[s]).get("effects", []))
 	if prepared_spell != "":
 		out.append_array(spell(gs, prepared_spell).get("effects", []))
+	out.append_array(Mind.effects(gs, h))
 	return out
 
 

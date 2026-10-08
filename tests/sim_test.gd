@@ -19,6 +19,7 @@ func _init() -> void:
 	_check_save(gs)
 	_check_endings(gs)
 	_check_expedition(gs)
+	_check_mind(gs)
 	_random_playthroughs(gs, 150)
 	print("RESULTADO: %s (%d falha(s))" % ["OK" if failures == 0 else "FALHOU", failures])
 	gs.free()
@@ -574,6 +575,78 @@ func _check_expedition(gs) -> void:
 	gs.end_day()
 	_expect(not gs.heroes.vera.busy, "depois volta à guilda")
 	_expect(gs.expedition.is_empty(), "expedição encerrada")
+
+
+func _check_mind(gs) -> void:
+	gs.new_game(11)
+	var h: Dictionary = gs.heroes.bram
+	_expect(h.stress == 0 and h.traits.is_empty() and h.condition == "", "herói começa sem estresse, traços ou condição")
+	Mind.add_stress(gs, "bram", 4)
+	_expect(h.stress == 4, "estresse soma")
+	gs.rng.seed = 1
+	var lines: Array = Mind.add_stress(gs, "bram", 20)
+	_expect(h.condition != "" and h.condition_kind in ["aflicao", "virtude"], "no máximo, vira aflição ou virtude (%s)" % h.condition)
+	_expect(not lines.is_empty(), "ponto de ruptura é narrado")
+	# força uma aflição e confere o score
+	h.condition = "desesperado"
+	h.condition_kind = "aflicao"
+	h.stress = 10
+	var m := _mission(gs, "lobos")
+	var sc: Dictionary = ScoreCalc.compute(gs, m, ["bram"], 0)
+	_expect(sc.mind == -2, "aflição Desesperado dá −2 em Mente")
+	var hp0: int = h.hp
+	Mind.add_stress(gs, "bram", 1)
+	_expect(h.hp == maxi(1, hp0 - 1), "estresse no limite causa colapso (−1 PV)")
+	gs.heroes.bram.busy = false
+	gs.set_resting("bram", true)
+	gs.end_day()
+	_expect(h.condition == "" and h.stress <= 5, "descanso na guilda cura a aflição e alivia o estresse")
+	# virtude dura virtue_missions missões
+	h.condition = "corajoso"
+	h.condition_kind = "virtude"
+	h.condition_left = 1
+	_expect(ScoreCalc.compute(gs, m, ["bram"], 0).mind == 2, "virtude Corajoso dá +2 em Mente")
+	Mind.after_mission(gs, m, ["bram"], {}, "limpo")
+	_expect(h.condition == "", "virtude passa depois das missões")
+	# traços
+	Mind.gain_trait(gs, "bram", false, "claustrofobico")
+	var mont := _mission(gs, "torre")
+	_expect(ScoreCalc.compute(gs, mont, ["bram"], 0).mind == -1, "traço de bioma pesa só no bioma (montanha −1)")
+	_expect(ScoreCalc.compute(gs, m, ["bram"], 0).mind == 0, "e não pesa em outro bioma")
+	Mind.gain_trait(gs, "bram", true, "sangue_frio")
+	h.stress = 0
+	Mind.add_stress(gs, "bram", 2)
+	_expect(h.stress == 1, "Sangue-Frio reduz o estresse ganho")
+	for i in 10:
+		Mind.gain_trait(gs, "bram", gs.rng.randf() < 0.5)
+	_expect(h.traits.size() <= int(gs.traits_data.max_traits), "limite de traços")
+	# rota: estresse, perda de item, requisito e miniboss
+	gs.heroes.vera.equip.arma = "espada_longa"
+	Expedition.start(gs, _mission(gs, "caravana"), ["vera", "theo"], {})
+	var lines2: Array = Expedition.apply(gs, {"lose_item": "arma", "stress": 2}, "vera")
+	_expect(gs.heroes.vera.equip.arma == "", "evento de perda tira a arma equipada")
+	_expect(gs.heroes.theo.stress >= 1, "estresse da rota vale para o grupo")
+	gs.gold = 0
+	_expect(Expedition.option_block(gs, {"requires": {"guild_gold": 25}}) != "", "opção com custo fica bloqueada sem ouro")
+	var has_mini := true
+	for mm in gs.missions:
+		if mm.risk != "baixo":
+			var e: Dictionary = Expedition.start(gs, mm, ["vera"], {})
+			var layer: Array = e.layers[e.layers.size() - 2]
+			if not layer.any(func(n): return n.type == "miniboss"):
+				has_mini = false
+	_expect(has_mini, "missões de risco médio+ têm guarda do alvo antes do chefe")
+	for t in ["npc", "santuario", "miniboss"]:
+		_expect(not gs.route_data.events.get(t, []).is_empty(), "eventos de %s existem" % t)
+	gs.expedition = {}
+	# save antigo sem os campos novos
+	for id in gs.heroes:
+		gs.heroes[id].erase("stress")
+		gs.heroes[id].erase("traits")
+	gs.save_game("teste_mind")
+	gs.load_game("teste_mind")
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(gs.save_path("teste_mind")))
+	_expect(gs.heroes.vera.has("stress") and gs.heroes.vera.has("traits"), "save antigo ganha estresse e traços ao carregar")
 
 
 func _expect(ok: bool, msg: String) -> void:

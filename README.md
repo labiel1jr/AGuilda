@@ -46,7 +46,17 @@ O jogo é dividido em **atos** e **capítulos**. Cada capítulo abre com uma cen
 | **Bastidores no hub** | **Cena de bastidor** |
 | ![Bastidores](docs/img/8_hub_bastidores.png) | ![Cena de bastidor](docs/img/9_bastidor.png) |
 
-## Estado atual — v0.8 (mapa de expedição)
+## Estado atual — v0.9 (estresse, traços e novos encontros)
+
+- **Estresse** (inspirado em Darkest Dungeon): de 0 a 10. Sobe com falhas, missões de risco alto, fome, combates e eventos assustadores. Cai no santuário, no acampamento, em dias ociosos e, principalmente, no descanso.
+- **Ponto de ruptura**: no estresse máximo o herói testa a vontade (a chance melhora com Resistência). Pode ganhar uma **Virtude** (Corajoso, Focado, Estoico, Inspirador), que dura duas missões, ou uma **Aflição** (Paranoico, Egoísta, Desesperado, Irracional, Medroso), que dura até um dia de descanso na guilda. O herói aflito pede descanso. Com a aflição ativa e o estresse ainda no máximo, cada novo estresse vira colapso (−1 PV).
+- **Traços permanentes**: positivos (Matador de Feras, Pele Dura, Sangue-Frio...) e negativos (Medo do Escuro, Claustrofóbico, Nervoso...), ganhos em missões e em eventos. Alguns valem só em certos biomas. O limite é de 4 por herói.
+- **Novo termo no score**: `Mente` = virtudes, aflições e traços do grupo, até ±3.
+- **Novos pontos no mapa**: **Guarda do alvo** (miniboss obrigatório em missões de risco médio para cima, com o cartaz do segundo inimigo), **Estranho** (mercenária, eremita, guia traidor) e **Santuário** (oração, bênção ou maldição, oferendas).
+- **Eventos de perda**: perder a arma na correnteza, a armadura para o guarda, comida e ouro para ladrões, sanidade para vozes na escuridão. Algumas opções custam ouro da guilda, da bolsa ou provisões e ficam bloqueadas sem eles.
+- Estresse, condição e traços aparecem no Livro, na montagem do grupo e no mapa. Saves antigos ganham os campos novos ao carregar. Dados em `data/traits.json`.
+
+## v0.8 (mapa de expedição)
 
 - **Rotas com escolhas** (inspiradas em Darkest Dungeon, Slay the Spire e Cult of the Lamb): cada missão gera de 3 a 4 camadas de nós com bifurcações até o alvo, sorteadas pelo bioma e pelo risco. Névoa: só a próxima camada aparece.
 - **Chamadas ao vivo** (inspiradas em Dispatch): ao chegar a um nó, o herói mais apto chama o líder e mostra as opções. Testes com **d20 + (atributo − 5)** contra uma CD por risco, com a rolagem visível.
@@ -129,6 +139,8 @@ Requer **Godot 4.7**. Abra a pasta no editor e pressione **F5**.
 | `art/tools/` | Scripts que preparam retratos e cartazes (conversão e remoção de fundo) |
 | `data/book.json` | Seções trancadas do Livro (slots de expansão por versão) |
 | `scripts/ui/main.gd` | Telas, montadas por código |
+| `data/traits.json` | Estresse, aflições, virtudes e traços |
+| `scripts/core/mind.gd` | Regras de estresse, ponto de ruptura, condições, traços e termo Mente |
 | `data/route.json` | Mapa de expedição: tipos de nó, pesos por bioma, eventos com testes e efeitos |
 | `scripts/core/expedition.gd` | Expedição: geração do grafo, nós, testes d20, efeitos e modificador da rota |
 | `scripts/ui/magic_map.gd` | Mapa Mágico: desenho do bioma, grafo de caminhos clicável, névoa e marcadores |
@@ -184,7 +196,7 @@ godot --headless --path . -s res://tests/ui_smoke.gd
 - [x] **v0.6** — Ato 2, missões pessoais, bastidores ligados à história, saída de aventureiros por moral baixa
 - [x] **v0.7** — salvar/carregar, finais variáveis, retratos gerados por código
 - [x] **v0.8** — mapa de expedição: rotas com bifurcações, chamadas ao vivo, testes d20, provisões, saque e preparação contra o alvo
-- [ ] **v0.9** — estresse, aflições e virtudes, traços, miniboss, NPCs, santuário, eventos de perda
+- [x] **v0.9** — estresse, aflições e virtudes, traços, miniboss, NPCs, santuário, eventos de perda
 - [ ] **v1.0** — políticas da guilda, habilidades de acampamento por classe, trilha e efeitos sonoros, opções
 
 ## Créditos

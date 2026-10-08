@@ -274,6 +274,7 @@ func _render_party(m: Dictionary) -> void:
 		var ea: Dictionary = HeroRPG.effective_attrs(gs, id)
 		row.add_child(_label("Nv %d · %s %d / %s %d" % [h.level, gs.ATTR_NAMES[m.primary].left(3), ea[m.primary], gs.ATTR_NAMES[m.secondary].left(3), ea[m.secondary]], 13, C_TEXT))
 		row.add_child(_spacer())
+		row.add_child(_stress_chip(h))
 		var state: String = reason if reason != "" else gs.hero_status(id)
 		row.add_child(_label(state, 13, C_BAD if reason != "" else _fatigue_color(h)))
 
@@ -429,6 +430,9 @@ func show_map(m: Dictionary) -> void:
 	if et != null:
 		_map.goal_texture = et
 	_map.type_info = gs.route_data.types
+	var ets := _enemy_textures(m)
+	if ets.size() >= 2:
+		_map.mini_texture = ets[1]
 	_map.setup(m, tokens, gs.day * 1000 + gs.missions.find(m), gs.expedition)
 	_map.node_chosen.connect(_on_node_chosen)
 	_map.arrived.connect(_on_node_arrived)
@@ -449,6 +453,7 @@ func _map_refresh() -> void:
 		row.add_child(_label(h.name, 14, h.color.lightened(0.25)))
 		row.add_child(_spacer())
 		var low: bool = h.hp <= h.hp_max / 3
+		row.add_child(_stress_chip(h))
 		row.add_child(_label("PV %d/%d" % [h.hp, h.hp_max], 13, C_BAD if low else C_MUTED))
 	var mod := Expedition.route_mod(gs)
 	_map_status.text = "Provisões %d   ·   Bolsa da rota %d ouro   ·   Itens %d\nPreparação %+d   ·   Desgaste −%d   ·   Fome −%d   →   Rota no score %+d" % [
@@ -520,6 +525,10 @@ func _show_call(ev: Dictionary, caller: String) -> void:
 		var hint := Expedition.test_hint(gs, opt)
 		var b := _button(opt.label + ("   [%s]" % hint if hint != "" else ""), _on_call_choice.bind(opt))
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		var block := Expedition.option_block(gs, opt)
+		if block != "":
+			b.disabled = true
+			b.tooltip_text = block
 		_map_action.add_child(b)
 
 
@@ -590,7 +599,7 @@ func show_result(res: Dictionary) -> void:
 
 	var sc: Dictionary = res.score
 	var t: Array = ScoreCalc.THRESHOLDS[m.risk]
-	root.add_child(_para("Score %.1f  =  Base %.1f  + Cobertura %d  + Afinidade %+.1f  + Vínculo %d  + Poderes %d  + Oculto %d  + Rota %+d  + Sorte %+d      (custo ≥ %d · limpo ≥ %d)" % [sc.total, sc.base, sc.coverage, sc.affinity, sc.bond, sc.powers, sc.hidden, int(sc.get("route", 0)), sc.luck, t[0], t[1]], 13, C_MUTED))
+	root.add_child(_para("Score %.1f  =  Base %.1f  + Cobertura %d  + Afinidade %+.1f  + Vínculo %d  + Poderes %d  + Oculto %d  + Mente %+d  + Rota %+d  + Sorte %+d      (custo ≥ %d · limpo ≥ %d)" % [sc.total, sc.base, sc.coverage, sc.affinity, sc.bond, sc.powers, sc.hidden, int(sc.get("mind", 0)), int(sc.get("route", 0)), sc.luck, t[0], t[1]], 13, C_MUTED))
 	if res.has("route"):
 		var rt: Dictionary = res.route
 		root.add_child(_para("Rota: preparação %+d · desgaste −%d · fome −%d" % [rt.bonus, rt.wear, mini(rt.hunger, 2)], 13, C_MUTED))
@@ -1283,6 +1292,16 @@ func show_load(from_title: bool) -> void:
 	root.add_child(_button("◀ Voltar", show_title if from_title else show_menu))
 
 
+## Cartazes de todos os inimigos da missão que têm imagem (chefe primeiro).
+func _enemy_textures(m: Dictionary) -> Array:
+	var out := []
+	for eid in m.get("enemies", []):
+		var path := "res://art/enemies/%s.png" % eid
+		if ResourceLoader.exists(path):
+			out.append(load(path))
+	return out
+
+
 ## Primeiro inimigo da missão que tem imagem (res://art/enemies/<id>.png), ou null.
 func _enemy_texture(m: Dictionary) -> Texture2D:
 	for eid in m.get("enemies", []):
@@ -1318,6 +1337,31 @@ func _enemy_poster(m: Dictionary, px: int, defeated: bool = false) -> Control:
 
 
 ## Cabeçalho do Quadro de Relações: retrato + nome (coluna = empilhado, linha = lado a lado).
+## Estresse e condição (aflição/virtude) em um rótulo curto, com detalhes no tooltip.
+func _stress_chip(h: Dictionary) -> Control:
+	var st := int(h.get("stress", 0))
+	var mx := int(gs.traits_data.stress_max)
+	var cond: Dictionary = Mind.condition_info(gs, h)
+	var txt := "Estr %d/%d" % [st, mx]
+	var col := C_MUTED if st < mx / 2 else (C_GOLD if st < mx else C_BAD)
+	if not cond.is_empty():
+		var virtue: bool = h.condition_kind == "virtude"
+		txt += ("  ✦ " if virtue else "  ✖ ") + cond.name
+		col = C_GOOD if virtue else C_BAD
+	var l := _label(txt, 13, col)
+	var tip := "Estresse %d/%d: no máximo, o herói testa a vontade (virtude ou aflição)." % [st, mx]
+	if not cond.is_empty():
+		tip += "
+%s — %s" % [cond.name, cond.desc]
+	for tid in h.get("traits", []):
+		var ti: Dictionary = Mind.trait_info(gs, tid)
+		tip += "
+%s %s — %s" % ["+" if ti.positive else "−", ti.name, ti.desc]
+	l.tooltip_text = tip
+	l.mouse_filter = Control.MOUSE_FILTER_STOP
+	return l
+
+
 func _hero_header(id: String, column: bool) -> Control:
 	var h: Dictionary = gs.heroes[id]
 	var p := _panel(C_PANEL)

@@ -91,6 +91,26 @@ func _left_page(id: String, h: Dictionary) -> Control:
 	col.add_child(_rule())
 	col.add_child(_pips_row("PV", h.hp, h.hp_max, C_HP, "%d/%d" % [h.hp, h.hp_max]))
 	col.add_child(_pips_row("Moral", h.morale, 10, C_GOLD, "%d/10" % h.morale))
+	col.add_child(_pips_row("Estresse", int(h.get("stress", 0)), int(gs.traits_data.stress_max), C_RUBRIC, Mind.stress_label(gs, h)))
+	var cond: Dictionary = Mind.condition_info(gs, h)
+	var marks := HFlowContainer.new()
+	marks.add_theme_constant_override("h_separation", 6)
+	marks.add_theme_constant_override("v_separation", 4)
+	if not cond.is_empty():
+		var virtue: bool = h.condition_kind == "virtude"
+		var cb := _badge(("✦ " if virtue else "✖ ") + cond.name, Color("#3f6b2f") if virtue else C_RUBRIC)
+		cb.tooltip_text = cond.desc + ("" if virtue else "
+Um dia de descanso na guilda cura a aflição.")
+		cb.mouse_filter = Control.MOUSE_FILTER_STOP
+		marks.add_child(cb)
+	for tid in h.get("traits", []):
+		var ti: Dictionary = Mind.trait_info(gs, tid)
+		var tb := _tag(("+ " if ti.positive else "− ") + ti.name)
+		tb.tooltip_text = ti.desc
+		tb.mouse_filter = Control.MOUSE_FILTER_STOP
+		marks.add_child(tb)
+	if marks.get_child_count() > 0:
+		col.add_child(marks)
 	col.add_child(_xp_row(id, h))
 
 	col.add_child(_heading("Equipamento"))

@@ -40,6 +40,7 @@ static var _parts := {}   # tipo -> [Texture2D] (carregado uma vez)
 var biome := "estrada"
 var tokens: Array = []        # [{name, color}]
 var goal_texture: Texture2D = null   # cartaz do inimigo no alvo (sem ele, um X)
+var mini_texture: Texture2D = null   # cartaz do guarda do alvo (miniboss), se houver
 var type_info := {}           # tipo de nó -> {name, desc} (tooltip)
 var exp: Dictionary = {}      # gs.expedition (mesmo objeto, atualizado pelo jogo)
 var reachable: Array = []     # [[camada, índice]] clicáveis agora
@@ -142,9 +143,9 @@ func _is_reachable(pos: Array) -> bool:
 	return false
 
 
-## Névoa: só a camada atual, a seguinte e o que dá para alcançar aparecem. O alvo sempre aparece.
+## Névoa: só a camada atual, a seguinte e o que dá para alcançar aparecem. O alvo e o guarda sempre aparecem.
 func _revealed(pos: Array) -> bool:
-	if pos[0] >= exp.layers.size() - 1:
+	if pos[0] >= exp.layers.size() - 1 or exp.layers[pos[0]][pos[1]].type == "miniboss":
 		return true
 	return pos[0] <= int(exp.cur[0]) + 1 or _is_reachable(pos) or _visited(pos)
 
@@ -398,6 +399,15 @@ func _draw_node(pos: Array, c: Vector2, paper: Color) -> void:
 			draw_arc(c, 34.0 + pulse * 3.0, 0, TAU, 40, Color("#b8892e"), 3.0, true)
 		return
 	var visited := _visited(pos)
+	if node.type == "miniboss" and _revealed(pos):
+		var pulse2 := 0.5 + 0.5 * sin(_time * 2.0)
+		draw_circle(c, 22.0 + pulse2 * 2.0, Color(C_RED, 0.15))
+		if reach:
+			var ph2 := fmod(_time * 0.9, 1.0)
+			draw_arc(c, 24.0 + ph2 * 10.0, 0, TAU, 32, Color("#b8892e", 1.0 - ph2), 2.0, true)
+		if mini_texture != null:
+			draw_texture_rect(mini_texture, Rect2(c - Vector2(21, 21), Vector2(42, 42)), false, Color(1, 1, 1, 1.0 if (reach or visited) else 0.75))
+			return
 	var r := NODE_R + (3.0 if reach and _hover == pos else 0.0)
 	if reach:
 		var ph := fmod(_time * 0.9, 1.0)
@@ -433,6 +443,14 @@ func _draw_icon(t: String, c: Vector2, ink: Color) -> void:
 			draw_line(c + Vector2(-8, 3), c + Vector2(8, 7), ink, 2.0)
 		"evento":
 			draw_string(font, c + Vector2(-4, 7), "?", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, ink)
+		"npc":
+			draw_circle(c + Vector2(0, -4), 3.5, ink)
+			draw_arc(c + Vector2(0, 8), 7.0, PI, TAU, 12, ink, 2.0)
+		"santuario":
+			draw_line(c + Vector2(0, -9), c + Vector2(0, 8), ink, 2.2)
+			draw_line(c + Vector2(-6, -3), c + Vector2(6, -3), ink, 2.2)
+		"miniboss":
+			draw_colored_polygon(PackedVector2Array([c + Vector2(-8, 6), c + Vector2(-8, -4), c + Vector2(-4, 0), c + Vector2(0, -7), c + Vector2(4, 0), c + Vector2(8, -4), c + Vector2(8, 6)]), Color(C_RED, ink.a))
 		"atalho":
 			draw_line(c + Vector2(-8, 0), c + Vector2(5, 0), ink, 2.0)
 			draw_colored_polygon(PackedVector2Array([c + Vector2(9, 0), c + Vector2(3, -5), c + Vector2(3, 5)]), ink)

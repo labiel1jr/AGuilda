@@ -100,6 +100,7 @@ var gold := 0
 var upgrades_owned := []
 var trained_today := false
 var route_data := {}
+var traits_data := {}
 var expedition := {}         # expedição em andamento (Expedition), vazia fora do mapa
 var pair_history := {}         # "a|b" -> [{day, mission, outcome}] (exibido com o Arquivo)
 
@@ -124,6 +125,7 @@ func new_game(seed_value: int = -1) -> void:
 	# JSON devolve números como float; níveis marcantes são comparados com int
 	classes_data.xp.milestones = classes_data.xp.milestones.map(func(x): return int(x))
 	items_data = _load_json("res://data/items.json")
+	traits_data = _load_json("res://data/traits.json")
 	inventory.clear()
 	pending_levelups.clear()
 	recruits.clear()
@@ -489,6 +491,8 @@ func hero_status(id: String) -> String:
 		return "Exausto"
 	if h.hp < h.hp_max:
 		return "Ferido"
+	if h.get("condition_kind", "") == "aflicao":
+		return "Aflito"
 	return FATIGUE_NAMES[h.fatigue]
 
 
@@ -677,6 +681,7 @@ func dispatch(mission: Dictionary, party: Array, prepared: Dictionary = {}, rout
 	mission.result = {"outcome": result, "party": party.duplicate(), "day": day}
 	lines = rpg_lines + lines
 	lines.append_array(HeroRPG.after_mission(self, mission, party, prep, result))
+	lines.append_array(Mind.after_mission(self, mission, party, prep, result))
 	dispatched_today += 1
 	return {"mission": mission, "party": party, "score": sc, "outcome": result, "lines": lines, "affinity": aff_changes, "prepared": prep}
 
@@ -716,6 +721,7 @@ func end_day() -> Array:
 		if h.rest_request and not h.resting:
 			h.morale = max(0, h.morale - 1)
 			lines.append("%s pediu descanso e não foi atendido(a) (moral −1)." % h.name)
+		lines.append_array(Mind.end_day(self, id, h.resting, not h.busy))
 		if h.resting:
 			# Descanso de verdade: tudo volta, inclusive a magia
 			h.fatigue = 0
@@ -744,7 +750,7 @@ func end_day() -> Array:
 	_roll_backstage()
 	for id in hero_order:
 		var h: Dictionary = heroes[id]
-		h.rest_request = not h.busy and (h.fatigue >= 2 or h.hp <= h.hp_max / 3)   # na estrada não dá para pedir
+		h.rest_request = not h.busy and (h.fatigue >= 2 or h.hp <= h.hp_max / 3 or h.get("condition_kind", "") == "aflicao")   # na estrada não dá para pedir
 		if h.rest_request:
 			lines.append("%s pede um dia de descanso." % h.name)
 	for id in hero_order:
@@ -999,6 +1005,8 @@ func load_game(slot: String) -> bool:
 			set(k, data.state[k])
 	act = chapters_data.acts[act_index]
 	rng.state = data.rng_state
+	for id in heroes:
+		Mind.ensure(heroes[id])   # saves anteriores à v0.9
 	return true
 
 
