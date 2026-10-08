@@ -88,6 +88,7 @@ Requer **Godot 4.7**. Abra a pasta no editor e pressione **F5**.
 | `scripts/ui/portrait.gd` | Retrato procedural dos heróis |
 | `art/MapParts/<tipo>/` | Peças de mapa a nanquim (trees, hills, mountains, towns, cities) usadas pelo Mapa Mágico |
 | `art/enemies/` | Cartazes dos inimigos (mural, destino do mapa, resultado) |
+| `art/specs/` | Especificações para artistas: heróis e wallpaper (`art/specs/`), inimigos (`art/specs/inimigos/`) e cenário, objetos, interface, fundos e efeitos (`art/specs/cenario/`, com `_indice.json` de 237 assets por prioridade) |
 | `art/tools/` | Scripts que preparam retratos e cartazes (conversão e remoção de fundo) |
 | `data/book.json` | Seções trancadas do Livro (slots de expansão por versão) |
 | `scripts/ui/main.gd` | Telas, montadas por código |

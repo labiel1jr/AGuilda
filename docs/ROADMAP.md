@@ -58,6 +58,8 @@ Objetivo: uma experiência pequena, completa e jogável que mostre por que A Gui
 - [ ] Trilha e efeitos sonoros
 - [ ] Tela de opções (volume, velocidade do mapa)
 - [ ] Mais capítulos, personagens, missões e finais
+- [x] Especificar os assets de cenário, objetos, interface, fundos e efeitos (`art/specs/cenario/`)
+- [ ] Produção dos assets P0 pelos artistas e integração no jogo
 - [ ] Arte final
 - [ ] Localização
 

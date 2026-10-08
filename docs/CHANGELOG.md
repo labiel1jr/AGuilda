@@ -4,6 +4,11 @@ Histórico de versões, da mais recente para a mais antiga. Datas dos commits no
 
 ---
 
+## Especificações de assets de cenário — 2026-10-08
+
+- `art/specs/cenario/`: guia de estilo (`_estilo_cenario.json`), índice com 237 assets (`_indice.json`, prioridades P0–P3 e status de produção) e um JSON por categoria: ícones de nó do mapa, marcos/terreno/veículos do mapa, itens e ferramentas, objetos da guilda, fundos, interface e efeitos.
+- Sem personagens vivos ou mortos-vivos; modelo e prefixos para novos assets.
+
 ## Documentação — 2026-10-07
 
 - GDD reescrito para a v0.9 (plataforma Godot 4.7, mapa de expedição, estresse, progressão).
