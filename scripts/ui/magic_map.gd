@@ -1,5 +1,5 @@
 extends Control
-## Mapa Mágico de Escrutínio (GDD §13) — mapa de expedição (v0.8).
+## Mapa Mágico de Escrutínio (GDD §5.9) — mapa de expedição (v0.8).
 ## Pergaminho com peças de nanquim (art/MapParts/<tipo>/*.png) escolhidas pelo bioma.
 ## A rota é um grafo em camadas (Expedition): o líder clica no próximo nó quando
 ## o grupo chama; o marcador anda até lá e o nó se resolve.

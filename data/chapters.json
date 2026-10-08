@@ -1,5 +1,5 @@
 {
-  "_doc": "Capítulos (GDD §9). Missões de cada capítulo usam 'day' relativo ao início do capítulo. goal.type: reputation (min) ou mission (sucesso na missão). intro_flags acrescenta texto conforme flags de capítulos anteriores ('!flag' = flag ausente). Ao fim de um ato, o jogo segue para o próximo ato da lista.",
+  "_doc": "Capítulos (GDD §7). Missões de cada capítulo usam 'day' relativo ao início do capítulo. goal.type: reputation (min) ou mission (sucesso na missão). intro_flags acrescenta texto conforme flags de capítulos anteriores ('!flag' = flag ausente). Ao fim de um ato, o jogo segue para o próximo ato da lista.",
   "acts": [
     {
       "id": "ato1",

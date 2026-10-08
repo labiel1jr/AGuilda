@@ -46,71 +46,23 @@ O jogo é dividido em **atos** e **capítulos**. Cada capítulo abre com uma cen
 | **Bastidores no hub** | **Cena de bastidor** |
 | ![Bastidores](docs/img/8_hub_bastidores.png) | ![Cena de bastidor](docs/img/9_bastidor.png) |
 
-## Estado atual — v0.9 (estresse, traços e novos encontros)
+## Estado atual — v0.9
 
-- **Estresse** (inspirado em Darkest Dungeon): de 0 a 10. Sobe com falhas, missões de risco alto, fome, combates e eventos assustadores. Cai no santuário, no acampamento, em dias ociosos e, principalmente, no descanso.
-- **Ponto de ruptura**: no estresse máximo o herói testa a vontade (a chance melhora com Resistência). Pode ganhar uma **Virtude** (Corajoso, Focado, Estoico, Inspirador), que dura duas missões, ou uma **Aflição** (Paranoico, Egoísta, Desesperado, Irracional, Medroso), que dura até um dia de descanso na guilda. O herói aflito pede descanso. Com a aflição ativa e o estresse ainda no máximo, cada novo estresse vira colapso (−1 PV).
-- **Traços permanentes**: positivos (Matador de Feras, Pele Dura, Sangue-Frio...) e negativos (Medo do Escuro, Claustrofóbico, Nervoso...), ganhos em missões e em eventos. Alguns valem só em certos biomas. O limite é de 4 por herói.
-- **Novo termo no score**: `Mente` = virtudes, aflições e traços do grupo, até ±3.
-- **Novos pontos no mapa**: **Guarda do alvo** (miniboss obrigatório em missões de risco médio para cima, com o cartaz do segundo inimigo), **Estranho** (mercenária, eremita, guia traidor) e **Santuário** (oração, bênção ou maldição, oferendas).
-- **Eventos de perda**: perder a arma na correnteza, a armadura para o guarda, comida e ouro para ladrões, sanidade para vozes na escuridão. Algumas opções custam ouro da guilda, da bolsa ou provisões e ficam bloqueadas sem eles.
-- Estresse, condição e traços aparecem no Livro, na montagem do grupo e no mapa. Saves antigos ganham os campos novos ao carregar. Dados em `data/traits.json`.
+Dois atos (4 capítulos, 24 missões), 7 aventureiros, afinidade assimétrica com vínculos e Ações de Vínculo, mapa de expedição com escolhas de rota, estresse com virtudes e aflições, traços, progressão de RPG leve, melhorias da guilda, bastidores, ultimatos, salvar/carregar e quatro finais.
 
-## v0.8 (mapa de expedição)
+O histórico de cada versão está no [Changelog](docs/CHANGELOG.md) e o que vem a seguir no [Roadmap](docs/ROADMAP.md). A próxima meta é a **v1.0 — Vertical Slice**: consolidar e polir o núcleo antes de novos sistemas.
 
-- **Rotas com escolhas** (inspiradas em Darkest Dungeon, Slay the Spire e Cult of the Lamb): cada missão gera de 3 a 4 camadas de nós com bifurcações até o alvo, sorteadas pelo bioma e pelo risco. Névoa: só a próxima camada aparece.
-- **Chamadas ao vivo** (inspiradas em Dispatch): ao chegar a um nó, o herói mais apto chama o líder e mostra as opções. Testes com **d20 + (atributo − 5)** contra uma CD por risco, com a rolagem visível.
-- **Tipos de nó**: combate, tesouro, mercador de estrada (compra com o ouro da guilda), acampamento (cura, comida, conversa que aproxima o grupo), encontro e atalho (pula uma camada, com risco).
-- **Estado da expedição**: provisões (cada passo gasta 1; sem comida é fome), bolsa da rota, itens achados, preparação contra o alvo e dias de atraso.
-- **Rota no score**: `Rota = preparação (até +3) − desgaste (membros com ⅓ do PV ou menos) − fome`, nunca abaixo de −2. O saque da rota chega inteiro no sucesso, pela metade no custo e se perde na falha. Atrasos deixam o grupo fora da guilda por mais dias.
-- Conteúdo em `data/route.json` (tipos, pesos por bioma, eventos e efeitos). Uma missão pode mudar os pesos com `route.weights`.
+## Documentação
 
-## v0.7 (salvar, finais e retratos)
-
-- **Salvar e carregar**: tela de título (Continuar / Novo jogo / Carregar), 3 espaços de save e salvamento automático ao fim de cada dia. Menu ☰ no hub. O save usa `var_to_str` (preserva inteiros e cores) e guarda só o estado mutável — os JSON de conteúdo são recarregados, então correções de texto valem para saves antigos.
-- **Finais variáveis**: epílogo ao fim do Ato 2 — quatro finais (*A Lenda do Corvo Cinzento*, *A Guilda Reconstruída*, *Os Que Ficaram*, *Cinzas e Recomeço*) conforme flags, reputação e quem deixou a guilda; um desfecho por herói (inclusive quem saiu) e uma linha por vínculo formado (Romance, Mentoria, Irmandade...). Tudo em `data/endings.json`.
-- **Retratos gerados por código**: busto na cor do herói, detalhe de raça (barba anã, orelhas élficas, presas de meio-orc, halfling menor) e emblema da classe. Aparecem no título, no Livro, no ultimato, na subida de nível e no epílogo. Um `portrait` com imagem em `heroes.json` substitui o retrato gerado.
-
-## v0.6 (Ato 2)
-
-- **Ato 2 — A Lista de Nomes**: Capítulo 3 "Nomes na Lista" (objetivo: convencer o Conselho) e Capítulo 4 "O Ninho do Corvo" (missão final **lendária**, exige 4 aventureiros). 12 missões novas. Ao fim de um ato, o jogo segue para o próximo.
-- **Missões pessoais**: *O Irmão de Senna*, *A Última Carta* (Mira) e *O Julgamento da Ordem* (Theo) exigem o herói e mudam a moral dele e as flags da história.
-- **Bastidores ligados à história**: eventos com condição de capítulo (`chapters`) ou de flag (`requires_flag`) — a primeira noite na guilda, a chegada de Corin, Senna encontrando o nome do irmão, a véspera do Ninho...
-- **Saída por moral baixa (GDD §5.7)**: herói com moral ≤ 1 dá um **ultimato**. Pagar bônus, dar folga, prometer a próxima missão ou deixar partir. Ignorado por um dia, ele vai embora; promessa não cumprida em 2 dias também. O equipamento volta ao Baú. Vínculo de **Irmandade** ("Até o Fim"): o par parte junto.
-
-## v0.5 (RPG)
-
-- **XP e níveis**: XP por missão (risco × resultado; falha também ensina) e por treino. Cada nível dá PV pela classe e +1 atributo à escolha (máx. 10). Níveis 3/5/7/9: conjuradores escolhem 1 de 2 magias; os demais, 1 de 2 talentos.
-- **Equipamento**: Arma, Armadura, Acessório e 2 Consumíveis por herói; armaduras respeitam a classe (leve/média/pesada). Baú da Guilda guarda o saque.
-- **Saque e Mercado**: missões trazem itens (limpo sempre, custo 50%, falha 30%); o Mercado vende o básico e compra pela metade. Itens raros (★) só vêm de missões.
-- **Magias**: Mira (Maga), Theo (Paladino), Bram (Bardo) e Corin (Clérigo). Na montagem da party você escolhe a magia que cada conjurador leva; ela gasta 1 espaço. Magias de cura também são lançadas na guilda pelo Livro.
-- **Irmão Corin**, clérigo, entra no elenco no Capítulo 2.
-- **Poderes**: novo termo do score — itens, talentos e magias somam até **+3**, para não quebrar a calibragem.
-- **Descanso ativo**: descansar recupera tudo (inclusive magia); ficar parado recupera pouco e não recupera magia. Herói com fadiga máxima ou PV baixo pede descanso.
-
-## v0.4
-
-- **Capítulos (GDD §9)**: Ato 1 com "Herança de Cinzas" (objetivo: Reputação 6+) e "Ecos do Corvo" (objetivo: sobreviver à missão final *A Noite do Corvo*, que exige 3+ aventureiros). Abertura, encerramento com objetivo cumprido ou não, flags que mudam o texto do capítulo seguinte e tela de fim de ato. Falhar não encerra o jogo.
-- **Ouro**: missões pagam recompensa (limpo = inteira, custo = metade, falha = nada).
-- **Melhorias da Guilda (GDD §7)**:
-  - *Quadro de Relações* — sem ele, a afinidade aparece só como impressão ("Se dão bem", "Mal se olham"); com ele, números e o Quadro.
-  - *Enfermaria* — descanso recupera um estado de fadiga a mais e o dobro de PV.
-  - *Arquivo da Guilda* — histórico de missões de cada dupla no Quadro.
-  - *Salão de Treinamento* — 1 treino de dupla por dia: +1 de afinidade, os dois ficam Cansados.
-  - Slots de missão seguem liberados pela reputação (5 → 2 slots, 12 → 3 slots).
-
-- 6 aventureiros (Theo, Lyssa, Mira, Senna, Bram, Vera) com atributos e grade de afinidade assimétrica.
-- 10 missões, com tags de composição (exige especialista, proíbe herói) e requisito oculto.
-- Score normalizado: `Base + Cobertura + Afinidade + Vínculo + Oculto + Sorte` (GDD §5.6).
-- Fadiga (Pronto / Cansado / Exausto), moral, reputação e slots de despacho por dia.
-- Eventos de vínculo em +3, +6, +9, −3 e −5, com escolha de rótulo.
-- Ações de Vínculo: Impulso do Mentor, Cobertura Mútua, Esforço Extra, Competição, Sincronia Perfeita.
-- **Mapa Mágico** (GDD §13): 5 biomas desenhados por código, rota sinuosa revelada aos poucos, marcadores por herói, 3 waypoints com narração e botão de acelerar.
-- **Livro da Guilda** (GDD §14): ficha D&D 5e resumida — retrato, classe, raça, nível, PV, moral, status, proficiências, histórico, atributos com modificador, personalidade (Traço, Ideal, Vínculo, Defeito) e barras de afinidade.
-- PV: missões com custo ou falha ferem; o descanso cura; com 0 PV o herói fica Incapacitado.
-- **Eventos de bastidor**: até 2 cenas por dia, sorteadas por afinidade do par, com escolhas que mudam afinidade, moral e fadiga. Inclui cenas exclusivas de duplas (Vera & Bram, Theo & Lyssa, Mira & Lyssa) e a regra "escolher um lado" (+2 / −1 de moral).
-- **Neglect**: par com afinidade +3 ou mais perde 1 a cada 3 dias sem missão juntos, nunca abaixo do valor inicial. Herói 4 dias sem missão perde 1 de moral.
-- Quadro de Relações (com dias sem missão juntos no tooltip).
+| Documento | Conteúdo |
+|---|---|
+| [GDD](docs/GDD.md) | Design do jogo como ele é hoje |
+| [TDD](docs/TDD.md) | Arquitetura, dados, save, testes e pipeline de arte |
+| [Balanceamento](docs/BALANCEAMENTO.md) | Fórmulas, constantes e resultados de simulação |
+| [Narrativa](docs/NARRATIVA.md) | Elenco, relações, capítulos, missões pessoais e finais |
+| [Roadmap](docs/ROADMAP.md) | Prioridades até a v1.0 e depois |
+| [Changelog](docs/CHANGELOG.md) | Histórico de versões |
+| [Análise e Melhorias](docs/ANALISE_E_MELHORIAS.md) | Direção de design e plano de consolidação |
 
 ## Rodar
 
@@ -184,20 +136,11 @@ godot --headless --path . -s res://tests/sim_test.gd
 godot --headless --path . -s res://tests/ui_smoke.gd
 ```
 
-`sim_test.gd` confere a tabela de calibragem do GDD, as regras de assimetria, fadiga e Mentoria, e joga 150 partidas aleatórias (2 atos). `tests/screenshots.gd` (com janela, sem `--headless`) regenera as imagens em `user://shots`.
+`sim_test.gd` confere a calibragem do score, as regras de afinidade, RPG, capítulos, save, expedição e estresse, e joga 150 partidas aleatórias (2 atos). `tests/screenshots.gd` (com janela, sem `--headless`) regenera as imagens em `user://shots`. Detalhes no [TDD](docs/TDD.md#7-testes).
 
 ## Roadmap
 
-- [x] **v0.1** — loop de despacho
-- [x] **v0.2** — party, afinidade, Ações de Vínculo
-- [x] **v0.3** — Mapa Mágico, Livro da Guilda, eventos de bastidor, neglect
-- [x] **v0.4** — capítulos, Ato 1 completo, upgrades da guilda
-- [x] **v0.5** — níveis, equipamento, saque, mercado, magias, clérigo, descanso ativo
-- [x] **v0.6** — Ato 2, missões pessoais, bastidores ligados à história, saída de aventureiros por moral baixa
-- [x] **v0.7** — salvar/carregar, finais variáveis, retratos gerados por código
-- [x] **v0.8** — mapa de expedição: rotas com bifurcações, chamadas ao vivo, testes d20, provisões, saque e preparação contra o alvo
-- [x] **v0.9** — estresse, aflições e virtudes, traços, miniboss, NPCs, santuário, eventos de perda
-- [ ] **v1.0** — políticas da guilda, habilidades de acampamento por classe, trilha e efeitos sonoros, opções
+Ver [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Créditos
 

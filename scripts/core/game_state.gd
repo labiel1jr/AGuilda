@@ -14,7 +14,7 @@ const OUTCOME_NAMES := {"limpo": "Sucesso Limpo", "custo": "Sucesso com Custo", 
 const AFF_MIN := -5
 const AFF_MAX := 10
 
-## Faixas de afinidade (GDD §5.4.1): [até, rótulo, modificador]
+## Faixas de afinidade (GDD §5.4): [até, rótulo, modificador]
 const BANDS := [
 	[-3, "Conflito Aberto", -4],
 	[-1, "Tensão Velada", -2],
@@ -25,7 +25,7 @@ const BANDS := [
 	[10, "Dupla Lendária", 8],
 ]
 
-## Eventos de limiar (GDD §5.4.3)
+## Eventos de limiar (GDD §5.4)
 const THRESHOLD_EVENTS := {
 	3: {"title": "Algo mudou entre eles", "labels": ["Amizade", "Lealdade", "Rivalidade Saudável"]},
 	6: {"title": "Um vínculo se forma", "labels": ["Amizade Profunda", "Mentoria", "Atração", "Rivalidade Saudável"]},
@@ -73,7 +73,7 @@ var rng := RandomNumberGenerator.new()
 var narration := {}
 var book := {}
 
-# Neglect (GDD §5.4.2) e moral por abandono (§5.7)
+# Neglect (GDD §5.4) e moral por abandono (§5.7)
 const NEGLECT_DAYS := 3        # dias sem missão juntos para perder 1 ponto
 const NEGLECT_MIN := 3         # só pares a partir de +3 têm o que perder
 const IDLE_MORALE_DAYS := 4    # dias sem ser despachado para perder 1 de moral
@@ -85,7 +85,7 @@ var backstage_data := {}
 var backstage_today := []      # [{event, a, b, done}]
 var backstage_once := []       # ids de eventos "once" já usados
 
-# Capítulos (GDD §9)
+# Capítulos (GDD §7)
 var chapters_data := {}
 var act := {}                  # ato atual
 var chapter_index := 0         # índice em act.chapters
@@ -94,7 +94,7 @@ var chapter_state := "intro"   # intro | jogando | encerrado | fim_do_ato
 var chapter_result := {}       # resultado do último capítulo encerrado
 var flags := []                # flags narrativas ganhas nos capítulos
 
-# Ouro e upgrades (GDD §7)
+# Ouro e upgrades (GDD §5.12)
 var upgrades_data := {}
 var gold := 0
 var upgrades_owned := []
@@ -138,7 +138,7 @@ func new_game(seed_value: int = -1) -> void:
 		heroes[h.id] = {
 			"id": h.id, "name": h.name, "archetype": h.archetype, "color": Color(h.color),
 			"trait": h.trait, "attrs": attrs,
-			# Ficha (GDD §14) — campos opcionais no JSON para permitir expansão
+			# Ficha (GDD §8) — campos opcionais no JSON para permitir expansão
 			"title": h.get("title", h.name), "class": h.get("class", ""), "race": h.get("race", ""),
 			"level": int(h.get("level", 1)), "hp_max": int(h.get("hp_max", 8)),
 			"proficiencies": h.get("proficiencies", []), "personality": h.get("personality", {}),
@@ -209,7 +209,7 @@ static func pair_key(a: String, b: String) -> String:
 	return a + "|" + b if a < b else b + "|" + a
 
 
-## Valor mecânico do par: o menor dos dois lados (GDD §5.4.2).
+## Valor mecânico do par: o menor dos dois lados (GDD §5.4).
 func pair_value(a: String, b: String) -> int:
 	return min(affinity[a][b], affinity[b][a])
 
@@ -423,7 +423,7 @@ func mission_reward(m: Dictionary) -> int:
 	return int(m.get("reward", upgrades_data.rewards.get(m.risk, 0)))
 
 
-## Sem o Quadro de Relações, a afinidade só aparece como impressão (GDD §5.4.1).
+## Sem o Quadro de Relações, a afinidade só aparece como impressão (GDD §5.4).
 func affinity_visible() -> bool:
 	return has_upgrade("quadro")
 
@@ -650,7 +650,7 @@ func dispatch(mission: Dictionary, party: Array, prepared: Dictionary = {}, rout
 			pair_history[key] = []
 		pair_history[key].append({"day": day, "mission": mission.name, "outcome": result})
 
-	# Afinidade (GDD §5.4.2)
+	# Afinidade (GDD §5.4)
 	var pair_delta: int = {"limpo": 1, "custo": 0, "falha": -1}[result]
 	for pr in ScoreCalc.pairs_of(party):
 		if pair_delta != 0:
@@ -686,7 +686,7 @@ func dispatch(mission: Dictionary, party: Array, prepared: Dictionary = {}, rout
 	return {"mission": mission, "party": party, "score": sc, "outcome": result, "lines": lines, "affinity": aff_changes, "prepared": prep}
 
 
-## Narração do Mapa Mágico: uma linha por waypoint (GDD §13).
+## Narração do Mapa Mágico: uma linha por waypoint (GDD §5.9).
 func map_narration(res: Dictionary) -> Array:
 	var m: Dictionary = res.mission
 	var party: Array = res.party
@@ -712,7 +712,7 @@ func _change_logged(a: String, b: String, dab: int, dba: int, log_out: Array) ->
 	log_out.append({"a": a, "b": b, "before": before, "after": pair_value(a, b)})
 
 
-## Avança o tempo (GDD §4 passo 7). Devolve as linhas do resumo.
+## Avança o tempo (GDD §4 passo 9). Devolve as linhas do resumo.
 func end_day() -> Array:
 	var lines := []
 	var infirmary := 1 if has_upgrade("enfermaria") else 0

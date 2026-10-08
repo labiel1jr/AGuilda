@@ -1,5 +1,5 @@
 {
-  "_doc": "Upgrades da guilda (GDD §7). cost em ouro, rep = reputação mínima para comprar.",
+  "_doc": "Upgrades da guilda (GDD §5.12). cost em ouro, rep = reputação mínima para comprar.",
   "start_gold": 30,
   "rewards": {"baixo": 20, "medio": 35, "alto": 60, "lendario": 90},
   "upgrades": [

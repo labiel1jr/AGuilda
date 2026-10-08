@@ -1,5 +1,5 @@
 {
-  "_doc": "Eventos de bastidor (GDD §5.4.2, §8). Cada evento envolve um par {a}/{b}. Condições: heroes (par exato, na ordem a,b), min/max (afinidade do par), once (só uma vez por jogo), weight. Efeitos por escolha: aff [a→b, b→a], morale {a,b}, fatigue {a,b}. chapters: só nesses capítulos. requires_flag: só com a flag.",
+  "_doc": "Eventos de bastidor (GDD §5.4, §5.12). Cada evento envolve um par {a}/{b}. Condições: heroes (par exato, na ordem a,b), min/max (afinidade do par), once (só uma vez por jogo), weight. Efeitos por escolha: aff [a→b, b→a], morale {a,b}, fatigue {a,b}. chapters: só nesses capítulos. requires_flag: só com a flag.",
   "per_day": 2,
   "events": [
     {

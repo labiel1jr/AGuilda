@@ -1,5 +1,5 @@
 {
-  "_doc": "Livro da Guilda (GDD §14). Seções trancadas são slots de expansão: quando a versão chegar, a seção ganha conteúdo e sai desta lista.",
+  "_doc": "Livro da Guilda (GDD §8). Seções trancadas são slots de expansão: quando a versão chegar, a seção ganha conteúdo e sai desta lista.",
   "locked_sections": [
     {
       "page": "right",

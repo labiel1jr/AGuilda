@@ -1,5 +1,5 @@
 extends VBoxContainer
-## Livro da Guilda (GDD §14): ficha resumida no estilo D&D 5e, uma por aventureiro.
+## Livro da Guilda (GDD §8): ficha resumida no estilo D&D 5e, uma por aventureiro.
 ## Página esquerda = identidade; direita = atributos, personalidade e afinidades.
 ## Seções trancadas vêm de data/book.json e são os slots de expansão.
 

@@ -1,5 +1,5 @@
 {
-  "_doc": "Narração do Mapa Mágico (GDD §13). Um texto por waypoint: 1 = partida, 2 = bioma, 3 = presságio do resultado. {party} e {lider} são substituídos.",
+  "_doc": "Narração do Mapa Mágico (GDD §5.9). Um texto por waypoint: 1 = partida, 2 = bioma, 3 = presságio do resultado. {party} e {lider} são substituídos.",
   "start": [
     "O mapa se acende. {party} cruza os portões da guilda.",
     "A tinta dourada se move: {party} toma a estrada.",
