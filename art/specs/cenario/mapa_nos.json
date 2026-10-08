@@ -1,0 +1,261 @@
+{
+  "_doc": "Ícones dos nós do mapa de expedição. Não contém imagens: é a especificação para artistas. Herda de _estilo_cenario.json.",
+  "herda": "_estilo_cenario.json",
+  "titulo": "Mapa Mágico — ícones de nó",
+  "familia_padrao": "nanquim",
+  "versao": 1,
+  "total_assets": 13,
+  "grupos": [
+    {
+      "id": "nos",
+      "nome": "Ícones de nó",
+      "descricao": "Um por tipo de nó do mapa de expedição. Lidos em 32 px, com traço mais grosso que as peças de cenário para destacar.",
+      "familia": "nanquim",
+      "assets": [
+        {
+          "id": "no_combate",
+          "nome": "Nó: Combate",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Duas espadas cruzadas sobre um escudo redondo pequeno.",
+          "estados": [
+            "normal",
+            "alcancavel (traço mais grosso)",
+            "visitado (preenchido de ouro velho #b8892e)"
+          ],
+          "uso_no_jogo": "Ícone do nó de combate no Mapa Mágico",
+          "destino": "res://art/map/nodes/combate.png",
+          "liga_com": "data/route.json → types.combate"
+        },
+        {
+          "id": "no_tesouro",
+          "nome": "Nó: Tesouro",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Baú de tampa curva, fechadura visível, duas moedas caídas ao lado.",
+          "estados": [
+            "normal",
+            "alcancavel",
+            "visitado (tampa aberta)"
+          ],
+          "uso_no_jogo": "Nó de tesouro",
+          "destino": "res://art/map/nodes/tesouro.png",
+          "liga_com": "route.json → types.tesouro"
+        },
+        {
+          "id": "no_loja",
+          "nome": "Nó: Mercador",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Carroça de mercador com toldo listrado e uma balança pendurada.",
+          "estados": [
+            "normal",
+            "alcancavel",
+            "visitado"
+          ],
+          "uso_no_jogo": "Nó do mercador de estrada",
+          "destino": "res://art/map/nodes/loja.png",
+          "liga_com": "route.json → types.loja"
+        },
+        {
+          "id": "no_acampamento",
+          "nome": "Nó: Acampamento",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Fogueira com três toras cruzadas e uma tenda triangular atrás.",
+          "detalhes": [
+            "única peça do conjunto com acento de cor: chama em #c0602d"
+          ],
+          "estados": [
+            "normal",
+            "alcancavel",
+            "visitado (fogo apagado, fumaça)"
+          ],
+          "uso_no_jogo": "Nó de acampamento",
+          "destino": "res://art/map/nodes/acampamento.png",
+          "liga_com": "route.json → types.acampamento"
+        },
+        {
+          "id": "no_evento",
+          "nome": "Nó: Encontro",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Pergaminho enrolado com um ponto de interrogação desenhado em tinta.",
+          "estados": [
+            "normal",
+            "alcancavel",
+            "visitado"
+          ],
+          "uso_no_jogo": "Nó de evento",
+          "destino": "res://art/map/nodes/evento.png",
+          "liga_com": "route.json → types.evento"
+        },
+        {
+          "id": "no_atalho",
+          "nome": "Nó: Atalho",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Trilha estreita entre duas rochas com uma seta de pegadas.",
+          "estados": [
+            "normal",
+            "alcancavel",
+            "visitado"
+          ],
+          "uso_no_jogo": "Nó de atalho (pula uma camada)",
+          "destino": "res://art/map/nodes/atalho.png",
+          "liga_com": "route.json → types.atalho"
+        },
+        {
+          "id": "no_npc",
+          "nome": "Nó: Estranho",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Silhueta encapuzada de costas apoiada num cajado, SEM rosto (só capuz) — lê como 'alguém', não como personagem.",
+          "estados": [
+            "normal",
+            "alcancavel",
+            "visitado"
+          ],
+          "uso_no_jogo": "Nó de NPC",
+          "destino": "res://art/map/nodes/npc.png",
+          "liga_com": "route.json → types.npc"
+        },
+        {
+          "id": "no_santuario",
+          "nome": "Nó: Santuário",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Pequeno altar de pedra com uma vela e um símbolo de sol gravado.",
+          "estados": [
+            "normal",
+            "alcancavel",
+            "visitado (vela apagada)"
+          ],
+          "uso_no_jogo": "Nó de santuário",
+          "destino": "res://art/map/nodes/santuario.png",
+          "liga_com": "route.json → types.santuario"
+        },
+        {
+          "id": "no_miniboss",
+          "nome": "Nó: Guarda do alvo",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            40,
+            40
+          ],
+          "descricao": "Coroa quebrada sobre um elmo; usado quando a missão não tem cartaz do guarda.",
+          "detalhes": [
+            "acento #a8443c na coroa"
+          ],
+          "estados": [
+            "normal",
+            "alcancavel",
+            "derrotado (X de lacre por cima)"
+          ],
+          "uso_no_jogo": "Nó do miniboss sem cartaz",
+          "destino": "res://art/map/nodes/miniboss.png",
+          "liga_com": "route.json → types.miniboss"
+        },
+        {
+          "id": "no_chefe",
+          "nome": "Nó: Objetivo (sem cartaz)",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            48,
+            48
+          ],
+          "descricao": "X de lacre grande com respingos, à moda de 'aqui está o tesouro'.",
+          "uso_no_jogo": "Objetivo quando a missão não tem cartaz de inimigo",
+          "destino": "res://art/map/nodes/chefe.png"
+        },
+        {
+          "id": "no_nevoa",
+          "nome": "Nó: Encoberto",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Círculo de névoa em espiral com um '?' tênue.",
+          "uso_no_jogo": "Nó ainda sob névoa",
+          "destino": "res://art/map/nodes/nevoa.png"
+        },
+        {
+          "id": "no_partida",
+          "nome": "Marco: A Guilda",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            56,
+            48
+          ],
+          "descricao": "Pequeno salão com torre e uma bandeira do corvo; maior e mais detalhado que as vilas.",
+          "uso_no_jogo": "Ponto de partida no mapa (hoje usa uma vila genérica)",
+          "destino": "res://art/map/nodes/guilda.png"
+        },
+        {
+          "id": "no_base_circulo",
+          "nome": "Base do nó",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            36,
+            36
+          ],
+          "descricao": "Círculo de pergaminho mais claro com borda dupla de tinta, para ficar atrás dos ícones.",
+          "estados": [
+            "normal",
+            "alcancavel (borda dourada)",
+            "visitado (preenchido ouro velho)"
+          ],
+          "uso_no_jogo": "Fundo comum dos nós",
+          "destino": "res://art/map/nodes/base.png"
+        }
+      ]
+    }
+  ],
+  "reservado_para_futuro": {
+    "_doc": "Espaço para novos ícones de nó quando surgirem tipos novos em data/route.json → types. Copie um asset do grupo 'nos' e troque id, nome, descricao e destino.",
+    "ideias": [
+      "no_ferreiro",
+      "no_emboscada",
+      "no_portal",
+      "no_batedor"
+    ]
+  }
+}

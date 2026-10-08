@@ -1,0 +1,453 @@
+{
+  "_doc": "Mobiliário e objetos do salão da guilda, das melhorias e das telas de serviço. Não contém imagens: é a especificação para artistas. Herda de _estilo_cenario.json.",
+  "herda": "_estilo_cenario.json",
+  "titulo": "Guilda — objetos de cenário",
+  "familia_padrao": "pixel_hd",
+  "versao": 1,
+  "total_assets": 27,
+  "grupos": [
+    {
+      "id": "props",
+      "nome": "Objetos da guilda",
+      "descricao": "Mobiliário e objetos do salão. Mesma escala entre si (1 px final ≈ 2 cm). Base no chão na borda inferior.",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "guilda_mural",
+          "nome": "Mural de quests",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            320,
+            220
+          ],
+          "descricao": "Quadro de cortiça em moldura de madeira, pregos e 4–6 papéis em branco presos (o jogo põe o texto).",
+          "variacoes": [
+            "vazio",
+            "com papéis"
+          ],
+          "uso_no_jogo": "Fundo do Mural de Quests no hub",
+          "destino": "res://art/guild/props/mural.png"
+        },
+        {
+          "id": "guilda_quadro_relacoes",
+          "nome": "Quadro de Relações",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            280,
+            200
+          ],
+          "descricao": "Quadro com retratos vazios (molduras) ligados por fios vermelhos e alfinetes.",
+          "estados": [
+            "não construído (parede vazia com marcas)",
+            "construído"
+          ],
+          "uso_no_jogo": "Melhoria Quadro de Relações",
+          "destino": "res://art/guild/props/quadro_relacoes.png",
+          "liga_com": "data/upgrades.json → quadro"
+        },
+        {
+          "id": "guilda_bau_guilda",
+          "nome": "Baú da Guilda",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            96,
+            72
+          ],
+          "descricao": "Baú grande reforçado com ferro e o corvo entalhado na tampa.",
+          "estados": [
+            "fechado",
+            "aberto"
+          ],
+          "uso_no_jogo": "Baú (inventário) no hub e no Equipamento",
+          "destino": "res://art/guild/props/bau_guilda.png"
+        },
+        {
+          "id": "guilda_mesa_longa",
+          "nome": "Mesa longa",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            220,
+            90
+          ],
+          "descricao": "Mesa de taverna com canecas, velas e um mapa aberto.",
+          "uso_no_jogo": "Salão/taverna; fundo de bastidores",
+          "destino": "res://art/guild/props/mesa_longa.png"
+        },
+        {
+          "id": "guilda_mesa_mestre",
+          "nome": "Mesa do Mestre de Despacho",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            220,
+            120
+          ],
+          "descricao": "Escrivaninha com livro aberto, pena, tinteiro, selo de cera e pilhas de papéis.",
+          "uso_no_jogo": "Primeiro plano do hub; moldura do Mapa Mágico",
+          "destino": "res://art/guild/props/mesa_mestre.png"
+        },
+        {
+          "id": "guilda_cadeira",
+          "nome": "Cadeira e banco",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            48,
+            72
+          ],
+          "descricao": "Cadeira de espaldar alto e banco simples.",
+          "variacoes": [
+            "cadeira",
+            "banco",
+            "banquinho"
+          ],
+          "uso_no_jogo": "",
+          "destino": "res://art/guild/props/cadeira.png"
+        },
+        {
+          "id": "guilda_barril",
+          "nome": "Barril",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            40,
+            52
+          ],
+          "descricao": "Barril de carvalho com aros de ferro.",
+          "variacoes": [
+            "em pé",
+            "deitado",
+            "pilha de 3"
+          ],
+          "uso_no_jogo": "",
+          "destino": "res://art/guild/props/barril.png"
+        },
+        {
+          "id": "guilda_caixote",
+          "nome": "Caixote",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            44,
+            40
+          ],
+          "descricao": "Caixote de madeira pregado.",
+          "variacoes": [
+            "fechado",
+            "aberto com palha",
+            "pilha de 2"
+          ],
+          "uso_no_jogo": "",
+          "destino": "res://art/guild/props/caixote.png"
+        },
+        {
+          "id": "guilda_caixa_pequena",
+          "nome": "Caixa pequena",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            28,
+            22
+          ],
+          "descricao": "Caixinha de madeira com tampa de dobradiça.",
+          "uso_no_jogo": "",
+          "destino": "res://art/guild/props/caixa_pequena.png"
+        },
+        {
+          "id": "guilda_saco",
+          "nome": "Sacos de grão",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            48,
+            40
+          ],
+          "descricao": "Sacos de pano empilhados.",
+          "variacoes": [
+            "1 saco",
+            "3 sacos"
+          ],
+          "uso_no_jogo": "",
+          "destino": "res://art/guild/props/saco.png"
+        },
+        {
+          "id": "guilda_estante",
+          "nome": "Estante de livros",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            96,
+            160
+          ],
+          "descricao": "Estante alta com livros, rolos de pergaminho e um crânio de enfeite.",
+          "uso_no_jogo": "Arquivo e escritório",
+          "destino": "res://art/guild/props/estante.png"
+        },
+        {
+          "id": "guilda_arquivo_gavetas",
+          "nome": "Arquivo da Guilda",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            110,
+            140
+          ],
+          "descricao": "Móvel de gavetas com etiquetas em branco e pastas amarradas.",
+          "estados": [
+            "não construído",
+            "construído"
+          ],
+          "uso_no_jogo": "",
+          "destino": "res://art/guild/props/arquivo_gavetas.png",
+          "liga_com": "upgrades.json → arquivo"
+        },
+        {
+          "id": "guilda_lareira",
+          "nome": "Lareira",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            160,
+            150
+          ],
+          "descricao": "Lareira de pedra com caldeirão e fogo.",
+          "animacao": {
+            "quadros": 6,
+            "fps": 8,
+            "loop": true
+          },
+          "uso_no_jogo": "Ambiente quente do hub; bastidores na taverna",
+          "destino": "res://art/guild/props/lareira.png"
+        },
+        {
+          "id": "guilda_rack_armas",
+          "nome": "Suporte de armas",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            120,
+            120
+          ],
+          "descricao": "Rack de parede com espadas, lanças e escudos.",
+          "uso_no_jogo": "Tela de Equipamento e hub",
+          "destino": "res://art/guild/props/rack_armas.png"
+        },
+        {
+          "id": "guilda_boneco_treino",
+          "nome": "Boneco de treino",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            56,
+            96
+          ],
+          "descricao": "Boneco de palha num poste com marcas de corte.",
+          "estados": [
+            "inteiro",
+            "danificado"
+          ],
+          "uso_no_jogo": "Salão de Treinamento",
+          "destino": "res://art/guild/props/boneco_treino.png",
+          "liga_com": "upgrades.json → salao"
+        },
+        {
+          "id": "guilda_cama_enfermaria",
+          "nome": "Cama da enfermaria",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            140,
+            80
+          ],
+          "descricao": "Cama simples com lençol, mesinha com bacia e ataduras.",
+          "estados": [
+            "não construída",
+            "construída"
+          ],
+          "uso_no_jogo": "Enfermaria; heróis descansando",
+          "destino": "res://art/guild/props/cama_enfermaria.png",
+          "liga_com": "upgrades.json → enfermaria"
+        },
+        {
+          "id": "guilda_armario_pocoes",
+          "nome": "Armário de poções",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            90,
+            120
+          ],
+          "descricao": "Prateleira com frascos coloridos e ervas penduradas.",
+          "uso_no_jogo": "Mercado/enfermaria",
+          "destino": "res://art/guild/props/armario_pocoes.png"
+        },
+        {
+          "id": "guilda_balcao",
+          "nome": "Balcão",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            180,
+            90
+          ],
+          "descricao": "Balcão de madeira com balança e moedas.",
+          "uso_no_jogo": "Tela de Mercado",
+          "destino": "res://art/guild/props/balcao.png"
+        },
+        {
+          "id": "guilda_estandarte_corvo",
+          "nome": "Estandarte do Corvo",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            80,
+            140
+          ],
+          "descricao": "Bandeira cinza com corvo negro, pendurada em haste.",
+          "variacoes": [
+            "novo",
+            "rasgado e desbotado (início do jogo)"
+          ],
+          "uso_no_jogo": "Identidade da guilda no hub e no título",
+          "destino": "res://art/guild/props/estandarte_corvo.png"
+        },
+        {
+          "id": "guilda_candelabro",
+          "nome": "Candelabro",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            120,
+            70
+          ],
+          "descricao": "Lustre de roda de carroça com velas.",
+          "animacao": {
+            "quadros": 4,
+            "fps": 6,
+            "loop": true
+          },
+          "uso_no_jogo": "",
+          "destino": "res://art/guild/props/candelabro.png"
+        },
+        {
+          "id": "guilda_velas",
+          "nome": "Velas",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            24,
+            32
+          ],
+          "descricao": "Grupo de velas derretidas.",
+          "animacao": {
+            "quadros": 4,
+            "fps": 6,
+            "loop": true
+          },
+          "uso_no_jogo": "",
+          "destino": "res://art/guild/props/velas.png"
+        },
+        {
+          "id": "guilda_janela",
+          "nome": "Janela",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            80,
+            120
+          ],
+          "descricao": "Janela de vitral simples com luz entrando.",
+          "variacoes": [
+            "dia",
+            "noite"
+          ],
+          "uso_no_jogo": "",
+          "destino": "res://art/guild/props/janela.png"
+        },
+        {
+          "id": "guilda_porta",
+          "nome": "Porta da guilda",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            120,
+            180
+          ],
+          "descricao": "Porta dupla pesada com ferragens.",
+          "variacoes": [
+            "fechada",
+            "entreaberta"
+          ],
+          "uso_no_jogo": "",
+          "destino": "res://art/guild/props/porta.png"
+        },
+        {
+          "id": "guilda_tapete",
+          "nome": "Tapete",
+          "status": "planejado",
+          "prioridade": "P3",
+          "tamanho_final_px": [
+            200,
+            80
+          ],
+          "descricao": "Tapete gasto com padrão geométrico.",
+          "uso_no_jogo": "",
+          "destino": "res://art/guild/props/tapete.png"
+        },
+        {
+          "id": "guilda_bigorna",
+          "nome": "Bigorna",
+          "status": "planejado",
+          "prioridade": "P3",
+          "tamanho_final_px": [
+            64,
+            48
+          ],
+          "descricao": "Bigorna com martelo e tenaz.",
+          "uso_no_jogo": "Futuro: ferreiro",
+          "destino": "res://art/guild/props/bigorna.png"
+        },
+        {
+          "id": "guilda_selo_cera",
+          "nome": "Selo de cera",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            48,
+            48
+          ],
+          "descricao": "Carimbo de latão com cabo de madeira e uma poça de lacre vermelho.",
+          "uso_no_jogo": "Botão Despachar (Selo de Cera)",
+          "destino": "res://art/guild/props/selo_cera.png"
+        },
+        {
+          "id": "guilda_livro_guilda",
+          "nome": "Livro da Guilda (fechado)",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            96,
+            120
+          ],
+          "descricao": "Tomo grosso com capa de couro e o corvo em relevo.",
+          "uso_no_jogo": "Botão/abertura do Livro",
+          "destino": "res://art/guild/props/livro_guilda.png"
+        }
+      ]
+    }
+  ],
+  "reservado_para_futuro": {
+    "_doc": "Melhoria nova em data/upgrades.json → crie guilda_<id> com estados 'não construído' e 'construído'.",
+    "ideias": [
+      "ferraria",
+      "sanatório",
+      "capela da guilda",
+      "estábulo",
+      "torre de vigia da guilda"
+    ]
+  }
+}

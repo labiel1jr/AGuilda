@@ -1,0 +1,2413 @@
+{
+  "_doc": "Índice de todos os assets de cenário, objetos e interface. Atualize 'status' conforme a produção. Gerado a partir dos arquivos de categoria.",
+  "versao": 1,
+  "arquivos": {
+    "mapa_nos.json": {
+      "titulo": "Mapa Mágico — ícones de nó",
+      "total": 13
+    },
+    "mapa_cenario.json": {
+      "titulo": "Mapa Mágico — marcos, terreno e veículos",
+      "total": 43
+    },
+    "itens.json": {
+      "titulo": "Ícones de itens, recursos e ferramentas",
+      "total": 37
+    },
+    "guilda.json": {
+      "titulo": "Guilda — objetos de cenário",
+      "total": 27
+    },
+    "fundos.json": {
+      "titulo": "Fundos e cenas",
+      "total": 10
+    },
+    "interface.json": {
+      "titulo": "Interface — molduras e ícones",
+      "total": 96
+    },
+    "efeitos.json": {
+      "titulo": "Efeitos visuais",
+      "total": 11
+    }
+  },
+  "resumo_por_prioridade": {
+    "P0": 62,
+    "P1": 95,
+    "P2": 64,
+    "P3": 16
+  },
+  "assets": [
+    {
+      "id": "no_combate",
+      "nome": "Nó: Combate",
+      "arquivo": "mapa_nos.json",
+      "grupo": "nos",
+      "familia": "nanquim",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/map/nodes/combate.png"
+    },
+    {
+      "id": "no_tesouro",
+      "nome": "Nó: Tesouro",
+      "arquivo": "mapa_nos.json",
+      "grupo": "nos",
+      "familia": "nanquim",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/map/nodes/tesouro.png"
+    },
+    {
+      "id": "no_loja",
+      "nome": "Nó: Mercador",
+      "arquivo": "mapa_nos.json",
+      "grupo": "nos",
+      "familia": "nanquim",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/map/nodes/loja.png"
+    },
+    {
+      "id": "no_acampamento",
+      "nome": "Nó: Acampamento",
+      "arquivo": "mapa_nos.json",
+      "grupo": "nos",
+      "familia": "nanquim",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/map/nodes/acampamento.png"
+    },
+    {
+      "id": "no_evento",
+      "nome": "Nó: Encontro",
+      "arquivo": "mapa_nos.json",
+      "grupo": "nos",
+      "familia": "nanquim",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/map/nodes/evento.png"
+    },
+    {
+      "id": "no_atalho",
+      "nome": "Nó: Atalho",
+      "arquivo": "mapa_nos.json",
+      "grupo": "nos",
+      "familia": "nanquim",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/map/nodes/atalho.png"
+    },
+    {
+      "id": "no_npc",
+      "nome": "Nó: Estranho",
+      "arquivo": "mapa_nos.json",
+      "grupo": "nos",
+      "familia": "nanquim",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/map/nodes/npc.png"
+    },
+    {
+      "id": "no_santuario",
+      "nome": "Nó: Santuário",
+      "arquivo": "mapa_nos.json",
+      "grupo": "nos",
+      "familia": "nanquim",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/map/nodes/santuario.png"
+    },
+    {
+      "id": "no_miniboss",
+      "nome": "Nó: Guarda do alvo",
+      "arquivo": "mapa_nos.json",
+      "grupo": "nos",
+      "familia": "nanquim",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/map/nodes/miniboss.png"
+    },
+    {
+      "id": "no_chefe",
+      "nome": "Nó: Objetivo (sem cartaz)",
+      "arquivo": "mapa_nos.json",
+      "grupo": "nos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/map/nodes/chefe.png"
+    },
+    {
+      "id": "no_nevoa",
+      "nome": "Nó: Encoberto",
+      "arquivo": "mapa_nos.json",
+      "grupo": "nos",
+      "familia": "nanquim",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/map/nodes/nevoa.png"
+    },
+    {
+      "id": "no_partida",
+      "nome": "Marco: A Guilda",
+      "arquivo": "mapa_nos.json",
+      "grupo": "nos",
+      "familia": "nanquim",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/map/nodes/guilda.png"
+    },
+    {
+      "id": "no_base_circulo",
+      "nome": "Base do nó",
+      "arquivo": "mapa_nos.json",
+      "grupo": "nos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/map/nodes/base.png"
+    },
+    {
+      "id": "marco_ponte_pedra",
+      "nome": "Ponte de pedra",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/ponte_pedra.png"
+    },
+    {
+      "id": "marco_ponte_madeira",
+      "nome": "Ponte de madeira",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/ponte_madeira.png"
+    },
+    {
+      "id": "marco_vau",
+      "nome": "Vau do rio",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/vau.png"
+    },
+    {
+      "id": "marco_ruinas",
+      "nome": "Ruínas antigas",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/ruinas_{n}.png"
+    },
+    {
+      "id": "marco_torre_vigia",
+      "nome": "Torre de vigia",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/torre_vigia.png"
+    },
+    {
+      "id": "marco_torre_mago",
+      "nome": "Torre do mago",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/torre_mago.png"
+    },
+    {
+      "id": "marco_mina",
+      "nome": "Entrada de mina",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/mina.png"
+    },
+    {
+      "id": "marco_porto",
+      "nome": "Porto e cais",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/porto.png"
+    },
+    {
+      "id": "marco_moinho",
+      "nome": "Moinho de vento",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/moinho.png"
+    },
+    {
+      "id": "marco_poco",
+      "nome": "Poço",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/poco.png"
+    },
+    {
+      "id": "marco_santuario_pedra",
+      "nome": "Santuário de beira de estrada",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/santuario.png"
+    },
+    {
+      "id": "marco_capela",
+      "nome": "Capela em ruínas",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/capela.png"
+    },
+    {
+      "id": "marco_circulo_pedras",
+      "nome": "Círculo de pedras",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/circulo_pedras.png"
+    },
+    {
+      "id": "marco_cripta",
+      "nome": "Cripta",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/cripta.png"
+    },
+    {
+      "id": "marco_cemiterio",
+      "nome": "Cemitério",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/cemiterio.png"
+    },
+    {
+      "id": "marco_palicada",
+      "nome": "Forte de paliçada",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/palicada.png"
+    },
+    {
+      "id": "marco_castelo",
+      "nome": "Castelo/fortaleza",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/castelo.png"
+    },
+    {
+      "id": "marco_ninho",
+      "nome": "O Ninho do Corvo",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/ninho_corvo.png"
+    },
+    {
+      "id": "marco_encruzilhada",
+      "nome": "Encruzilhada com placa",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/placa.png"
+    },
+    {
+      "id": "marco_cabana_pantano",
+      "nome": "Cabana do pântano",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/cabana_pantano.png"
+    },
+    {
+      "id": "marco_naufragio",
+      "nome": "Naufrágio",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P3",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/naufragio.png"
+    },
+    {
+      "id": "marco_campo_batalha",
+      "nome": "Campo de batalha antigo",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/campo_batalha.png"
+    },
+    {
+      "id": "marco_arvore_marcada",
+      "nome": "Árvore marcada",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P3",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/arvore_marcada.png"
+    },
+    {
+      "id": "marco_toca",
+      "nome": "Toca/covil",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/covil.png"
+    },
+    {
+      "id": "marco_ninho_serpe",
+      "nome": "Ninho da serpe",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/ninho_serpe.png"
+    },
+    {
+      "id": "marco_celeiro",
+      "nome": "Celeiro",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "marcos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/landmarks/celeiro.png"
+    },
+    {
+      "id": "ter_rochas",
+      "nome": "Rochas",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "terreno",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/rocks/{n}.png"
+    },
+    {
+      "id": "ter_arvore_morta",
+      "nome": "Árvores mortas",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "terreno",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/deadtrees/{n}.png"
+    },
+    {
+      "id": "ter_juncos",
+      "nome": "Juncos e taboas",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "terreno",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/reeds/{n}.png"
+    },
+    {
+      "id": "ter_arbustos",
+      "nome": "Arbustos",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "terreno",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/bushes/{n}.png"
+    },
+    {
+      "id": "ter_cercas",
+      "nome": "Cercas",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "terreno",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/fences/{n}.png"
+    },
+    {
+      "id": "ter_campos",
+      "nome": "Campos de cultivo",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "terreno",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/fields/{n}.png"
+    },
+    {
+      "id": "ter_pinheiros",
+      "nome": "Pinheiros",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "terreno",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/pines/{n}.png"
+    },
+    {
+      "id": "ter_ondas",
+      "nome": "Água: ondas e correnteza",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "terreno",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/waves/{n}.png"
+    },
+    {
+      "id": "ter_ponte_trilha",
+      "nome": "Carimbos de trilha",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "terreno",
+      "familia": "nanquim",
+      "prioridade": "P3",
+      "status": "planejado",
+      "destino": "res://art/MapParts/paths/{n}.png"
+    },
+    {
+      "id": "vei_carroca",
+      "nome": "Carroça",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "veiculos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/vehicles/carroca.png"
+    },
+    {
+      "id": "vei_caravana",
+      "nome": "Caravana",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "veiculos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/vehicles/caravana.png"
+    },
+    {
+      "id": "vei_carroca_mercador",
+      "nome": "Carroça de mercador",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "veiculos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/MapParts/vehicles/mercador.png"
+    },
+    {
+      "id": "vei_barco",
+      "nome": "Barco a remo",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "veiculos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/vehicles/barco.png"
+    },
+    {
+      "id": "vei_navio",
+      "nome": "Navio mercante",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "veiculos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/vehicles/navio.png"
+    },
+    {
+      "id": "vei_balsa",
+      "nome": "Balsa de corda",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "veiculos",
+      "familia": "nanquim",
+      "prioridade": "P3",
+      "status": "planejado",
+      "destino": "res://art/MapParts/vehicles/balsa.png"
+    },
+    {
+      "id": "vei_carrinho_mina",
+      "nome": "Carrinho de minério",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "veiculos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/MapParts/vehicles/vagonete.png"
+    },
+    {
+      "id": "vei_carruagem",
+      "nome": "Carruagem nobre",
+      "arquivo": "mapa_cenario.json",
+      "grupo": "veiculos",
+      "familia": "nanquim",
+      "prioridade": "P3",
+      "status": "planejado",
+      "destino": "res://art/MapParts/vehicles/carruagem.png"
+    },
+    {
+      "id": "item_espada_longa",
+      "nome": "Espada Longa",
+      "arquivo": "itens.json",
+      "grupo": "armas",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/espada_longa.png"
+    },
+    {
+      "id": "item_adaga_elfica",
+      "nome": "Adaga Élfica",
+      "arquivo": "itens.json",
+      "grupo": "armas",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/adaga_elfica.png"
+    },
+    {
+      "id": "item_cajado_runico",
+      "nome": "Cajado Rúnico",
+      "arquivo": "itens.json",
+      "grupo": "armas",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/cajado_runico.png"
+    },
+    {
+      "id": "item_alaude_encantado",
+      "nome": "Alaúde Encantado",
+      "arquivo": "itens.json",
+      "grupo": "armas",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/alaude_encantado.png"
+    },
+    {
+      "id": "item_machado_anao",
+      "nome": "Machado Anão",
+      "arquivo": "itens.json",
+      "grupo": "armas",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/machado_anao.png"
+    },
+    {
+      "id": "item_arco_longo",
+      "nome": "Arco Longo de Teixo",
+      "arquivo": "itens.json",
+      "grupo": "armas",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/arco_longo.png"
+    },
+    {
+      "id": "item_lamina_corvo",
+      "nome": "Lâmina do Corvo",
+      "arquivo": "itens.json",
+      "grupo": "armas",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/lamina_corvo.png"
+    },
+    {
+      "id": "item_gibao_couro",
+      "nome": "Gibão de Couro",
+      "arquivo": "itens.json",
+      "grupo": "armaduras",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/gibao_couro.png"
+    },
+    {
+      "id": "item_manto_viajante",
+      "nome": "Manto do Viajante",
+      "arquivo": "itens.json",
+      "grupo": "armaduras",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/manto_viajante.png"
+    },
+    {
+      "id": "item_cota_malha",
+      "nome": "Cota de Malha",
+      "arquivo": "itens.json",
+      "grupo": "armaduras",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/cota_malha.png"
+    },
+    {
+      "id": "item_placas",
+      "nome": "Armadura de Placas",
+      "arquivo": "itens.json",
+      "grupo": "armaduras",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/placas.png"
+    },
+    {
+      "id": "item_amuleto_coragem",
+      "nome": "Amuleto da Coragem",
+      "arquivo": "itens.json",
+      "grupo": "acessorios",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/amuleto_coragem.png"
+    },
+    {
+      "id": "item_insignia_corvo",
+      "nome": "Insígnia do Corvo",
+      "arquivo": "itens.json",
+      "grupo": "acessorios",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/insignia_corvo.png"
+    },
+    {
+      "id": "item_brinco_sabio",
+      "nome": "Brinco do Sábio",
+      "arquivo": "itens.json",
+      "grupo": "acessorios",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/brinco_sabio.png"
+    },
+    {
+      "id": "item_anel_amizade",
+      "nome": "Anel dos Laços",
+      "arquivo": "itens.json",
+      "grupo": "acessorios",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/anel_amizade.png"
+    },
+    {
+      "id": "item_pocao_cura",
+      "nome": "Poção de Cura",
+      "arquivo": "itens.json",
+      "grupo": "consumiveis",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/pocao_cura.png"
+    },
+    {
+      "id": "item_tonico",
+      "nome": "Tônico Revigorante",
+      "arquivo": "itens.json",
+      "grupo": "consumiveis",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/tonico.png"
+    },
+    {
+      "id": "item_pergaminho_forca",
+      "nome": "Pergaminho de Bravura",
+      "arquivo": "itens.json",
+      "grupo": "consumiveis",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/pergaminho_forca.png"
+    },
+    {
+      "id": "rec_provisoes",
+      "nome": "Provisões",
+      "arquivo": "itens.json",
+      "grupo": "recursos",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/provisoes.png"
+    },
+    {
+      "id": "rec_moedas",
+      "nome": "Moedas de ouro",
+      "arquivo": "itens.json",
+      "grupo": "recursos",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/items/ouro_{var}.png"
+    },
+    {
+      "id": "rec_bolsa_rota",
+      "nome": "Bolsa da rota",
+      "arquivo": "itens.json",
+      "grupo": "recursos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/items/bolsa_rota.png"
+    },
+    {
+      "id": "rec_saque",
+      "nome": "Saque genérico",
+      "arquivo": "itens.json",
+      "grupo": "recursos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/items/saque.png"
+    },
+    {
+      "id": "fer_corda",
+      "nome": "Corda com gancho",
+      "arquivo": "itens.json",
+      "grupo": "ferramentas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/items/corda.png"
+    },
+    {
+      "id": "fer_lanterna",
+      "nome": "Lanterna",
+      "arquivo": "itens.json",
+      "grupo": "ferramentas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/items/lanterna.png"
+    },
+    {
+      "id": "fer_tocha",
+      "nome": "Tocha",
+      "arquivo": "itens.json",
+      "grupo": "ferramentas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/items/tocha.png"
+    },
+    {
+      "id": "fer_pa",
+      "nome": "Pá",
+      "arquivo": "itens.json",
+      "grupo": "ferramentas",
+      "familia": "pixel_hd",
+      "prioridade": "P3",
+      "status": "planejado",
+      "destino": "res://art/items/pa.png"
+    },
+    {
+      "id": "fer_picareta",
+      "nome": "Picareta",
+      "arquivo": "itens.json",
+      "grupo": "ferramentas",
+      "familia": "pixel_hd",
+      "prioridade": "P3",
+      "status": "planejado",
+      "destino": "res://art/items/picareta.png"
+    },
+    {
+      "id": "fer_gazuas",
+      "nome": "Gazuas",
+      "arquivo": "itens.json",
+      "grupo": "ferramentas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/items/gazuas.png"
+    },
+    {
+      "id": "fer_kit_cura",
+      "nome": "Kit de curandeiro",
+      "arquivo": "itens.json",
+      "grupo": "ferramentas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/items/kit_cura.png"
+    },
+    {
+      "id": "fer_mapa",
+      "nome": "Mapa dobrado",
+      "arquivo": "itens.json",
+      "grupo": "ferramentas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/items/mapa.png"
+    },
+    {
+      "id": "fer_bussola",
+      "nome": "Bússola",
+      "arquivo": "itens.json",
+      "grupo": "ferramentas",
+      "familia": "pixel_hd",
+      "prioridade": "P3",
+      "status": "planejado",
+      "destino": "res://art/items/bussola.png"
+    },
+    {
+      "id": "fer_luneta",
+      "nome": "Luneta",
+      "arquivo": "itens.json",
+      "grupo": "ferramentas",
+      "familia": "pixel_hd",
+      "prioridade": "P3",
+      "status": "planejado",
+      "destino": "res://art/items/luneta.png"
+    },
+    {
+      "id": "fer_chave",
+      "nome": "Chave antiga",
+      "arquivo": "itens.json",
+      "grupo": "ferramentas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/items/chave.png"
+    },
+    {
+      "id": "fer_carta",
+      "nome": "Carta lacrada",
+      "arquivo": "itens.json",
+      "grupo": "ferramentas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/items/carta.png"
+    },
+    {
+      "id": "fer_martelo",
+      "nome": "Martelo e pregos",
+      "arquivo": "itens.json",
+      "grupo": "ferramentas",
+      "familia": "pixel_hd",
+      "prioridade": "P3",
+      "status": "planejado",
+      "destino": "res://art/items/martelo.png"
+    },
+    {
+      "id": "fer_ervas",
+      "nome": "Ervas",
+      "arquivo": "itens.json",
+      "grupo": "ferramentas",
+      "familia": "pixel_hd",
+      "prioridade": "P3",
+      "status": "planejado",
+      "destino": "res://art/items/ervas.png"
+    },
+    {
+      "id": "fer_armadilha",
+      "nome": "Armadilha",
+      "arquivo": "itens.json",
+      "grupo": "ferramentas",
+      "familia": "pixel_hd",
+      "prioridade": "P3",
+      "status": "planejado",
+      "destino": "res://art/items/armadilha.png"
+    },
+    {
+      "id": "guilda_mural",
+      "nome": "Mural de quests",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/guild/props/mural.png"
+    },
+    {
+      "id": "guilda_quadro_relacoes",
+      "nome": "Quadro de Relações",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/guild/props/quadro_relacoes.png"
+    },
+    {
+      "id": "guilda_bau_guilda",
+      "nome": "Baú da Guilda",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/guild/props/bau_guilda.png"
+    },
+    {
+      "id": "guilda_mesa_longa",
+      "nome": "Mesa longa",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/guild/props/mesa_longa.png"
+    },
+    {
+      "id": "guilda_mesa_mestre",
+      "nome": "Mesa do Mestre de Despacho",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/guild/props/mesa_mestre.png"
+    },
+    {
+      "id": "guilda_cadeira",
+      "nome": "Cadeira e banco",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/guild/props/cadeira.png"
+    },
+    {
+      "id": "guilda_barril",
+      "nome": "Barril",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/guild/props/barril.png"
+    },
+    {
+      "id": "guilda_caixote",
+      "nome": "Caixote",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/guild/props/caixote.png"
+    },
+    {
+      "id": "guilda_caixa_pequena",
+      "nome": "Caixa pequena",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/guild/props/caixa_pequena.png"
+    },
+    {
+      "id": "guilda_saco",
+      "nome": "Sacos de grão",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/guild/props/saco.png"
+    },
+    {
+      "id": "guilda_estante",
+      "nome": "Estante de livros",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/guild/props/estante.png"
+    },
+    {
+      "id": "guilda_arquivo_gavetas",
+      "nome": "Arquivo da Guilda",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/guild/props/arquivo_gavetas.png"
+    },
+    {
+      "id": "guilda_lareira",
+      "nome": "Lareira",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/guild/props/lareira.png"
+    },
+    {
+      "id": "guilda_rack_armas",
+      "nome": "Suporte de armas",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/guild/props/rack_armas.png"
+    },
+    {
+      "id": "guilda_boneco_treino",
+      "nome": "Boneco de treino",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/guild/props/boneco_treino.png"
+    },
+    {
+      "id": "guilda_cama_enfermaria",
+      "nome": "Cama da enfermaria",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/guild/props/cama_enfermaria.png"
+    },
+    {
+      "id": "guilda_armario_pocoes",
+      "nome": "Armário de poções",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/guild/props/armario_pocoes.png"
+    },
+    {
+      "id": "guilda_balcao",
+      "nome": "Balcão",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/guild/props/balcao.png"
+    },
+    {
+      "id": "guilda_estandarte_corvo",
+      "nome": "Estandarte do Corvo",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/guild/props/estandarte_corvo.png"
+    },
+    {
+      "id": "guilda_candelabro",
+      "nome": "Candelabro",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/guild/props/candelabro.png"
+    },
+    {
+      "id": "guilda_velas",
+      "nome": "Velas",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/guild/props/velas.png"
+    },
+    {
+      "id": "guilda_janela",
+      "nome": "Janela",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/guild/props/janela.png"
+    },
+    {
+      "id": "guilda_porta",
+      "nome": "Porta da guilda",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/guild/props/porta.png"
+    },
+    {
+      "id": "guilda_tapete",
+      "nome": "Tapete",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P3",
+      "status": "planejado",
+      "destino": "res://art/guild/props/tapete.png"
+    },
+    {
+      "id": "guilda_bigorna",
+      "nome": "Bigorna",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P3",
+      "status": "planejado",
+      "destino": "res://art/guild/props/bigorna.png"
+    },
+    {
+      "id": "guilda_selo_cera",
+      "nome": "Selo de cera",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/guild/props/selo_cera.png"
+    },
+    {
+      "id": "guilda_livro_guilda",
+      "nome": "Livro da Guilda (fechado)",
+      "arquivo": "guilda.json",
+      "grupo": "props",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/guild/props/livro_guilda.png"
+    },
+    {
+      "id": "fundo_salao",
+      "nome": "Salão da Guilda",
+      "arquivo": "fundos.json",
+      "grupo": "fundos",
+      "familia": "fundo",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/backgrounds/salao_{estado}.png"
+    },
+    {
+      "id": "fundo_taverna",
+      "nome": "Taverna da guilda",
+      "arquivo": "fundos.json",
+      "grupo": "fundos",
+      "familia": "fundo",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/backgrounds/taverna.png"
+    },
+    {
+      "id": "fundo_patio_treino",
+      "nome": "Pátio de treino",
+      "arquivo": "fundos.json",
+      "grupo": "fundos",
+      "familia": "fundo",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/backgrounds/patio.png"
+    },
+    {
+      "id": "fundo_escritorio",
+      "nome": "Escritório do Mestre",
+      "arquivo": "fundos.json",
+      "grupo": "fundos",
+      "familia": "fundo",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/backgrounds/escritorio.png"
+    },
+    {
+      "id": "fundo_mercado",
+      "nome": "Mercado",
+      "arquivo": "fundos.json",
+      "grupo": "fundos",
+      "familia": "fundo",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/backgrounds/mercado.png"
+    },
+    {
+      "id": "fundo_mesa_mapa",
+      "nome": "Mesa do Mapa Mágico",
+      "arquivo": "fundos.json",
+      "grupo": "fundos",
+      "familia": "fundo",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/backgrounds/mesa_mapa.png"
+    },
+    {
+      "id": "fundo_pergaminho_mapa",
+      "nome": "Textura de pergaminho do mapa",
+      "arquivo": "fundos.json",
+      "grupo": "fundos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/backgrounds/pergaminho_{bioma}.png"
+    },
+    {
+      "id": "fundo_chamada_bioma",
+      "nome": "Vinheta de chamada por bioma",
+      "arquivo": "fundos.json",
+      "grupo": "fundos",
+      "familia": "fundo",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/backgrounds/chamada_{bioma}.png"
+    },
+    {
+      "id": "fundo_capitulo",
+      "nome": "Abertura de capítulo",
+      "arquivo": "fundos.json",
+      "grupo": "fundos",
+      "familia": "fundo",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/backgrounds/capitulo_{id}.png"
+    },
+    {
+      "id": "fundo_epilogo",
+      "nome": "Epílogo",
+      "arquivo": "fundos.json",
+      "grupo": "fundos",
+      "familia": "fundo",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/backgrounds/epilogo_{final}.png"
+    },
+    {
+      "id": "ui_painel_pergaminho",
+      "nome": "Painel de pergaminho",
+      "arquivo": "interface.json",
+      "grupo": "molduras",
+      "familia": "pergaminho_ui",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/painel_pergaminho.png"
+    },
+    {
+      "id": "ui_painel_madeira",
+      "nome": "Painel de madeira escura",
+      "arquivo": "interface.json",
+      "grupo": "molduras",
+      "familia": "pergaminho_ui",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/painel_madeira.png"
+    },
+    {
+      "id": "ui_painel_couro",
+      "nome": "Painel de couro",
+      "arquivo": "interface.json",
+      "grupo": "molduras",
+      "familia": "pergaminho_ui",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/painel_couro.png"
+    },
+    {
+      "id": "ui_cartaz_papel",
+      "nome": "Papel de cartaz",
+      "arquivo": "interface.json",
+      "grupo": "molduras",
+      "familia": "pergaminho_ui",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/cartaz_papel.png"
+    },
+    {
+      "id": "ui_botao",
+      "nome": "Botão",
+      "arquivo": "interface.json",
+      "grupo": "molduras",
+      "familia": "pergaminho_ui",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/botao.png"
+    },
+    {
+      "id": "ui_aba",
+      "nome": "Aba",
+      "arquivo": "interface.json",
+      "grupo": "molduras",
+      "familia": "pergaminho_ui",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/aba.png"
+    },
+    {
+      "id": "ui_divisor",
+      "nome": "Divisor ornamental",
+      "arquivo": "interface.json",
+      "grupo": "molduras",
+      "familia": "pergaminho_ui",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/divisor.png"
+    },
+    {
+      "id": "ui_cantos",
+      "nome": "Cantos ornamentais",
+      "arquivo": "interface.json",
+      "grupo": "molduras",
+      "familia": "pergaminho_ui",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/cantos.png"
+    },
+    {
+      "id": "ui_barra",
+      "nome": "Barras de progresso",
+      "arquivo": "interface.json",
+      "grupo": "molduras",
+      "familia": "pergaminho_ui",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/barra.png"
+    },
+    {
+      "id": "ui_cursor",
+      "nome": "Cursor",
+      "arquivo": "interface.json",
+      "grupo": "molduras",
+      "familia": "pergaminho_ui",
+      "prioridade": "P3",
+      "status": "planejado",
+      "destino": "res://art/ui/cursor.png"
+    },
+    {
+      "id": "ui_selo_despachar",
+      "nome": "Selo de Cera (botão)",
+      "arquivo": "interface.json",
+      "grupo": "molduras",
+      "familia": "pergaminho_ui",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/selo_despachar.png"
+    },
+    {
+      "id": "ui_ic_pv",
+      "nome": "PV",
+      "arquivo": "interface.json",
+      "grupo": "status",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/ic_pv.png"
+    },
+    {
+      "id": "ui_ic_moral",
+      "nome": "Moral",
+      "arquivo": "interface.json",
+      "grupo": "status",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/ic_moral.png"
+    },
+    {
+      "id": "ui_ic_estresse",
+      "nome": "Estresse",
+      "arquivo": "interface.json",
+      "grupo": "status",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/ic_estresse.png"
+    },
+    {
+      "id": "ui_ic_fadiga",
+      "nome": "Fadiga",
+      "arquivo": "interface.json",
+      "grupo": "status",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/ic_fadiga.png"
+    },
+    {
+      "id": "ui_ic_ouro",
+      "nome": "Ouro",
+      "arquivo": "interface.json",
+      "grupo": "status",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/ic_ouro.png"
+    },
+    {
+      "id": "ui_ic_reputacao",
+      "nome": "Reputação",
+      "arquivo": "interface.json",
+      "grupo": "status",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/ic_reputacao.png"
+    },
+    {
+      "id": "ui_ic_provisoes",
+      "nome": "Provisões",
+      "arquivo": "interface.json",
+      "grupo": "status",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/ic_provisoes.png"
+    },
+    {
+      "id": "ui_ic_xp",
+      "nome": "XP",
+      "arquivo": "interface.json",
+      "grupo": "status",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/ic_xp.png"
+    },
+    {
+      "id": "ui_ic_dia",
+      "nome": "Dia",
+      "arquivo": "interface.json",
+      "grupo": "status",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/ic_dia.png"
+    },
+    {
+      "id": "ui_ic_preparacao",
+      "nome": "Preparação",
+      "arquivo": "interface.json",
+      "grupo": "status",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/ic_preparacao.png"
+    },
+    {
+      "id": "ui_ic_fome",
+      "nome": "Fome",
+      "arquivo": "interface.json",
+      "grupo": "status",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/ic_fome.png"
+    },
+    {
+      "id": "ui_ic_desgaste",
+      "nome": "Desgaste",
+      "arquivo": "interface.json",
+      "grupo": "status",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/ic_desgaste.png"
+    },
+    {
+      "id": "ui_ic_atraso",
+      "nome": "Atraso",
+      "arquivo": "interface.json",
+      "grupo": "status",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/ic_atraso.png"
+    },
+    {
+      "id": "ui_ic_cadeado",
+      "nome": "Trancado",
+      "arquivo": "interface.json",
+      "grupo": "status",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/ic_cadeado.png"
+    },
+    {
+      "id": "ui_atr_forca",
+      "nome": "Força",
+      "arquivo": "interface.json",
+      "grupo": "atributos",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/atr_forca.png"
+    },
+    {
+      "id": "ui_atr_destreza",
+      "nome": "Destreza",
+      "arquivo": "interface.json",
+      "grupo": "atributos",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/atr_destreza.png"
+    },
+    {
+      "id": "ui_atr_conhecimento",
+      "nome": "Conhecimento",
+      "arquivo": "interface.json",
+      "grupo": "atributos",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/atr_conhecimento.png"
+    },
+    {
+      "id": "ui_atr_carisma",
+      "nome": "Carisma",
+      "arquivo": "interface.json",
+      "grupo": "atributos",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/atr_carisma.png"
+    },
+    {
+      "id": "ui_atr_resistencia",
+      "nome": "Resistência",
+      "arquivo": "interface.json",
+      "grupo": "atributos",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/atr_resistencia.png"
+    },
+    {
+      "id": "ui_tipo_combate",
+      "nome": "Combate",
+      "arquivo": "interface.json",
+      "grupo": "missao",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/tipo_combate.png"
+    },
+    {
+      "id": "ui_tipo_diplomacia",
+      "nome": "Diplomacia",
+      "arquivo": "interface.json",
+      "grupo": "missao",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/tipo_diplomacia.png"
+    },
+    {
+      "id": "ui_tipo_exploracao",
+      "nome": "Exploração",
+      "arquivo": "interface.json",
+      "grupo": "missao",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/tipo_exploracao.png"
+    },
+    {
+      "id": "ui_tipo_furtividade",
+      "nome": "Furtividade",
+      "arquivo": "interface.json",
+      "grupo": "missao",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/tipo_furtividade.png"
+    },
+    {
+      "id": "ui_risco_baixo",
+      "nome": "Risco Baixo",
+      "arquivo": "interface.json",
+      "grupo": "missao",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/risco_baixo.png"
+    },
+    {
+      "id": "ui_risco_medio",
+      "nome": "Risco Médio",
+      "arquivo": "interface.json",
+      "grupo": "missao",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/risco_medio.png"
+    },
+    {
+      "id": "ui_risco_alto",
+      "nome": "Risco Alto",
+      "arquivo": "interface.json",
+      "grupo": "missao",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/risco_alto.png"
+    },
+    {
+      "id": "ui_risco_lendario",
+      "nome": "Risco Lendário",
+      "arquivo": "interface.json",
+      "grupo": "missao",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/risco_lendario.png"
+    },
+    {
+      "id": "ui_bioma_floresta",
+      "nome": "Floresta",
+      "arquivo": "interface.json",
+      "grupo": "missao",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/bioma_floresta.png"
+    },
+    {
+      "id": "ui_bioma_pantano",
+      "nome": "Pântano",
+      "arquivo": "interface.json",
+      "grupo": "missao",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/bioma_pantano.png"
+    },
+    {
+      "id": "ui_bioma_montanha",
+      "nome": "Montanha",
+      "arquivo": "interface.json",
+      "grupo": "missao",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/bioma_montanha.png"
+    },
+    {
+      "id": "ui_bioma_estrada",
+      "nome": "Estrada",
+      "arquivo": "interface.json",
+      "grupo": "missao",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/bioma_estrada.png"
+    },
+    {
+      "id": "ui_bioma_cidade",
+      "nome": "Cidade",
+      "arquivo": "interface.json",
+      "grupo": "missao",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/bioma_cidade.png"
+    },
+    {
+      "id": "ui_carimbo_limpo",
+      "nome": "Carimbo: Sucesso Limpo",
+      "arquivo": "interface.json",
+      "grupo": "resultado",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/carimbo_limpo.png"
+    },
+    {
+      "id": "ui_carimbo_custo",
+      "nome": "Carimbo: Sucesso com Custo",
+      "arquivo": "interface.json",
+      "grupo": "resultado",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/carimbo_custo.png"
+    },
+    {
+      "id": "ui_carimbo_falha",
+      "nome": "Carimbo: Falha com Revelação",
+      "arquivo": "interface.json",
+      "grupo": "resultado",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/carimbo_falha.png"
+    },
+    {
+      "id": "ui_vinculo_amizade",
+      "nome": "Amizade",
+      "arquivo": "interface.json",
+      "grupo": "vinculos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/vinculo_amizade.png"
+    },
+    {
+      "id": "ui_vinculo_lealdade",
+      "nome": "Lealdade",
+      "arquivo": "interface.json",
+      "grupo": "vinculos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/vinculo_lealdade.png"
+    },
+    {
+      "id": "ui_vinculo_rivalidade_saudavel",
+      "nome": "Rivalidade Saudável",
+      "arquivo": "interface.json",
+      "grupo": "vinculos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/vinculo_rivalidade_saudavel.png"
+    },
+    {
+      "id": "ui_vinculo_amizade_profunda",
+      "nome": "Amizade Profunda",
+      "arquivo": "interface.json",
+      "grupo": "vinculos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/vinculo_amizade_profunda.png"
+    },
+    {
+      "id": "ui_vinculo_mentoria",
+      "nome": "Mentoria",
+      "arquivo": "interface.json",
+      "grupo": "vinculos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/vinculo_mentoria.png"
+    },
+    {
+      "id": "ui_vinculo_atracao",
+      "nome": "Atração",
+      "arquivo": "interface.json",
+      "grupo": "vinculos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/vinculo_atracao.png"
+    },
+    {
+      "id": "ui_vinculo_parceria_lendaria",
+      "nome": "Parceria Lendária",
+      "arquivo": "interface.json",
+      "grupo": "vinculos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/vinculo_parceria_lendaria.png"
+    },
+    {
+      "id": "ui_vinculo_romance",
+      "nome": "Romance",
+      "arquivo": "interface.json",
+      "grupo": "vinculos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/vinculo_romance.png"
+    },
+    {
+      "id": "ui_vinculo_irmandade",
+      "nome": "Irmandade",
+      "arquivo": "interface.json",
+      "grupo": "vinculos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/vinculo_irmandade.png"
+    },
+    {
+      "id": "ui_vinculo_rivalidade",
+      "nome": "Rivalidade",
+      "arquivo": "interface.json",
+      "grupo": "vinculos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/vinculo_rivalidade.png"
+    },
+    {
+      "id": "ui_vinculo_rancor",
+      "nome": "Rancor",
+      "arquivo": "interface.json",
+      "grupo": "vinculos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/vinculo_rancor.png"
+    },
+    {
+      "id": "ui_vinculo_ruptura",
+      "nome": "Ruptura",
+      "arquivo": "interface.json",
+      "grupo": "vinculos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/vinculo_ruptura.png"
+    },
+    {
+      "id": "ui_vinculo_inimizade",
+      "nome": "Inimizade Declarada",
+      "arquivo": "interface.json",
+      "grupo": "vinculos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/vinculo_inimizade.png"
+    },
+    {
+      "id": "ui_cond_paranoico",
+      "nome": "Paranoico",
+      "arquivo": "interface.json",
+      "grupo": "condicoes",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/cond_paranoico.png"
+    },
+    {
+      "id": "ui_cond_egoista",
+      "nome": "Egoísta",
+      "arquivo": "interface.json",
+      "grupo": "condicoes",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/cond_egoista.png"
+    },
+    {
+      "id": "ui_cond_desesperado",
+      "nome": "Desesperado",
+      "arquivo": "interface.json",
+      "grupo": "condicoes",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/cond_desesperado.png"
+    },
+    {
+      "id": "ui_cond_irracional",
+      "nome": "Irracional",
+      "arquivo": "interface.json",
+      "grupo": "condicoes",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/cond_irracional.png"
+    },
+    {
+      "id": "ui_cond_medroso",
+      "nome": "Medroso",
+      "arquivo": "interface.json",
+      "grupo": "condicoes",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/cond_medroso.png"
+    },
+    {
+      "id": "ui_cond_corajoso",
+      "nome": "Corajoso",
+      "arquivo": "interface.json",
+      "grupo": "condicoes",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/cond_corajoso.png"
+    },
+    {
+      "id": "ui_cond_focado",
+      "nome": "Focado",
+      "arquivo": "interface.json",
+      "grupo": "condicoes",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/cond_focado.png"
+    },
+    {
+      "id": "ui_cond_estoico",
+      "nome": "Estoico",
+      "arquivo": "interface.json",
+      "grupo": "condicoes",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/cond_estoico.png"
+    },
+    {
+      "id": "ui_cond_inspirador",
+      "nome": "Inspirador",
+      "arquivo": "interface.json",
+      "grupo": "condicoes",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/cond_inspirador.png"
+    },
+    {
+      "id": "ui_traco_matador_de_feras",
+      "nome": "Matador de Feras",
+      "arquivo": "interface.json",
+      "grupo": "tracos",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/traco_matador_de_feras.png"
+    },
+    {
+      "id": "ui_traco_andarilho",
+      "nome": "Andarilho da Mata",
+      "arquivo": "interface.json",
+      "grupo": "tracos",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/traco_andarilho.png"
+    },
+    {
+      "id": "ui_traco_pele_dura",
+      "nome": "Pele Dura",
+      "arquivo": "interface.json",
+      "grupo": "tracos",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/traco_pele_dura.png"
+    },
+    {
+      "id": "ui_traco_sangue_frio",
+      "nome": "Sangue-Frio",
+      "arquivo": "interface.json",
+      "grupo": "tracos",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/traco_sangue_frio.png"
+    },
+    {
+      "id": "ui_traco_olho_vivo",
+      "nome": "Olho Vivo",
+      "arquivo": "interface.json",
+      "grupo": "tracos",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/traco_olho_vivo.png"
+    },
+    {
+      "id": "ui_traco_voz_firme",
+      "nome": "Voz Firme",
+      "arquivo": "interface.json",
+      "grupo": "tracos",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/traco_voz_firme.png"
+    },
+    {
+      "id": "ui_traco_medo_do_escuro",
+      "nome": "Medo do Escuro",
+      "arquivo": "interface.json",
+      "grupo": "tracos",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/traco_medo_do_escuro.png"
+    },
+    {
+      "id": "ui_traco_claustrofobico",
+      "nome": "Claustrofóbico",
+      "arquivo": "interface.json",
+      "grupo": "tracos",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/traco_claustrofobico.png"
+    },
+    {
+      "id": "ui_traco_mao_tremula",
+      "nome": "Mão Trêmula",
+      "arquivo": "interface.json",
+      "grupo": "tracos",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/traco_mao_tremula.png"
+    },
+    {
+      "id": "ui_traco_rancoroso",
+      "nome": "Rancoroso",
+      "arquivo": "interface.json",
+      "grupo": "tracos",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/traco_rancoroso.png"
+    },
+    {
+      "id": "ui_traco_nervoso",
+      "nome": "Nervoso",
+      "arquivo": "interface.json",
+      "grupo": "tracos",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/traco_nervoso.png"
+    },
+    {
+      "id": "ui_traco_pulmao_fraco",
+      "nome": "Pulmão Fraco",
+      "arquivo": "interface.json",
+      "grupo": "tracos",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/traco_pulmao_fraco.png"
+    },
+    {
+      "id": "ui_slot_arma",
+      "nome": "Slot: Arma",
+      "arquivo": "interface.json",
+      "grupo": "equipamento",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/slot_arma.png"
+    },
+    {
+      "id": "ui_slot_armadura",
+      "nome": "Slot: Armadura",
+      "arquivo": "interface.json",
+      "grupo": "equipamento",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/slot_armadura.png"
+    },
+    {
+      "id": "ui_slot_acessorio",
+      "nome": "Slot: Acessório",
+      "arquivo": "interface.json",
+      "grupo": "equipamento",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/slot_acessorio.png"
+    },
+    {
+      "id": "ui_slot_consumivel",
+      "nome": "Slot: Consumível",
+      "arquivo": "interface.json",
+      "grupo": "equipamento",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/slot_consumivel.png"
+    },
+    {
+      "id": "ui_menu_guilda",
+      "nome": "Guilda",
+      "arquivo": "interface.json",
+      "grupo": "menu",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/menu_guilda.png"
+    },
+    {
+      "id": "ui_menu_mercado",
+      "nome": "Mercado",
+      "arquivo": "interface.json",
+      "grupo": "menu",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/menu_mercado.png"
+    },
+    {
+      "id": "ui_menu_quadro",
+      "nome": "Quadro",
+      "arquivo": "interface.json",
+      "grupo": "menu",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/menu_quadro.png"
+    },
+    {
+      "id": "ui_menu_livro",
+      "nome": "Livro",
+      "arquivo": "interface.json",
+      "grupo": "menu",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/menu_livro.png"
+    },
+    {
+      "id": "ui_menu_treino",
+      "nome": "Treino",
+      "arquivo": "interface.json",
+      "grupo": "menu",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/menu_treino.png"
+    },
+    {
+      "id": "ui_menu_encerrar_dia",
+      "nome": "Encerrar dia",
+      "arquivo": "interface.json",
+      "grupo": "menu",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/menu_encerrar_dia.png"
+    },
+    {
+      "id": "ui_menu_salvar",
+      "nome": "Salvar",
+      "arquivo": "interface.json",
+      "grupo": "menu",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/menu_salvar.png"
+    },
+    {
+      "id": "ui_menu_carregar",
+      "nome": "Carregar",
+      "arquivo": "interface.json",
+      "grupo": "menu",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/menu_carregar.png"
+    },
+    {
+      "id": "ui_menu_menu",
+      "nome": "Menu",
+      "arquivo": "interface.json",
+      "grupo": "menu",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/menu_menu.png"
+    },
+    {
+      "id": "ui_menu_acelerar",
+      "nome": "Acelerar",
+      "arquivo": "interface.json",
+      "grupo": "menu",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/menu_acelerar.png"
+    },
+    {
+      "id": "ui_menu_descanso",
+      "nome": "Descanso",
+      "arquivo": "interface.json",
+      "grupo": "menu",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/menu_descanso.png"
+    },
+    {
+      "id": "ui_d20",
+      "nome": "Dado d20",
+      "arquivo": "interface.json",
+      "grupo": "dados",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/d20.png"
+    },
+    {
+      "id": "fx_nevoa",
+      "nome": "Névoa do mapa",
+      "arquivo": "efeitos.json",
+      "grupo": "efeitos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/fx/nevoa.png"
+    },
+    {
+      "id": "fx_tinta_respingo",
+      "nome": "Respingo de tinta",
+      "arquivo": "efeitos.json",
+      "grupo": "efeitos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/fx/tinta.png"
+    },
+    {
+      "id": "fx_pegadas",
+      "nome": "Pegadas",
+      "arquivo": "efeitos.json",
+      "grupo": "efeitos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/fx/pegadas.png"
+    },
+    {
+      "id": "fx_x_lacre",
+      "nome": "X de lacre",
+      "arquivo": "efeitos.json",
+      "grupo": "efeitos",
+      "familia": "efeito",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/fx/x_lacre.png"
+    },
+    {
+      "id": "fx_brilho_magico",
+      "nome": "Brilho arcano",
+      "arquivo": "efeitos.json",
+      "grupo": "efeitos",
+      "familia": "efeito",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/fx/brilho.png"
+    },
+    {
+      "id": "fx_fogo",
+      "nome": "Fogo pequeno",
+      "arquivo": "efeitos.json",
+      "grupo": "efeitos",
+      "familia": "efeito",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/fx/fogo.png"
+    },
+    {
+      "id": "fx_fumaca",
+      "nome": "Fumaça",
+      "arquivo": "efeitos.json",
+      "grupo": "efeitos",
+      "familia": "efeito",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/fx/fumaca.png"
+    },
+    {
+      "id": "fx_moedas",
+      "nome": "Moedas",
+      "arquivo": "efeitos.json",
+      "grupo": "efeitos",
+      "familia": "efeito",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/fx/moedas.png"
+    },
+    {
+      "id": "fx_ruptura",
+      "nome": "Ponto de ruptura",
+      "arquivo": "efeitos.json",
+      "grupo": "efeitos",
+      "familia": "efeito",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/fx/ruptura_{var}.png"
+    },
+    {
+      "id": "fx_cura",
+      "nome": "Cura",
+      "arquivo": "efeitos.json",
+      "grupo": "efeitos",
+      "familia": "efeito",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/fx/cura.png"
+    },
+    {
+      "id": "fx_corvos",
+      "nome": "Corvos voando",
+      "arquivo": "efeitos.json",
+      "grupo": "efeitos",
+      "familia": "efeito",
+      "prioridade": "P3",
+      "status": "planejado",
+      "destino": "res://art/fx/corvos.png"
+    }
+  ],
+  "total": 237
+}

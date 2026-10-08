@@ -1,0 +1,1466 @@
+{
+  "_doc": "Molduras, botões e ícones da interface. Não contém imagens: é a especificação para artistas. Herda de _estilo_cenario.json.",
+  "herda": "_estilo_cenario.json",
+  "titulo": "Interface — molduras e ícones",
+  "familia_padrao": "pixel_hd",
+  "versao": 1,
+  "total_assets": 96,
+  "grupos": [
+    {
+      "id": "molduras",
+      "nome": "Molduras e botões",
+      "descricao": "Peças estruturais da interface.",
+      "familia": "pergaminho_ui",
+      "assets": [
+        {
+          "id": "ui_painel_pergaminho",
+          "nome": "Painel de pergaminho",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            96,
+            96
+          ],
+          "descricao": "Pergaminho claro com borda queimada; 9-slice.",
+          "uso_no_jogo": "Cartões de missão, resultado, chamadas",
+          "destino": "res://art/ui/painel_pergaminho.png",
+          "nine_slice": [
+            24,
+            24,
+            24,
+            24
+          ]
+        },
+        {
+          "id": "ui_painel_madeira",
+          "nome": "Painel de madeira escura",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            96,
+            96
+          ],
+          "descricao": "Madeira escura com cantos de ferro; 9-slice.",
+          "uso_no_jogo": "Painéis do hub e listas",
+          "destino": "res://art/ui/painel_madeira.png",
+          "nine_slice": [
+            24,
+            24,
+            24,
+            24
+          ]
+        },
+        {
+          "id": "ui_painel_couro",
+          "nome": "Painel de couro",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            96,
+            96
+          ],
+          "descricao": "Couro marrom com costura nas bordas; 9-slice.",
+          "uso_no_jogo": "Livro e menus",
+          "destino": "res://art/ui/painel_couro.png",
+          "nine_slice": [
+            20,
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "id": "ui_cartaz_papel",
+          "nome": "Papel de cartaz",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            256,
+            256
+          ],
+          "descricao": "Papel rasgado com prego no topo (como os cartazes de inimigo), sem desenho.",
+          "uso_no_jogo": "Moldura para cartazes futuros",
+          "destino": "res://art/ui/cartaz_papel.png"
+        },
+        {
+          "id": "ui_botao",
+          "nome": "Botão",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            64,
+            32
+          ],
+          "descricao": "Placa de madeira com borda dourada; 9-slice.",
+          "estados": [
+            "normal",
+            "hover (borda mais clara)",
+            "pressionado",
+            "desativado (dessaturado)"
+          ],
+          "uso_no_jogo": "",
+          "destino": "res://art/ui/botao.png",
+          "nine_slice": [
+            10,
+            10,
+            10,
+            10
+          ]
+        },
+        {
+          "id": "ui_aba",
+          "nome": "Aba",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            48,
+            64
+          ],
+          "descricao": "Aba de marcador de livro.",
+          "estados": [
+            "ativa",
+            "inativa"
+          ],
+          "uso_no_jogo": "",
+          "destino": "res://art/ui/aba.png"
+        },
+        {
+          "id": "ui_divisor",
+          "nome": "Divisor ornamental",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            320,
+            16
+          ],
+          "descricao": "Linha de tinta com ornamento central (pena/corvo).",
+          "uso_no_jogo": "",
+          "destino": "res://art/ui/divisor.png"
+        },
+        {
+          "id": "ui_cantos",
+          "nome": "Cantos ornamentais",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "4 cantos de metal envelhecido para emoldurar telas.",
+          "uso_no_jogo": "",
+          "destino": "res://art/ui/cantos.png"
+        },
+        {
+          "id": "ui_barra",
+          "nome": "Barras de progresso",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            200,
+            14
+          ],
+          "descricao": "Moldura e preenchimento para XP e progresso.",
+          "variacoes": [
+            "moldura",
+            "preenchimento ouro",
+            "preenchimento vermelho"
+          ],
+          "uso_no_jogo": "",
+          "destino": "res://art/ui/barra.png"
+        },
+        {
+          "id": "ui_cursor",
+          "nome": "Cursor",
+          "status": "planejado",
+          "prioridade": "P3",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Pena de escrever como cursor.",
+          "estados": [
+            "normal",
+            "clicável"
+          ],
+          "uso_no_jogo": "",
+          "destino": "res://art/ui/cursor.png"
+        },
+        {
+          "id": "ui_selo_despachar",
+          "nome": "Selo de Cera (botão)",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            96,
+            96
+          ],
+          "descricao": "Lacre vermelho grande com o corvo em relevo.",
+          "estados": [
+            "normal",
+            "hover (brilho)",
+            "carimbado (animação de 4 quadros)"
+          ],
+          "uso_no_jogo": "Confirmar despacho",
+          "destino": "res://art/ui/selo_despachar.png"
+        }
+      ]
+    },
+    {
+      "id": "status",
+      "nome": "Ícones de status",
+      "descricao": "Leitura rápida em 16–24 px. Uma cor dominante por ícone.",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "ui_ic_pv",
+          "nome": "PV",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Coração vermelho estilizado.",
+          "estados": [
+            "cheio",
+            "vazio"
+          ],
+          "uso_no_jogo": "Pips de PV",
+          "destino": "res://art/ui/ic_pv.png"
+        },
+        {
+          "id": "ui_ic_moral",
+          "nome": "Moral",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Chama dourada.",
+          "estados": [
+            "cheio",
+            "vazio"
+          ],
+          "uso_no_jogo": "Pips de moral",
+          "destino": "res://art/ui/ic_moral.png"
+        },
+        {
+          "id": "ui_ic_estresse",
+          "nome": "Estresse",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Espiral roxa/vermelha tensa.",
+          "estados": [
+            "cheio",
+            "vazio",
+            "no limite (pulsando)"
+          ],
+          "uso_no_jogo": "Pips de estresse",
+          "destino": "res://art/ui/ic_estresse.png"
+        },
+        {
+          "id": "ui_ic_fadiga",
+          "nome": "Fadiga",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Ampulheta.",
+          "variacoes": [
+            "pronto",
+            "cansado",
+            "exausto"
+          ],
+          "uso_no_jogo": "",
+          "destino": "res://art/ui/ic_fadiga.png"
+        },
+        {
+          "id": "ui_ic_ouro",
+          "nome": "Ouro",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Moeda com corvo.",
+          "uso_no_jogo": "",
+          "destino": "res://art/ui/ic_ouro.png"
+        },
+        {
+          "id": "ui_ic_reputacao",
+          "nome": "Reputação",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Coroa de louros.",
+          "uso_no_jogo": "",
+          "destino": "res://art/ui/ic_reputacao.png"
+        },
+        {
+          "id": "ui_ic_provisoes",
+          "nome": "Provisões",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Pão.",
+          "uso_no_jogo": "",
+          "destino": "res://art/ui/ic_provisoes.png"
+        },
+        {
+          "id": "ui_ic_xp",
+          "nome": "XP",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Estrela de quatro pontas.",
+          "uso_no_jogo": "",
+          "destino": "res://art/ui/ic_xp.png"
+        },
+        {
+          "id": "ui_ic_dia",
+          "nome": "Dia",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Sol nascendo sobre linha do horizonte.",
+          "uso_no_jogo": "",
+          "destino": "res://art/ui/ic_dia.png"
+        },
+        {
+          "id": "ui_ic_preparacao",
+          "nome": "Preparação",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Alvo com flecha.",
+          "uso_no_jogo": "",
+          "destino": "res://art/ui/ic_preparacao.png"
+        },
+        {
+          "id": "ui_ic_fome",
+          "nome": "Fome",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Prato vazio rachado.",
+          "uso_no_jogo": "",
+          "destino": "res://art/ui/ic_fome.png"
+        },
+        {
+          "id": "ui_ic_desgaste",
+          "nome": "Desgaste",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Escudo rachado.",
+          "uso_no_jogo": "",
+          "destino": "res://art/ui/ic_desgaste.png"
+        },
+        {
+          "id": "ui_ic_atraso",
+          "nome": "Atraso",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Relógio de sol com seta.",
+          "uso_no_jogo": "",
+          "destino": "res://art/ui/ic_atraso.png"
+        },
+        {
+          "id": "ui_ic_cadeado",
+          "nome": "Trancado",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Cadeado antigo.",
+          "uso_no_jogo": "Seções e melhorias bloqueadas",
+          "destino": "res://art/ui/ic_cadeado.png"
+        }
+      ]
+    },
+    {
+      "id": "atributos",
+      "nome": "Ícones de atributo",
+      "descricao": "Os cinco atributos.",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "ui_atr_forca",
+          "nome": "Força",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Punho cerrado",
+          "uso_no_jogo": "Atributo no Livro, montagem e testes do mapa",
+          "destino": "res://art/ui/atr_forca.png"
+        },
+        {
+          "id": "ui_atr_destreza",
+          "nome": "Destreza",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Pena caindo / mão ágil",
+          "uso_no_jogo": "Atributo no Livro, montagem e testes do mapa",
+          "destino": "res://art/ui/atr_destreza.png"
+        },
+        {
+          "id": "ui_atr_conhecimento",
+          "nome": "Conhecimento",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Livro aberto com olho",
+          "uso_no_jogo": "Atributo no Livro, montagem e testes do mapa",
+          "destino": "res://art/ui/atr_conhecimento.png"
+        },
+        {
+          "id": "ui_atr_carisma",
+          "nome": "Carisma",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Máscara sorridente / boca falando",
+          "uso_no_jogo": "Atributo no Livro, montagem e testes do mapa",
+          "destino": "res://art/ui/atr_carisma.png"
+        },
+        {
+          "id": "ui_atr_resistencia",
+          "nome": "Resistência",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Escudo com montanha",
+          "uso_no_jogo": "Atributo no Livro, montagem e testes do mapa",
+          "destino": "res://art/ui/atr_resistencia.png"
+        }
+      ]
+    },
+    {
+      "id": "missao",
+      "nome": "Tipo de missão, risco e bioma",
+      "descricao": "Mural e cartões.",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "ui_tipo_combate",
+          "nome": "Combate",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Espada",
+          "uso_no_jogo": "Tipo de missão no mural",
+          "destino": "res://art/ui/tipo_combate.png"
+        },
+        {
+          "id": "ui_tipo_diplomacia",
+          "nome": "Diplomacia",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Aperto de mãos com pergaminho",
+          "uso_no_jogo": "Tipo de missão no mural",
+          "destino": "res://art/ui/tipo_diplomacia.png"
+        },
+        {
+          "id": "ui_tipo_exploracao",
+          "nome": "Exploração",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Luneta e mapa",
+          "uso_no_jogo": "Tipo de missão no mural",
+          "destino": "res://art/ui/tipo_exploracao.png"
+        },
+        {
+          "id": "ui_tipo_furtividade",
+          "nome": "Furtividade",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Capuz e adaga",
+          "uso_no_jogo": "Tipo de missão no mural",
+          "destino": "res://art/ui/tipo_furtividade.png"
+        },
+        {
+          "id": "ui_risco_baixo",
+          "nome": "Risco Baixo",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            64,
+            24
+          ],
+          "descricao": "Fita verde-oliva com 1 caveira pequena",
+          "uso_no_jogo": "Selo de risco nos cartões",
+          "destino": "res://art/ui/risco_baixo.png"
+        },
+        {
+          "id": "ui_risco_medio",
+          "nome": "Risco Médio",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            64,
+            24
+          ],
+          "descricao": "Fita âmbar com 2 caveiras",
+          "uso_no_jogo": "Selo de risco nos cartões",
+          "destino": "res://art/ui/risco_medio.png"
+        },
+        {
+          "id": "ui_risco_alto",
+          "nome": "Risco Alto",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            64,
+            24
+          ],
+          "descricao": "Fita vermelha com 3 caveiras",
+          "uso_no_jogo": "Selo de risco nos cartões",
+          "destino": "res://art/ui/risco_alto.png"
+        },
+        {
+          "id": "ui_risco_lendario",
+          "nome": "Risco Lendário",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            64,
+            24
+          ],
+          "descricao": "Fita roxa com coroa e caveira",
+          "uso_no_jogo": "Selo de risco nos cartões",
+          "destino": "res://art/ui/risco_lendario.png"
+        },
+        {
+          "id": "ui_bioma_floresta",
+          "nome": "Floresta",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Árvore",
+          "uso_no_jogo": "Bioma no cartão de missão",
+          "destino": "res://art/ui/bioma_floresta.png"
+        },
+        {
+          "id": "ui_bioma_pantano",
+          "nome": "Pântano",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Juncos e água",
+          "uso_no_jogo": "Bioma no cartão de missão",
+          "destino": "res://art/ui/bioma_pantano.png"
+        },
+        {
+          "id": "ui_bioma_montanha",
+          "nome": "Montanha",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Pico",
+          "uso_no_jogo": "Bioma no cartão de missão",
+          "destino": "res://art/ui/bioma_montanha.png"
+        },
+        {
+          "id": "ui_bioma_estrada",
+          "nome": "Estrada",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Placa de estrada",
+          "uso_no_jogo": "Bioma no cartão de missão",
+          "destino": "res://art/ui/bioma_estrada.png"
+        },
+        {
+          "id": "ui_bioma_cidade",
+          "nome": "Cidade",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Torre e muralha",
+          "uso_no_jogo": "Bioma no cartão de missão",
+          "destino": "res://art/ui/bioma_cidade.png"
+        }
+      ]
+    },
+    {
+      "id": "resultado",
+      "nome": "Carimbos de resultado",
+      "descricao": "Carimbados por cima do texto do resultado (com leve transparência).",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "ui_carimbo_limpo",
+          "nome": "Carimbo: Sucesso Limpo",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            180,
+            90
+          ],
+          "descricao": "Carimbo dourado com louros",
+          "uso_no_jogo": "Tela de resultado",
+          "destino": "res://art/ui/carimbo_limpo.png"
+        },
+        {
+          "id": "ui_carimbo_custo",
+          "nome": "Carimbo: Sucesso com Custo",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            180,
+            90
+          ],
+          "descricao": "Carimbo âmbar com rachadura",
+          "uso_no_jogo": "Tela de resultado",
+          "destino": "res://art/ui/carimbo_custo.png"
+        },
+        {
+          "id": "ui_carimbo_falha",
+          "nome": "Carimbo: Falha com Revelação",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            180,
+            90
+          ],
+          "descricao": "Carimbo vermelho com olho aberto (a revelação)",
+          "uso_no_jogo": "Tela de resultado",
+          "destino": "res://art/ui/carimbo_falha.png"
+        }
+      ]
+    },
+    {
+      "id": "vinculos",
+      "nome": "Ícones de vínculo",
+      "descricao": "Um por rótulo de vínculo.",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "ui_vinculo_amizade",
+          "nome": "Amizade",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Duas canecas brindando",
+          "uso_no_jogo": "Rótulo do vínculo no Quadro, Livro e eventos",
+          "destino": "res://art/ui/vinculo_amizade.png",
+          "liga_com": "game_state.gd → THRESHOLD_EVENTS / BOND_ACTIONS"
+        },
+        {
+          "id": "ui_vinculo_lealdade",
+          "nome": "Lealdade",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Mão no ombro / juramento",
+          "uso_no_jogo": "Rótulo do vínculo no Quadro, Livro e eventos",
+          "destino": "res://art/ui/vinculo_lealdade.png",
+          "liga_com": "game_state.gd → THRESHOLD_EVENTS / BOND_ACTIONS"
+        },
+        {
+          "id": "ui_vinculo_rivalidade_saudavel",
+          "nome": "Rivalidade Saudável",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Duas espadas de treino",
+          "uso_no_jogo": "Rótulo do vínculo no Quadro, Livro e eventos",
+          "destino": "res://art/ui/vinculo_rivalidade_saudavel.png",
+          "liga_com": "game_state.gd → THRESHOLD_EVENTS / BOND_ACTIONS"
+        },
+        {
+          "id": "ui_vinculo_amizade_profunda",
+          "nome": "Amizade Profunda",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Escudos sobrepostos",
+          "uso_no_jogo": "Rótulo do vínculo no Quadro, Livro e eventos",
+          "destino": "res://art/ui/vinculo_amizade_profunda.png",
+          "liga_com": "game_state.gd → THRESHOLD_EVENTS / BOND_ACTIONS"
+        },
+        {
+          "id": "ui_vinculo_mentoria",
+          "nome": "Mentoria",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Livro com tocha",
+          "uso_no_jogo": "Rótulo do vínculo no Quadro, Livro e eventos",
+          "destino": "res://art/ui/vinculo_mentoria.png",
+          "liga_com": "game_state.gd → THRESHOLD_EVENTS / BOND_ACTIONS"
+        },
+        {
+          "id": "ui_vinculo_atracao",
+          "nome": "Atração",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Rosa",
+          "uso_no_jogo": "Rótulo do vínculo no Quadro, Livro e eventos",
+          "destino": "res://art/ui/vinculo_atracao.png",
+          "liga_com": "game_state.gd → THRESHOLD_EVENTS / BOND_ACTIONS"
+        },
+        {
+          "id": "ui_vinculo_parceria_lendaria",
+          "nome": "Parceria Lendária",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Duas estrelas entrelaçadas",
+          "uso_no_jogo": "Rótulo do vínculo no Quadro, Livro e eventos",
+          "destino": "res://art/ui/vinculo_parceria_lendaria.png",
+          "liga_com": "game_state.gd → THRESHOLD_EVENTS / BOND_ACTIONS"
+        },
+        {
+          "id": "ui_vinculo_romance",
+          "nome": "Romance",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Coração com fita",
+          "uso_no_jogo": "Rótulo do vínculo no Quadro, Livro e eventos",
+          "destino": "res://art/ui/vinculo_romance.png",
+          "liga_com": "game_state.gd → THRESHOLD_EVENTS / BOND_ACTIONS"
+        },
+        {
+          "id": "ui_vinculo_irmandade",
+          "nome": "Irmandade",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Mãos com corte unidas (pacto de sangue, sem sangue explícito)",
+          "uso_no_jogo": "Rótulo do vínculo no Quadro, Livro e eventos",
+          "destino": "res://art/ui/vinculo_irmandade.png",
+          "liga_com": "game_state.gd → THRESHOLD_EVENTS / BOND_ACTIONS"
+        },
+        {
+          "id": "ui_vinculo_rivalidade",
+          "nome": "Rivalidade",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Dois chifres opostos",
+          "uso_no_jogo": "Rótulo do vínculo no Quadro, Livro e eventos",
+          "destino": "res://art/ui/vinculo_rivalidade.png",
+          "liga_com": "game_state.gd → THRESHOLD_EVENTS / BOND_ACTIONS"
+        },
+        {
+          "id": "ui_vinculo_rancor",
+          "nome": "Rancor",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Punhal cravado",
+          "uso_no_jogo": "Rótulo do vínculo no Quadro, Livro e eventos",
+          "destino": "res://art/ui/vinculo_rancor.png",
+          "liga_com": "game_state.gd → THRESHOLD_EVENTS / BOND_ACTIONS"
+        },
+        {
+          "id": "ui_vinculo_ruptura",
+          "nome": "Ruptura",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Corda partida",
+          "uso_no_jogo": "Rótulo do vínculo no Quadro, Livro e eventos",
+          "destino": "res://art/ui/vinculo_ruptura.png",
+          "liga_com": "game_state.gd → THRESHOLD_EVENTS / BOND_ACTIONS"
+        },
+        {
+          "id": "ui_vinculo_inimizade",
+          "nome": "Inimizade Declarada",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Escudo partido ao meio",
+          "uso_no_jogo": "Rótulo do vínculo no Quadro, Livro e eventos",
+          "destino": "res://art/ui/vinculo_inimizade.png",
+          "liga_com": "game_state.gd → THRESHOLD_EVENTS / BOND_ACTIONS"
+        }
+      ]
+    },
+    {
+      "id": "condicoes",
+      "nome": "Ícones de condição",
+      "descricao": "Aflições (borda vermelha #a8443c) e virtudes (borda verde #3f6b2f).",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "ui_cond_paranoico",
+          "nome": "Paranoico",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Olho arregalado com olhos menores ao redor",
+          "uso_no_jogo": "Condição no Livro, montagem e mapa",
+          "destino": "res://art/ui/cond_paranoico.png",
+          "liga_com": "data/traits.json"
+        },
+        {
+          "id": "ui_cond_egoista",
+          "nome": "Egoísta",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Mão agarrando moedas",
+          "uso_no_jogo": "Condição no Livro, montagem e mapa",
+          "destino": "res://art/ui/cond_egoista.png",
+          "liga_com": "data/traits.json"
+        },
+        {
+          "id": "ui_cond_desesperado",
+          "nome": "Desesperado",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Vela quase apagada",
+          "uso_no_jogo": "Condição no Livro, montagem e mapa",
+          "destino": "res://art/ui/cond_desesperado.png",
+          "liga_com": "data/traits.json"
+        },
+        {
+          "id": "ui_cond_irracional",
+          "nome": "Irracional",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Espiral quebrada",
+          "uso_no_jogo": "Condição no Livro, montagem e mapa",
+          "destino": "res://art/ui/cond_irracional.png",
+          "liga_com": "data/traits.json"
+        },
+        {
+          "id": "ui_cond_medroso",
+          "nome": "Medroso",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Gota de suor e mão trêmula",
+          "uso_no_jogo": "Condição no Livro, montagem e mapa",
+          "destino": "res://art/ui/cond_medroso.png",
+          "liga_com": "data/traits.json"
+        },
+        {
+          "id": "ui_cond_corajoso",
+          "nome": "Corajoso",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Leão rugindo",
+          "uso_no_jogo": "Condição no Livro, montagem e mapa",
+          "destino": "res://art/ui/cond_corajoso.png",
+          "liga_com": "data/traits.json"
+        },
+        {
+          "id": "ui_cond_focado",
+          "nome": "Focado",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Olho com mira",
+          "uso_no_jogo": "Condição no Livro, montagem e mapa",
+          "destino": "res://art/ui/cond_focado.png",
+          "liga_com": "data/traits.json"
+        },
+        {
+          "id": "ui_cond_estoico",
+          "nome": "Estoico",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Rocha firme",
+          "uso_no_jogo": "Condição no Livro, montagem e mapa",
+          "destino": "res://art/ui/cond_estoico.png",
+          "liga_com": "data/traits.json"
+        },
+        {
+          "id": "ui_cond_inspirador",
+          "nome": "Inspirador",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Trombeta com notas",
+          "uso_no_jogo": "Condição no Livro, montagem e mapa",
+          "destino": "res://art/ui/cond_inspirador.png",
+          "liga_com": "data/traits.json"
+        }
+      ]
+    },
+    {
+      "id": "tracos",
+      "nome": "Ícones de traço",
+      "descricao": "Positivos com fundo claro, negativos com fundo escuro.",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "ui_traco_matador_de_feras",
+          "nome": "Matador de Feras",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Garra de fera",
+          "uso_no_jogo": "Traço no Livro",
+          "destino": "res://art/ui/traco_matador_de_feras.png",
+          "liga_com": "data/traits.json → traits"
+        },
+        {
+          "id": "ui_traco_andarilho",
+          "nome": "Andarilho da Mata",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Folha e bota",
+          "uso_no_jogo": "Traço no Livro",
+          "destino": "res://art/ui/traco_andarilho.png",
+          "liga_com": "data/traits.json → traits"
+        },
+        {
+          "id": "ui_traco_pele_dura",
+          "nome": "Pele Dura",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Escama/couro grosso",
+          "uso_no_jogo": "Traço no Livro",
+          "destino": "res://art/ui/traco_pele_dura.png",
+          "liga_com": "data/traits.json → traits"
+        },
+        {
+          "id": "ui_traco_sangue_frio",
+          "nome": "Sangue-Frio",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Floco de gelo",
+          "uso_no_jogo": "Traço no Livro",
+          "destino": "res://art/ui/traco_sangue_frio.png",
+          "liga_com": "data/traits.json → traits"
+        },
+        {
+          "id": "ui_traco_olho_vivo",
+          "nome": "Olho Vivo",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Olho de águia",
+          "uso_no_jogo": "Traço no Livro",
+          "destino": "res://art/ui/traco_olho_vivo.png",
+          "liga_com": "data/traits.json → traits"
+        },
+        {
+          "id": "ui_traco_voz_firme",
+          "nome": "Voz Firme",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Boca com ondas de som",
+          "uso_no_jogo": "Traço no Livro",
+          "destino": "res://art/ui/traco_voz_firme.png",
+          "liga_com": "data/traits.json → traits"
+        },
+        {
+          "id": "ui_traco_medo_do_escuro",
+          "nome": "Medo do Escuro",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Lua com olhos na sombra",
+          "uso_no_jogo": "Traço no Livro",
+          "destino": "res://art/ui/traco_medo_do_escuro.png",
+          "liga_com": "data/traits.json → traits"
+        },
+        {
+          "id": "ui_traco_claustrofobico",
+          "nome": "Claustrofóbico",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Paredes se fechando",
+          "uso_no_jogo": "Traço no Livro",
+          "destino": "res://art/ui/traco_claustrofobico.png",
+          "liga_com": "data/traits.json → traits"
+        },
+        {
+          "id": "ui_traco_mao_tremula",
+          "nome": "Mão Trêmula",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Mão com linhas de tremor",
+          "uso_no_jogo": "Traço no Livro",
+          "destino": "res://art/ui/traco_mao_tremula.png",
+          "liga_com": "data/traits.json → traits"
+        },
+        {
+          "id": "ui_traco_rancoroso",
+          "nome": "Rancoroso",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Nuvem escura",
+          "uso_no_jogo": "Traço no Livro",
+          "destino": "res://art/ui/traco_rancoroso.png",
+          "liga_com": "data/traits.json → traits"
+        },
+        {
+          "id": "ui_traco_nervoso",
+          "nome": "Nervoso",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Unha roída / relâmpago pequeno",
+          "uso_no_jogo": "Traço no Livro",
+          "destino": "res://art/ui/traco_nervoso.png",
+          "liga_com": "data/traits.json → traits"
+        },
+        {
+          "id": "ui_traco_pulmao_fraco",
+          "nome": "Pulmão Fraco",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Pulmões com fissura",
+          "uso_no_jogo": "Traço no Livro",
+          "destino": "res://art/ui/traco_pulmao_fraco.png",
+          "liga_com": "data/traits.json → traits"
+        }
+      ]
+    },
+    {
+      "id": "equipamento",
+      "nome": "Slots de equipamento",
+      "descricao": "Silhuetas em baixo relevo para slots vazios.",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "ui_slot_arma",
+          "nome": "Slot: Arma",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            48,
+            48
+          ],
+          "descricao": "Silhueta de espada em baixo relevo",
+          "uso_no_jogo": "Slot vazio na tela de Equipamento",
+          "destino": "res://art/ui/slot_arma.png"
+        },
+        {
+          "id": "ui_slot_armadura",
+          "nome": "Slot: Armadura",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            48,
+            48
+          ],
+          "descricao": "Silhueta de peitoral",
+          "uso_no_jogo": "Slot vazio na tela de Equipamento",
+          "destino": "res://art/ui/slot_armadura.png"
+        },
+        {
+          "id": "ui_slot_acessorio",
+          "nome": "Slot: Acessório",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            48,
+            48
+          ],
+          "descricao": "Silhueta de anel",
+          "uso_no_jogo": "Slot vazio na tela de Equipamento",
+          "destino": "res://art/ui/slot_acessorio.png"
+        },
+        {
+          "id": "ui_slot_consumivel",
+          "nome": "Slot: Consumível",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            48,
+            48
+          ],
+          "descricao": "Silhueta de frasco",
+          "uso_no_jogo": "Slot vazio na tela de Equipamento",
+          "destino": "res://art/ui/slot_consumivel.png"
+        }
+      ]
+    },
+    {
+      "id": "menu",
+      "nome": "Ícones de menu",
+      "descricao": "Botões do hub.",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "ui_menu_guilda",
+          "nome": "Guilda",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Martelo e tijolo",
+          "uso_no_jogo": "Botões do hub e menu",
+          "destino": "res://art/ui/menu_guilda.png"
+        },
+        {
+          "id": "ui_menu_mercado",
+          "nome": "Mercado",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Balança",
+          "uso_no_jogo": "Botões do hub e menu",
+          "destino": "res://art/ui/menu_mercado.png"
+        },
+        {
+          "id": "ui_menu_quadro",
+          "nome": "Quadro",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Alfinete com fio",
+          "uso_no_jogo": "Botões do hub e menu",
+          "destino": "res://art/ui/menu_quadro.png"
+        },
+        {
+          "id": "ui_menu_livro",
+          "nome": "Livro",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Livro fechado",
+          "uso_no_jogo": "Botões do hub e menu",
+          "destino": "res://art/ui/menu_livro.png"
+        },
+        {
+          "id": "ui_menu_treino",
+          "nome": "Treino",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Boneco de treino",
+          "uso_no_jogo": "Botões do hub e menu",
+          "destino": "res://art/ui/menu_treino.png"
+        },
+        {
+          "id": "ui_menu_encerrar_dia",
+          "nome": "Encerrar dia",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Lua e vela",
+          "uso_no_jogo": "Botões do hub e menu",
+          "destino": "res://art/ui/menu_encerrar_dia.png"
+        },
+        {
+          "id": "ui_menu_salvar",
+          "nome": "Salvar",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Pena e pergaminho",
+          "uso_no_jogo": "Botões do hub e menu",
+          "destino": "res://art/ui/menu_salvar.png"
+        },
+        {
+          "id": "ui_menu_carregar",
+          "nome": "Carregar",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Pergaminho enrolado com fita",
+          "uso_no_jogo": "Botões do hub e menu",
+          "destino": "res://art/ui/menu_carregar.png"
+        },
+        {
+          "id": "ui_menu_menu",
+          "nome": "Menu",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Três linhas de couro",
+          "uso_no_jogo": "Botões do hub e menu",
+          "destino": "res://art/ui/menu_menu.png"
+        },
+        {
+          "id": "ui_menu_acelerar",
+          "nome": "Acelerar",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Ampulheta com seta",
+          "uso_no_jogo": "Botões do hub e menu",
+          "destino": "res://art/ui/menu_acelerar.png"
+        },
+        {
+          "id": "ui_menu_descanso",
+          "nome": "Descanso",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Cama com Z",
+          "uso_no_jogo": "Botões do hub e menu",
+          "destino": "res://art/ui/menu_descanso.png"
+        }
+      ]
+    },
+    {
+      "id": "dados",
+      "nome": "Dados",
+      "descricao": "Elementos de rolagem.",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "ui_d20",
+          "nome": "Dado d20",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            64,
+            64
+          ],
+          "descricao": "Icosaedro de osso com números escuros (só o '20' visível na face de frente).",
+          "variacoes": [
+            "rolando",
+            "parado: sucesso (borda dourada)",
+            "parado: falha (borda vermelha)",
+            "crítico 20",
+            "falha crítica 1"
+          ],
+          "animacao": {
+            "quadros": 8,
+            "fps": 16,
+            "loop": false
+          },
+          "uso_no_jogo": "Rolagem visível nos eventos do mapa",
+          "destino": "res://art/ui/d20.png"
+        }
+      ]
+    }
+  ],
+  "reservado_para_futuro": {
+    "_doc": "Vínculo, condição, traço ou atributo novo → ícone novo no grupo correspondente, mesmo prefixo (vinculo_, cond_, traco_, atr_).",
+    "ideias": [
+      "ícones de magias por escola",
+      "ícones de talentos",
+      "conquistas (v1.0+)"
+    ]
+  }
+}

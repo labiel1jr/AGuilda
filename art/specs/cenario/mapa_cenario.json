@@ -1,0 +1,659 @@
+{
+  "_doc": "Peças de cenário para o pergaminho do Mapa Mágico, no estilo das peças já existentes em art/MapParts. Não contém imagens: é a especificação para artistas. Herda de _estilo_cenario.json.",
+  "herda": "_estilo_cenario.json",
+  "titulo": "Mapa Mágico — marcos, terreno e veículos",
+  "familia_padrao": "nanquim",
+  "versao": 1,
+  "total_assets": 43,
+  "grupos": [
+    {
+      "id": "marcos",
+      "nome": "Marcos e construções",
+      "descricao": "Pontos de referência únicos ligados a missões e eventos. Desenhados como as vilas e cidades já existentes, um pouco maiores.",
+      "familia": "nanquim",
+      "assets": [
+        {
+          "id": "marco_ponte_pedra",
+          "nome": "Ponte de pedra",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            72,
+            34
+          ],
+          "descricao": "Ponte de três arcos sobre água, vista oblíqua.",
+          "variacoes": [
+            "inteira",
+            "com arco caído"
+          ],
+          "uso_no_jogo": "Cruzamento de rio na rota (evento Ponte caída)",
+          "destino": "res://art/MapParts/landmarks/ponte_pedra.png"
+        },
+        {
+          "id": "marco_ponte_madeira",
+          "nome": "Ponte de madeira",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            60,
+            26
+          ],
+          "descricao": "Ponte de tábuas com corrimão de corda.",
+          "variacoes": [
+            "inteira",
+            "rompida (corda solta)"
+          ],
+          "uso_no_jogo": "Rio e desfiladeiro",
+          "destino": "res://art/MapParts/landmarks/ponte_madeira.png"
+        },
+        {
+          "id": "marco_vau",
+          "nome": "Vau do rio",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            48,
+            24
+          ],
+          "descricao": "Pedras chatas atravessando um trecho raso, marcas de correnteza.",
+          "uso_no_jogo": "Evento Travessia do rio",
+          "destino": "res://art/MapParts/landmarks/vau.png"
+        },
+        {
+          "id": "marco_ruinas",
+          "nome": "Ruínas antigas",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            64,
+            44
+          ],
+          "descricao": "Colunas partidas e um arco de pedra em pé, mato crescendo.",
+          "variacoes": [
+            "3 variações de composição"
+          ],
+          "uso_no_jogo": "Nó de tesouro/evento Ruínas",
+          "destino": "res://art/MapParts/landmarks/ruinas_{n}.png"
+        },
+        {
+          "id": "marco_torre_vigia",
+          "nome": "Torre de vigia",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            30,
+            56
+          ],
+          "descricao": "Torre quadrada de pedra com ameias e uma fogueira de sinal no topo.",
+          "variacoes": [
+            "ativa (fumaça)",
+            "abandonada"
+          ],
+          "uso_no_jogo": "Missão A Torre de Sinais e decoração de estrada",
+          "destino": "res://art/MapParts/landmarks/torre_vigia.png"
+        },
+        {
+          "id": "marco_torre_mago",
+          "nome": "Torre do mago",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            30,
+            64
+          ],
+          "descricao": "Torre fina e torta, telhado cônico, janelas com brilho (único acento: ouro velho).",
+          "uso_no_jogo": "Missão A Torre do Mago Silencioso",
+          "destino": "res://art/MapParts/landmarks/torre_mago.png"
+        },
+        {
+          "id": "marco_mina",
+          "nome": "Entrada de mina",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            56,
+            40
+          ],
+          "descricao": "Boca escura na encosta escorada com vigas, trilho e um carrinho de minério.",
+          "variacoes": [
+            "ativa",
+            "lacrada com tábuas"
+          ],
+          "uso_no_jogo": "Missão Os Mortos da Mina",
+          "destino": "res://art/MapParts/landmarks/mina.png"
+        },
+        {
+          "id": "marco_porto",
+          "nome": "Porto e cais",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            80,
+            44
+          ],
+          "descricao": "Cais de madeira com dois postes, um barco amarrado e caixotes.",
+          "uso_no_jogo": "Missão Contrabando no Porto",
+          "destino": "res://art/MapParts/landmarks/porto.png"
+        },
+        {
+          "id": "marco_moinho",
+          "nome": "Moinho de vento",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            36,
+            52
+          ],
+          "descricao": "Moinho de pedra com quatro pás de pano.",
+          "variacoes": [
+            "pás em 2 ângulos (animação lenta)"
+          ],
+          "uso_no_jogo": "Decoração de estrada e campos",
+          "destino": "res://art/MapParts/landmarks/moinho.png"
+        },
+        {
+          "id": "marco_poco",
+          "nome": "Poço",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            24,
+            26
+          ],
+          "descricao": "Poço de pedra com telhadinho e balde.",
+          "uso_no_jogo": "Decoração de vila; evento de água",
+          "destino": "res://art/MapParts/landmarks/poco.png"
+        },
+        {
+          "id": "marco_santuario_pedra",
+          "nome": "Santuário de beira de estrada",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            28,
+            36
+          ],
+          "descricao": "Nicho de pedra com estátua sem rosto e velas.",
+          "uso_no_jogo": "Nó Santuário no mapa (versão de cenário)",
+          "destino": "res://art/MapParts/landmarks/santuario.png"
+        },
+        {
+          "id": "marco_capela",
+          "nome": "Capela em ruínas",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            56,
+            48
+          ],
+          "descricao": "Capela sem teto, sino caído na porta.",
+          "uso_no_jogo": "Evento Capela em ruínas",
+          "destino": "res://art/MapParts/landmarks/capela.png"
+        },
+        {
+          "id": "marco_circulo_pedras",
+          "nome": "Círculo de pedras",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            56,
+            32
+          ],
+          "descricao": "Menires em círculo com uma pedra central.",
+          "uso_no_jogo": "Missão Rituais no Pântano",
+          "destino": "res://art/MapParts/landmarks/circulo_pedras.png"
+        },
+        {
+          "id": "marco_cripta",
+          "nome": "Cripta",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            48,
+            40
+          ],
+          "descricao": "Mausoléu baixo com porta selada por runas (acento ouro velho nas runas).",
+          "uso_no_jogo": "Missão Runas na Cripta de Hollen",
+          "destino": "res://art/MapParts/landmarks/cripta.png"
+        },
+        {
+          "id": "marco_cemiterio",
+          "nome": "Cemitério",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            64,
+            36
+          ],
+          "descricao": "Lápides tortas, cerca baixa, árvore seca.",
+          "uso_no_jogo": "Decoração de pântano e cidade",
+          "destino": "res://art/MapParts/landmarks/cemiterio.png"
+        },
+        {
+          "id": "marco_palicada",
+          "nome": "Forte de paliçada",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            72,
+            48
+          ],
+          "descricao": "Cerca de troncos pontudos com portão e torre baixa.",
+          "uso_no_jogo": "Missão Aldeia Sitiada",
+          "destino": "res://art/MapParts/landmarks/palicada.png"
+        },
+        {
+          "id": "marco_castelo",
+          "nome": "Castelo/fortaleza",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            96,
+            64
+          ],
+          "descricao": "Muralha com duas torres e um estandarte.",
+          "uso_no_jogo": "Destino de diplomacia (Barões, Conselho)",
+          "destino": "res://art/MapParts/landmarks/castelo.png"
+        },
+        {
+          "id": "marco_ninho",
+          "nome": "O Ninho do Corvo",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            110,
+            80
+          ],
+          "descricao": "Fortaleza escura no pico, torres finas como penas, corvos em volta.",
+          "detalhes": [
+            "peça única do jogo, mais detalhada; acento #a8443c na bandeira"
+          ],
+          "uso_no_jogo": "Missão final O Ninho do Corvo",
+          "destino": "res://art/MapParts/landmarks/ninho_corvo.png"
+        },
+        {
+          "id": "marco_encruzilhada",
+          "nome": "Encruzilhada com placa",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            22,
+            32
+          ],
+          "descricao": "Poste com três placas apontando direções (placas sem texto legível).",
+          "uso_no_jogo": "Bifurcações do mapa",
+          "destino": "res://art/MapParts/landmarks/placa.png"
+        },
+        {
+          "id": "marco_cabana_pantano",
+          "nome": "Cabana do pântano",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            44,
+            40
+          ],
+          "descricao": "Cabana sobre palafitas com juncos em volta.",
+          "uso_no_jogo": "Pântano; NPC eremita",
+          "destino": "res://art/MapParts/landmarks/cabana_pantano.png"
+        },
+        {
+          "id": "marco_naufragio",
+          "nome": "Naufrágio",
+          "status": "planejado",
+          "prioridade": "P3",
+          "tamanho_final_px": [
+            56,
+            28
+          ],
+          "descricao": "Casco de barco virado na margem.",
+          "uso_no_jogo": "Decoração de rio e costa",
+          "destino": "res://art/MapParts/landmarks/naufragio.png"
+        },
+        {
+          "id": "marco_campo_batalha",
+          "nome": "Campo de batalha antigo",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            56,
+            32
+          ],
+          "descricao": "Lanças fincadas, estandarte rasgado, escudo caído.",
+          "uso_no_jogo": "Evento e decoração de estrada",
+          "destino": "res://art/MapParts/landmarks/campo_batalha.png"
+        },
+        {
+          "id": "marco_arvore_marcada",
+          "nome": "Árvore marcada",
+          "status": "planejado",
+          "prioridade": "P3",
+          "tamanho_final_px": [
+            32,
+            40
+          ],
+          "descricao": "Árvore grossa com marcas de garra e um laço de corda (sem corpo).",
+          "uso_no_jogo": "Território perigoso",
+          "destino": "res://art/MapParts/landmarks/arvore_marcada.png"
+        },
+        {
+          "id": "marco_toca",
+          "nome": "Toca/covil",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            48,
+            32
+          ],
+          "descricao": "Entrada de caverna com ossos espalhados.",
+          "uso_no_jogo": "Missões de fera (lobos, serpe), guarda do alvo",
+          "destino": "res://art/MapParts/landmarks/covil.png"
+        },
+        {
+          "id": "marco_ninho_serpe",
+          "nome": "Ninho da serpe",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            64,
+            52
+          ],
+          "descricao": "Pico rochoso com ninho de galhos e ovos rachados.",
+          "uso_no_jogo": "Missão O Ninho da Serpe",
+          "destino": "res://art/MapParts/landmarks/ninho_serpe.png"
+        },
+        {
+          "id": "marco_celeiro",
+          "nome": "Celeiro",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            44,
+            36
+          ],
+          "descricao": "Celeiro de madeira com porta grande e feno.",
+          "uso_no_jogo": "Missão Ratos Gigantes no Celeiro",
+          "destino": "res://art/MapParts/landmarks/celeiro.png"
+        }
+      ]
+    },
+    {
+      "id": "terreno",
+      "nome": "Peças de terreno",
+      "descricao": "Novas famílias de peças soltas, no mesmo esquema de art/MapParts/<tipo>/<n>.png (o jogo lê a pasta inteira).",
+      "familia": "nanquim",
+      "assets": [
+        {
+          "id": "ter_rochas",
+          "nome": "Rochas",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            24,
+            16
+          ],
+          "descricao": "Grupos de 1 a 4 pedras.",
+          "variacoes": [
+            "12 peças numeradas"
+          ],
+          "uso_no_jogo": "Montanha, estrada",
+          "destino": "res://art/MapParts/rocks/{n}.png"
+        },
+        {
+          "id": "ter_arvore_morta",
+          "nome": "Árvores mortas",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            20,
+            26
+          ],
+          "descricao": "Árvores secas, galhos tortos.",
+          "variacoes": [
+            "10 peças"
+          ],
+          "uso_no_jogo": "Pântano e áreas amaldiçoadas",
+          "destino": "res://art/MapParts/deadtrees/{n}.png"
+        },
+        {
+          "id": "ter_juncos",
+          "nome": "Juncos e taboas",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            16,
+            14
+          ],
+          "descricao": "Tufos de junco à beira d'água.",
+          "variacoes": [
+            "12 peças"
+          ],
+          "uso_no_jogo": "Pântano e rios",
+          "destino": "res://art/MapParts/reeds/{n}.png"
+        },
+        {
+          "id": "ter_arbustos",
+          "nome": "Arbustos",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            16,
+            12
+          ],
+          "descricao": "Moitas baixas arredondadas.",
+          "variacoes": [
+            "12 peças"
+          ],
+          "uso_no_jogo": "Floresta, estrada",
+          "destino": "res://art/MapParts/bushes/{n}.png"
+        },
+        {
+          "id": "ter_cercas",
+          "nome": "Cercas",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            32,
+            10
+          ],
+          "descricao": "Trechos de cerca de madeira e muro de pedra baixa.",
+          "variacoes": [
+            "8 peças"
+          ],
+          "uso_no_jogo": "Campos perto de vilas",
+          "destino": "res://art/MapParts/fences/{n}.png"
+        },
+        {
+          "id": "ter_campos",
+          "nome": "Campos de cultivo",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            48,
+            24
+          ],
+          "descricao": "Retângulos com sulcos de plantação em perspectiva.",
+          "variacoes": [
+            "6 peças"
+          ],
+          "uso_no_jogo": "Estrada e arredores de vilas",
+          "destino": "res://art/MapParts/fields/{n}.png"
+        },
+        {
+          "id": "ter_pinheiros",
+          "nome": "Pinheiros",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            14,
+            30
+          ],
+          "descricao": "Coníferas altas e estreitas.",
+          "variacoes": [
+            "12 peças"
+          ],
+          "uso_no_jogo": "Montanha e floresta fria",
+          "destino": "res://art/MapParts/pines/{n}.png"
+        },
+        {
+          "id": "ter_ondas",
+          "nome": "Água: ondas e correnteza",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            20,
+            8
+          ],
+          "descricao": "Marcas de onda e redemoinho para lagos e rio.",
+          "variacoes": [
+            "8 peças"
+          ],
+          "uso_no_jogo": "Rio e lagos do mapa",
+          "destino": "res://art/MapParts/waves/{n}.png"
+        },
+        {
+          "id": "ter_ponte_trilha",
+          "nome": "Carimbos de trilha",
+          "status": "planejado",
+          "prioridade": "P3",
+          "tamanho_final_px": [
+            24,
+            12
+          ],
+          "descricao": "Pedaços de estrada de terra e calçamento para desenhar caminhos.",
+          "variacoes": [
+            "8 peças"
+          ],
+          "uso_no_jogo": "Caminhos futuros desenhados com carimbos",
+          "destino": "res://art/MapParts/paths/{n}.png"
+        }
+      ]
+    },
+    {
+      "id": "veiculos",
+      "nome": "Veículos e transporte",
+      "descricao": "Carroças, barcos e afins, para cenário e eventos.",
+      "familia": "nanquim",
+      "assets": [
+        {
+          "id": "vei_carroca",
+          "nome": "Carroça",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            36,
+            22
+          ],
+          "descricao": "Carroça de duas rodas com carga coberta por lona.",
+          "variacoes": [
+            "parada",
+            "tombada (evento Carroça tombada)"
+          ],
+          "uso_no_jogo": "Mapa: caravana, evento",
+          "destino": "res://art/MapParts/vehicles/carroca.png"
+        },
+        {
+          "id": "vei_caravana",
+          "nome": "Caravana",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            72,
+            24
+          ],
+          "descricao": "Fila de três carroças com toldo.",
+          "uso_no_jogo": "Missão Escolta da Caravana",
+          "destino": "res://art/MapParts/vehicles/caravana.png"
+        },
+        {
+          "id": "vei_carroca_mercador",
+          "nome": "Carroça de mercador",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            40,
+            28
+          ],
+          "descricao": "Carroção colorido com toldo listrado e mercadoria pendurada.",
+          "uso_no_jogo": "Nó Mercador (versão de cenário)",
+          "destino": "res://art/MapParts/vehicles/mercador.png"
+        },
+        {
+          "id": "vei_barco",
+          "nome": "Barco a remo",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            32,
+            14
+          ],
+          "descricao": "Barco pequeno com remos.",
+          "uso_no_jogo": "Rio e porto",
+          "destino": "res://art/MapParts/vehicles/barco.png"
+        },
+        {
+          "id": "vei_navio",
+          "nome": "Navio mercante",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            60,
+            44
+          ],
+          "descricao": "Navio de um mastro com vela enrolada.",
+          "uso_no_jogo": "Porto (Contrabando)",
+          "destino": "res://art/MapParts/vehicles/navio.png"
+        },
+        {
+          "id": "vei_balsa",
+          "nome": "Balsa de corda",
+          "status": "planejado",
+          "prioridade": "P3",
+          "tamanho_final_px": [
+            40,
+            18
+          ],
+          "descricao": "Balsa de troncos presa a uma corda entre margens.",
+          "uso_no_jogo": "Travessia de rio",
+          "destino": "res://art/MapParts/vehicles/balsa.png"
+        },
+        {
+          "id": "vei_carrinho_mina",
+          "nome": "Carrinho de minério",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            18,
+            14
+          ],
+          "descricao": "Vagonete sobre trilho.",
+          "uso_no_jogo": "Mina",
+          "destino": "res://art/MapParts/vehicles/vagonete.png"
+        },
+        {
+          "id": "vei_carruagem",
+          "nome": "Carruagem nobre",
+          "status": "planejado",
+          "prioridade": "P3",
+          "tamanho_final_px": [
+            44,
+            28
+          ],
+          "descricao": "Carruagem fechada com brasão (sem texto).",
+          "uso_no_jogo": "Missões de diplomacia",
+          "destino": "res://art/MapParts/vehicles/carruagem.png"
+        }
+      ]
+    }
+  ],
+  "reservado_para_futuro": {
+    "_doc": "Novas famílias de terreno entram como nova pasta em art/MapParts/<tipo>/ (o jogo lê a pasta). Novos marcos: adicione no grupo 'marcos'.",
+    "ideias": [
+      "vulcao",
+      "deserto (dunas, cactos)",
+      "neve (pinheiros nevados)",
+      "costa (falésias, farol)",
+      "ponte levadiça"
+    ]
+  }
+}

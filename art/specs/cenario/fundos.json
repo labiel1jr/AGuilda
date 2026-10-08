@@ -1,0 +1,192 @@
+{
+  "_doc": "Cenários de fundo sem personagens. Não contém imagens: é a especificação para artistas. Herda de _estilo_cenario.json.",
+  "herda": "_estilo_cenario.json",
+  "titulo": "Fundos e cenas",
+  "familia_padrao": "fundo",
+  "versao": 1,
+  "total_assets": 10,
+  "grupos": [
+    {
+      "id": "fundos",
+      "nome": "Fundos",
+      "descricao": "Cenas sem personagens. Entregar em camadas quando indicado.",
+      "familia": "fundo",
+      "assets": [
+        {
+          "id": "fundo_salao",
+          "nome": "Salão da Guilda",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            1920,
+            1080
+          ],
+          "descricao": "Salão de pedra e madeira com lareira à esquerda, mural ao centro, estandarte, mesas; luz quente de velas.",
+          "estados": [
+            "decadente (início: teias, cadeiras viradas, estandarte rasgado)",
+            "reconstruído (fim do Ato 2)"
+          ],
+          "area_ui": "faixa superior de 80 px e 2/3 centrais ficam cobertos por painéis: manter detalhe nas bordas",
+          "uso_no_jogo": "Fundo do hub",
+          "destino": "res://art/backgrounds/salao_{estado}.png",
+          "liga_com": "Pode mudar conforme Reputação/capítulo"
+        },
+        {
+          "id": "fundo_taverna",
+          "nome": "Taverna da guilda",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            1920,
+            1080
+          ],
+          "descricao": "Canto da taverna com balcão, barris e lareira, sem pessoas.",
+          "area_ui": "painel central de cena",
+          "uso_no_jogo": "Bastidores (taverna, primeira noite)",
+          "destino": "res://art/backgrounds/taverna.png"
+        },
+        {
+          "id": "fundo_patio_treino",
+          "nome": "Pátio de treino",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            1920,
+            1080
+          ],
+          "descricao": "Pátio de terra com bonecos, alvos de arco e rack de armas.",
+          "uso_no_jogo": "Salão de Treinamento e bastidores de treino",
+          "destino": "res://art/backgrounds/patio.png"
+        },
+        {
+          "id": "fundo_escritorio",
+          "nome": "Escritório do Mestre",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            1920,
+            1080
+          ],
+          "descricao": "Escritório com a mesa do mestre, estantes e janela para a cidade.",
+          "uso_no_jogo": "Ultimato, abertura de capítulo, menu",
+          "destino": "res://art/backgrounds/escritorio.png"
+        },
+        {
+          "id": "fundo_mercado",
+          "nome": "Mercado",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            1920,
+            1080
+          ],
+          "descricao": "Barraca de mercado com toldos, armas e poções expostas.",
+          "uso_no_jogo": "Tela de Mercado",
+          "destino": "res://art/backgrounds/mercado.png"
+        },
+        {
+          "id": "fundo_mesa_mapa",
+          "nome": "Mesa do Mapa Mágico",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            1920,
+            1080
+          ],
+          "descricao": "Mesa vista de cima com bordas de madeira, velas nos cantos e brilho arcano roxo em volta da área do mapa.",
+          "area_ui": "retângulo central (≈ 66% da largura) livre para o mapa",
+          "uso_no_jogo": "Moldura do Mapa Mágico",
+          "destino": "res://art/backgrounds/mesa_mapa.png"
+        },
+        {
+          "id": "fundo_pergaminho_mapa",
+          "nome": "Textura de pergaminho do mapa",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            512,
+            512
+          ],
+          "descricao": "Textura de pergaminho envelhecido que repete sem emenda, manchas suaves.",
+          "variacoes": [
+            "floresta (esverdeado)",
+            "pântano",
+            "montanha",
+            "estrada",
+            "cidade"
+          ],
+          "uso_no_jogo": "Fundo do mapa por bioma (hoje é cor sólida)",
+          "destino": "res://art/backgrounds/pergaminho_{bioma}.png",
+          "familia": "nanquim"
+        },
+        {
+          "id": "fundo_chamada_bioma",
+          "nome": "Vinheta de chamada por bioma",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Cena pequena e atmosférica do bioma, sem personagens, vista como através de uma bola de cristal.",
+          "variacoes": [
+            "floresta",
+            "pântano",
+            "montanha",
+            "estrada",
+            "cidade"
+          ],
+          "uso_no_jogo": "Fundo do painel de chamada no mapa",
+          "destino": "res://art/backgrounds/chamada_{bioma}.png"
+        },
+        {
+          "id": "fundo_capitulo",
+          "nome": "Abertura de capítulo",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            1920,
+            1080
+          ],
+          "descricao": "Ilustração de paisagem de cada capítulo (sem personagens).",
+          "variacoes": [
+            "c1 Herança de Cinzas: guilda decadente ao amanhecer",
+            "c2 Ecos do Corvo: cidade à noite com corvos",
+            "c3 Nomes na Lista: lista de nomes queimando sobre a mesa",
+            "c4 O Ninho do Corvo: fortaleza no pico sob tempestade"
+          ],
+          "uso_no_jogo": "Tela de abertura de capítulo",
+          "destino": "res://art/backgrounds/capitulo_{id}.png",
+          "liga_com": "data/chapters.json"
+        },
+        {
+          "id": "fundo_epilogo",
+          "nome": "Epílogo",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            1920,
+            1080
+          ],
+          "descricao": "Salão da guilda ao entardecer, mesa posta para festa (variação por final).",
+          "variacoes": [
+            "lenda",
+            "reconstrucao",
+            "sobrevivencia",
+            "cinzas"
+          ],
+          "uso_no_jogo": "Epílogo",
+          "destino": "res://art/backgrounds/epilogo_{final}.png",
+          "liga_com": "data/endings.json"
+        }
+      ]
+    }
+  ],
+  "reservado_para_futuro": {
+    "_doc": "Capítulo novo em data/chapters.json → adicione uma variação em fundo_capitulo. Final novo em endings.json → variação em fundo_epilogo.",
+    "ideias": [
+      "Ato 3",
+      "estações do ano no salão"
+    ]
+  }
+}

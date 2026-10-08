@@ -166,6 +166,7 @@ Saída esperada: `RESULTADO: OK (0 falha(s))` e `UI SMOKE OK`. Depois de criar u
 ## 8. Pipeline de Arte
 
 - Especificações (JSON) para gerar imagens: `art/specs/` (heróis, wallpaper) e `art/specs/inimigos/` (com `_indice.json` ligando inimigos a missões).
+- Cenário, objetos, interface, fundos e efeitos (sem personagens): `art/specs/cenario/` — `_estilo_cenario.json` (famílias de estilo, regras, modelo para assets novos), `_indice.json` (todos os assets com prioridade, status e destino) e um arquivo por categoria.
 - Originais em `art/portraits/originais/`, `art/enemies/originais/`, `art/geralimagem/originais/`.
 - `python art/tools/preparar_retratos.py` e `python art/tools/preparar_inimigos.py`: leem o formato pelo conteúdo (há JPEG com extensão `.png`), removem o fundo por *flood fill* a partir das bordas (fundo branco, xadrez falso, madeira ou pedra, amostrado na borda), fecham rasgos com fechamento morfológico e salvam PNG RGBA 256×256.
 

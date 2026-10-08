@@ -1,0 +1,230 @@
+{
+  "_doc": "Animações curtas. Não contém imagens: é a especificação para artistas. Herda de _estilo_cenario.json.",
+  "herda": "_estilo_cenario.json",
+  "titulo": "Efeitos visuais",
+  "familia_padrao": "efeito",
+  "versao": 1,
+  "total_assets": 11,
+  "grupos": [
+    {
+      "id": "efeitos",
+      "nome": "Efeitos",
+      "descricao": "Animações curtas em spritesheet.",
+      "familia": "efeito",
+      "assets": [
+        {
+          "id": "fx_nevoa",
+          "nome": "Névoa do mapa",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            64,
+            64
+          ],
+          "descricao": "Nuvem de névoa macia que cobre nós ainda não revelados.",
+          "animacao": {
+            "quadros": 8,
+            "fps": 6,
+            "loop": true
+          },
+          "uso_no_jogo": "Névoa de guerra do mapa",
+          "destino": "res://art/fx/nevoa.png",
+          "familia": "nanquim"
+        },
+        {
+          "id": "fx_tinta_respingo",
+          "nome": "Respingo de tinta",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            48,
+            48
+          ],
+          "descricao": "Respingo de nanquim que 'desenha' um nó ao ser revelado.",
+          "animacao": {
+            "quadros": 6,
+            "fps": 14,
+            "loop": false
+          },
+          "uso_no_jogo": "Revelar nós e caminhos",
+          "destino": "res://art/fx/tinta.png",
+          "familia": "nanquim"
+        },
+        {
+          "id": "fx_pegadas",
+          "nome": "Pegadas",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            16,
+            8
+          ],
+          "descricao": "Pegadas de bota em tinta para o caminho percorrido.",
+          "variacoes": [
+            "esquerda",
+            "direita"
+          ],
+          "uso_no_jogo": "Rastro do grupo no mapa",
+          "destino": "res://art/fx/pegadas.png",
+          "familia": "nanquim"
+        },
+        {
+          "id": "fx_x_lacre",
+          "nome": "X de lacre",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            64,
+            64
+          ],
+          "descricao": "X pintado em lacre vermelho, com escorrido.",
+          "animacao": {
+            "quadros": 5,
+            "fps": 14,
+            "loop": false
+          },
+          "uso_no_jogo": "Cartaz derrotado e guarda vencido",
+          "destino": "res://art/fx/x_lacre.png"
+        },
+        {
+          "id": "fx_brilho_magico",
+          "nome": "Brilho arcano",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            64,
+            64
+          ],
+          "descricao": "Partículas roxas e douradas subindo.",
+          "animacao": {
+            "quadros": 8,
+            "fps": 10,
+            "loop": true
+          },
+          "uso_no_jogo": "Borda do Mapa Mágico, magia preparada",
+          "destino": "res://art/fx/brilho.png"
+        },
+        {
+          "id": "fx_fogo",
+          "nome": "Fogo pequeno",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            24,
+            32
+          ],
+          "descricao": "Chamas para fogueira e tocha.",
+          "animacao": {
+            "quadros": 6,
+            "fps": 10,
+            "loop": true
+          },
+          "uso_no_jogo": "Acampamento, lareira",
+          "destino": "res://art/fx/fogo.png"
+        },
+        {
+          "id": "fx_fumaca",
+          "nome": "Fumaça",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            16,
+            40
+          ],
+          "descricao": "Fio de fumaça subindo.",
+          "animacao": {
+            "quadros": 8,
+            "fps": 8,
+            "loop": true
+          },
+          "uso_no_jogo": "Fogueira apagada, torre de sinal",
+          "destino": "res://art/fx/fumaca.png"
+        },
+        {
+          "id": "fx_moedas",
+          "nome": "Moedas",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            48,
+            48
+          ],
+          "descricao": "Moedas saltando e brilhando.",
+          "animacao": {
+            "quadros": 6,
+            "fps": 12,
+            "loop": false
+          },
+          "uso_no_jogo": "Ganho de ouro",
+          "destino": "res://art/fx/moedas.png"
+        },
+        {
+          "id": "fx_ruptura",
+          "nome": "Ponto de ruptura",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            96,
+            96
+          ],
+          "descricao": "Rachadura que se espalha (aflição, vermelha) ou luz que se abre (virtude, dourada).",
+          "variacoes": [
+            "aflicao",
+            "virtude"
+          ],
+          "animacao": {
+            "quadros": 8,
+            "fps": 12,
+            "loop": false
+          },
+          "uso_no_jogo": "Momento em que o herói quebra ou se supera",
+          "destino": "res://art/fx/ruptura_{var}.png"
+        },
+        {
+          "id": "fx_cura",
+          "nome": "Cura",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            48,
+            48
+          ],
+          "descricao": "Brilho verde-dourado em espiral.",
+          "animacao": {
+            "quadros": 6,
+            "fps": 10,
+            "loop": false
+          },
+          "uso_no_jogo": "Cura no acampamento, santuário, magia",
+          "destino": "res://art/fx/cura.png"
+        },
+        {
+          "id": "fx_corvos",
+          "nome": "Corvos voando",
+          "status": "planejado",
+          "prioridade": "P3",
+          "tamanho_final_px": [
+            96,
+            48
+          ],
+          "descricao": "Bando de corvos em silhueta (animais de cenário, não personagens).",
+          "animacao": {
+            "quadros": 6,
+            "fps": 8,
+            "loop": true
+          },
+          "uso_no_jogo": "Ninho do Corvo, título, abertura de capítulo",
+          "destino": "res://art/fx/corvos.png"
+        }
+      ]
+    }
+  ],
+  "reservado_para_futuro": {
+    "_doc": "Efeito novo: defina quadros, fps e loop.",
+    "ideias": [
+      "chuva sobre o mapa",
+      "relâmpago",
+      "neve"
+    ]
+  }
+}
