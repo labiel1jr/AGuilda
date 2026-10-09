@@ -8,6 +8,7 @@ Histórico de versões, da mais recente para a mais antiga. Datas dos commits no
 
 - `art/specs/cenario/`: guia de estilo (`_estilo_cenario.json`), índice com 237 assets (`_indice.json`, prioridades P0–P3 e status de produção) e um JSON por categoria: ícones de nó do mapa, marcos/terreno/veículos do mapa, itens e ferramentas, objetos da guilda, fundos, interface e efeitos.
 - Sem personagens vivos ou mortos-vivos; modelo e prefixos para novos assets.
+- Regra de entrega: JPG com fundo branco puro completo, em `<pasta do destino>/originais/`; o jogo remove o branco e gera o PNG.
 
 ## Documentação — 2026-10-07
 

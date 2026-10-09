@@ -1,6 +1,6 @@
 {
   "_doc": "Guia comum aos assets de cenário, objetos, interface, fundos e efeitos de A Guilda. NÃO cobre personagens vivos nem mortos-vivos (ver art/specs/_estilo.json e art/specs/inimigos/). Cada arquivo desta pasta herda daqui.",
-  "versao": 1,
+  "versao": 2,
   "projeto": "A Guilda — fantasia medieval, tom de campanha de RPG de mesa (GDD §9)",
   "escopo": "objetos, construções, terreno, veículos, móveis, ferramentas, ícones, molduras, fundos sem personagens, efeitos",
   "fora_de_escopo": [
@@ -12,7 +12,7 @@
   "familias": {
     "nanquim": {
       "nome": "Nanquim de mapa",
-      "tecnica": "desenho a pena em tinta sépia-escura sobre transparente, traço fino irregular, hachura cruzada para sombra, sem cor (só a tinta) salvo indicação",
+      "tecnica": "desenho a pena em tinta sépia-escura sobre fundo branco, traço fino irregular, hachura cruzada para sombra, sem cor (só a tinta) salvo indicação",
       "cor_tinta": "#3a2a1c",
       "cor_tinta_alternativa": "#1a120c",
       "acentos_permitidos": {
@@ -21,8 +21,8 @@
         "azul_rio": "#4f6f80"
       },
       "regra": "deve parecer da mesma mão das peças já existentes em art/MapParts (árvores 16–29 px, colinas 41–106 px, montanhas 70–153 px, vilas 23–78 px, cidades 47–130 px). Base da peça (onde toca o chão) na borda inferior da imagem.",
-      "entrega": "PNG RGBA, fundo transparente, tamanho final (sem escalar no jogo), 1 px de margem",
-      "prompt_base_en": "hand-drawn ink map icon, fantasy parchment map style, sepia ink line art, cross hatching, transparent background, no color fill, small stamp-like illustration, top-down oblique view like old cartography"
+      "entrega": "JPG em fundo branco puro (#FFFFFF) cobrindo a imagem inteira, sem moldura nem sombra no chão; o jogo remove o branco e salva o PNG no 'destino'",
+      "prompt_base_en": "hand-drawn ink map icon, fantasy parchment map style, sepia ink line art, cross hatching, plain solid white background, no color fill, small stamp-like illustration, top-down oblique view like old cartography"
     },
     "pixel_hd": {
       "nome": "Pixel art detalhado",
@@ -31,29 +31,29 @@
       "luz": "superior esquerda",
       "paleta": "paleta_global de art/specs/_estilo.json; madeira quente, ferro frio, ouro #d4a94a para destaque",
       "regra": "silhueta legível reduzida a 48 px; sem texto escrito dentro do desenho",
-      "entrega": "PNG RGBA 32 bits. Original grande em <pasta>/originais/<id>.png; o jogo usa a versão reduzida (art/tools prepara)",
-      "prompt_base_en": "detailed pixel art game asset, 16-bit medieval fantasy RPG style, crisp visible pixels, dark 1px outline, light from top-left, limited warm palette, centered object, transparent background, no text"
+      "entrega": "JPG em fundo branco puro (#FFFFFF) cobrindo a imagem inteira, 1024×1024 (ou proporcional), objeto centralizado com margem de ~5%; o jogo remove o branco, reduz e salva o PNG no 'destino'",
+      "prompt_base_en": "detailed pixel art game asset, 16-bit medieval fantasy RPG style, crisp visible pixels, dark 1px outline, light from top-left, limited warm palette, centered object, plain solid white background, no text"
     },
     "pergaminho_ui": {
       "nome": "Moldura de interface",
       "tecnica": "texturas de madeira, pergaminho, couro, cera e metal em pixel art detalhado; peças preparadas para 9-slice (cantos fixos, bordas que repetem, centro liso)",
       "regra": "cantos ornamentados ≤ 24 px no tamanho final; centro com textura sutil (não pode competir com texto escuro #2a1f14 nem claro #f1e6cc)",
-      "entrega": "PNG RGBA no tamanho final + nota com as margens do 9-slice (esq, cima, dir, baixo) em px",
-      "prompt_base_en": "medieval fantasy game UI panel, pixel art, parchment and dark wood frame, ornate corners, 9-slice ready, flat center, no text"
+      "entrega": "JPG em fundo branco puro (#FFFFFF) cobrindo a imagem inteira; informe as margens do 9-slice (esq, cima, dir, baixo) em px no tamanho final",
+      "prompt_base_en": "medieval fantasy game UI panel, pixel art, parchment and dark wood frame, ornate corners, 9-slice ready, flat center, no text, plain solid white background"
     },
     "fundo": {
       "nome": "Cenário de fundo",
       "tecnica": "pixel art detalhado em camadas (fundo, meio, frente) sem personagens",
       "regra": "deixar áreas calmas onde a UI fica por cima (indicado em 'area_ui'); paleta quente na guilda, mais fria/dessaturada nos biomas",
-      "entrega": "PNG por camada, 1920×1080 (o jogo reduz para 1280×720); camadas: <id>_fundo, <id>_meio, <id>_frente",
+      "entrega": "JPG da cena completa (a cena É o fundo; não usar branco), 1920×1080; camadas separadas: <id>_fundo, <id>_meio e <id>_frente (as camadas _meio e _frente em fundo branco puro)",
       "prompt_base_en": "pixel art background scene, medieval fantasy, 16-bit style, no characters, layered parallax, warm lighting, empty space for UI"
     },
     "efeito": {
       "nome": "Efeito visual",
       "tecnica": "spritesheet horizontal de quadros iguais, pixel art ou nanquim conforme indicado",
-      "regra": "fundo transparente; loop sem salto quando for 'loop: true'",
-      "entrega": "PNG spritesheet + quadros e fps no campo 'animacao'",
-      "prompt_base_en": "pixel art effect spritesheet, transparent background, frames in a row"
+      "regra": "loop sem salto quando 'loop: true'. Efeitos muito suaves (névoa, brilho, fumaça) devem ter contorno ou forma definida, porque a remoção do fundo branco apaga semitransparência",
+      "entrega": "JPG spritesheet em fundo branco puro (#FFFFFF), quadros lado a lado com o mesmo tamanho; informe quadros e fps no campo 'animacao'",
+      "prompt_base_en": "pixel art effect spritesheet, plain solid white background, frames in a row"
     }
   },
   "paleta_global": {
@@ -75,12 +75,11 @@
   },
   "regras_gerais": [
     "Sem texto legível dentro das imagens (o jogo escreve por cima e será traduzido).",
-    "Fundo transparente, exceto fundos de cena e texturas.",
+    "Fundo branco puro #FFFFFF completo em JPG (ver 'entrega_artistas'); fundos de cena são a cena inteira.",
     "Luz da superior esquerda em tudo.",
     "Base do objeto (onde toca o chão) na borda inferior; centralizado na horizontal.",
     "Cada asset tem um id único; o arquivo se chama como em 'destino' ({n} = número sequencial a partir de 1; {var}/{estado}/{bioma}/{id}/{final} = nome da variação em minúsculas sem acento).",
-    "Estados e variações são ajustes sobre o mesmo desenho, não redesenhos.",
-    "Entregue também o original em alta (pasta originais/ ao lado do destino)."
+    "Estados e variações são ajustes sobre o mesmo desenho, não redesenhos."
   ],
   "prioridades": {
     "P0": "necessário para a v1.0 (vertical slice) — começar por aqui",
@@ -150,5 +149,16 @@
     },
     "categoria_nova": "Crie <categoria>.json nesta pasta com a mesma estrutura (herda, familia_padrao, grupos, reservado_para_futuro) e acrescente em _indice.json → arquivos."
   },
-  "prompt_negativo_en": "people, characters, faces, creatures, text, letters, watermark, signature, blurry, photorealistic, 3d render, modern objects, jpeg artifacts"
+  "prompt_negativo_en": "people, characters, faces, creatures, text, letters, watermark, signature, blurry, photorealistic, 3d render, modern objects, jpeg artifacts, transparent background, checkerboard pattern, drop shadow, gradient background, frame, border",
+  "entrega_artistas": {
+    "_doc": "Regra de entrega para os artistas (vale para todas as categorias, exceto fundos de cena).",
+    "formato": "JPG, qualidade alta (90%+), sRGB",
+    "fundo": "branco puro #FFFFFF, completo, cobrindo toda a imagem — sem xadrez de transparência, sem degradê, sem sombra projetada no chão, sem moldura",
+    "objeto": "não usar branco puro dentro do objeto (o mais claro deve ser #F4EEE0 ou mais escuro) e manter contorno escuro fechado, para o recorte não comer o desenho",
+    "margem": "~5% de branco em volta do objeto; nada encostando na borda",
+    "um_por_arquivo": "um asset (ou uma variação/estado) por arquivo, exceto spritesheets de efeito",
+    "nome": "<nome do arquivo do 'destino'>.jpg (ex.: destino res://art/items/espada_longa.png → entregar espada_longa.jpg)",
+    "pasta_de_entrega": "<pasta do destino>/originais/ (ex.: art/items/originais/espada_longa.jpg)",
+    "processamento": "art/tools prepara: lê o JPG, remove o branco a partir das bordas, recorta, reduz ao tamanho_final_px e salva o PNG com transparência no 'destino'"
+  }
 }
