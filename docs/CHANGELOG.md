@@ -4,6 +4,14 @@ Histórico de versões, da mais recente para a mais antiga. Datas dos commits no
 
 ---
 
+## Resultado contado em frases — 2026-10-10
+
+- A tela de resultado mostra **por que** a missão deu certo ou errado, em até 3 momentos com frase e imagem: par em sinergia ou conflito, Ação de Vínculo, destaque por atributo, cansaço, aflição/virtude, poderes, preparação, fome, desgaste, sorte, azar, ir sozinho. A soma do score foi para "ver detalhes".
+- `scripts/systems/result_story.gd` (`ResultStory`) monta os momentos no despacho, antes das consequências; não muda o estado (equivalência idêntica).
+- `data/result_story.json`: textos por tipo e por resultado, e frases/imagens próprias de pares — Vera e Bram: *"Vera e Bram lutaram como uma só lâmina."*; Lyssa e Mira; Theo e Lyssa.
+- **Primeiras cenas entregues e integradas:** Vera e Bram ("como uma só lâmina"), Lyssa e Mira (a porta das runas) e Theo e Lyssa (a discussão enquanto o inimigo foge). `preparar_assets.py` trata `cena_*` como imagem cheia (960×394). Falta a variação de derrota de Vera e Bram.
+- `art/specs/cenas/cenas_resultado.json`: 22 cenas ilustradas (P0: Vera e Bram golpeando juntos como uma só lâmina; genéricas por tipo de momento; outros pares). Sem a imagem, o cartão mostra os retratos ligados por um fio.
+
 ## Documentação e screenshots — 2026-10-10
 
 - README reorganizado (como se joga, galeria nova com selo, dado, ruptura, mapas por bioma; estrutura em código, dados e arte; como adicionar eventos de rota e arte; testes).

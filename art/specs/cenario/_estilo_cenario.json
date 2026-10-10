@@ -150,7 +150,8 @@
       "livro_": "Livro da Guilda",
       "mapa_": "pergaminho do mapa",
       "token_": "miniatura de herói (art/specs/tokens_herois.json)",
-      "dado_": "dado arremessado nos testes (dado.json)"
+      "dado_": "dado arremessado nos testes (dado.json)",
+      "cena_": "cena ilustrada de momento do resultado (art/specs/cenas/cenas_resultado.json)"
     },
     "categoria_nova": "Crie <categoria>.json nesta pasta com a mesma estrutura (herda, familia_padrao, grupos, reservado_para_futuro) e acrescente em _indice.json → arquivos."
   },

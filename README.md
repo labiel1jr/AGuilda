@@ -18,7 +18,7 @@ O jogo é dividido em **atos** e **capítulos**. Cada capítulo abre com uma cen
 2. **Montagem de Party** — escolha de 1 a 4 aventureiros. O preview mostra a afinidade, o estresse e as condições de cada um, mas nunca o resultado.
 3. **Despacho** — o **Selo de Cera** carimba a decisão.
 4. **Mapa Mágico (expedição)** — a missão vira um mapa de pergaminho com caminhos e bifurcações; os heróis andam como **miniaturas de RPG de mesa**. Em cada encruzilhada um herói **chama pelo Mapa Mágico** e você escolhe o próximo ponto: combate, tesouro, mercador, acampamento, encontro, atalho, estranho, santuário ou o guarda do alvo. Os testes são um **d20 arremessado na cena** + o atributo do herói mais apto.
-5. **Resolução** — a barra do score enche até o veredito: Sucesso Limpo, Sucesso com Custo ou Falha com Revelação. Falhar nunca é beco sem saída: é gancho de história.
+5. **Resolução** — a barra do score enche até o veredito: Sucesso Limpo, Sucesso com Custo ou Falha com Revelação. O jogo conta **por que** deu assim, em até três momentos (*"Vera e Bram lutaram como uma só lâmina."*, *"Theo e Lyssa não se entenderam — e isso custou caro."*); a soma do score fica em "ver detalhes". Falhar nunca é beco sem saída: é gancho de história.
 6. **Vínculos** — quem vai junto se aproxima ou se afasta. Ao cruzar limiares, você decide o que existe entre eles (Amizade, Mentoria, Rivalidade, Romance...), e isso desbloqueia **Ações de Vínculo**.
 7. **Estresse** — expedições pesam. No limite, o herói **quebra** (Paranoico, Desesperado...) ou **se supera** (Corajoso, Inspirador...), e pode ganhar traços permanentes. Ele não volta só ferido: volta diferente.
 8. **Bastidores** — cenas curtas na guilda (taverna, treino, brigas, segredos). Você escolhe como reagir.
@@ -94,7 +94,7 @@ Nome dos arquivos: `AGuilda-v<versão>-debug.apk` (ex.: `AGuilda-v0.9-debug.apk`
 | Caminho | Conteúdo |
 |---|---|
 | `scripts/core/game_state.gd` | Autoload `GameState`: estado da guilda, início de jogo, fim do dia e API pública |
-| `scripts/systems/` | Regras por assunto: relações, missões e despacho, capítulos, economia, saídas, bastidores, save, finais |
+| `scripts/systems/` | Regras por assunto: relações, missões e despacho, capítulos, economia, saídas, bastidores, save, finais, resultado contado em frases |
 | `scripts/core/score_calc.gd` | Fórmula de score e limiares |
 | `scripts/core/hero_rpg.gd` | RPG: XP, nível, efeitos, equipamento, magias, saque, mercado |
 | `scripts/core/expedition.gd` | Expedição: grafo de nós, testes d20, efeitos e modificador da rota |
@@ -118,6 +118,7 @@ A regra de jogo fica em `scripts/core` e `scripts/systems`; a UI só lê o estad
 | `chapters.json` | Atos e capítulos: abertura, duração, missões, objetivo, flags e encerramentos |
 | `route.json` | Mapa de expedição: tipos de nó, pesos por bioma, eventos com testes e efeitos |
 | `traits.json` | Estresse, aflições, virtudes e traços |
+| `result_story.json` | Resultado contado em frases: momentos por tipo (sinergia, conflito, destaque, aflição, rota, sorte...), textos por resultado e frases/imagens próprias de pares |
 | `backstage.json` | Eventos de bastidor: condições, texto e escolhas com efeitos |
 | `classes.json` / `items.json` | Classes, magias, talentos / itens, saque e mercado |
 | `upgrades.json` | Ouro inicial, recompensas e melhorias da guilda |
@@ -130,7 +131,7 @@ Heróis, missões, eventos e textos novos entram pelos JSON, sem mexer em códig
 
 | Caminho | Conteúdo |
 |---|---|
-| `art/specs/` | Especificações para artistas (JSON): heróis e wallpaper, inimigos (`inimigos/`), miniaturas (`tokens_herois.json`) e cenário/objetos/interface/fundos/efeitos/livro/mapa/ícone/dado (`cenario/`, com `_indice.json` de todos os assets por prioridade e status de produção) |
+| `art/specs/` | Especificações para artistas (JSON): heróis e wallpaper, inimigos (`inimigos/`), miniaturas (`tokens_herois.json`), cenas ilustradas do resultado (`cenas/cenas_resultado.json`) e cenário/objetos/interface/fundos/efeitos/livro/mapa/ícone/dado (`cenario/`, com `_indice.json` de todos os assets por prioridade e status de produção) |
 | `art/ArtesEmGeral/` | Artes entregues pelos artistas, com o nome do id do asset (pasta ignorada pelo Godot) |
 | `art/items/`, `art/tokens/`, `art/book/`, `art/icon/`, `art/dice/` | Artes processadas que o jogo usa |
 | `art/portraits/`, `art/enemies/`, `art/MapParts/` | Retratos, cartazes de inimigos e peças de mapa a nanquim |

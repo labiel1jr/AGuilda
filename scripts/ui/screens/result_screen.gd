@@ -53,18 +53,44 @@ static func show_result(ui: GuildUI, res: Dictionary) -> void:
 				Juice.shake(ui, 4.0, 0.3)
 		Moments.play_moments(ui))
 
+	# O porquê, em frases (os números ficam em "ver detalhes")
+	var story: Array = res.get("story", [])
+	if not story.is_empty():
+		var srow := HBoxContainer.new()
+		srow.add_theme_constant_override("separation", 12)
+		ui.root.add_child(srow)
+		for i in story.size():
+			var card := ResultScreen.story_card(ui, story[i])
+			srow.add_child(card)
+			Juice.fade_in(card, reveal + 0.15 + i * 0.25, 0.45)
+
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	ui.root.add_child(scroll)
 	var p := UIKit.panel(GuildUI.C_PARCHMENT)
-	ui.root.add_child(p)
+	p.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(p)
 	Juice.fade_in(p, reveal + 0.1, 0.4)
 	var col := VBoxContainer.new()
 	p.add_child(col)
 	for l in res.lines:
-		col.add_child(UIKit.para(l, 16, GuildUI.C_INK))
+		col.add_child(UIKit.para(l, 15, GuildUI.C_INK))
 
-	ui.root.add_child(UIKit.para("Score %.1f  =  Base %.1f  + Cobertura %d  + Afinidade %+.1f  + Vínculo %d  + Poderes %d  + Oculto %d  + Mente %+d  + Rota %+d  + Sorte %+d      (custo ≥ %d · limpo ≥ %d)" % [sc.total, sc.base, sc.coverage, sc.affinity, sc.bond, sc.powers, sc.hidden, int(sc.get("mind", 0)), int(sc.get("route", 0)), sc.luck, t[0], t[1]], 13, GuildUI.C_MUTED))
+	var details := VBoxContainer.new()
+	details.visible = false
+	var dbtn := UIKit.button("Ver detalhes do score ▸", func(): pass)
+	dbtn.flat = true
+	dbtn.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	dbtn.pressed.connect(func():
+		details.visible = not details.visible
+		dbtn.text = ("Esconder detalhes ▾" if details.visible else "Ver detalhes do score ▸"))
+	ui.root.add_child(dbtn)
+	ui.root.add_child(details)
+	details.add_child(UIKit.para("Score %.1f  =  Base %.1f  + Cobertura %d  + Afinidade %+.1f  + Vínculo %d  + Poderes %d  + Oculto %d  + Mente %+d  + Rota %+d  + Sorte %+d      (custo ≥ %d · limpo ≥ %d)" % [sc.total, sc.base, sc.coverage, sc.affinity, sc.bond, sc.powers, sc.hidden, int(sc.get("mind", 0)), int(sc.get("route", 0)), sc.luck, t[0], t[1]], 13, GuildUI.C_MUTED))
 	if res.has("route"):
 		var rt: Dictionary = res.route
-		ui.root.add_child(UIKit.para("Rota: preparação %+d · desgaste −%d · fome −%d" % [rt.bonus, rt.wear, mini(rt.hunger, 2)], 13, GuildUI.C_MUTED))
+		details.add_child(UIKit.para("Rota: preparação %+d · desgaste −%d · fome −%d" % [rt.bonus, rt.wear, mini(rt.hunger, 2)], 13, GuildUI.C_MUTED))
 
 	if not res.affinity.is_empty():
 		ui.root.add_child(UIKit.label("Vínculos", 16, GuildUI.C_GOLD))
@@ -73,8 +99,47 @@ static func show_result(ui: GuildUI, res: Dictionary) -> void:
 			var al := UIKit.label("%s ↔ %s   %s  %s" % [ui.gs.heroes[ch.a].name, ui.gs.heroes[ch.b].name, ui.gs.describe_change(ch.before, ch.after), arrow], 14, UIKit.aff_color(ch.after))
 			ui.root.add_child(al)
 			Juice.fade_in(al, reveal + 0.4 + res.affinity.find(ch) * 0.12, 0.3)
-	ui.root.add_child(UIKit.spacer_v())
 	ui.root.add_child(UIKit.button("Continuar", ui._after_result))
+
+
+## Cartão de um momento do resultado: a cena ilustrada (se existir) ou os retratos, e a frase.
+static func story_card(ui: GuildUI, beat: Dictionary) -> Control:
+	var card := UIKit.panel(Color("#4a3a2a"))
+	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 6)
+	card.add_child(col)
+	var img: Texture2D = UIKit.tex(String(beat.get("image", "")))
+	if img != null:
+		var tr := UIKit.icon(img, 0)
+		tr.custom_minimum_size = Vector2(0, 120)
+		tr.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		col.add_child(tr)
+	else:
+		# sem a ilustração: os retratos de quem protagonizou o momento
+		var heroes: Array = beat.get("heroes", [])
+		var row := HBoxContainer.new()
+		row.alignment = BoxContainer.ALIGNMENT_CENTER
+		row.add_theme_constant_override("separation", 0)
+		row.custom_minimum_size.y = 64
+		col.add_child(row)
+		var good: bool = beat.type in ["sinergia", "laco_lendario", "acao_vinculo", "virtude", "destaque", "preparacao", "poderes", "sorte"]
+		for i in heroes.size():
+			if i == 1:
+				var thread := ColorRect.new()
+				thread.color = GuildUI.C_GOLD if good else GuildUI.C_BAD
+				thread.custom_minimum_size = Vector2(36, 3)
+				thread.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+				row.add_child(thread)
+			row.add_child(Widgets.portrait(ui, ui.gs.heroes[heroes[i]], 60))
+		if heroes.is_empty():
+			var mark := UIKit.label("✦" if good else "✖", 34, GuildUI.C_GOLD if good else GuildUI.C_BAD)
+			mark.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			row.add_child(mark)
+	var t := UIKit.para(String(beat.text), 15, GuildUI.C_TEXT)
+	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	col.add_child(t)
+	return card
 
 
 static func after_result(ui: GuildUI) -> void:

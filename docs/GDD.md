@@ -164,7 +164,9 @@ Score = Base + Cobertura + Afinidade + Vínculo + Poderes + Oculto + Mente + Rot
 | Rota | Preparação − desgaste − fome do mapa de expedição, de −2 a +3 |
 | Sorte | Inteiro de −2 a +2 |
 
-O resultado sai da tabela de limiares por risco (ver [Balanceamento](BALANCEAMENTO.md)). A tela de resultado mostra a soma completa.
+O resultado sai da tabela de limiares por risco (ver [Balanceamento](BALANCEAMENTO.md)).
+
+**Resultado contado em frases:** a tela não mostra a conta; mostra **por que** deu assim, em até três momentos escolhidos pelo que mais pesou (um par em sinergia ou em conflito, uma Ação de Vínculo, o herói que se destacou, alguém cansado ou aflito, a preparação ou a fome da rota, a sorte). Cada momento tem uma frase e uma cena ilustrada; pares importantes têm frase e cena próprias (*"Vera e Bram lutaram como uma só lâmina."*). A soma completa fica em "ver detalhes". Textos em `data/result_story.json`.
 
 ### 5.7 Moral, Descanso e Saída
 

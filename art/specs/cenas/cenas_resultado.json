@@ -1,0 +1,367 @@
+{
+  "_doc": "Ilustrações dos momentos do resultado (data/result_story.json → image). Cada missão mostra até 3 momentos: a frase + esta cena. Não contém imagens: é a especificação para artistas. Personagens seguem o visual dos retratos já aprovados (art/portraits/<id>.png) e das specs art/specs/<id>.json. Sem a imagem, o jogo mostra os retratos do momento ligados por um fio.",
+  "herda": [
+    "../_estilo.json",
+    "../cenario/_estilo_cenario.json"
+  ],
+  "titulo": "Cenas do resultado",
+  "familia_padrao": "pixel_hd",
+  "versao": 1,
+  "formato": {
+    "tamanho_final_px": [
+      480,
+      200
+    ],
+    "proporcao": "2,4 : 1 (faixa de cinema) — exibida com ~110 px de altura no cartão do resultado",
+    "tamanho_de_trabalho": "1920×800 (ou 1440×600), pixel art detalhado como os retratos (pixels visíveis de 4–8 px no trabalho)",
+    "entrega": "JPG da CENA COMPLETA (exceção à regra do fundo branco: a cena ocupa a imagem toda), em art/ArtesEmGeral/<id>.jpg",
+    "enquadramento": "ação no terço central; bordas com vinheta suave escurecida (#2b2118), porque o cartão é escuro",
+    "texto": "nenhum texto na imagem (a frase é escrita pelo jogo embaixo)",
+    "personagens": "rostos e roupas fiéis aos retratos aprovados; heróis genéricos (cenas sem par definido) aparecem de costas, em silhueta ou em plano que não identifica quem é"
+  },
+  "paleta_de_clima": {
+    "sinergia": "luz dourada quente (#f2d27a) sobre o par, fundo frio",
+    "conflito": "contraste vermelho-ferrugem (#8a2f1f) e sombras duras",
+    "derrota": "dessaturado, chuva ou poeira",
+    "magia": "azul arcano (#5b7fbf) e roxo (#8a6fb0)"
+  },
+  "total_assets": 22,
+  "grupos": [
+    {
+      "id": "pares",
+      "nome": "Momentos de um par específico",
+      "descricao": "Têm prioridade sobre as cenas genéricas quando aquele par protagoniza o momento (data/result_story.json → pairs).",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "cena_par_bram_vera_sinergia",
+          "nome": "Vera e Bram — \"lutaram como uma só lâmina\"",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "frase": "Vera e Bram lutaram como uma só lâmina.",
+          "descricao": "Vera (anã guerreira veterana) e Bram (halfling bardo, bem menor) atacam o mesmo inimigo ao mesmo tempo, em movimentos espelhados: os dois golpes cruzam no centro da imagem como uma única lâmina de luz.",
+          "composicao": [
+            "centro: o ponto onde os dois golpes se encontram — um arco de luz dourada único, como se fosse uma lâmina só, atravessando uma silhueta escura de inimigo (fera ou bandido genérico, sem detalhe, só sombra com olhos acesos)",
+            "esquerda: Vera de três-quartos, pés firmes, machado de lâmina dupla descendo em diagonal; armadura pesada amassada, elmo aberto com proteção nasal, gola de pele, barba e trança como no retrato (art/portraits/vera.png); manopla de ferro visível",
+            "direita: Bram em salto, menor que Vera, golpeando com uma espada curta emprestada na MESMA diagonal do machado (espelhado); gibão verde-petróleo, chapéu com pena vermelha voando, alaúde preso às costas, cachos ruivos; expressão determinada, não assustada",
+            "os dois olham para o mesmo ponto; nenhum olha para o outro — confiança total",
+            "fundo: floresta ou estrada ao entardecer, desfocada, com faíscas e folhas no ar"
+          ],
+          "luz": "contraluz dourado vindo do ponto de impacto; luz principal da superior esquerda",
+          "paleta": "cores do Vera (#8a6fb0, aço, pele) e do Bram (#d9823b, verde-petróleo, vermelho da pena) + dourado do golpe",
+          "variacoes": [
+            "vitoria (padrão)",
+            "derrota: mesma pose, mas Vera de pé na frente de Bram, escudando-o, golpe quebrado, tons dessaturados (texts_falha: 'Vera ficou na frente de Bram até o fim')"
+          ],
+          "uso_no_jogo": "Cartão do resultado quando Vera e Bram têm sinergia (ou Ação de Vínculo) na missão",
+          "destino": "res://art/scenes/par_bram_vera_sinergia.png",
+          "liga_com": "data/result_story.json → pairs.bram|vera",
+          "prompt_en": "pixel art cinematic scene, 2.4:1 wide, a stout female dwarf warrior in dented heavy plate with a double-bladed axe and a small halfling bard with a red-feathered hat and a short sword leap and strike the same shadowy beast at the same instant, their mirrored diagonal swings merging into a single golden blade of light at the center, warm golden backlight, blurred forest at dusk, sparks and leaves in the air, detailed 16-bit RPG style, crisp pixels, dark vignette edges, no text",
+          "observacoes": "cartão do resultado (sinergia e Ação de Vínculo de Vera e Bram); entregue só a versão de vitória"
+        },
+        {
+          "id": "cena_par_lyssa_mira_sinergia",
+          "nome": "Lyssa e Mira — \"Lyssa abriu a porta; Mira já sabia o que havia atrás\"",
+          "status": "integrado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "frase": "Lyssa abriu a porta; Mira já sabia o que havia atrás dela.",
+          "descricao": "Lyssa agachada destrancando uma porta antiga com gazuas; Mira logo atrás, de pé, lendo runas que brilham azuis na moldura da porta, com o livro aberto — as duas sorriem de canto.",
+          "uso_no_jogo": "Resultado com sinergia de Lyssa e Mira",
+          "destino": "res://art/scenes/par_lyssa_mira_sinergia.png",
+          "liga_com": "data/result_story.json → pairs.lyssa|mira",
+          "observacoes": "cartão do resultado (sinergia de Lyssa e Mira)"
+        },
+        {
+          "id": "cena_par_lyssa_theo_conflito",
+          "nome": "Theo e Lyssa — conflito",
+          "status": "integrado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "frase": "Theo chamou de roubo. Lyssa chamou de plano. O inimigo chamou de oportunidade.",
+          "descricao": "Theo e Lyssa discutindo de frente um para o outro (Theo apontando, Lyssa de braços cruzados com uma bolsa roubada na mão), enquanto atrás deles, desfocado, um inimigo aproveita para fugir pela janela.",
+          "uso_no_jogo": "Resultado com conflito entre Theo e Lyssa",
+          "destino": "res://art/scenes/par_lyssa_theo_conflito.png",
+          "liga_com": "data/result_story.json → pairs.lyssa|theo",
+          "observacoes": "cartão do resultado (conflito de Theo e Lyssa)"
+        }
+      ]
+    },
+    {
+      "id": "genericas",
+      "nome": "Momentos genéricos",
+      "descricao": "Uma por tipo de momento; servem para qualquer herói. Sem rostos identificáveis (silhuetas, mãos, costas, objetos).",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "cena_sinergia",
+          "nome": "Sinergia",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Duas silhuetas de costas uma para a outra, armas em punho, cercadas, luz dourada entre elas.",
+          "uso_no_jogo": "Par com afinidade boa",
+          "destino": "res://art/scenes/sinergia.png"
+        },
+        {
+          "id": "cena_laco_lendario",
+          "nome": "Dupla lendária",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Duas silhuetas em pleno salto, contra um sol enorme, como numa tapeçaria heroica.",
+          "uso_no_jogo": "Par em Dupla Lendária",
+          "destino": "res://art/scenes/laco_lendario.png"
+        },
+        {
+          "id": "cena_conflito",
+          "nome": "Conflito",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Duas mãos puxando o mesmo mapa rasgado ao meio, luz vermelha, sombras duras.",
+          "uso_no_jogo": "Par em tensão ou conflito",
+          "destino": "res://art/scenes/conflito.png"
+        },
+        {
+          "id": "cena_acao_vinculo",
+          "nome": "Ação de Vínculo",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Duas mãos de luvas diferentes segurando juntas o mesmo cabo de espada, fios dourados entrelaçados em volta.",
+          "uso_no_jogo": "Ação de Vínculo ativa",
+          "destino": "res://art/scenes/acao_vinculo.png"
+        },
+        {
+          "id": "cena_destaque_forca",
+          "nome": "Destaque: Força",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Um portão de madeira explodindo para dentro, um vulto de costas com o ombro à frente.",
+          "uso_no_jogo": "Destaque de Força",
+          "destino": "res://art/scenes/destaque_forca.png"
+        },
+        {
+          "id": "cena_destaque_destreza",
+          "nome": "Destaque: Destreza",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Rastro de movimento entre telhados à noite, uma adaga brilhando no ar.",
+          "uso_no_jogo": "Destaque de Destreza",
+          "destino": "res://art/scenes/destaque_destreza.png"
+        },
+        {
+          "id": "cena_destaque_conhecimento",
+          "nome": "Destaque: Conhecimento",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Runas acendendo numa parede de pedra, uma mão com giz completando o último símbolo.",
+          "uso_no_jogo": "Destaque de Conhecimento",
+          "destino": "res://art/scenes/destaque_conhecimento.png"
+        },
+        {
+          "id": "cena_destaque_carisma",
+          "nome": "Destaque: Carisma",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Uma multidão de silhuetas baixando as armas diante de um vulto de braço erguido.",
+          "uso_no_jogo": "Destaque de Carisma",
+          "destino": "res://art/scenes/destaque_carisma.png"
+        },
+        {
+          "id": "cena_destaque_resistencia",
+          "nome": "Destaque: Resistência",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Um vulto de pé sob chuva de flechas, escudo cravejado, os outros caídos atrás dele.",
+          "uso_no_jogo": "Destaque de Resistência",
+          "destino": "res://art/scenes/destaque_resistencia.png"
+        },
+        {
+          "id": "cena_cansaco",
+          "nome": "Cansaço",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Botas enlameadas arrastando pela estrada, espada arrastada no chão.",
+          "uso_no_jogo": "Membro cansado",
+          "destino": "res://art/scenes/cansaco.png"
+        },
+        {
+          "id": "cena_aflicao",
+          "nome": "Aflição",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Um vulto encolhido junto à fogueira, sombras alongadas com olhos nas árvores, tons vermelhos.",
+          "uso_no_jogo": "Membro aflito",
+          "destino": "res://art/scenes/aflicao.png"
+        },
+        {
+          "id": "cena_virtude",
+          "nome": "Virtude",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Um vulto erguendo a arma no alto de uma pedra, luz dourada rasgando as nuvens.",
+          "uso_no_jogo": "Membro com virtude",
+          "destino": "res://art/scenes/virtude.png"
+        },
+        {
+          "id": "cena_poderes",
+          "nome": "Poderes",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Mesa de acampamento com armas brilhando e um pergaminho de magia se desenrolando em luz azul.",
+          "uso_no_jogo": "Itens e magias somaram",
+          "destino": "res://art/scenes/poderes.png"
+        },
+        {
+          "id": "cena_preparacao",
+          "nome": "Preparação",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Mapa da rota aberto com uma faca cravada sobre o covil do alvo, anotações a carvão.",
+          "uso_no_jogo": "Preparação da rota",
+          "destino": "res://art/scenes/preparacao.png"
+        },
+        {
+          "id": "cena_fome",
+          "nome": "Fome",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Saco de provisões vazio virado no chão, uma casca de pão, mãos sujas.",
+          "uso_no_jogo": "Fome na rota",
+          "destino": "res://art/scenes/fome.png"
+        },
+        {
+          "id": "cena_desgaste",
+          "nome": "Desgaste",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Ataduras ensanguentadas, escudo rachado encostado numa pedra.",
+          "uso_no_jogo": "Grupo muito ferido",
+          "destino": "res://art/scenes/desgaste.png"
+        },
+        {
+          "id": "cena_sorte",
+          "nome": "Sorte",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "O d20 da guilda parado no 20 sobre uma mesa, faíscas douradas.",
+          "uso_no_jogo": "Sorte máxima",
+          "destino": "res://art/scenes/sorte.png"
+        },
+        {
+          "id": "cena_azar",
+          "nome": "Azar",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Corda de ponte arrebentando, um corvo rindo num galho.",
+          "uso_no_jogo": "Azar máximo",
+          "destino": "res://art/scenes/azar.png"
+        },
+        {
+          "id": "cena_sozinho",
+          "nome": "Sozinho",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Um vulto pequeno numa estrada enorme e vazia ao anoitecer.",
+          "uso_no_jogo": "Herói que foi sozinho e não teve sucesso limpo",
+          "destino": "res://art/scenes/sozinho.png"
+        }
+      ]
+    }
+  ],
+  "reservado_para_futuro": {
+    "_doc": "Par novo com momento próprio: escreva o texto em data/result_story.json → pairs.<a|b>.<tipo> (com 'image') e crie aqui cena_par_<a>_<b>_<tipo> com a mesma estrutura do de Vera e Bram.",
+    "pares_sugeridos": [
+      "senna|vera (camaradas de armas)",
+      "bram|corin (o bardo e o clérigo)",
+      "theo|vera (veteranos)",
+      "mira|corin (estudiosos)",
+      "senna|lyssa (desconfiança mútua)",
+      "theo|lyssa (reconciliação, quando o conflito virar respeito)"
+    ]
+  }
+}

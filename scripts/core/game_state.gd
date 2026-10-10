@@ -106,6 +106,7 @@ var upgrades_owned := []
 var trained_today := false
 var route_data := {}
 var traits_data := {}
+var result_story_data := {}   # textos do resultado contado (data/result_story.json)
 var expedition := {}         # expedição em andamento (Expedition), vazia fora do mapa
 var pair_history := {}         # "a|b" -> [{day, mission, outcome}] (exibido com o Arquivo)
 
@@ -131,6 +132,7 @@ func new_game(seed_value: int = -1) -> void:
 	classes_data.xp.milestones = classes_data.xp.milestones.map(func(x): return int(x))
 	items_data = _load_json("res://data/items.json")
 	traits_data = _load_json("res://data/traits.json")
+	result_story_data = _load_json("res://data/result_story.json")
 	inventory.clear()
 	pending_levelups.clear()
 	pending_moments.clear()

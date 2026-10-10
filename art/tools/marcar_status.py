@@ -41,6 +41,9 @@ MARCAS.update({
     "icone_android_fundo": ("integrado", "launcher_icons/adaptive_background_432x432"),
     "icone_android_mono": ("integrado", "launcher_icons/adaptive_monochrome_432x432"),
     "dado_d20_faces": ("integrado", "folha única com as 20 faces recortada em art/dice/d20_face_01..20; desvios a corrigir pelo artista: ponto só no 6 e 9 (veio no 7, 8 e 9, faltou no 6), vizinhos não seguem um d20 real"),
+    "cena_par_bram_vera_sinergia": ("integrado", "cartão do resultado (sinergia e Ação de Vínculo de Vera e Bram); entregue só a versão de vitória"),
+    "cena_par_lyssa_mira_sinergia": ("integrado", "cartão do resultado (sinergia de Lyssa e Mira)"),
+    "cena_par_lyssa_theo_conflito": ("integrado", "cartão do resultado (conflito de Theo e Lyssa)"),
     "icone_windows": ("planejado", "usando .ico provisório gerado da arte mestre (art/icon/icone.ico); falta a versão redesenhada em 16–32 px"),
 })
 
@@ -59,7 +62,7 @@ def aplicar(a: dict) -> bool:
 
 def main():
     n = 0
-    for f in list(CEN.glob("*.json")) + [SPECS / "tokens_herois.json"]:
+    for f in list(CEN.glob("*.json")) + list((SPECS / "cenas").glob("*.json")) + [SPECS / "tokens_herois.json"]:
         if f.name.startswith("_"):
             continue
         data = json.loads(f.read_text(encoding="utf-8"))

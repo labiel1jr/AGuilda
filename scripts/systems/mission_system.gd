@@ -108,6 +108,8 @@ static func dispatch(gs: GuildState, mission: Dictionary, party: Array, prepared
 	if result == "falha" and action_names.has("Sincronia Perfeita"):
 		result = "custo"
 		lines.append("Sincronia Perfeita: a dupla transformou o desastre em vitória amarga.")
+	# o porquê em frases, com o estado de antes das consequências (afinidade, fadiga, estresse)
+	var story := ResultStory.build(gs, mission, party, sc, prep, route, result)
 
 	var names := ", ".join(party.map(func(id): return gs.heroes[id].name))
 	lines.push_front(String(mission.texts[result]).replace("{party}", names))
@@ -231,7 +233,7 @@ static func dispatch(gs: GuildState, mission: Dictionary, party: Array, prepared
 	lines.append_array(HeroRPG.after_mission(gs, mission, party, prep, result))
 	lines.append_array(Mind.after_mission(gs, mission, party, prep, result))
 	gs.dispatched_today += 1
-	return {"mission": mission, "party": party, "score": sc, "outcome": result, "lines": lines, "affinity": aff_changes, "prepared": prep}
+	return {"mission": mission, "party": party, "score": sc, "outcome": result, "lines": lines, "affinity": aff_changes, "prepared": prep, "story": story}
 
 
 ## Narração do Mapa Mágico: uma linha por waypoint (GDD §5.9).

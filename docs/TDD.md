@@ -34,6 +34,7 @@ Este documento descreve **como o jogo está construído hoje**: módulos, fluxo 
 | `scripts/systems/backstage_system.gd` | `Backstage`: sorteio e escolhas dos bastidores |
 | `scripts/systems/save_system.gd` | `SaveSystem`: salvar e carregar |
 | `scripts/systems/ending_system.gd` | `Endings`: epílogo |
+| `scripts/systems/result_story.gd` | `ResultStory`: o porquê do resultado em frases — escolhe até 3 momentos pelo peso no score (pares, Ações de Vínculo, destaque, cansaço, condições, poderes, rota, sorte), com o estado de antes das consequências; variação determinística, sem usar o rng |
 | `scripts/core/score_calc.gd` | `ScoreCalc` (estático): fórmula do score e limiares |
 | `scripts/core/hero_rpg.gd` | `HeroRPG` (estático): XP, níveis, efeitos, equipamento, magias, saque, mercado |
 | `scripts/core/expedition.gd` | `Expedition` (estático): grafo da rota, nós, testes d20, efeitos, modificador da rota |
@@ -118,6 +119,7 @@ Cada JSON tem um campo `_doc` explicando o formato.
 | `items.json` | Itens, tabelas de saque por risco, chance por resultado |
 | `route.json` | Mapa de expedição: camadas, provisões, CD por risco, tipos de nó, pesos por bioma, eventos e efeitos |
 | `traits.json` | Estresse, aflições, virtudes, traços |
+| `result_story.json` | Textos e imagens dos momentos do resultado, por tipo e por par |
 | `narration.json` | Frases de narração do mapa |
 | `book.json` | Seções trancadas do Livro |
 | `ultimatum.json` | Texto e escolhas do ultimato |

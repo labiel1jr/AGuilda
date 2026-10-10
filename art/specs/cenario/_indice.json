@@ -49,12 +49,16 @@
     "dado.json": {
       "titulo": "Dado d20",
       "total": 9
+    },
+    "../cenas/cenas_resultado.json": {
+      "titulo": "Cenas do resultado",
+      "total": 22
     }
   },
   "resumo_por_prioridade": {
-    "P0": 83,
-    "P1": 116,
-    "P2": 73,
+    "P0": 84,
+    "P1": 127,
+    "P2": 83,
     "P3": 17
   },
   "assets": [
@@ -3025,14 +3029,237 @@
       "prioridade": "P1",
       "status": "planejado",
       "destino": "res://art/dice/falha_critica_1.png"
+    },
+    {
+      "id": "cena_par_bram_vera_sinergia",
+      "nome": "Vera e Bram — \"lutaram como uma só lâmina\"",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "pares",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/scenes/par_bram_vera_sinergia.png",
+      "observacoes": "cartão do resultado (sinergia e Ação de Vínculo de Vera e Bram); entregue só a versão de vitória"
+    },
+    {
+      "id": "cena_par_lyssa_mira_sinergia",
+      "nome": "Lyssa e Mira — \"Lyssa abriu a porta; Mira já sabia o que havia atrás\"",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "pares",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "integrado",
+      "destino": "res://art/scenes/par_lyssa_mira_sinergia.png",
+      "observacoes": "cartão do resultado (sinergia de Lyssa e Mira)"
+    },
+    {
+      "id": "cena_par_lyssa_theo_conflito",
+      "nome": "Theo e Lyssa — conflito",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "pares",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "integrado",
+      "destino": "res://art/scenes/par_lyssa_theo_conflito.png",
+      "observacoes": "cartão do resultado (conflito de Theo e Lyssa)"
+    },
+    {
+      "id": "cena_sinergia",
+      "nome": "Sinergia",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/scenes/sinergia.png"
+    },
+    {
+      "id": "cena_laco_lendario",
+      "nome": "Dupla lendária",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/scenes/laco_lendario.png"
+    },
+    {
+      "id": "cena_conflito",
+      "nome": "Conflito",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/scenes/conflito.png"
+    },
+    {
+      "id": "cena_acao_vinculo",
+      "nome": "Ação de Vínculo",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/scenes/acao_vinculo.png"
+    },
+    {
+      "id": "cena_destaque_forca",
+      "nome": "Destaque: Força",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/scenes/destaque_forca.png"
+    },
+    {
+      "id": "cena_destaque_destreza",
+      "nome": "Destaque: Destreza",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/scenes/destaque_destreza.png"
+    },
+    {
+      "id": "cena_destaque_conhecimento",
+      "nome": "Destaque: Conhecimento",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/scenes/destaque_conhecimento.png"
+    },
+    {
+      "id": "cena_destaque_carisma",
+      "nome": "Destaque: Carisma",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/scenes/destaque_carisma.png"
+    },
+    {
+      "id": "cena_destaque_resistencia",
+      "nome": "Destaque: Resistência",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/scenes/destaque_resistencia.png"
+    },
+    {
+      "id": "cena_cansaco",
+      "nome": "Cansaço",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/scenes/cansaco.png"
+    },
+    {
+      "id": "cena_aflicao",
+      "nome": "Aflição",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/scenes/aflicao.png"
+    },
+    {
+      "id": "cena_virtude",
+      "nome": "Virtude",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/scenes/virtude.png"
+    },
+    {
+      "id": "cena_poderes",
+      "nome": "Poderes",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/scenes/poderes.png"
+    },
+    {
+      "id": "cena_preparacao",
+      "nome": "Preparação",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/scenes/preparacao.png"
+    },
+    {
+      "id": "cena_fome",
+      "nome": "Fome",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/scenes/fome.png"
+    },
+    {
+      "id": "cena_desgaste",
+      "nome": "Desgaste",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/scenes/desgaste.png"
+    },
+    {
+      "id": "cena_sorte",
+      "nome": "Sorte",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/scenes/sorte.png"
+    },
+    {
+      "id": "cena_azar",
+      "nome": "Azar",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/scenes/azar.png"
+    },
+    {
+      "id": "cena_sozinho",
+      "nome": "Sozinho",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/scenes/sozinho.png"
     }
   ],
-  "total": 291,
-  "total_ativos": 289,
+  "total": 313,
+  "total_ativos": 311,
   "resumo_por_status": {
     "cancelado": 2,
     "entregue": 17,
-    "integrado": 40,
-    "planejado": 232
+    "integrado": 43,
+    "planejado": 251
   }
 }

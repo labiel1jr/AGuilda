@@ -20,6 +20,7 @@ func _init() -> void:
 	_check_endings(gs)
 	_check_expedition(gs)
 	_check_mind(gs)
+	_check_story(gs)
 	_random_playthroughs(gs, 150)
 	print("RESULTADO: %s (%d falha(s))" % ["OK" if failures == 0 else "FALHOU", failures])
 	gs.free()
@@ -647,6 +648,21 @@ func _check_mind(gs) -> void:
 	gs.load_game("teste_mind")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(gs.save_path("teste_mind")))
 	_expect(gs.heroes.vera.has("stress") and gs.heroes.vera.has("traits"), "save antigo ganha estresse e traços ao carregar")
+
+
+func _check_story(gs) -> void:
+	gs.new_game(21)
+	var res: Dictionary = gs.dispatch(_mission(gs, "lobos"), ["vera", "bram"])
+	var st: Array = res.story
+	_expect(not st.is_empty() and st.size() <= int(gs.result_story_data.max_beats), "resultado contado em até %d momentos" % int(gs.result_story_data.max_beats))
+	var pair_lines: Array = gs.result_story_data.pairs["bram|vera"].sinergia.texts + gs.result_story_data.pairs["bram|vera"].sinergia.texts_falha
+	_expect(st.any(func(b): return b.type == "sinergia" and pair_lines.has(b.text)), "Vera e Bram ganham a frase própria do par (%s)" % [st.map(func(b): return b.text)])
+	_expect(st.any(func(b): return b.type == "sinergia" and b.image.ends_with("par_bram_vera_sinergia.png")), "e a imagem própria do par")
+	gs.new_game(21)
+	var r2: Dictionary = gs.dispatch(_mission(gs, "lobos"), ["theo", "lyssa"])
+	_expect(r2.story.any(func(b): return b.type == "conflito"), "Theo e Lyssa geram um momento de conflito")
+	var again: Dictionary = gs.dispatch(_mission(gs, "ratos"), ["vera"])
+	_expect(not again.story.any(func(b): return b.text.contains("{")), "sem marcadores sobrando no texto")
 
 
 func _expect(ok: bool, msg: String) -> void:

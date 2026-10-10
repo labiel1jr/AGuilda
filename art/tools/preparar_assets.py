@@ -166,7 +166,12 @@ def main():
         img = Image.open(f)
         img.load()
         dest = ids[aid]["destino"]
-        if aid in CHEIAS:
+        if aid.startswith("cena_"):
+            # cenas do resultado: imagem cheia (sem recorte), guardada em 2x da exibição
+            out = img.convert("RGB")
+            out.thumbnail((960, 400), Image.LANCZOS)
+            alvos = destino_png(dest, aid)
+        elif aid in CHEIAS:
             out = img.convert("RGB").resize(CHEIAS[aid], Image.LANCZOS) if aid != "livro_aberto" else img.convert("RGB")
             if aid == "livro_aberto":
                 out.thumbnail(CHEIAS[aid], Image.LANCZOS)
