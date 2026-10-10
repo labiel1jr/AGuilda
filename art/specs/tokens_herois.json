@@ -1,0 +1,364 @@
+{
+  "_doc": "Marcadores dos heróis no Mapa Mágico como MINIATURAS DE RPG DE MESA de cada personagem. Não contém imagens. Herda o estilo dos personagens (art/specs/_estilo.json) e a regra de entrega de art/specs/cenario/_estilo_cenario.json (JPG em fundo branco puro).",
+  "herda": [
+    "../_estilo.json",
+    "_estilo_cenario.json"
+  ],
+  "titulo": "Miniaturas dos heróis (marcadores do mapa)",
+  "familia_padrao": "pixel_hd",
+  "versao": 1,
+  "conceito": {
+    "ideia": "Cada herói vira a miniatura de metal pintada que um jogador colocaria sobre o mapa da campanha. Lê-se de longe pela silhueta (arma, chapéu, capuz, tamanho) e pela cor da base.",
+    "leitura": "reconhecível em 48×64 no mapa: silhueta e arma característica exageradas; Bram e Vera visivelmente mais baixos (halfling e anã)",
+    "vista": "3/4 frontal levemente de cima (como a câmera do mapa), virado para a direita (sentido da viagem); o jogo espelha quando anda para a esquerda",
+    "pintura": "aspecto de miniatura pintada à mão: cores um pouco saturadas, realces claros nas bordas (dry-brush), base com textura de madeira",
+    "agrupamento": "no mapa, as miniaturas do grupo ficam lado a lado (sobrepondo ~30%), a de quem chama fica à frente",
+    "integracao": "magic_map.gd desenha a textura do estado atual no lugar do círculo; sem textura, mantém o círculo com a inicial (fallback)."
+  },
+  "total_assets": 10,
+  "grupos": [
+    {
+      "id": "miniaturas",
+      "nome": "Miniaturas",
+      "familia": "pixel_hd",
+      "descricao": "Uma por herói, mais peças comuns.",
+      "assets": [
+        {
+          "id": "token_theo",
+          "nome": "Miniatura: Theo",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            48,
+            64
+          ],
+          "descricao": "Miniatura pintada de RPG de mesa: paladino em armadura de placas gasta com tabardo bege de sol raspado no peito, escudo redondo nas costas, espada longa na mão direita apontada para baixo, cabelo castanho-escuro com mecha na testa. De pé sobre base redonda de madeira pintada na cor dele (#c9a227), com borda dourada fina.",
+          "estados": [
+            "parado",
+            "andando (4 quadros: balanço leve e passo)",
+            "chamando (braço erguido; o jogo põe o balão '!')",
+            "ferido (curativo, postura curvada)",
+            "aflito (aura vermelha #a8443c tremulando)",
+            "virtude (aura dourada #f2d27a)"
+          ],
+          "animacao": {
+            "andando": {
+              "quadros": 4,
+              "fps": 8,
+              "loop": true
+            },
+            "aflito": {
+              "quadros": 4,
+              "fps": 6,
+              "loop": true
+            },
+            "virtude": {
+              "quadros": 4,
+              "fps": 6,
+              "loop": true
+            }
+          },
+          "liga_com": "art/specs/theo.json (aparência, paleta e equipamento) · data/heroes.json → theo.color",
+          "uso_no_jogo": "Marcador do herói andando no Mapa Mágico (substitui o círculo colorido com a inicial)",
+          "destino": "res://art/tokens/theo_{estado}.png",
+          "observacoes": "só o estado 'parado' foi entregue; faltam andando, chamando, ferido, aflito e virtude"
+        },
+        {
+          "id": "token_lyssa",
+          "nome": "Miniatura: Lyssa",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            48,
+            64
+          ],
+          "descricao": "Miniatura pintada de RPG de mesa: ladina de capuz verde-musgo e gibão de couro com cintas cruzadas, adaga curva na mão esquerda, postura agachada e leve, mecha ruiva aparecendo sob o capuz. De pé sobre base redonda de madeira pintada na cor dele (#6a9a5b), com borda dourada fina.",
+          "estados": [
+            "parado",
+            "andando (4 quadros: balanço leve e passo)",
+            "chamando (braço erguido; o jogo põe o balão '!')",
+            "ferido (curativo, postura curvada)",
+            "aflito (aura vermelha #a8443c tremulando)",
+            "virtude (aura dourada #f2d27a)"
+          ],
+          "animacao": {
+            "andando": {
+              "quadros": 4,
+              "fps": 8,
+              "loop": true
+            },
+            "aflito": {
+              "quadros": 4,
+              "fps": 6,
+              "loop": true
+            },
+            "virtude": {
+              "quadros": 4,
+              "fps": 6,
+              "loop": true
+            }
+          },
+          "liga_com": "art/specs/lyssa.json (aparência, paleta e equipamento) · data/heroes.json → lyssa.color",
+          "uso_no_jogo": "Marcador do herói andando no Mapa Mágico (substitui o círculo colorido com a inicial)",
+          "destino": "res://art/tokens/lyssa_{estado}.png",
+          "observacoes": "só o estado 'parado' foi entregue; faltam andando, chamando, ferido, aflito e virtude"
+        },
+        {
+          "id": "token_mira",
+          "nome": "Miniatura: Mira",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            48,
+            64
+          ],
+          "descricao": "Miniatura pintada de RPG de mesa: maga de manto azul-índigo com runas na gola, cajado fino com cristal azul na mão direita, livro sob o braço, coque preto-azulado com uma pena atravessada. De pé sobre base redonda de madeira pintada na cor dele (#5b7fbf), com borda dourada fina.",
+          "estados": [
+            "parado",
+            "andando (4 quadros: balanço leve e passo)",
+            "chamando (braço erguido; o jogo põe o balão '!')",
+            "ferido (curativo, postura curvada)",
+            "aflito (aura vermelha #a8443c tremulando)",
+            "virtude (aura dourada #f2d27a)"
+          ],
+          "animacao": {
+            "andando": {
+              "quadros": 4,
+              "fps": 8,
+              "loop": true
+            },
+            "aflito": {
+              "quadros": 4,
+              "fps": 6,
+              "loop": true
+            },
+            "virtude": {
+              "quadros": 4,
+              "fps": 6,
+              "loop": true
+            }
+          },
+          "liga_com": "art/specs/mira.json (aparência, paleta e equipamento) · data/heroes.json → mira.color",
+          "uso_no_jogo": "Marcador do herói andando no Mapa Mágico (substitui o círculo colorido com a inicial)",
+          "destino": "res://art/tokens/mira_{estado}.png",
+          "observacoes": "só o estado 'parado' foi entregue; faltam andando, chamando, ferido, aflito e virtude"
+        },
+        {
+          "id": "token_senna",
+          "nome": "Miniatura: Senna",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            48,
+            64
+          ],
+          "descricao": "Miniatura pintada de RPG de mesa: mercenária meio-orc de pele esverdeada, couraça de couro com ombreiras de malha, lenço vermelho-ferrugem no pescoço, espada bastarda apoiada no ombro, trança preta grossa. De pé sobre base redonda de madeira pintada na cor dele (#a8443c), com borda dourada fina.",
+          "estados": [
+            "parado",
+            "andando (4 quadros: balanço leve e passo)",
+            "chamando (braço erguido; o jogo põe o balão '!')",
+            "ferido (curativo, postura curvada)",
+            "aflito (aura vermelha #a8443c tremulando)",
+            "virtude (aura dourada #f2d27a)"
+          ],
+          "animacao": {
+            "andando": {
+              "quadros": 4,
+              "fps": 8,
+              "loop": true
+            },
+            "aflito": {
+              "quadros": 4,
+              "fps": 6,
+              "loop": true
+            },
+            "virtude": {
+              "quadros": 4,
+              "fps": 6,
+              "loop": true
+            }
+          },
+          "liga_com": "art/specs/senna.json (aparência, paleta e equipamento) · data/heroes.json → senna.color",
+          "uso_no_jogo": "Marcador do herói andando no Mapa Mágico (substitui o círculo colorido com a inicial)",
+          "destino": "res://art/tokens/senna_{estado}.png",
+          "observacoes": "só o estado 'parado' foi entregue; faltam andando, chamando, ferido, aflito e virtude"
+        },
+        {
+          "id": "token_bram",
+          "nome": "Miniatura: Bram",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            48,
+            64
+          ],
+          "descricao": "Miniatura pintada de RPG de mesa: bardo halfling (menor que os outros) de gibão verde-petróleo, chapéu de aba curta com pena vermelha longa, alaúde nas mãos, cabelo castanho cacheado. De pé sobre base redonda de madeira pintada na cor dele (#d9823b), com borda dourada fina.",
+          "estados": [
+            "parado",
+            "andando (4 quadros: balanço leve e passo)",
+            "chamando (braço erguido; o jogo põe o balão '!')",
+            "ferido (curativo, postura curvada)",
+            "aflito (aura vermelha #a8443c tremulando)",
+            "virtude (aura dourada #f2d27a)"
+          ],
+          "animacao": {
+            "andando": {
+              "quadros": 4,
+              "fps": 8,
+              "loop": true
+            },
+            "aflito": {
+              "quadros": 4,
+              "fps": 6,
+              "loop": true
+            },
+            "virtude": {
+              "quadros": 4,
+              "fps": 6,
+              "loop": true
+            }
+          },
+          "liga_com": "art/specs/bram.json (aparência, paleta e equipamento) · data/heroes.json → bram.color",
+          "uso_no_jogo": "Marcador do herói andando no Mapa Mágico (substitui o círculo colorido com a inicial)",
+          "destino": "res://art/tokens/bram_{estado}.png",
+          "observacoes": "só o estado 'parado' foi entregue; faltam andando, chamando, ferido, aflito e virtude"
+        },
+        {
+          "id": "token_vera",
+          "nome": "Miniatura: Vera",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            48,
+            64
+          ],
+          "descricao": "Miniatura pintada de RPG de mesa: guerreira anã baixa e larga em armadura pesada amassada, elmo aberto com proteção nasal, gola de pele, machado de lâmina dupla no ombro, trança grisalha. De pé sobre base redonda de madeira pintada na cor dele (#8a6fb0), com borda dourada fina.",
+          "estados": [
+            "parado",
+            "andando (4 quadros: balanço leve e passo)",
+            "chamando (braço erguido; o jogo põe o balão '!')",
+            "ferido (curativo, postura curvada)",
+            "aflito (aura vermelha #a8443c tremulando)",
+            "virtude (aura dourada #f2d27a)"
+          ],
+          "animacao": {
+            "andando": {
+              "quadros": 4,
+              "fps": 8,
+              "loop": true
+            },
+            "aflito": {
+              "quadros": 4,
+              "fps": 6,
+              "loop": true
+            },
+            "virtude": {
+              "quadros": 4,
+              "fps": 6,
+              "loop": true
+            }
+          },
+          "liga_com": "art/specs/vera.json (aparência, paleta e equipamento) · data/heroes.json → vera.color",
+          "uso_no_jogo": "Marcador do herói andando no Mapa Mágico (substitui o círculo colorido com a inicial)",
+          "destino": "res://art/tokens/vera_{estado}.png",
+          "observacoes": "só o estado 'parado' foi entregue; faltam andando, chamando, ferido, aflito e virtude"
+        },
+        {
+          "id": "token_corin",
+          "nome": "Miniatura: Corin",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            48,
+            64
+          ],
+          "descricao": "Miniatura pintada de RPG de mesa: clérigo de hábito marrom remendado e estola creme com bordas verde-azuladas, sol sagrado de madeira erguido na mão, maça pendurada na corda da cintura. De pé sobre base redonda de madeira pintada na cor dele (#4f9d9a), com borda dourada fina.",
+          "estados": [
+            "parado",
+            "andando (4 quadros: balanço leve e passo)",
+            "chamando (braço erguido; o jogo põe o balão '!')",
+            "ferido (curativo, postura curvada)",
+            "aflito (aura vermelha #a8443c tremulando)",
+            "virtude (aura dourada #f2d27a)"
+          ],
+          "animacao": {
+            "andando": {
+              "quadros": 4,
+              "fps": 8,
+              "loop": true
+            },
+            "aflito": {
+              "quadros": 4,
+              "fps": 6,
+              "loop": true
+            },
+            "virtude": {
+              "quadros": 4,
+              "fps": 6,
+              "loop": true
+            }
+          },
+          "liga_com": "art/specs/corin.json (aparência, paleta e equipamento) · data/heroes.json → corin.color",
+          "uso_no_jogo": "Marcador do herói andando no Mapa Mágico (substitui o círculo colorido com a inicial)",
+          "destino": "res://art/tokens/corin_{estado}.png",
+          "observacoes": "só o estado 'parado' foi entregue; faltam andando, chamando, ferido, aflito e virtude"
+        },
+        {
+          "id": "token_base",
+          "nome": "Base genérica",
+          "status": "entregue",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            48,
+            20
+          ],
+          "descricao": "Base redonda de madeira com borda dourada, vazia, neutra (bege), para heróis futuros enquanto a miniatura não existe; o jogo tinge com a cor do herói e põe a inicial.",
+          "liga_com": "data/heroes.json → color",
+          "uso_no_jogo": "Fallback do marcador",
+          "destino": "res://art/tokens/base.png",
+          "observacoes": "reserva para heróis sem miniatura"
+        },
+        {
+          "id": "token_sombra",
+          "nome": "Sombra de contato",
+          "status": "integrado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            40,
+            12
+          ],
+          "descricao": "Elipse escura suave para ficar embaixo da miniatura no papel.",
+          "uso_no_jogo": "Embaixo de cada miniatura",
+          "destino": "res://art/tokens/sombra.png"
+        },
+        {
+          "id": "token_balao",
+          "nome": "Balão de chamada",
+          "status": "integrado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            24,
+            28
+          ],
+          "descricao": "Pequeno balão de pergaminho com '!' em tinta vermelha, saltitando.",
+          "animacao": {
+            "quadros": 4,
+            "fps": 8,
+            "loop": true
+          },
+          "uso_no_jogo": "Sobre o herói que está chamando pelo Mapa Mágico",
+          "destino": "res://art/tokens/balao.png",
+          "observacoes": "tira de 4 quadros sobre quem chama"
+        }
+      ]
+    }
+  ],
+  "reservado_para_futuro": {
+    "_doc": "Herói novo em data/heroes.json → copie um token_<id>, troque descrição, cor e liga_com.",
+    "ideias": [
+      "miniatura do Mestre de Despacho (opcional, para cenas)",
+      "versões com equipamento trocado (arma nova visível)",
+      "pintura dourada para heróis de nível 10"
+    ]
+  }
+}

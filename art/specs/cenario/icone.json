@@ -1,0 +1,189 @@
+{
+  "_doc": "Ícone do jogo para Android (APK/Play Store) e Windows (.exe). Não contém imagens: é a especificação para artistas. Herda de _estilo_cenario.json (paleta, regra de entrega em JPG com fundo branco). Hoje o jogo usa um ícone provisório (res://icon.png, recorte da placa 'Grey Crow' da tela de título).",
+  "herda": "_estilo_cenario.json",
+  "titulo": "Ícone do jogo",
+  "familia_padrao": "pixel_hd",
+  "versao": 1,
+  "total_assets": 6,
+  "conceito": {
+    "ideia": "O Corvo Cinzento: um corvo de perfil, asas levemente abertas, pousado sobre um selo de cera vermelho (o Selo de Despacho) — junta a guilda (corvo) e o papel do jogador (quem despacha).",
+    "alternativas_para_esboco": [
+      "A: corvo pousado sobre o selo de cera (preferida)",
+      "B: corvo dentro de um escudo heráldico de madeira com borda dourada",
+      "C: selo de cera com o corvo em relevo, sem o pássaro solto"
+    ],
+    "leitura": "precisa ser reconhecível em 16×16 (ícone pequeno do Windows): silhueta do corvo forte, no máximo 3 massas de cor (corvo escuro, lacre vermelho, fundo claro/dourado)",
+    "paleta": {
+      "corvo": [
+        "#2b2a30",
+        "#4a4852",
+        "#8a8794"
+      ],
+      "lacre": [
+        "#a8443c",
+        "#7a2e28",
+        "#c8645a"
+      ],
+      "ouro": [
+        "#d4a94a",
+        "#b8892e",
+        "#f2d27a"
+      ],
+      "fundo": [
+        "#3d2f22",
+        "#2b2118"
+      ],
+      "contorno": "#1a120c"
+    },
+    "regras": [
+      "Sem texto (nem 'A Guilda'): o nome aparece embaixo do ícone no sistema",
+      "Mesmo desenho em todos os tamanhos; nos menores (16 a 32 px) simplificar: tirar penas internas e detalhes do lacre",
+      "Área importante dentro do círculo central de 66% (Android corta o ícone adaptativo em círculo, quadrado arredondado ou gota)",
+      "Pixel art detalhado, como os retratos; contorno escuro fechado"
+    ]
+  },
+  "grupos": [
+    {
+      "id": "fonte",
+      "nome": "Arte-fonte",
+      "descricao": "Desenho principal em alta. Todos os outros tamanhos saem daqui.",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "icone_mestre",
+          "nome": "Ícone — arte mestre",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            1024,
+            1024
+          ],
+          "descricao": "Composição completa: corvo sobre o selo de cera, fundo de madeira escura com leve vinheta e brilho dourado atrás do corvo.",
+          "detalhes": [
+            "entregar duas versões: com fundo (cena completa) e só o símbolo (corvo + selo) em fundo branco puro"
+          ],
+          "uso_no_jogo": "Fonte para todos os ícones; Play Store (512×512) e materiais de divulgação",
+          "destino": "res://art/icon/icone_mestre.png",
+          "prompt_en": "game app icon, pixel art, a grey crow perched on a red wax seal, dark wood background with soft golden glow, bold readable silhouette, centered, no text",
+          "observacoes": "ícone do projeto (Godot) e base do .ico provisório do Windows"
+        }
+      ]
+    },
+    {
+      "id": "android",
+      "nome": "Android (APK e Play Store)",
+      "descricao": "Godot usa: ícone principal 192×192 e ícone adaptativo (frente + fundo + monocromático) 432×432. A Play Store pede 512×512.",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "icone_android_principal",
+          "nome": "Android — ícone principal",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            192,
+            192
+          ],
+          "descricao": "Ícone completo (fundo + símbolo) em quadrado, para aparelhos sem ícone adaptativo.",
+          "uso_no_jogo": "Preset Android → launcher_icons/main_192x192",
+          "destino": "res://art/icon/android_192.png",
+          "liga_com": "export_presets.cfg → launcher_icons/main_192x192",
+          "observacoes": "launcher_icons/main_192x192"
+        },
+        {
+          "id": "icone_android_frente",
+          "nome": "Android — adaptativo: frente",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            432,
+            432
+          ],
+          "descricao": "Só o símbolo (corvo + selo), transparente em volta, ocupando no máximo o círculo central de 264 px (zona segura); o sistema recorta e anima as bordas.",
+          "detalhes": [
+            "entregar em fundo branco puro; a ferramenta remove o branco"
+          ],
+          "uso_no_jogo": "Preset Android → launcher_icons/adaptive_foreground_432x432",
+          "destino": "res://art/icon/android_frente_432.png",
+          "liga_com": "export_presets.cfg → launcher_icons/adaptive_foreground_432x432",
+          "observacoes": "launcher_icons/adaptive_foreground_432x432 (símbolo reduzido à zona segura)"
+        },
+        {
+          "id": "icone_android_fundo",
+          "nome": "Android — adaptativo: fundo",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            432,
+            432
+          ],
+          "descricao": "Fundo de madeira escura com vinheta e brilho dourado central, sem o símbolo. Ocupa o quadrado inteiro (é a única peça que não vem em fundo branco).",
+          "uso_no_jogo": "Preset Android → launcher_icons/adaptive_background_432x432",
+          "destino": "res://art/icon/android_fundo_432.png",
+          "liga_com": "export_presets.cfg → launcher_icons/adaptive_background_432x432",
+          "observacoes": "launcher_icons/adaptive_background_432x432"
+        },
+        {
+          "id": "icone_android_mono",
+          "nome": "Android — adaptativo: monocromático",
+          "status": "integrado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            432,
+            432
+          ],
+          "descricao": "Silhueta do corvo + selo em uma só cor, para o tema de ícones do Android 13+ (o sistema pinta). Mesma zona segura da frente.",
+          "detalhes": [
+            "entregar em preto sobre fundo branco puro"
+          ],
+          "uso_no_jogo": "Preset Android → launcher_icons/adaptive_monochrome_432x432",
+          "destino": "res://art/icon/android_mono_432.png",
+          "liga_com": "export_presets.cfg → launcher_icons/adaptive_monochrome_432x432",
+          "observacoes": "launcher_icons/adaptive_monochrome_432x432"
+        }
+      ]
+    },
+    {
+      "id": "windows",
+      "nome": "Windows",
+      "descricao": "Arquivo .ico com vários tamanhos dentro; usado no .exe, na barra de tarefas e na janela.",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "icone_windows",
+          "nome": "Windows — .ico",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            256,
+            256
+          ],
+          "descricao": "Ícone completo em quadrado com cantos levemente arredondados. Entregar PNGs separados em 256, 128, 64, 48, 32, 24 e 16 px — os de 16 a 32 redesenhados à mão (pixel a pixel), não só reduzidos.",
+          "variacoes": [
+            "256",
+            "128",
+            "64",
+            "48",
+            "32",
+            "24",
+            "16"
+          ],
+          "uso_no_jogo": "Preset Windows → application/icon; também application/config/windows_native_icon",
+          "destino": "res://art/icon/windows/icone_{var}.png (a ferramenta junta em res://art/icon/icone.ico)",
+          "liga_com": "project.godot → application/config/windows_native_icon; export_presets.cfg (Windows) → application/icon",
+          "observacoes": "usando .ico provisório gerado da arte mestre (art/icon/icone.ico); falta a versão redesenhada em 16–32 px"
+        }
+      ]
+    }
+  ],
+  "reservado_para_futuro": {
+    "_doc": "Outras plataformas e materiais de loja entram aqui no mesmo formato.",
+    "ideias": [
+      "Play Store: imagem de destaque 1024×500 (feature graphic)",
+      "macOS: .icns (16 a 1024)",
+      "iOS: ícone 1024×1024 sem transparência",
+      "Linux: PNG 256×256",
+      "ícone de evento/temporada (variação do corvo)"
+    ]
+  }
+}

@@ -1,0 +1,239 @@
+{
+  "_doc": "Arte do Mapa Mágico (GDD §5.9): fundo de mapa de RPG envelhecido onde os heróis andam. Não contém imagens. Herda de _estilo_cenario.json. Substitui o asset 'fundo_pergaminho_mapa' de fundos.json.",
+  "herda": "_estilo_cenario.json",
+  "titulo": "Mapa Mágico — pergaminho",
+  "familia_padrao": "nanquim",
+  "versao": 1,
+  "conceito": {
+    "ideia": "Um mapa de campanha de RPG de mesa, desenhado à mão, dobrado e carregado em muitas viagens. O jogo continua desenhando por cima (peças de nanquim, rio, caminhos, nós, névoa) — a arte dá o papel, as bordas, os ornamentos e o desgaste.",
+    "referencias_de_clima": [
+      "mapas de livros de fantasia (Terra-média, Westeros)",
+      "mapas de módulos de D&D antigos",
+      "cartografia do século XVI"
+    ],
+    "camadas": [
+      "1 folha (fundo)",
+      "2 rio e peças do jogo",
+      "3 caminhos e nós do jogo",
+      "4 heróis do jogo",
+      "5 borda e ornamentos",
+      "6 vincos (multiplicar)",
+      "7 vinheta (multiplicar)",
+      "8 brilho mágico roxo do jogo"
+    ],
+    "integracao": "magic_map.gd: trocar o draw_rect/manchas pela textura 'folha' do bioma e desenhar borda, rosa dos ventos e vincos por cima."
+  },
+  "total_assets": 11,
+  "grupos": [
+    {
+      "id": "folha",
+      "nome": "Folha do mapa",
+      "familia": "nanquim",
+      "descricao": "O pergaminho onde o mapa é desenhado. O jogo coloca por cima as peças de nanquim (árvores, colinas, vilas), os caminhos, os nós e os marcadores dos heróis.",
+      "assets": [
+        {
+          "id": "mapa_folha",
+          "nome": "Folha de mapa envelhecida",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            2048,
+            1600
+          ],
+          "descricao": "Pergaminho de mapa de RPG antigo: bordas rasgadas e levemente queimadas, vincos de dobra (2 verticais, 1 horizontal) bem visíveis, manchas de umidade e de chá, cantos enrolados, textura de fibra. Centro mais claro e limpo.",
+          "area_ui": "área de desenho do jogo: retângulo central com 7% de margem; manter o centro SEM desenhos (só textura) — rios, peças, nós e caminhos são do jogo",
+          "detalhes": [
+            "entregar como imagem completa (é a exceção ao fundo branco: a folha ocupa a imagem toda; o que fica fora das bordas rasgadas pode ser preto #000000 ou a mesa escura)",
+            "sem rosa dos ventos, cartela ou moldura nesta camada (vêm separados)"
+          ],
+          "variacoes": [
+            "neutra",
+            "floresta (tom esverdeado)",
+            "pântano (tom acinzentado-verde, mais manchas)",
+            "montanha (tom frio)",
+            "estrada (tom quente padrão)",
+            "cidade (tom pálido)"
+          ],
+          "uso_no_jogo": "Fundo do Mapa Mágico (hoje é cor sólida + manchas desenhadas por código)",
+          "destino": "res://art/map/parchment/folha.png"
+        },
+        {
+          "id": "mapa_borda",
+          "nome": "Moldura cartográfica",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            2048,
+            1600
+          ],
+          "descricao": "Borda decorada de mapa antigo: faixa dupla de tinta com escala graduada (marcas alternadas claro/escuro, como latitude), cantos com ornamentos de vinha.",
+          "detalhes": [
+            "vazada no centro (fundo branco no JPG, removido)"
+          ],
+          "uso_no_jogo": "Camada por cima da folha, dando cara de mapa impresso",
+          "destino": "res://art/map/parchment/borda.png"
+        },
+        {
+          "id": "mapa_vincos",
+          "nome": "Vincos e desgaste (sobreposição)",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            2048,
+            1600
+          ],
+          "descricao": "Só as linhas de dobra, rachaduras no papel e furos de traça, para aplicar em modo multiplicar por cima de tudo (inclusive do que o jogo desenha).",
+          "detalhes": [
+            "fundo branco puro: será usado em modo 'multiplicar', não recortado"
+          ],
+          "uso_no_jogo": "Overlay final do mapa: faz até os caminhos e peças parecerem impressos no papel velho",
+          "destino": "res://art/map/parchment/vincos.png"
+        },
+        {
+          "id": "mapa_vinheta",
+          "nome": "Escurecimento das bordas",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            1024,
+            800
+          ],
+          "descricao": "Gradiente sépia nas bordas, como papel envelhecido pela luz da vela.",
+          "detalhes": [
+            "fundo branco puro: usado em modo multiplicar"
+          ],
+          "uso_no_jogo": "Overlay leve",
+          "destino": "res://art/map/parchment/vinheta.png"
+        }
+      ]
+    },
+    {
+      "id": "ornamentos",
+      "nome": "Ornamentos de cartografia",
+      "familia": "nanquim",
+      "descricao": "Elementos clássicos de mapa de RPG desenhados a nanquim.",
+      "assets": [
+        {
+          "id": "mapa_rosa_ventos",
+          "nome": "Rosa dos ventos",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            160,
+            160
+          ],
+          "descricao": "Rosa dos ventos de 16 pontas, ornamentada, com acento dourado #b8892e e a flor-de-lis no norte (sem letras).",
+          "uso_no_jogo": "Canto inferior direito do mapa (hoje desenhada por código)",
+          "destino": "res://art/map/parchment/rosa_ventos.png"
+        },
+        {
+          "id": "mapa_cartela",
+          "nome": "Cartela de título",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            420,
+            140
+          ],
+          "descricao": "Moldura de pergaminho desenrolado/escudo com fitas, vazia, para o nome da missão.",
+          "nine_slice": [
+            60,
+            30,
+            60,
+            30
+          ],
+          "uso_no_jogo": "Topo do mapa com o nome da missão escrito pelo jogo",
+          "destino": "res://art/map/parchment/cartela.png"
+        },
+        {
+          "id": "mapa_escala",
+          "nome": "Barra de escala",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            240,
+            40
+          ],
+          "descricao": "Régua de mapa com divisões alternadas e floreio (sem números).",
+          "uso_no_jogo": "Canto inferior esquerdo",
+          "destino": "res://art/map/parchment/escala.png"
+        },
+        {
+          "id": "mapa_selo_guilda",
+          "nome": "Selo da guilda no mapa",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            96,
+            96
+          ],
+          "descricao": "Carimbo de tinta vermelha com o corvo, meio desbotado, como marca de propriedade.",
+          "uso_no_jogo": "Canto do mapa",
+          "destino": "res://art/map/parchment/selo.png"
+        },
+        {
+          "id": "mapa_rio",
+          "nome": "Peças de rio",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            96,
+            96
+          ],
+          "descricao": "Trechos de rio a nanquim com margens duplas e marcas de correnteza: reto, curva, bifurcação, nascente, foz.",
+          "variacoes": [
+            "reto",
+            "curva",
+            "bifurcacao",
+            "nascente",
+            "foz"
+          ],
+          "uso_no_jogo": "Substituir o rio desenhado por código",
+          "destino": "res://art/map/parchment/rio_{var}.png"
+        },
+        {
+          "id": "mapa_caminho",
+          "nome": "Traço de caminho",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            64,
+            16
+          ],
+          "descricao": "Segmentos de trilha tracejada a pena e de estrada com bordas duplas.",
+          "variacoes": [
+            "trilha",
+            "estrada",
+            "percorrido (dourado)"
+          ],
+          "uso_no_jogo": "Caminhos entre nós",
+          "destino": "res://art/map/parchment/caminho_{var}.png"
+        },
+        {
+          "id": "mapa_mar_bordas",
+          "nome": "Margens de lago/mar",
+          "status": "planejado",
+          "prioridade": "P3",
+          "tamanho_final_px": [
+            256,
+            128
+          ],
+          "descricao": "Contornos de costa com linhas de água paralelas (estilo cartográfico) para lagos.",
+          "variacoes": [
+            "4 peças"
+          ],
+          "uso_no_jogo": "Lagos futuros",
+          "destino": "res://art/map/parchment/costa_{n}.png"
+        }
+      ]
+    }
+  ],
+  "reservado_para_futuro": {
+    "_doc": "Novos ornamentos e biomas entram aqui.",
+    "ideias": [
+      "folha queimada (missão lendária)",
+      "manchas de sangue/vinho para eventos",
+      "anotações a lápis do Mestre (setas, círculos) desenhadas pelo jogador"
+    ]
+  }
+}

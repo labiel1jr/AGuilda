@@ -1,0 +1,372 @@
+{
+  "_doc": "Arte do Livro da Guilda (GDD §8): deixar a tela com cara de livro de verdade. Não contém imagens. Herda de _estilo_cenario.json (entrega em JPG com fundo branco, exceto a base 'livro_aberto', que é cena completa).",
+  "herda": "_estilo_cenario.json",
+  "titulo": "Livro da Guilda",
+  "familia_padrao": "pixel_hd",
+  "versao": 1,
+  "conceito": {
+    "ideia": "Tomo de capa de couro da guilda, aberto sobre a mesa do Mestre de Despacho. Página esquerda: identidade do herói; direita: atributos e relações (como hoje). A arte faz a moldura; o jogo escreve o conteúdo.",
+    "referencias_de_clima": [
+      "livro de feitiços de RPG",
+      "ficha de personagem de D&D impressa em pergaminho",
+      "manuscrito iluminado medieval"
+    ],
+    "paleta": {
+      "couro": [
+        "#4a2e1c",
+        "#6b4e2e",
+        "#2b1a10"
+      ],
+      "pagina": [
+        "#ead9b0",
+        "#c9b083",
+        "#f4e8c8"
+      ],
+      "tinta": "#2a1f14",
+      "rubrica": "#8a2f1f",
+      "latao": [
+        "#b8892e",
+        "#d4a94a"
+      ]
+    },
+    "integracao": "guild_book.gd troca os StyleBoxFlat das páginas pela textura (TextureRect/NinePatchRect) e as bolinhas de navegação pelas abas."
+  },
+  "total_assets": 18,
+  "grupos": [
+    {
+      "id": "estrutura",
+      "nome": "Estrutura do livro aberto",
+      "familia": "pixel_hd",
+      "descricao": "Peças que montam o livro aberto na tela. O jogo desenha o conteúdo (texto, barras, retrato) por cima das páginas.",
+      "assets": [
+        {
+          "id": "livro_aberto",
+          "nome": "Livro aberto (base)",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            1920,
+            1080
+          ],
+          "descricao": "Livro grosso aberto ao meio, visto de cima levemente inclinado: capa de couro marrom-escuro aparecendo nas bordas, cantoneiras de latão, duas páginas de pergaminho amarelado com curvatura perto da lombada (sombra na dobra), bloco de páginas visível na lateral.",
+          "area_ui": "cada página: retângulo interno com ~6% de margem; a faixa de 80 px no topo fica para navegação; a dobra central (~4% da largura) não recebe texto",
+          "detalhes": [
+            "sem texto nem desenho nas páginas (o jogo escreve)",
+            "entregar como cena completa (é a exceção ao fundo branco: o livro ocupa a tela, a mesa por trás é escura)",
+            "mesa de madeira escura e uma vela fora de foco no canto, discretos"
+          ],
+          "variacoes": [
+            "normal",
+            "páginas mais gastas (fim do Ato 2)"
+          ],
+          "uso_no_jogo": "Fundo da tela do Livro da Guilda (substitui os painéis lisos de hoje)",
+          "destino": "res://art/book/livro_aberto.png",
+          "observacoes": "mesa de fundo da tela do Livro (escurecida); entregue em 1536×1024 (3:2), não 16:9"
+        },
+        {
+          "id": "livro_pagina_esq",
+          "nome": "Página esquerda (textura)",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            900,
+            980
+          ],
+          "descricao": "Só a página esquerda, recortada, com borda irregular, manchas leves de umidade e a sombra da dobra no lado direito.",
+          "observacoes": "textura da página esquerda",
+          "uso_no_jogo": "Textura da página esquerda, se a base for montada em peças",
+          "destino": "res://art/book/pagina_esquerda.png"
+        },
+        {
+          "id": "livro_pagina_dir",
+          "nome": "Página direita (textura)",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            900,
+            980
+          ],
+          "descricao": "Espelho da esquerda, com a sombra da dobra no lado esquerdo e o canto inferior direito um pouco dobrado.",
+          "uso_no_jogo": "Textura da página direita",
+          "destino": "res://art/book/pagina_direita.png",
+          "observacoes": "textura da página direita"
+        },
+        {
+          "id": "livro_lombada",
+          "nome": "Lombada/dobra central",
+          "status": "integrado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            64,
+            980
+          ],
+          "descricao": "Faixa da dobra central com costura de linha aparecendo e sombra funda.",
+          "uso_no_jogo": "Centro do livro aberto",
+          "destino": "res://art/book/lombada.png"
+        },
+        {
+          "id": "livro_capa_fechada",
+          "nome": "Capa fechada",
+          "status": "integrado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            512,
+            640
+          ],
+          "descricao": "Livro fechado visto de frente: couro gravado com o Corvo Cinzento em relevo dourado, cantoneiras e fecho de latão, fita marcadora saindo por baixo.",
+          "estados": [
+            "fechado",
+            "fecho aberto"
+          ],
+          "uso_no_jogo": "Botão 'Livro' no hub e animação de abrir",
+          "destino": "res://art/book/capa_fechada.png",
+          "observacoes": "ícone do botão Livro no hub"
+        },
+        {
+          "id": "livro_borda_ornamental",
+          "nome": "Moldura ornamental de página",
+          "status": "integrado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            256,
+            256
+          ],
+          "descricao": "Filete duplo de tinta sépia com cantos ornamentados em vinhas e um pequeno corvo no canto superior; 9-slice.",
+          "nine_slice": [
+            40,
+            40,
+            40,
+            40
+          ],
+          "uso_no_jogo": "Moldura interna de cada página",
+          "destino": "res://art/book/moldura_pagina.png",
+          "observacoes": "moldura interna das páginas (9-slice 40 px)"
+        }
+      ]
+    },
+    {
+      "id": "ornamentos",
+      "nome": "Ornamentos de manuscrito",
+      "familia": "pixel_hd",
+      "descricao": "Elementos que fazem o conteúdo parecer escrito à mão num livro antigo.",
+      "assets": [
+        {
+          "id": "livro_capitular",
+          "nome": "Moldura de letra capitular",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            96,
+            96
+          ],
+          "descricao": "Quadrado iluminado (vermelho #8a2f1f e ouro) com vinhas, vazio no centro: o jogo escreve a inicial do nome do herói dentro.",
+          "variacoes": [
+            "vermelho",
+            "azul",
+            "verde"
+          ],
+          "uso_no_jogo": "Inicial iluminada do título do herói (hoje é só texto vermelho)",
+          "destino": "res://art/book/capitular.png"
+        },
+        {
+          "id": "livro_moldura_retrato",
+          "nome": "Moldura do retrato",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            300,
+            300
+          ],
+          "descricao": "Moldura oval de madeira e latão, como um retrato pendurado, vazada no centro para o retrato do herói.",
+          "uso_no_jogo": "Em volta do retrato na página esquerda",
+          "destino": "res://art/book/moldura_retrato.png"
+        },
+        {
+          "id": "livro_divisor",
+          "nome": "Divisor de seção",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            480,
+            24
+          ],
+          "descricao": "Linha de tinta com um floreio central (pena cruzada com espada).",
+          "uso_no_jogo": "Entre seções da ficha",
+          "destino": "res://art/book/divisor.png"
+        },
+        {
+          "id": "livro_titulo_secao",
+          "nome": "Faixa de título de seção",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            320,
+            48
+          ],
+          "descricao": "Pequena faixa/estandarte de pergaminho para os títulos (Atributos, Equipamento...).",
+          "nine_slice": [
+            24,
+            8,
+            24,
+            8
+          ],
+          "uso_no_jogo": "Cabeçalhos das seções",
+          "destino": "res://art/book/faixa_secao.png"
+        },
+        {
+          "id": "livro_caixa_atributo",
+          "nome": "Caixa de atributo",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            120,
+            140
+          ],
+          "descricao": "Caixa com bordas de tinta e cantos chanfrados, estilo ficha de D&D, para número grande e modificador.",
+          "uso_no_jogo": "Os cinco atributos na página direita",
+          "destino": "res://art/book/caixa_atributo.png"
+        },
+        {
+          "id": "livro_pip",
+          "nome": "Marcadores de pips",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            24,
+            24
+          ],
+          "descricao": "Gotas de tinta para PV, moral e estresse: cheia e vazia (contorno).",
+          "variacoes": [
+            "pv_cheio",
+            "pv_vazio",
+            "moral_cheio",
+            "moral_vazio",
+            "estresse_cheio",
+            "estresse_vazio"
+          ],
+          "uso_no_jogo": "Barras de PV, moral e estresse",
+          "destino": "res://art/book/pip_{var}.png"
+        },
+        {
+          "id": "livro_cadeado",
+          "nome": "Seção trancada",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            200,
+            60
+          ],
+          "descricao": "Corrente fina atravessando um trecho da página com um cadeado de latão.",
+          "uso_no_jogo": "Seções ainda trancadas (Conquistas...)",
+          "destino": "res://art/book/trancado.png"
+        },
+        {
+          "id": "livro_manchas",
+          "nome": "Manchas e marcas",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            128,
+            128
+          ],
+          "descricao": "Conjunto de manchas soltas: anel de caneca, gota de vela, borrão de tinta, impressão digital sépia.",
+          "variacoes": [
+            "6 manchas"
+          ],
+          "uso_no_jogo": "Espalhadas aleatoriamente nas páginas para dar vida",
+          "destino": "res://art/book/mancha_{n}.png"
+        }
+      ]
+    },
+    {
+      "id": "navegacao",
+      "nome": "Navegação",
+      "familia": "pixel_hd",
+      "descricao": "Como o jogador folheia o livro entre os aventureiros.",
+      "assets": [
+        {
+          "id": "livro_fita",
+          "nome": "Fita marcadora",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            40,
+            260
+          ],
+          "descricao": "Fita de cetim vermelha saindo do alto da lombada e caindo sobre a página.",
+          "uso_no_jogo": "Decoração e marcador da página atual",
+          "destino": "res://art/book/fita.png"
+        },
+        {
+          "id": "livro_aba_heroi",
+          "nome": "Abas laterais por herói",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            72,
+            56
+          ],
+          "descricao": "Abas de couro/pergaminho presas na borda das páginas, uma por herói, na cor do herói, com espaço para o mini-retrato.",
+          "estados": [
+            "normal",
+            "ativa (mais para fora)",
+            "herói fora da guilda (desbotada)"
+          ],
+          "detalhes": [
+            "entregar neutra (bege); o jogo tinge com a cor do herói",
+            "cores atuais: Theo #c9a227, Lyssa #6a9a5b, Mira #5b7fbf, Senna #a8443c, Bram #d9823b, Vera #8a6fb0, Corin #4f9d9a"
+          ],
+          "uso_no_jogo": "Substitui os pontinhos de navegação: clicar na aba abre a ficha",
+          "destino": "res://art/book/aba_{estado}.png"
+        },
+        {
+          "id": "livro_seta",
+          "nome": "Setas de folhear",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            96,
+            96
+          ],
+          "descricao": "Canto de página levantado (orelha) que o jogador clica para virar.",
+          "variacoes": [
+            "esquerda",
+            "direita"
+          ],
+          "estados": [
+            "normal",
+            "hover (levanta mais)"
+          ],
+          "uso_no_jogo": "Anterior / próximo",
+          "destino": "res://art/book/orelha_{var}.png"
+        },
+        {
+          "id": "livro_virar",
+          "nome": "Animação de virar a página",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            960,
+            980
+          ],
+          "descricao": "Página se curvando da direita para a esquerda.",
+          "animacao": {
+            "quadros": 8,
+            "fps": 20,
+            "loop": false
+          },
+          "uso_no_jogo": "Transição entre heróis",
+          "destino": "res://art/book/virar.png"
+        }
+      ]
+    }
+  ],
+  "reservado_para_futuro": {
+    "_doc": "Seções novas da ficha (Conquistas, Inventário detalhado...) usam as mesmas molduras; páginas especiais entram aqui.",
+    "ideias": [
+      "página de conquistas com selos",
+      "página do Arquivo (histórico de duplas)",
+      "páginas em branco para o diário do Mestre"
+    ]
+  }
+}
