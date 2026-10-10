@@ -42,6 +42,7 @@ Este documento descreve **como o jogo está construído hoje**: módulos, fluxo 
 | `scripts/ui/screens/*.gd` | Telas (estáticas, recebem `ui: GuildUI`): `HubScreen`, `PartyScreen`, `ExpeditionScreen`, `ResultScreen`, `GuildScreens`, `ItemScreens`, `StoryScreens`, `TitleScreen` |
 | `scripts/ui/components/ui_kit.gd` | `UIKit`: peças básicas sem estado (rótulo, parágrafo, painel, botão, ícone, cores de estado) |
 | `scripts/ui/components/widgets.gd` | `Widgets`: retrato, cabeçalho de herói, cartaz de inimigo, chip de estresse |
+| `scripts/ui/components/dice_throw.gd` | `DiceThrow`: d20 arremessado sobre o mapa nos testes (voo, quiques, parada na face, destaque de sucesso/falha/crítico); usa os sprites de `art/dice/` quando existirem, senão desenha por código |
 | `scripts/ui/components/moments.gd` | `Moments`: cena de ruptura e de saída por cima da tela atual |
 | `scripts/ui/magic_map.gd` | Mapa Mágico: desenho do pergaminho, grafo clicável, névoa, marcadores |
 | `scripts/ui/guild_book.gd` | Livro da Guilda (ficha em duas páginas) |

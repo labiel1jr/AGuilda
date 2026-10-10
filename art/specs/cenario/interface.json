@@ -1430,7 +1430,7 @@
         {
           "id": "ui_d20",
           "nome": "Dado d20",
-          "status": "planejado",
+          "status": "cancelado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -1450,7 +1450,8 @@
             "loop": false
           },
           "uso_no_jogo": "Rolagem visível nos eventos do mapa",
-          "destino": "res://art/ui/d20.png"
+          "destino": "res://art/ui/d20.png",
+          "observacoes": "substituído por dado.json"
         }
       ]
     }

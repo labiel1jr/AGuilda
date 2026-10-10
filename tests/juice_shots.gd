@@ -20,8 +20,16 @@ func _initialize() -> void:
 	await _shot("juice_selo")
 	await create_timer(1.2).timeout
 	main._roll_dice({"hero": "vera", "attr": "forca", "roll": 20, "mod": 4, "dc": 9, "ok": true}, func(): pass)
-	await create_timer(0.95).timeout
+	await create_timer(0.3).timeout
+	await _shot("juice_dado_voo")
+	await create_timer(0.55).timeout
+	await _shot("juice_dado_quique")
+	await create_timer(0.6).timeout
 	await _shot("juice_dado")
+	await create_timer(1.5).timeout
+	main._roll_dice({"hero": "bram", "attr": "destreza", "roll": 1, "mod": 0, "dc": 11, "ok": false}, func(): pass)
+	await create_timer(1.6).timeout
+	await _shot("juice_dado_falha")
 	await create_timer(1.5).timeout
 	while not Expedition.at_boss(gs):
 		if gs.expedition.pending != "":

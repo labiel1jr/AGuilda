@@ -110,6 +110,33 @@ def caber(img: Image.Image, tam, quadrado: bool) -> Image.Image:
     return img
 
 
+def _faixas(ocupado):
+    """[(início, fim)] das sequências contínuas de True."""
+    out, ini = [], None
+    for i, v in enumerate(ocupado + [False]):
+        if v and ini is None:
+            ini = i
+        elif not v and ini is not None:
+            out.append((ini, i))
+            ini = None
+    return out
+
+
+def celulas(img: Image.Image) -> list:
+    """Células de uma folha em grade (pela transparência), em ordem de leitura."""
+    a = img.getchannel("A")
+    w, h = img.size
+    px = a.load()
+    linhas = _faixas([any(px[x, y] > 16 for x in range(0, w, 3)) for y in range(h)])
+    out = []
+    for y0, y1 in linhas:
+        cols = _faixas([any(px[x, y] > 16 for y in range(y0, y1, 3)) for x in range(w)])
+        for x0, x1 in cols:
+            if x1 - x0 > 20 and y1 - y0 > 20:
+                out.append((x0, y0, x1, y1))
+    return out
+
+
 def destino_png(dest: str, aid: str) -> list:
     """res://... com {var}/{estado} → lista de caminhos locais."""
     p = dest.replace("res://", "")
@@ -147,6 +174,15 @@ def main():
         elif aid == "token_sombra":
             out = caber(sombra_por_luminancia(img), (96, 32), False)
             alvos = destino_png(dest, aid)
+        elif aid == "dado_d20_faces":
+            # folha com as 20 faces em grade (linha a linha, 1 a 20): recorta cada célula com conteúdo
+            limpa = img.convert("RGBA") if img.mode == "RGBA" else tirar_fundo(img)
+            for n, cel in enumerate(celulas(limpa)[:20], start=1):
+                alvo = ROOT / dest.replace("res://", "").replace("{var}", "%02d" % n)
+                alvo.parent.mkdir(parents=True, exist_ok=True)
+                caber(limpa.crop(cel), (128, 128), True).save(alvo, optimize=True)
+                feitos.append((aid, alvo))
+            continue
         elif aid == "rec_moedas":
             # três variações numa só imagem: duas pilhas em cima, a bolsa embaixo
             limpa = tirar_fundo(img)

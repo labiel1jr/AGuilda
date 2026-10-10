@@ -212,6 +212,8 @@ static func on_call_choice(ui: GuildUI, opt: Dictionary) -> void:
 static func roll_dice(ui: GuildUI, d: Dictionary, done: Callable) -> void:
 	if is_instance_valid(ui._dice_box):
 		ui._dice_box.queue_free()   # uma rolagem por vez
+	var frame_rect: Rect2 = ui._map.get_global_rect() if is_instance_valid(ui._map) else ui.get_viewport_rect()
+	# painel do teste (quem testa, CD e, ao parar o dado, a conta e o veredito)
 	var box := UIKit.panel(GuildUI.C_PARCHMENT)
 	ui._dice_box = box
 	box.top_level = true
@@ -223,37 +225,39 @@ static func roll_dice(ui: GuildUI, d: Dictionary, done: Callable) -> void:
 	var who := UIKit.label("%s testa %s (CD %d, %+d)" % [ui.gs.heroes[d.hero].name, ui.gs.ATTR_NAMES[d.attr], d.dc, d.mod], 14, GuildUI.C_INK)
 	who.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	col.add_child(who)
-	var num := UIKit.label("20", 54, GuildUI.C_INK)
+	var num := UIKit.label("…", 34, GuildUI.C_INK)
 	num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	col.add_child(num)
-	var verdict := UIKit.label("", 18, GuildUI.C_INK)
+	var verdict := UIKit.label("o dado rola...", 16, GuildUI.C_INK.lightened(0.3))
 	verdict.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	col.add_child(verdict)
-	box.custom_minimum_size = Vector2(260, 150)
-	var frame_rect: Rect2 = ui._map.get_global_rect() if is_instance_valid(ui._map) else ui.get_viewport_rect()
-	box.global_position = frame_rect.get_center() - box.custom_minimum_size / 2.0
+	box.custom_minimum_size = Vector2(280, 112)
+	box.global_position = Vector2(frame_rect.get_center().x - 140, frame_rect.position.y + 18)
+	# o dado arremessado sobre o mapa
+	var die := DiceThrow.new()
+	box.add_child(die)
 	var ok: bool = d.ok
 	var color: Color = Color("#3f6b2f") if ok else Color("#8a2f1f")
-	var tw := box.create_tween()
-	if not Juice.reduce_motion:
-		tw.tween_method(func(_v: float): num.text = str(randi_range(1, 20)), 0.0, 1.0, 0.7)
-	tw.tween_callback(func():
+	die.landed.connect(func():
 		num.text = str(d.roll)
 		num.add_theme_color_override("font_color", color)
 		verdict.text = "%d %+d = %d  —  %s" % [d.roll, d.mod, d.roll + d.mod, "SUCESSO" if ok else "FALHOU"]
 		verdict.add_theme_color_override("font_color", color)
 		Juice.pop(num, 0.35, 0.3)
+		Juice.pop(box, 0.06, 0.25)
 		if d.roll == 20:
 			Juice.flash(ui, Color("#f2d27a"), 0.3, 0.5)
 			Juice.shake(ui, 3.0, 0.2)
 		elif d.roll == 1:
 			Juice.flash(ui, Color("#8a2f1f"), 0.25, 0.5)
 			Juice.shake(ui, 5.0, 0.3))
-	tw.tween_interval(0.25 if Juice.reduce_motion else 0.8)
-	tw.tween_property(box, "modulate:a", 0.0, 0.25)
-	tw.tween_callback(func():
-		box.queue_free()
-		done.call())
+	die.finished.connect(func():
+		var tw := box.create_tween()
+		tw.tween_property(box, "modulate:a", 0.0, 0.2)
+		tw.tween_callback(func():
+			box.queue_free()
+			done.call()))
+	die.throw(int(d.roll), ok, frame_rect)
 
 
 static func show_shop(ui: GuildUI, stock: Array) -> void:

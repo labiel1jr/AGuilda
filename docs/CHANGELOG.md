@@ -4,6 +4,12 @@ Histórico de versões, da mais recente para a mais antiga. Datas dos commits no
 
 ---
 
+## Dado arremessado nos testes — 2026-10-10
+
+- Nos testes do mapa, um d20 é **arremessado sobre a cena**: voa girando, quica duas vezes (achata e levanta poeira), para na face do resultado e ganha aura verde (sucesso) ou vermelha (falha); 20 natural solta raios dourados, 1 natural racha. O painel do teste continua no topo do mapa e mostra a conta quando o dado para.
+- Faces do d20 entregues numa folha única (`art/ArtesEmGeral/dado_d20_faces.png`), recortadas por `preparar_assets.py` em `art/dice/d20_face_01..20.png`: o dado usa a arte no voo (face sorteada trocando) e na parada. A tira "rolando", impacto, poeira e destaques ainda são desenhados por código.
+- `art/specs/cenario/dado.json`: especificação dos sprites (20 faces, tira rolando, impacto, poeira, sombra, brilhos de sucesso/falha, crítico e falha crítica); substitui o antigo `ui_d20`.
+
 ## Refatoração: main.gd separado em telas e componentes — 2026-10-10
 
 - `scripts/ui/main.gd` (1.870 → ~300 linhas) guarda o estado da interface e repassa para as telas.

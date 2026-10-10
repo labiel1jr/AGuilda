@@ -42,6 +42,7 @@ Objetivo: uma experiência pequena, completa e jogável que mostre por que A Gui
 - [ ] Resultado explicado em linguagem narrativa ("Theo e Lyssa não se entenderam"), com a soma do score como detalhe opcional
 - [ ] Feedback visual de relações (o que mudou entre quem, e por quê)
 - [x] Game juice v1 (só código): selo, dado, placar, momentos de personagem, transições — ver Changelog
+- [x] Dado d20 arremessado na cena nos testes (provisório por código; sprites especificados em `dado.json`)
 - [ ] Game juice v2 (partículas com os sprites de `efeitos.json`) e v3 (som)
 - [ ] Melhor apresentação dos personagens (retratos maiores na montagem, falas curtas)
 - [ ] Mesma missão + party diferente = história diferente (textos por dupla/herói em `missions.json`)

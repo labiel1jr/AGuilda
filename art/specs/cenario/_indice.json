@@ -45,11 +45,15 @@
     "../tokens_herois.json": {
       "titulo": "Miniaturas dos heróis (marcadores do mapa)",
       "total": 10
+    },
+    "dado.json": {
+      "titulo": "Dado d20",
+      "total": 9
     }
   },
   "resumo_por_prioridade": {
-    "P0": 82,
-    "P1": 109,
+    "P0": 83,
+    "P1": 116,
     "P2": 73,
     "P3": 17
   },
@@ -2347,8 +2351,9 @@
       "grupo": "dados",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/ui/d20.png"
+      "status": "cancelado",
+      "destino": "res://art/ui/d20.png",
+      "observacoes": "substituído por dado.json (faces, rolando, impacto, destaques)"
     },
     {
       "id": "fx_nevoa",
@@ -2929,14 +2934,105 @@
       "status": "integrado",
       "destino": "res://art/tokens/balao.png",
       "observacoes": "tira de 4 quadros sobre quem chama"
+    },
+    {
+      "id": "dado_d20_faces",
+      "nome": "d20 — faces 1 a 20",
+      "arquivo": "dado.json",
+      "grupo": "faces",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/dice/d20_face_{var}.png",
+      "observacoes": "folha única com as 20 faces recortada em art/dice/d20_face_01..20; desvios a corrigir pelo artista: ponto só no 6 e 9 (veio no 7, 8 e 9, faltou no 6), vizinhos não seguem um d20 real"
+    },
+    {
+      "id": "dado_d20_rolando",
+      "nome": "d20 — rolando (tira)",
+      "arquivo": "dado.json",
+      "grupo": "animacao",
+      "familia": "efeito",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/dice/d20_rolando.png"
+    },
+    {
+      "id": "dado_d20_impacto",
+      "nome": "d20 — impacto (achatado)",
+      "arquivo": "dado.json",
+      "grupo": "animacao",
+      "familia": "efeito",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/dice/d20_impacto.png"
+    },
+    {
+      "id": "dado_poeira",
+      "nome": "Poeira do quique",
+      "arquivo": "dado.json",
+      "grupo": "animacao",
+      "familia": "efeito",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/dice/poeira.png"
+    },
+    {
+      "id": "dado_sombra",
+      "nome": "Sombra do dado",
+      "arquivo": "dado.json",
+      "grupo": "animacao",
+      "familia": "efeito",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/dice/sombra.png"
+    },
+    {
+      "id": "dado_brilho_sucesso",
+      "nome": "Brilho de sucesso",
+      "arquivo": "dado.json",
+      "grupo": "resultado",
+      "familia": "efeito",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/dice/brilho_sucesso.png"
+    },
+    {
+      "id": "dado_brilho_falha",
+      "nome": "Brilho de falha",
+      "arquivo": "dado.json",
+      "grupo": "resultado",
+      "familia": "efeito",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/dice/brilho_falha.png"
+    },
+    {
+      "id": "dado_critico_20",
+      "nome": "Crítico (20 natural)",
+      "arquivo": "dado.json",
+      "grupo": "resultado",
+      "familia": "efeito",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/dice/critico_20.png"
+    },
+    {
+      "id": "dado_falha_critica_1",
+      "nome": "Falha crítica (1 natural)",
+      "arquivo": "dado.json",
+      "grupo": "resultado",
+      "familia": "efeito",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/dice/falha_critica_1.png"
     }
   ],
-  "total": 282,
-  "total_ativos": 281,
+  "total": 291,
+  "total_ativos": 289,
   "resumo_por_status": {
-    "cancelado": 1,
+    "cancelado": 2,
     "entregue": 17,
-    "integrado": 39,
-    "planejado": 225
+    "integrado": 40,
+    "planejado": 232
   }
 }

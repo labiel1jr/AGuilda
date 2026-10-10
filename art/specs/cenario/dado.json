@@ -1,0 +1,261 @@
+{
+  "_doc": "Dado d20 arremessado nos testes do Mapa Mágico (game juice). Não contém imagens: é a especificação para artistas. Herda de _estilo_cenario.json (paleta, entrega em JPG com fundo branco puro). Substitui o asset 'ui_d20' de interface.json. Enquanto as imagens não chegam, o jogo desenha um d20 provisório por código (scripts/ui/components/dice_throw.gd).",
+  "herda": "_estilo_cenario.json",
+  "titulo": "Dado d20",
+  "familia_padrao": "pixel_hd",
+  "versao": 1,
+  "conceito": {
+    "ideia": "Um d20 de osso/marfim gasto, com números entalhados e pintados de tinta escura, como o dado de sorte de uma guilda velha. Ele é arremessado sobre o mapa quando um herói faz um teste: voa girando, quica duas vezes, para e mostra o número da face de cima.",
+    "vista": "icosaedro visto levemente de cima, com a face de cima (triângulo) virada para a câmera e as faces vizinhas em volta; silhueta de hexágono irregular",
+    "leitura": "o número da face de cima precisa ser legível em 64 px; faces vizinhas com números menores, parciais e mais escuros (dão volume, mas não competem)",
+    "paleta": {
+      "osso": [
+        "#f1e6cc",
+        "#d9c9a3",
+        "#b39d72"
+      ],
+      "sombra_faces": [
+        "#8f7a52",
+        "#6b5a3a"
+      ],
+      "tinta_numeros": "#2a1f14",
+      "sucesso": "#3f6b2f",
+      "falha": "#8a2f1f",
+      "critico": [
+        "#f2d27a",
+        "#d4a94a"
+      ],
+      "contorno": "#1a120c"
+    },
+    "regras": [
+      "Mesmo desenho e mesmo enquadramento em todas as faces (só muda o número de cima e os vizinhos): o jogo troca o quadro no lugar",
+      "Números em algarismos arábicos, com ponto embaixo do 6 e do 9 (6. e 9.) para não confundir",
+      "Luz da superior esquerda; brilho especular pequeno no canto de uma aresta",
+      "Sem fundo, sem sombra no chão (a sombra é peça separada); entregar em fundo branco puro (#FFFFFF)",
+      "Centralizado; o centro da face de cima no centro da imagem (o jogo gira o dado em volta desse ponto)"
+    ],
+    "como_o_jogo_usa": {
+      "1_arremesso": "entra pelo canto inferior esquerdo do mapa usando a tira 'rolando' em loop, girando e subindo em arco",
+      "2_quiques": "dois quiques com 'impacto' (achatado) e poeira; a cada quique a tira desacelera",
+      "3_parada": "troca para a face do resultado (d20_face_NN), pequeno balanço até parar",
+      "4_resultado": "sobrepõe 'brilho_sucesso' ou 'brilho_falha'; 20 natural usa 'critico_20', 1 natural usa 'falha_critica_1'",
+      "5_saida": "fica ~1 s e some (fade) junto com o painel do teste"
+    }
+  },
+  "total_assets": 9,
+  "grupos": [
+    {
+      "id": "faces",
+      "nome": "Faces do d20",
+      "descricao": "Um quadro por resultado, de 1 a 20.",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "dado_d20_faces",
+          "nome": "d20 — faces 1 a 20",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            128,
+            128
+          ],
+          "descricao": "O d20 parado com o número N na face de cima, para N de 1 a 20. Vinte arquivos, um por número, todos com o mesmo desenho.",
+          "variacoes": [
+            "01",
+            "02",
+            "03",
+            "04",
+            "05",
+            "06",
+            "07",
+            "08",
+            "09",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20"
+          ],
+          "detalhes": [
+            "faces vizinhas coerentes com um d20 real (opostas somam 21: o 20 fica oposto ao 1), mostrando 3 números vizinhos parciais",
+            "o 20 pode ter o número levemente dourado (detalhe da guilda)"
+          ],
+          "uso_no_jogo": "Face final do dado depois de parar (mostra o resultado do teste)",
+          "destino": "res://art/dice/d20_face_{var}.png",
+          "prompt_en": "pixel art bone ivory twenty-sided die, d20, top face number {N} engraved with dark ink, three neighbor faces with partial smaller numbers, viewed slightly from above, light from top-left, crisp pixels, dark outline, plain solid white background, no shadow",
+          "observacoes": "folha única com as 20 faces recortada em art/dice/d20_face_01..20; desvios a corrigir pelo artista: ponto só no 6 e 9 (veio no 7, 8 e 9, faltou no 6), vizinhos não seguem um d20 real"
+        }
+      ]
+    },
+    {
+      "id": "animacao",
+      "nome": "Animação",
+      "descricao": "Quadros para o arremesso e os quiques.",
+      "familia": "efeito",
+      "assets": [
+        {
+          "id": "dado_d20_rolando",
+          "nome": "d20 — rolando (tira)",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            128,
+            128
+          ],
+          "descricao": "Tira horizontal de 8 quadros do dado girando no ar (uma volta completa): arestas em posições diferentes, números borrados/ilegíveis, leve rastro de movimento.",
+          "animacao": {
+            "quadros": 8,
+            "fps": 16,
+            "loop": true
+          },
+          "uso_no_jogo": "Enquanto o dado voa e quica",
+          "destino": "res://art/dice/d20_rolando.png"
+        },
+        {
+          "id": "dado_d20_impacto",
+          "nome": "d20 — impacto (achatado)",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            128,
+            128
+          ],
+          "descricao": "Tira de 3 quadros do dado tocando o chão: achatado, normal, esticado (squash and stretch).",
+          "animacao": {
+            "quadros": 3,
+            "fps": 20,
+            "loop": false
+          },
+          "uso_no_jogo": "Em cada quique",
+          "destino": "res://art/dice/d20_impacto.png"
+        },
+        {
+          "id": "dado_poeira",
+          "nome": "Poeira do quique",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            96,
+            48
+          ],
+          "descricao": "Tira de 5 quadros de uma nuvenzinha de poeira de pergaminho/tinta abrindo para os lados e sumindo.",
+          "animacao": {
+            "quadros": 5,
+            "fps": 16,
+            "loop": false
+          },
+          "uso_no_jogo": "No ponto onde o dado quica",
+          "destino": "res://art/dice/poeira.png"
+        },
+        {
+          "id": "dado_sombra",
+          "nome": "Sombra do dado",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            96,
+            28
+          ],
+          "descricao": "Elipse de sombra suave (o jogo diminui quando o dado sobe).",
+          "uso_no_jogo": "Embaixo do dado durante todo o arremesso",
+          "destino": "res://art/dice/sombra.png"
+        }
+      ]
+    },
+    {
+      "id": "resultado",
+      "nome": "Destaques de resultado",
+      "descricao": "Sobreposições desenhadas atrás/por cima do dado parado.",
+      "familia": "efeito",
+      "assets": [
+        {
+          "id": "dado_brilho_sucesso",
+          "nome": "Brilho de sucesso",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            160,
+            160
+          ],
+          "descricao": "Aura verde-oliva suave em volta do dado (anel com raios curtos).",
+          "animacao": {
+            "quadros": 4,
+            "fps": 8,
+            "loop": true
+          },
+          "uso_no_jogo": "Atrás do dado quando o teste passa",
+          "destino": "res://art/dice/brilho_sucesso.png"
+        },
+        {
+          "id": "dado_brilho_falha",
+          "nome": "Brilho de falha",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            160,
+            160
+          ],
+          "descricao": "Aura vermelho-escura, irregular, como tinta escorrendo.",
+          "animacao": {
+            "quadros": 4,
+            "fps": 8,
+            "loop": true
+          },
+          "uso_no_jogo": "Atrás do dado quando o teste falha",
+          "destino": "res://art/dice/brilho_falha.png"
+        },
+        {
+          "id": "dado_critico_20",
+          "nome": "Crítico (20 natural)",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            192,
+            192
+          ],
+          "descricao": "Explosão dourada de faíscas e raios saindo do dado; o 20 brilha.",
+          "animacao": {
+            "quadros": 8,
+            "fps": 14,
+            "loop": false
+          },
+          "uso_no_jogo": "20 natural (sucesso automático)",
+          "destino": "res://art/dice/critico_20.png"
+        },
+        {
+          "id": "dado_falha_critica_1",
+          "nome": "Falha crítica (1 natural)",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            128,
+            128
+          ],
+          "descricao": "Sobreposição de rachadura atravessando o dado, com lascas soltando.",
+          "animacao": {
+            "quadros": 6,
+            "fps": 14,
+            "loop": false
+          },
+          "uso_no_jogo": "1 natural (falha automática)",
+          "destino": "res://art/dice/falha_critica_1.png"
+        }
+      ]
+    }
+  ],
+  "reservado_para_futuro": {
+    "_doc": "Outros dados entram no mesmo formato (faces + rolando), se o jogo passar a usá-los.",
+    "ideias": [
+      "d6 de madeira para eventos de taverna",
+      "d4, d8, d10, d12 para magias e saque",
+      "dado amaldiçoado (aflição Irracional)",
+      "dados da guilda de cor diferente por herói"
+    ]
+  }
+}

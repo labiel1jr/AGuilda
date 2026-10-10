@@ -79,7 +79,7 @@ func _initialize() -> void:
 	# juice: dado e momentos de personagem
 	var rolled := [false]
 	main._roll_dice({"hero": "vera", "attr": "forca", "roll": 20, "mod": 3, "dc": 11, "ok": true}, func(): rolled[0] = true)
-	await create_timer(2.5).timeout
+	await create_timer(4.0).timeout
 	assert(rolled[0], "dado não terminou")
 	main._on_face_boss()
 	await process_frame
