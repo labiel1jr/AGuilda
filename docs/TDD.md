@@ -153,6 +153,8 @@ JSON não distingue `int` de `float`: números lidos viram `float`. Converter co
 - Cada tela é um módulo estático em `ui/screens/` que monta a tela em `ui.root` (um `VBoxContainer`) depois de `ui._clear()`. O estado da interface (party em montagem, mapa aberto, momentos) fica na `main` (`GuildUI`). Navegação por chamadas diretas (`ui.show_hub()`, `PartyScreen.show_party(ui, m)`...). Peças sem estado vêm do `UIKit`.
 - **Mapa Mágico** (`magic_map.gd`): `Control` com `_draw()` próprio. Recebe a expedição por referência, emite `node_chosen(pos)` e `arrived(pos)`, mostra tooltip por nó (`_get_tooltip`). Peças de `art/MapParts/<tipo>/` são carregadas listando a pasta (funciona no editor e exportado, removendo o sufixo `.import`).
 - **Game juice:** só visual, nunca muda o estado. Momentos de personagem são enfileirados pelo núcleo em `gs.pending_moments` (ruptura em `Mind`, saída em `GameState._depart`; não salvos) e encenados por `main._play_moments()` no hub, no mapa e no resultado.
+- **Miniaturas:** o Mapa Mágico desenha `art/tokens/<id>_parado.png` com sombra e balão "!" sobre quem chama; sem a arte, um círculo com a inicial.
+- **Dado:** `DiceThrow` (componente) arremessa o d20 sobre o mapa; usa `art/dice/d20_face_NN.png` e, quando existirem, a tira `d20_rolando.png`.
 - **Retratos:** `h.portrait` aponta para `res://art/portraits/<id>.png`; sem imagem, usa `portrait.gd`.
 - **Cartazes:** `res://art/enemies/<id>.png`, na ordem de `mission.enemies` (chefe primeiro; o segundo vira o guarda do alvo no mapa).
 

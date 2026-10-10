@@ -2,9 +2,9 @@
 
 > *"Quem você envia define quem eles se tornam."*
 
-Jogo de gerenciamento narrativo em fantasia medieval, inspirado no loop de despacho de **Dispatch** (AdHoc Studio). Você não é o herói — é o(a) **Mestre(a) de Despacho** da decadente Guilda do Corvo Cinzento, e decide **quem vai, com quem, e como**.
+Jogo de gerenciamento narrativo em fantasia medieval, feito em **Godot 4.7**. Inspirado no loop de despacho de **Dispatch**, no estresse e nas expedições de **Darkest Dungeon** e nos mapas de rota de **Slay the Spire** e **Cult of the Lamb**. Você não é o herói — é o(a) **Mestre(a) de Despacho** da decadente Guilda do Corvo Cinzento, e decide **quem vai, com quem, e como**.
 
-O jogo não é sobre combate. É sobre gestão de gente complicada com poder de matar dragões: egos, rivalidades, dívidas de honra e vínculos que mudam conforme você monta as parties.
+O jogo não é sobre combate. É sobre gestão de gente complicada com poder de matar dragões: egos, rivalidades, dívidas de honra e vínculos que mudam conforme você monta as parties. **Não faça o jogador administrar números. Faça-o administrar pessoas.**
 
 ![Tela de título](docs/img/18_titulo.png)
 
@@ -14,41 +14,53 @@ O jogo não é sobre combate. É sobre gestão de gente complicada com poder de 
 
 O jogo é dividido em **atos** e **capítulos**. Cada capítulo abre com uma cena, dura alguns dias e tem um objetivo; o resultado muda o texto dos capítulos seguintes. São dois atos, com dois capítulos cada.
 
-1. **Mural de Quests** — pedidos chegam a cada dia, com risco, prazo e atributos exigidos.
-2. **Montagem de Party** — escolha de 1 a 4 aventureiros. O preview mostra a afinidade entre eles, mas nunca o resultado.
-3. **Despacho** — confirme com o Selo de Cera.
-4. **Mapa Mágico (expedição)** — a missão vira um mapa de caminhos com bifurcações. Quando o grupo chega a uma encruzilhada, um herói chama pelo Mapa Mágico e você escolhe o próximo ponto: combate, tesouro, mercador, acampamento, encontro ou atalho. Cada escolha muda a preparação contra o alvo, o saque, os ferimentos, a comida e os dias de viagem.
-5. **Resolução** — Sucesso Limpo, Sucesso com Custo ou Falha com Revelação. Falhar nunca é beco sem saída: é gancho de história.
+1. **Mural de Quests** — pedidos chegam a cada dia, com o cartaz do inimigo, risco, prazo e atributos exigidos.
+2. **Montagem de Party** — escolha de 1 a 4 aventureiros. O preview mostra a afinidade, o estresse e as condições de cada um, mas nunca o resultado.
+3. **Despacho** — o **Selo de Cera** carimba a decisão.
+4. **Mapa Mágico (expedição)** — a missão vira um mapa de pergaminho com caminhos e bifurcações; os heróis andam como **miniaturas de RPG de mesa**. Em cada encruzilhada um herói **chama pelo Mapa Mágico** e você escolhe o próximo ponto: combate, tesouro, mercador, acampamento, encontro, atalho, estranho, santuário ou o guarda do alvo. Os testes são um **d20 arremessado na cena** + o atributo do herói mais apto.
+5. **Resolução** — a barra do score enche até o veredito: Sucesso Limpo, Sucesso com Custo ou Falha com Revelação. Falhar nunca é beco sem saída: é gancho de história.
 6. **Vínculos** — quem vai junto se aproxima ou se afasta. Ao cruzar limiares, você decide o que existe entre eles (Amizade, Mentoria, Rivalidade, Romance...), e isso desbloqueia **Ações de Vínculo**.
-7. **Bastidores** — cenas curtas na guilda (taverna, treino, brigas, segredos). Você escolhe como reagir: pagar a rodada, tomar partido, mediar.
-8. **Evolução** — heróis ganham XP, sobem de nível (você escolhe o atributo e, nos níveis 3/5/7/9, uma magia ou talento), trazem saque das missões e usam armas, armaduras, acessórios e consumíveis. Conjuradores preparam uma magia antes de cada despacho; o clérigo e outros curandeiros curam na guilda.
-9. **Descanso** — mande um herói descansar: ele fica o dia fora, mas recupera fadiga, PV, magias e moral. Quem está esgotado pede descanso; ignorar custa moral.
-10. **Guilda** — gaste o ouro das missões em melhorias: Quadro de Relações, Enfermaria, Arquivo e Salão de Treinamento.
-11. **Encerrar o dia** — aventureiros descansam, missões expiram, novos pedidos chegam. Quem não sai junto em missão vai se afastando (neglect).
+7. **Estresse** — expedições pesam. No limite, o herói **quebra** (Paranoico, Desesperado...) ou **se supera** (Corajoso, Inspirador...), e pode ganhar traços permanentes. Ele não volta só ferido: volta diferente.
+8. **Bastidores** — cenas curtas na guilda (taverna, treino, brigas, segredos). Você escolhe como reagir.
+9. **Evolução** — XP, níveis, magias, talentos, equipamento, saque e mercado. Conjuradores preparam uma magia antes do despacho.
+10. **Descanso** — mande um herói descansar: recupera fadiga, PV, magias, moral, alivia o estresse e cura aflições.
+11. **Guilda** — gaste o ouro em melhorias: Quadro de Relações, Enfermaria, Arquivo e Salão de Treinamento.
+12. **Encerrar o dia** — o dia vira, missões expiram, novos pedidos chegam. Quem não sai junto vai se afastando; quem fica com moral baixa dá um ultimato.
 
-| Montagem de Party | Mapa Mágico |
+### Galeria
+
+| Montagem de Party | Mapa Mágico (miniaturas e mercador) |
 |---|---|
 | ![Montagem de Party](docs/img/2_party.png) | ![Mapa Mágico](docs/img/6_mapa.png) |
-| **Livro da Guilda** | **Resolução** |
-| ![Livro da Guilda](docs/img/5_livro.png) | ![Resolução](docs/img/3_resultado.png) |
-| **Abertura de capítulo** | **Melhorias da Guilda** |
-| ![Capítulo](docs/img/10_capitulo.png) | ![Melhorias](docs/img/11_upgrades.png) |
-| **Subida de nível** | **Equipamento** |
-| ![Nível](docs/img/14_nivel.png) | ![Equipamento](docs/img/13_equipamento.png) |
-| **Mercado** | **Livro com magias** |
-| ![Mercado](docs/img/12_mercado.png) | ![Livro](docs/img/15_livro_mira.png) |
-| **Ultimato** | **Abertura do Ato 2** |
-| ![Ultimato](docs/img/16_ultimato.png) | ![Ato 2](docs/img/17_ato2.png) |
-| **Epílogo** | **Livro com retrato** |
-| ![Epílogo](docs/img/19_epilogo.png) | ![Livro](docs/img/5_livro.png) |
-| **Mapa Mágico — floresta** | **Resultado com o cartaz riscado** |
-| ![Mapa floresta](docs/img/20_mapa_floresta.png) | ![Resultado](docs/img/3_resultado.png) |
+| **Selo de Cera no despacho** | **Dado d20 arremessado no teste** |
+| ![Selo](docs/img/21_selo.png) | ![Dado](docs/img/22_dado.png) |
+| **Dado em voo** | **Falha crítica (1 natural)** |
+| ![Dado em voo](docs/img/23_dado_voo.png) | ![Falha crítica](docs/img/24_dado_falha.png) |
+| **Resolução** | **Ponto de ruptura** |
+| ![Resolução](docs/img/3_resultado.png) | ![Ruptura](docs/img/25_ruptura.png) |
+| **Livro da Guilda** | **Livro com magias** |
+| ![Livro da Guilda](docs/img/5_livro.png) | ![Livro](docs/img/15_livro_mira.png) |
+| **Quadro de Relações** | **Mercado** |
+| ![Quadro de Relações](docs/img/4_relacoes.png) | ![Mercado](docs/img/12_mercado.png) |
+| **Equipamento** | **Subida de nível** |
+| ![Equipamento](docs/img/13_equipamento.png) | ![Nível](docs/img/14_nivel.png) |
+| **Mapa — floresta** | **Mapa — montanha** |
+| ![Mapa floresta](docs/img/20_mapa_floresta.png) | ![Mapa montanha](docs/img/26_mapa_montanha.png) |
 | **Bastidores no hub** | **Cena de bastidor** |
 | ![Bastidores](docs/img/8_hub_bastidores.png) | ![Cena de bastidor](docs/img/9_bastidor.png) |
+| **Abertura de capítulo** | **Melhorias da Guilda** |
+| ![Capítulo](docs/img/10_capitulo.png) | ![Melhorias](docs/img/11_upgrades.png) |
+| **Ultimato** | **Abertura do Ato 2** |
+| ![Ultimato](docs/img/16_ultimato.png) | ![Ato 2](docs/img/17_ato2.png) |
+| **Epílogo** | |
+| ![Epílogo](docs/img/19_epilogo.png) | |
 
 ## Estado atual — v0.9
 
-Dois atos (4 capítulos, 24 missões), 7 aventureiros, afinidade assimétrica com vínculos e Ações de Vínculo, mapa de expedição com escolhas de rota, estresse com virtudes e aflições, traços, progressão de RPG leve, melhorias da guilda, bastidores, ultimatos, salvar/carregar e quatro finais.
+- **Jogo:** dois atos (4 capítulos, 24 missões), 7 aventureiros, afinidade assimétrica com vínculos e Ações de Vínculo, mapa de expedição com escolhas de rota, estresse com virtudes e aflições, traços, progressão de RPG leve, melhorias da guilda, bastidores, ultimatos, salvar/carregar e quatro finais.
+- **Game juice:** Selo de Cera, d20 arremessado, placar crescente, momentos de personagem (ruptura, saída, vínculo, nível), transição de dia e opção **Reduzir movimento**.
+- **Arte integrada:** retratos e cartazes, ícones dos 18 itens, miniaturas dos heróis no mapa, páginas do Livro, ícone do jogo (Android e Windows) e as 20 faces do d20. O que ainda falta está no índice de assets (`art/specs/cenario/_indice.json`).
+- **Código:** regras separadas em sistemas (`scripts/systems/`) e interface separada em telas e componentes (`scripts/ui/screens/`, `scripts/ui/components/`), com equivalência provada por teste.
 
 O histórico de cada versão está no [Changelog](docs/CHANGELOG.md) e o que vem a seguir no [Roadmap](docs/ROADMAP.md). A próxima meta é a **v1.0 — Vertical Slice**: consolidar e polir o núcleo antes de novos sistemas.
 
@@ -57,7 +69,7 @@ O histórico de cada versão está no [Changelog](docs/CHANGELOG.md) e o que vem
 | Documento | Conteúdo |
 |---|---|
 | [GDD](docs/GDD.md) | Design do jogo como ele é hoje |
-| [TDD](docs/TDD.md) | Arquitetura, dados, save, testes e pipeline de arte |
+| [TDD](docs/TDD.md) | Arquitetura, dados, save, testes, build Android e pipeline de arte |
 | [Balanceamento](docs/BALANCEAMENTO.md) | Fórmulas, constantes e resultados de simulação |
 | [Narrativa](docs/NARRATIVA.md) | Elenco, relações, capítulos, missões pessoais e finais |
 | [Roadmap](docs/ROADMAP.md) | Prioridades até a v1.0 e depois |
@@ -77,41 +89,52 @@ Nome dos arquivos: `AGuilda-v<versão>-debug.apk` (ex.: `AGuilda-v0.9-debug.apk`
 
 ## Estrutura
 
+### Código
+
 | Caminho | Conteúdo |
 |---|---|
-| `data/heroes.json` | Elenco: atributos, cor, traço e grade de afinidade inicial (`a → b`) |
-| `data/missions.json` | Missões: risco, atributos, prazo, tags, requisito oculto e textos de resultado |
-| `scripts/core/score_calc.gd` | Fórmula de score e limiares |
 | `scripts/core/game_state.gd` | Autoload `GameState`: estado da guilda, início de jogo, fim do dia e API pública |
 | `scripts/systems/` | Regras por assunto: relações, missões e despacho, capítulos, economia, saídas, bastidores, save, finais |
-| `data/narration.json` | Narração do Mapa Mágico por partida, bioma e resultado |
-| `data/backstage.json` | Eventos de bastidor: condições, texto e escolhas com efeitos |
-| `data/chapters.json` | Atos e capítulos: abertura, duração, missões, objetivo, flags e encerramentos |
-| `data/upgrades.json` | Ouro inicial, recompensas por risco e melhorias da guilda |
-| `data/classes.json` | XP, níveis, classes, magias e talentos (com os tipos de efeito documentados) |
-| `data/items.json` | Itens, tabelas de saque e mercado |
-| `scripts/core/hero_rpg.gd` | Regras de RPG: XP, nível, efeitos, equipamento, magias, saque, mercado |
-| `data/ultimatum.json` | Texto e escolhas do ultimato por moral baixa |
-| `data/endings.json` | Finais, desfechos por herói e por vínculo |
-| `scripts/ui/portrait.gd` | Retrato procedural dos heróis |
-| `art/MapParts/<tipo>/` | Peças de mapa a nanquim (trees, hills, mountains, towns, cities) usadas pelo Mapa Mágico |
-| `art/enemies/` | Cartazes dos inimigos (mural, destino do mapa, resultado) |
-| `art/specs/` | Especificações para artistas: heróis e wallpaper (`art/specs/`), inimigos (`art/specs/inimigos/`) e cenário, objetos, interface, fundos e efeitos (`art/specs/cenario/`, com `_indice.json` de 281 assets por prioridade, incluindo o ícone do jogo, a arte do Livro e do pergaminho do mapa) e as miniaturas dos heróis no mapa (`art/specs/tokens_herois.json`) |
-| `art/tools/` | Scripts que preparam retratos e cartazes (conversão e remoção de fundo) |
-| `data/book.json` | Seções trancadas do Livro (slots de expansão por versão) |
+| `scripts/core/score_calc.gd` | Fórmula de score e limiares |
+| `scripts/core/hero_rpg.gd` | RPG: XP, nível, efeitos, equipamento, magias, saque, mercado |
+| `scripts/core/expedition.gd` | Expedição: grafo de nós, testes d20, efeitos e modificador da rota |
+| `scripts/core/mind.gd` | Estresse, ponto de ruptura, condições, traços e termo Mente |
 | `scripts/ui/main.gd` | Cena principal: estado da interface e repasses |
 | `scripts/ui/screens/` | Telas: hub, montagem de party, expedição, resultado, guilda, itens, história, título |
-| `scripts/ui/components/` | Peças de interface: kit básico, widgets de herói/inimigo, momentos de personagem |
-| `data/traits.json` | Estresse, aflições, virtudes e traços |
-| `scripts/core/mind.gd` | Regras de estresse, ponto de ruptura, condições, traços e termo Mente |
-| `data/route.json` | Mapa de expedição: tipos de nó, pesos por bioma, eventos com testes e efeitos |
-| `scripts/core/expedition.gd` | Expedição: geração do grafo, nós, testes d20, efeitos e modificador da rota |
-| `scripts/ui/magic_map.gd` | Mapa Mágico: desenho do bioma, grafo de caminhos clicável, névoa e marcadores |
+| `scripts/ui/components/` | Peças de interface: kit básico, widgets de herói/inimigo, momentos de personagem, dado arremessado |
+| `scripts/ui/magic_map.gd` | Mapa Mágico: pergaminho, grafo clicável, névoa e miniaturas |
 | `scripts/ui/guild_book.gd` | Livro da Guilda: ficha em duas páginas |
-| `tests/` | Testes headless de regras e telas, e gerador de screenshots |
-| `docs/GDD.md` | Game Design Document |
+| `scripts/ui/juice.gd` | Game juice: pop, fade, tremor, clarão, contadores, texto voando |
+| `tests/` | Testes de regras, de telas e de equivalência, e geradores de screenshot |
 
-A regra de jogo fica em `scripts/core`; a UI só lê o estado e chama métodos. Heróis, missões e textos novos entram pelos JSON, sem mexer em código.
+A regra de jogo fica em `scripts/core` e `scripts/systems`; a UI só lê o estado e chama métodos.
+
+### Dados (`data/`)
+
+| Arquivo | Conteúdo |
+|---|---|
+| `heroes.json` | Elenco: atributos, classe, personalidade, retrato e grade de afinidade inicial (`a → b`) |
+| `missions.json` | Missões: risco, atributos, prazo, tags, requisito oculto, inimigos e textos de resultado |
+| `chapters.json` | Atos e capítulos: abertura, duração, missões, objetivo, flags e encerramentos |
+| `route.json` | Mapa de expedição: tipos de nó, pesos por bioma, eventos com testes e efeitos |
+| `traits.json` | Estresse, aflições, virtudes e traços |
+| `backstage.json` | Eventos de bastidor: condições, texto e escolhas com efeitos |
+| `classes.json` / `items.json` | Classes, magias, talentos / itens, saque e mercado |
+| `upgrades.json` | Ouro inicial, recompensas e melhorias da guilda |
+| `ultimatum.json` / `endings.json` | Ultimato por moral baixa / finais e desfechos |
+| `narration.json` / `book.json` | Narração do mapa / seções trancadas do Livro |
+
+Heróis, missões, eventos e textos novos entram pelos JSON, sem mexer em código.
+
+### Arte (`art/`)
+
+| Caminho | Conteúdo |
+|---|---|
+| `art/specs/` | Especificações para artistas (JSON): heróis e wallpaper, inimigos (`inimigos/`), miniaturas (`tokens_herois.json`) e cenário/objetos/interface/fundos/efeitos/livro/mapa/ícone/dado (`cenario/`, com `_indice.json` de todos os assets por prioridade e status de produção) |
+| `art/ArtesEmGeral/` | Artes entregues pelos artistas, com o nome do id do asset (pasta ignorada pelo Godot) |
+| `art/items/`, `art/tokens/`, `art/book/`, `art/icon/`, `art/dice/` | Artes processadas que o jogo usa |
+| `art/portraits/`, `art/enemies/`, `art/MapParts/` | Retratos, cartazes de inimigos e peças de mapa a nanquim |
+| `art/tools/` | `preparar_assets.py` (remove o fundo branco, recorta e gera os PNGs), `marcar_status.py` (status no índice), `preparar_retratos.py` e `preparar_inimigos.py` |
 
 ### Criando eventos de bastidor
 
@@ -130,24 +153,34 @@ Adicione um objeto em `data/backstage.json`:
 - `min`/`max`: faixa de afinidade do par. `heroes`: fixa um ou os dois heróis (`null` = qualquer). `once`: aparece uma vez por jogo.
 - Efeitos: `aff` = [a→b, b→a], `morale` e `fatigue` por `a`/`b`. Mudanças de afinidade disparam os eventos de vínculo normalmente.
 
+### Criando eventos de rota
+
+Em `data/route.json → events.<tipo de nó>`: cada evento tem `title`, `text` (com `{heroi}`) e `options`. Uma opção pode ter `test {attr, dc}` com ramos `ok`/`fail`, `requires {guild_gold, gold, provisions}` e efeitos `fx` (`gold`, `provisions`, `hp`, `hp_one`, `bonus`, `item`, `days`, `affinity`, `stress`, `stress_one`, `guild_gold`, `lose_item`, `trait`). Detalhes no [TDD §4.2](docs/TDD.md#42-efeitos-da-rota-routejson).
+
 ### Criando capítulos
 
 Em `data/chapters.json`, adicione o capítulo à lista `chapters` e o id dele em `acts[].chapters`. As missões do capítulo ficam em `missions.json` com `day` relativo ao início do capítulo. Objetivos: `{"type": "reputation", "min": N}` ou `{"type": "mission", "mission": "<id>"}`. `intro_flags` acrescenta texto conforme as flags de capítulos anteriores (`"!flag"` = flag ausente).
 
-### Expandindo o Livro da Guilda
+### Adicionando arte
 
-- **Campo novo na ficha:** adicione no herói em `heroes.json`. Todos os campos da ficha são opcionais, com valor padrão em `GameState.new_game`.
-- **Retrato:** preencha `"portrait": "res://art/portraits/vera.png"`. Sem imagem, o livro mostra a inicial na cor do herói.
-- **Seção nova:** entre como trancada em `data/book.json` (`page`, `title`, `version`, `desc`). Quando for implementada, remova da lista e desenhe em `guild_book.gd` (`_left_page` ou `_right_page`).
+1. O artista entrega `art/ArtesEmGeral/<id>.jpg` (fundo branco) com o id do asset em `art/specs/cenario/_indice.json`.
+2. `python art/tools/preparar_assets.py` gera o PNG no destino do asset.
+3. `python art/tools/marcar_status.py` atualiza o status de produção no índice.
 
 ## Testes
 
 ```bash
 godot --headless --path . -s res://tests/sim_test.gd
 godot --headless --path . -s res://tests/ui_smoke.gd
+godot --headless --path . -s res://tests/equivalencia.gd
 ```
 
-`sim_test.gd` confere a calibragem do score, as regras de afinidade, RPG, capítulos, save, expedição e estresse, e joga 150 partidas aleatórias (2 atos). `tests/screenshots.gd` (com janela, sem `--headless`) regenera as imagens em `user://shots`. Detalhes no [TDD](docs/TDD.md#7-testes).
+- `sim_test.gd`: calibragem do score, regras de afinidade, RPG, capítulos, save, expedição e estresse, e 150 partidas aleatórias (2 atos).
+- `ui_smoke.gd`: abre todas as telas, percorre uma expedição, rola o dado, encena momentos, salva e carrega.
+- `equivalencia.gd`: partida roteirizada com semente fixa; o hash do estado por dia prova que uma refatoração não mudou o comportamento.
+- `screenshots.gd`, `map_biomes.gd` e `juice_shots.gd` (com janela, sem `--headless`) regeneram as imagens em `user://shots`.
+
+Detalhes no [TDD](docs/TDD.md#7-testes).
 
 ## Roadmap
 

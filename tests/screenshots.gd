@@ -107,5 +107,6 @@ func _initialize() -> void:
 func _shot(name: String) -> void:
 	for i in 3:
 		await process_frame
+	await create_timer(1.6).timeout   # deixa as animações de entrada (juice) terminarem
 	await RenderingServer.frame_post_draw
 	root.get_texture().get_image().save_png("user://shots/%s.png" % name)

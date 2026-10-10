@@ -185,7 +185,9 @@ A missão vira um **grafo em camadas** (3 a 4 camadas de 2–3 nós, mais o obje
 1. vê só a próxima camada (o resto fica sob **névoa**; o objetivo e o guarda do alvo sempre aparecem);
 2. clica no próximo nó; o grupo anda até lá;
 3. o **herói mais apto chama pelo Mapa Mágico** e apresenta a situação e as opções;
-4. cada opção pode ter **teste d20 + (atributo − 5)** contra uma CD por risco (20 sempre passa, 1 sempre falha), com a rolagem visível, e pode exigir ouro ou provisões.
+4. cada opção pode ter **teste d20 + (atributo − 5)** contra uma CD por risco (20 sempre passa, 1 sempre falha) e pode exigir ouro ou provisões. O teste é encenado: um **d20 é arremessado sobre o mapa**, gira, quica e para na face do resultado, enquanto o painel mostra quem testa, a CD e, ao parar, a conta e o veredito.
+
+Os heróis andam pelo mapa como **miniaturas de RPG de mesa** (base na cor de cada um); quem chama fica à frente com um balão "!".
 
 | Nó | Função |
 |---|---|
@@ -259,18 +261,19 @@ Total atual: 24 missões, 14 eventos de bastidor, 4 capítulos, 4 finais.
 1. **Título** — Continuar, Novo jogo, Carregar.
 2. **Hub da Guilda** — mural de quests, elenco com status, bastidores, ultimatos, menu.
 3. **Montagem de Party** — elenco, party selecionada, preview de afinidade, magias.
-4. **Mapa Mágico** — mapa de expedição clicável, painel com grupo (PV, estresse, condição), estado da rota, log e chamadas.
+4. **Mapa Mágico** — pergaminho com o mapa de expedição clicável e as miniaturas dos heróis; painel com grupo (PV, estresse, condição), estado da rota, log, chamadas e o painel do teste com o d20 arremessado.
 5. **Resolução** — cartaz do inimigo (riscado na vitória), texto, soma do score, mudanças de vínculo.
 6. **Evento de Vínculo** e **Bastidor** — cena curta com escolhas.
 7. **Quadro de Relações** — grade com retratos, faixas, os dois lados de cada par e histórico.
-8. **Livro da Guilda** — ficha estilo D&D em duas páginas (identidade, PV, moral, estresse, condição, traços, XP, equipamento, atributos, talentos, personalidade, afinidades).
+8. **Livro da Guilda** — livro de couro aberto sobre a mesa, com páginas de pergaminho e moldura ornamental; ficha estilo D&D em duas páginas (identidade, PV, moral, estresse, condição, traços, XP, equipamento, atributos, talentos, personalidade, afinidades).
 9. **Guilda** (melhorias), **Mercado**, **Equipamento**, **Treinamento**, **Subida de nível**, **Ultimato**, **Abertura/fim de capítulo**, **Epílogo**.
 
 ---
 
 ## 9. Direção de Arte e Som
 
-- **Arte:** retratos dos heróis e cartazes dos inimigos ilustrados (pixel art), tela de título ilustrada; Mapa Mágico em pergaminho com peças a nanquim por bioma. Especificações em `art/specs/`.
+- **Arte:** pixel art detalhada — retratos dos heróis, cartazes dos inimigos, tela de título, ícones dos itens, miniaturas dos heróis, páginas e capa do Livro, ícone do jogo e as faces do d20. O Mapa Mágico é um pergaminho com peças a nanquim por bioma. Especificações (JSON) e índice de produção em `art/specs/`; o que ainda não chegou é desenhado por código.
+- **Game juice:** sóbrio, a serviço da consequência — o Selo de Cera carimba o despacho, o d20 é arremessado nos testes, a barra do score enche até o veredito, rupturas e saídas ganham cena própria, o dia vira como uma vela apagando. Opção "Reduzir movimento" para acessibilidade.
 - **UI:** paleta quente de madeira e pergaminho; a Montagem de Party tem peso visual por ser a decisão mais importante.
 - **Som:** ainda não implementado (ver [Roadmap](ROADMAP.md)). Direção: folk acústico leve na guilda, percussão mínima na montagem, ambiente por bioma no mapa.
 

@@ -4,6 +4,12 @@ Histórico de versões, da mais recente para a mais antiga. Datas dos commits no
 
 ---
 
+## Documentação e screenshots — 2026-10-10
+
+- README reorganizado (como se joga, galeria nova com selo, dado, ruptura, mapas por bioma; estrutura em código, dados e arte; como adicionar eventos de rota e arte; testes).
+- GDD (mapa com miniaturas e dado, Livro, arte e game juice) e TDD (miniaturas, dado) atualizados.
+- Screenshots de `docs/img` regeneradas com as artes integradas; `tests/screenshots.gd` espera as animações terminarem antes de capturar.
+
 ## Dado arremessado nos testes — 2026-10-10
 
 - Nos testes do mapa, um d20 é **arremessado sobre a cena**: voa girando, quica duas vezes (achata e levanta poeira), para na face do resultado e ganha aura verde (sucesso) ou vermelha (falha); 20 natural solta raios dourados, 1 natural racha. O painel do teste continua no topo do mapa e mostra a conta quando o dado para.
