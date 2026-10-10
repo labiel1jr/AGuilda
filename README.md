@@ -68,6 +68,13 @@ O histórico de cada versão está no [Changelog](docs/CHANGELOG.md) e o que vem
 
 Requer **Godot 4.7**. Abra a pasta no editor e pressione **F5**.
 
+### APK de teste (Android)
+
+Os APKs **não ficam no Git**. Eles são publicados na pasta do Google Drive do projeto:
+**[A Guilda — builds Android](https://drive.google.com/drive/folders/1H7azjgFBsBbRIVLfLPu_LGSzMqcmbnkc?usp=drive_link)**
+
+Nome dos arquivos: `AGuilda-v<versão>-debug.apk` (ex.: `AGuilda-v0.9-debug.apk`). Como gerar: ver [TDD §8](docs/TDD.md#8-build-android).
+
 ## Estrutura
 
 | Caminho | Conteúdo |
@@ -75,7 +82,8 @@ Requer **Godot 4.7**. Abra a pasta no editor e pressione **F5**.
 | `data/heroes.json` | Elenco: atributos, cor, traço e grade de afinidade inicial (`a → b`) |
 | `data/missions.json` | Missões: risco, atributos, prazo, tags, requisito oculto e textos de resultado |
 | `scripts/core/score_calc.gd` | Fórmula de score e limiares |
-| `scripts/core/game_state.gd` | Autoload `GameState`: elenco, afinidade, vínculos, despacho, fadiga, moral, reputação, dias |
+| `scripts/core/game_state.gd` | Autoload `GameState`: estado da guilda, início de jogo, fim do dia e API pública |
+| `scripts/systems/` | Regras por assunto: relações, missões e despacho, capítulos, economia, saídas, bastidores, save, finais |
 | `data/narration.json` | Narração do Mapa Mágico por partida, bioma e resultado |
 | `data/backstage.json` | Eventos de bastidor: condições, texto e escolhas com efeitos |
 | `data/chapters.json` | Atos e capítulos: abertura, duração, missões, objetivo, flags e encerramentos |

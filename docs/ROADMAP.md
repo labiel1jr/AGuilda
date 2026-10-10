@@ -33,7 +33,7 @@ Objetivo: uma experiência pequena, completa e jogável que mostre por que A Gui
 - [x] Atualizar o GDD para a v0.9
 - [x] Corrigir a plataforma na documentação (Godot 4.7, não browser)
 - [x] Criar TDD, Roadmap, Changelog, Balanceamento e Narrativa
-- [ ] Separar `GameState` em sistemas (relações, missões, capítulos, economia, saída, save), mantendo-o como orquestrador
+- [x] Separar `GameState` em sistemas (relações, missões, capítulos, economia, saída, bastidores, save, finais), mantendo-o como orquestrador — comportamento idêntico provado por `tests/equivalencia.gd`
 - [ ] Separar `main.gd` em telas e componentes
 - [ ] Garantir o loop principal estável (testes verdes a cada passo, sem mudar comportamento)
 

@@ -4,6 +4,16 @@ Histórico de versões, da mais recente para a mais antiga. Datas dos commits no
 
 ---
 
+## APK fora do Git — 2026-10-10
+
+- O APK de teste saiu do repositório (o commit que o adicionou foi removido do histórico). Os builds Android ficam na pasta do Google Drive do projeto, citada no README e no TDD §8.
+
+## Refatoração: GameState separado em sistemas — 2026-10-10
+
+- `scripts/core/game_state.gd` (1.100 → ~550 linhas) agora guarda o estado e orquestra; as regras foram para 8 sistemas estáticos em `scripts/systems/`: `Relations`, `Missions`, `Chapters`, `Economy`, `Departures`, `Backstage`, `SaveSystem`, `Endings`.
+- A API pública do `GameState` foi mantida (repasses), então UI, testes e módulos não mudaram.
+- Novo `tests/equivalencia.gd`: partida roteirizada e determinística; o hash do estado de 3 partidas, dia a dia (168 pontos), é idêntico antes e depois da separação.
+
 ## Primeiras artes integradas — 2026-10-10
 
 - 56 artes entregues em `art/ArtesEmGeral/` (pasta ignorada pelo Godot com `.gdignore`); `art/tools/preparar_assets.py` remove o fundo branco, recorta e gera os PNGs nos destinos das specs.

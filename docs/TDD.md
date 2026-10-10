@@ -5,7 +5,7 @@
 **Resolução base:** 1280×720, `stretch/mode = canvas_items`, `aspect = expand`
 **Documentos relacionados:** [GDD](GDD.md) · [Balanceamento](BALANCEAMENTO.md) · [Roadmap](ROADMAP.md) · [Changelog](CHANGELOG.md)
 
-Este documento descreve **como o jogo está construído hoje**: módulos, fluxo de dados, formatos, save, testes e pipeline de arte. A dívida técnica conhecida está na seção 9.
+Este documento descreve **como o jogo está construído hoje**: módulos, fluxo de dados, formatos, save, testes, build Android e pipeline de arte. A dívida técnica conhecida está na seção 10.
 
 ---
 
@@ -25,7 +25,15 @@ Este documento descreve **como o jogo está construído hoje**: módulos, fluxo 
 |---|---|
 | `project.godot` | Configuração; autoload `GameState` |
 | `scenes/main.tscn` | Cena única com `scripts/ui/main.gd` |
-| `scripts/core/game_state.gd` | Autoload `GameState`: estado global, despacho, dias, capítulos, bastidores, ultimatos, save, finais |
+| `scripts/core/game_state.gd` | Autoload `GameState` (classe `GuildState`): estado global, `new_game`, `end_day` e a API pública que repassa para os sistemas |
+| `scripts/systems/relationship_system.gd` | `Relations`: afinidade, faixas, vínculos, Ações de Vínculo, descrições, treino, neglect |
+| `scripts/systems/mission_system.gd` | `Missions`: slots, mural, prazos, disponibilidade, requisitos, despacho, narração |
+| `scripts/systems/chapter_system.gd` | `Chapters`: atos, capítulos, recrutas, objetivo, encerramento |
+| `scripts/systems/economy_system.gd` | `Economy`: melhorias e recompensa |
+| `scripts/systems/departure_system.gd` | `Departures`: ultimato, promessas, saída, Irmandade |
+| `scripts/systems/backstage_system.gd` | `Backstage`: sorteio e escolhas dos bastidores |
+| `scripts/systems/save_system.gd` | `SaveSystem`: salvar e carregar |
+| `scripts/systems/ending_system.gd` | `Endings`: epílogo |
 | `scripts/core/score_calc.gd` | `ScoreCalc` (estático): fórmula do score e limiares |
 | `scripts/core/hero_rpg.gd` | `HeroRPG` (estático): XP, níveis, efeitos, equipamento, magias, saque, mercado |
 | `scripts/core/expedition.gd` | `Expedition` (estático): grafo da rota, nós, testes d20, efeitos, modificador da rota |
@@ -58,7 +66,8 @@ Este documento descreve **como o jogo está construído hoje**: módulos, fluxo 
 ```
 
 - Os módulos estáticos recebem o `GameState` como primeiro parâmetro (`gs`) e não guardam estado próprio. Isso mantém um só lugar de verdade e simplifica o save.
-- `GameState` ainda concentra muitas regras (despacho, neglect, bastidores, capítulos, ultimatos). A separação em sistemas está planejada (seção 9).
+- `GameState` guarda o estado e orquestra (`new_game`, `end_day`). As regras ficam nos sistemas de `scripts/systems/` (um por assunto) e nos módulos de `scripts/core/` (`ScoreCalc`, `HeroRPG`, `Expedition`, `Mind`). A seção "API pública" do `GameState` repassa para os sistemas, para a UI e os testes continuarem chamando `gs.<função>`; código novo de regra pode chamar o sistema direto (`Relations.pair_value(gs, a, b)`).
+- Nos sistemas, o estado é tipado (`gs: GuildState`) e as constantes são lidas pela classe (`GuildState.BANDS`).
 
 ### 3.1 Fluxo de uma missão
 
@@ -161,13 +170,27 @@ Godot_v4.7.2-stable_win64_console.exe --path . -s res://tests/map_biomes.gd
 | `ui_smoke.gd` | Abre todas as telas, percorre uma expedição pela UI, salva e carrega; falha em qualquer erro de script |
 | `screenshots.gd` | Gera as imagens de `docs/img` (precisa de janela) |
 | `map_biomes.gd` | Uma imagem do mapa por bioma |
+| `equivalencia.gd` | Partida roteirizada com semente fixa: imprime um hash do estado a cada dia. Rodar antes e depois de uma refatoração e comparar a saída prova que o comportamento não mudou |
 | `juice_shots.gd` | Imagens dos momentos de juice (selo, dado, resultado, ruptura) |
 
 Saída esperada: `RESULTADO: OK (0 falha(s))` e `UI SMOKE OK`. Depois de criar um `class_name` novo, rodar `--import` uma vez para o Godot registrá-lo.
 
 ---
 
-## 8. Pipeline de Arte
+## 8. Build Android
+
+- Preset `Android` em `export_presets.cfg`: pacote `com.labiel1jr.aguilda`, arm64, paisagem, tela cheia, ícones adaptativos de `art/icon/`. Fora do APK: `tests/`, `docs/`, `art/specs/`, `art/tools/`, `art/ArtesEmGeral/` e os originais das imagens.
+- Requisitos instalados: templates de exportação do Godot 4.7.2, JDK 17, Android SDK (build-tools 35, platform-tools) e o keystore de debug do Godot (configurados nas Configurações do Editor).
+- Gerar (debug, para teste):
+
+```bash
+Godot_v4.7.2-stable_win64_console.exe --headless --path . --export-debug "Android" export/android/AGuilda.apk
+```
+
+- A pasta `export/` está no `.gitignore`: **APKs não vão para o Git** (deixam o repositório pesado para sempre). Renomeie para `AGuilda-v<versão>-debug.apk` e copie para a pasta do Google Drive do projeto: [https://drive.google.com/drive/folders/1H7azjgFBsBbRIVLfLPu_LGSzMqcmbnkc?usp=drive_link](https://drive.google.com/drive/folders/1H7azjgFBsBbRIVLfLPu_LGSzMqcmbnkc?usp=drive_link).
+- Release para loja: exige um keystore próprio de release (não versionado) configurado no preset.
+
+## 9. Pipeline de Arte
 
 - Especificações (JSON) para gerar imagens: `art/specs/` (heróis, wallpaper) e `art/specs/inimigos/` (com `_indice.json` ligando inimigos a missões).
 - Cenário, objetos, interface, fundos e efeitos (sem personagens): `art/specs/cenario/` — `_estilo_cenario.json` (famílias de estilo, regras, modelo para assets novos), `_indice.json` (todos os assets com prioridade, status e destino) e um arquivo por categoria. O ícone do jogo (Android e Windows) está em `art/specs/cenario/icone.json`; a arte do Livro em `livro.json`; o pergaminho do mapa em `mapa_pergaminho.json`; as miniaturas dos heróis no mapa em `art/specs/tokens_herois.json`. Os artistas entregam **JPG com fundo branco puro** em `<pasta do destino>/originais/`; a ferramenta remove o branco e gera o PNG no destino.
@@ -177,13 +200,13 @@ Saída esperada: `RESULTADO: OK (0 falha(s))` e `UI SMOKE OK`. Depois de criar u
 
 ---
 
-## 9. Dívida Técnica e Plano de Refatoração
+## 10. Dívida Técnica e Plano de Refatoração
 
 | Ponto | Situação | Plano |
 |---|---|---|
-| `game_state.gd` (~1.100 linhas) | Concentra despacho, afinidade, neglect, bastidores, capítulos, ultimatos, save, finais | Extrair `relationship_system`, `mission_system`, `chapter_system`, `economy_system`, `departure_system`, `save_system`, mantendo `GameState` como orquestrador |
+| ~~`game_state.gd` (~1.100 linhas)~~ | **Feito (2026-10-10):** separado em 8 sistemas em `scripts/systems/`; o `GameState` ficou com ~550 linhas (estado, orquestração e repasses). Provado sem mudança de comportamento por `tests/equivalencia.gd` | Futuro: a UI chamar os sistemas direto e os repasses diminuírem |
 | `main.gd` (~1.500 linhas) | Todas as telas e componentes num arquivo | Dividir em `ui/screens/*` e `ui/components/*` |
-| Pasta `systems/` | `Expedition`, `Mind`, `HeroRPG` e `ScoreCalc` já são módulos separados, mas em `core/` | Decidir a convenção (`core/` para regras ou nova `systems/`) junto com a extração |
+| Pasta `systems/` | Os sistemas extraídos do `GameState` estão em `systems/`; `Expedition`, `Mind`, `HeroRPG` e `ScoreCalc` continuam em `core/` | Mover os quatro para `systems/` numa próxima limpeza (só caminho de arquivo; os `class_name` não mudam) |
 | Expedição não salva | Sair no meio do mapa perde o progresso da rota | Salvar `gs.expedition` se houver menu dentro do mapa |
 | Formato de texto do resultado | Mostra a soma inteira do score | Explicação narrativa com números como detalhe opcional (P1) |
 
