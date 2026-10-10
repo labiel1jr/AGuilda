@@ -38,7 +38,11 @@ Este documento descreve **como o jogo está construído hoje**: módulos, fluxo 
 | `scripts/core/hero_rpg.gd` | `HeroRPG` (estático): XP, níveis, efeitos, equipamento, magias, saque, mercado |
 | `scripts/core/expedition.gd` | `Expedition` (estático): grafo da rota, nós, testes d20, efeitos, modificador da rota |
 | `scripts/core/mind.gd` | `Mind` (estático): estresse, ponto de ruptura, condições, traços, termo Mente |
-| `scripts/ui/main.gd` | Todas as telas e helpers de UI |
+| `scripts/ui/main.gd` | Cena principal (classe `GuildUI`): estado da interface, cores e repasses para as telas |
+| `scripts/ui/screens/*.gd` | Telas (estáticas, recebem `ui: GuildUI`): `HubScreen`, `PartyScreen`, `ExpeditionScreen`, `ResultScreen`, `GuildScreens`, `ItemScreens`, `StoryScreens`, `TitleScreen` |
+| `scripts/ui/components/ui_kit.gd` | `UIKit`: peças básicas sem estado (rótulo, parágrafo, painel, botão, ícone, cores de estado) |
+| `scripts/ui/components/widgets.gd` | `Widgets`: retrato, cabeçalho de herói, cartaz de inimigo, chip de estresse |
+| `scripts/ui/components/moments.gd` | `Moments`: cena de ruptura e de saída por cima da tela atual |
 | `scripts/ui/magic_map.gd` | Mapa Mágico: desenho do pergaminho, grafo clicável, névoa, marcadores |
 | `scripts/ui/guild_book.gd` | Livro da Guilda (ficha em duas páginas) |
 | `scripts/ui/portrait.gd` | Retrato procedural (fallback quando não há imagem) |
@@ -145,7 +149,7 @@ JSON não distingue `int` de `float`: números lidos viram `float`. Converter co
 
 ## 6. UI
 
-- `main.gd` monta cada tela em `root` (um `VBoxContainer`) depois de `_clear()`. Navegação por chamadas diretas (`show_hub`, `show_party`, `show_map`, `show_result`...).
+- Cada tela é um módulo estático em `ui/screens/` que monta a tela em `ui.root` (um `VBoxContainer`) depois de `ui._clear()`. O estado da interface (party em montagem, mapa aberto, momentos) fica na `main` (`GuildUI`). Navegação por chamadas diretas (`ui.show_hub()`, `PartyScreen.show_party(ui, m)`...). Peças sem estado vêm do `UIKit`.
 - **Mapa Mágico** (`magic_map.gd`): `Control` com `_draw()` próprio. Recebe a expedição por referência, emite `node_chosen(pos)` e `arrived(pos)`, mostra tooltip por nó (`_get_tooltip`). Peças de `art/MapParts/<tipo>/` são carregadas listando a pasta (funciona no editor e exportado, removendo o sufixo `.import`).
 - **Game juice:** só visual, nunca muda o estado. Momentos de personagem são enfileirados pelo núcleo em `gs.pending_moments` (ruptura em `Mind`, saída em `GameState._depart`; não salvos) e encenados por `main._play_moments()` no hub, no mapa e no resultado.
 - **Retratos:** `h.portrait` aponta para `res://art/portraits/<id>.png`; sem imagem, usa `portrait.gd`.
@@ -205,7 +209,7 @@ Godot_v4.7.2-stable_win64_console.exe --headless --path . --export-debug "Androi
 | Ponto | Situação | Plano |
 |---|---|---|
 | ~~`game_state.gd` (~1.100 linhas)~~ | **Feito (2026-10-10):** separado em 8 sistemas em `scripts/systems/`; o `GameState` ficou com ~550 linhas (estado, orquestração e repasses). Provado sem mudança de comportamento por `tests/equivalencia.gd` | Futuro: a UI chamar os sistemas direto e os repasses diminuírem |
-| `main.gd` (~1.500 linhas) | Todas as telas e componentes num arquivo | Dividir em `ui/screens/*` e `ui/components/*` |
+| ~~`main.gd` (~1.900 linhas)~~ | **Feito (2026-10-10):** 8 telas em `ui/screens/` e 3 componentes em `ui/components/`; a `main` ficou com ~300 linhas (estado da UI e repasses). Lógica provada idêntica por `equivalencia.gd`; telas comparadas por screenshot | Futuro: botões e sinais chamarem as telas direto e os repasses diminuírem |
 | Pasta `systems/` | Os sistemas extraídos do `GameState` estão em `systems/`; `Expedition`, `Mind`, `HeroRPG` e `ScoreCalc` continuam em `core/` | Mover os quatro para `systems/` numa próxima limpeza (só caminho de arquivo; os `class_name` não mudam) |
 | Expedição não salva | Sair no meio do mapa perde o progresso da rota | Salvar `gs.expedition` se houver menu dentro do mapa |
 | Formato de texto do resultado | Mostra a soma inteira do score | Explicação narrativa com números como detalhe opcional (P1) |

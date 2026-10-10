@@ -4,6 +4,14 @@ Histórico de versões, da mais recente para a mais antiga. Datas dos commits no
 
 ---
 
+## Refatoração: main.gd separado em telas e componentes — 2026-10-10
+
+- `scripts/ui/main.gd` (1.870 → ~300 linhas) guarda o estado da interface e repassa para as telas.
+- Telas em `scripts/ui/screens/`: `HubScreen`, `PartyScreen`, `ExpeditionScreen`, `ResultScreen`, `GuildScreens`, `ItemScreens`, `StoryScreens`, `TitleScreen`.
+- Componentes em `scripts/ui/components/`: `UIKit` (peças básicas), `Widgets` (retrato, cartaz, estresse), `Moments` (ruptura e saída). O Livro passou a usar o `UIKit`.
+- Verificação: testes de regras e de telas OK, `equivalencia.gd` idêntico, screenshots das telas iguais (diferenças só de dados aleatórios da partida de teste).
+- Correções: textos com quebra de linha literal passaram a usar `\n`; uma rolagem de dado nova fecha a anterior (não fica janela esquecida).
+
 ## APK fora do Git — 2026-10-10
 
 - O APK de teste saiu do repositório (o commit que o adicionou foi removido do histórico). Os builds Android ficam na pasta do Google Drive do projeto, citada no README e no TDD §8.

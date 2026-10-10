@@ -99,7 +99,9 @@ Nome dos arquivos: `AGuilda-v<versão>-debug.apk` (ex.: `AGuilda-v0.9-debug.apk`
 | `art/specs/` | Especificações para artistas: heróis e wallpaper (`art/specs/`), inimigos (`art/specs/inimigos/`) e cenário, objetos, interface, fundos e efeitos (`art/specs/cenario/`, com `_indice.json` de 281 assets por prioridade, incluindo o ícone do jogo, a arte do Livro e do pergaminho do mapa) e as miniaturas dos heróis no mapa (`art/specs/tokens_herois.json`) |
 | `art/tools/` | Scripts que preparam retratos e cartazes (conversão e remoção de fundo) |
 | `data/book.json` | Seções trancadas do Livro (slots de expansão por versão) |
-| `scripts/ui/main.gd` | Telas, montadas por código |
+| `scripts/ui/main.gd` | Cena principal: estado da interface e repasses |
+| `scripts/ui/screens/` | Telas: hub, montagem de party, expedição, resultado, guilda, itens, história, título |
+| `scripts/ui/components/` | Peças de interface: kit básico, widgets de herói/inimigo, momentos de personagem |
 | `data/traits.json` | Estresse, aflições, virtudes e traços |
 | `scripts/core/mind.gd` | Regras de estresse, ponto de ruptura, condições, traços e termo Mente |
 | `data/route.json` | Mapa de expedição: tipos de nó, pesos por bioma, eventos com testes e efeitos |

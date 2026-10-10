@@ -37,19 +37,19 @@ func _render() -> void:
 	# Navegação
 	var nav := HBoxContainer.new()
 	add_child(nav)
-	nav.add_child(ui._label("Livro da Guilda", 22, ui.C_GOLD))
-	nav.add_child(ui._spacer())
-	nav.add_child(ui._button("◀", _go.bind(index - 1)))
+	nav.add_child(UIKit.label("Livro da Guilda", 22, ui.C_GOLD))
+	nav.add_child(UIKit.spacer())
+	nav.add_child(UIKit.button("◀", _go.bind(index - 1)))
 	for i in gs.hero_order.size():
-		var dot: Button = ui._button("●" if i == index else "○", _go.bind(i))
+		var dot: Button = UIKit.button("●" if i == index else "○", _go.bind(i))
 		dot.flat = true
 		dot.tooltip_text = gs.heroes[gs.hero_order[i]].name
 		dot.add_theme_color_override("font_color", gs.heroes[gs.hero_order[i]].color)
 		nav.add_child(dot)
-	nav.add_child(ui._button("▶", _go.bind(index + 1)))
-	nav.add_child(ui._label("  %s (%d/%d)" % [h.name, index + 1, gs.hero_order.size()], 15, ui.C_TEXT))
-	nav.add_child(ui._spacer())
-	nav.add_child(ui._button("Fechar o livro", func(): closed.emit()))
+	nav.add_child(UIKit.button("▶", _go.bind(index + 1)))
+	nav.add_child(UIKit.label("  %s (%d/%d)" % [h.name, index + 1, gs.hero_order.size()], 15, ui.C_TEXT))
+	nav.add_child(UIKit.spacer())
+	nav.add_child(UIKit.button("Fechar o livro", func(): closed.emit()))
 
 	# Livro aberto (spread)
 	var spread := HBoxContainer.new()
@@ -111,8 +111,7 @@ func _left_page(id: String, h: Dictionary) -> Control:
 	if not cond.is_empty():
 		var virtue: bool = h.condition_kind == "virtude"
 		var cb := _badge(("✦ " if virtue else "✖ ") + cond.name, Color("#3f6b2f") if virtue else C_RUBRIC)
-		cb.tooltip_text = cond.desc + ("" if virtue else "
-Um dia de descanso na guilda cura a aflição.")
+		cb.tooltip_text = cond.desc + ("" if virtue else "\nUm dia de descanso na guilda cura a aflição.")
 		cb.mouse_filter = Control.MOUSE_FILTER_STOP
 		marks.add_child(cb)
 	for tid in h.get("traits", []):
@@ -436,7 +435,7 @@ func _aff_bar(v: int) -> Control:
 	var zero := w * 5.0 / 15.0
 	var x := w * (v + 5) / 15.0
 	var fill := ColorRect.new()
-	fill.color = ui._aff_color(v).darkened(0.2)
+	fill.color = UIKit.aff_color(v).darkened(0.2)
 	fill.position = Vector2(minf(zero, x), 0)
 	fill.size = Vector2(absf(x - zero), 10)
 	holder.add_child(fill)
@@ -501,7 +500,7 @@ func _status_color(s: String) -> Color:
 
 
 func _text(t: String, size: int, color: Color, italic: bool = false) -> Label:
-	var l: Label = ui._label(t, size, color)
+	var l: Label = UIKit.label(t, size, color)
 	if italic:
 		l.add_theme_font_override("font", _italic_font())
 	return l
