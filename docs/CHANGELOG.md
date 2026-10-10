@@ -4,6 +4,40 @@ Histórico de versões, da mais recente para a mais antiga. Datas dos commits no
 
 ---
 
+## Primeiras artes integradas — 2026-10-10
+
+- 56 artes entregues em `art/ArtesEmGeral/` (pasta ignorada pelo Godot com `.gdignore`); `art/tools/preparar_assets.py` remove o fundo branco, recorta e gera os PNGs nos destinos das specs.
+- **Itens:** ícones dos 18 itens no Mercado, Baú, Equipamento e no mercador da rota (com provisões).
+- **Mapa:** os heróis andam como miniaturas de RPG de mesa (sombra, passos, espelhadas ao voltar), com o balão "!" sobre quem chama; o círculo com inicial fica como reserva.
+- **Livro:** páginas de pergaminho com moldura ornamental, lombada costurada, o livro aberto como mesa ao fundo e a capa no botão do hub.
+- **Ícone do jogo:** projeto, Android (principal e adaptativo frente/fundo/monocromático) e `.ico` provisório do Windows gerado da arte mestre.
+- `art/tools/marcar_status.py` atualiza o índice: 39 integrados, 17 entregues (ferramentas, moedas, base genérica), estados das miniaturas e ícone do Windows ainda pendentes.
+
+## Game juice v1 — 2026-10-09
+
+Feedback visual sóbrio, só código (`scripts/ui/juice.gd`), sem mudar regras:
+
+- **Despacho:** o Selo de Cera carimba o mapa (queda, tremor curto, respingo de lacre).
+- **Montagem:** o herói escolhido entra com um pulo; par em Conflito Aberto pisca em vermelho.
+- **Mapa:** o caminho se desenha em dourado enquanto o grupo anda; as miniaturas dão passos; ganhos e perdas sobem como texto (+15 ouro, −1 provisões) e o contador pulsa; quem se fere, se estressa ou se cura pisca; flash vermelho ao chegar no alvo.
+- **Dado d20:** gira, para no resultado com a conta (rolagem + mod = total) e o veredito; 20 natural tem clarão dourado, 1 natural tem tremor.
+- **Resultado:** a barra do score enche contando até o total, com as linhas de custo e limpo; o veredito "carimba" (clarão no limpo, tremor na falha) e o X de lacre é pintado no cartaz.
+- **Momentos de personagem:** ponto de ruptura (virtude com luz dourada, aflição com clarão vermelho e tremor) e saída da guilda (retrato desbota) em cena própria, com texto letra a letra; vínculo formado mostra os dois retratos ligados por um fio; subida de nível com brilho; ultimato tira a cor da tela.
+- **Hub e Livro:** transição de dia (a tela escurece e volta com o novo dia), cartazes do dia entram em sequência, páginas do Livro aparecem e os pips de PV/moral/estresse enchem um a um.
+- **Opção "Reduzir movimento"** no menu (sem tremor, sem zoom, animações curtas), salva em `user://settings.cfg`.
+
+## Arte do Livro, do mapa e miniaturas dos heróis — 2026-10-09
+
+- `art/specs/cenario/livro.json` (18 assets): livro aberto de couro e pergaminho, páginas, lombada, capa, capitular iluminada, moldura de retrato, caixas de atributo, pips de tinta, abas por herói, orelhas de folhear e animação de virar página.
+- `art/specs/cenario/mapa_pergaminho.json` (11 assets): folha de mapa de RPG envelhecida por bioma, moldura cartográfica, vincos e vinheta em sobreposição, rosa dos ventos, cartela de título, escala, rio e caminhos a nanquim. Substitui `fundo_pergaminho_mapa`.
+- `art/specs/tokens_herois.json` (10 assets): cada herói vira uma miniatura pintada de RPG de mesa sobre base na cor dele, com estados (parado, andando, chamando, ferido, aflito, virtude), mais base genérica, sombra e balão de chamada.
+- `_indice.json`: 282 assets (281 ativos).
+
+## Ícone do jogo e build Android — 2026-10-09
+
+- `art/specs/cenario/icone.json`: ícone do jogo (corvo sobre o selo de cera) para Android — principal 192, adaptativo frente/fundo/monocromático 432 — e Windows (.ico de 16 a 256), com arte mestre 1024; registrado no `_indice.json`.
+- Preset de exportação Android (`export_presets.cfg`), compressão ETC2/ASTC e ícone provisório (`icon.png`, recorte da tela de título).
+
 ## Especificações de assets de cenário — 2026-10-08
 
 - `art/specs/cenario/`: guia de estilo (`_estilo_cenario.json`), índice com 237 assets (`_indice.json`, prioridades P0–P3 e status de produção) e um JSON por categoria: ícones de nó do mapa, marcos/terreno/veículos do mapa, itens e ferramentas, objetos da guilda, fundos, interface e efeitos.

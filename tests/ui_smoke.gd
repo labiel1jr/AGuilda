@@ -76,8 +76,14 @@ func _initialize() -> void:
 		assert(not map.moving, "grupo não chegou ao nó")
 		steps += 1
 	assert(Expedition.at_boss(gs), "expedição não chegou ao alvo")
+	# juice: dado e momentos de personagem
+	var rolled := [false]
+	main._roll_dice({"hero": "vera", "attr": "forca", "roll": 20, "mod": 3, "dc": 11, "ok": true}, func(): rolled[0] = true)
+	await create_timer(2.5).timeout
+	assert(rolled[0], "dado não terminou")
 	main._on_face_boss()
 	await process_frame
+	await create_timer(1.6).timeout
 	assert(main.last_result.has("route"))
 	gs.pending_events.append({"a": "vera", "b": "bram", "threshold": 6})
 	main._after_result()
@@ -91,6 +97,20 @@ func _initialize() -> void:
 	main._on_backstage_choice(gs.backstage_today[0], gs.backstage_data.events[0].choices[0])
 	await process_frame
 	assert(gs.backstage_today[0].done)
+	gs.pending_moments.append({"type": "ruptura", "id": "bram", "kind": "aflicao", "name": "Paranoico", "text": "Quem de vocês contou a eles?"})
+	gs.pending_moments.append({"type": "saida", "id": "lyssa", "text": "Lyssa deixou a guilda."})
+	main._play_moments()
+	await process_frame
+	assert(main._moment_open, "momento não abriu")
+	for k in 2:
+		var btn: Button = main._moment_layer.find_children("*", "Button", true, false)[0]
+		btn.pressed.emit()
+		await process_frame
+	assert(not main._moment_open and gs.pending_moments.is_empty(), "momentos não fecharam")
+	Juice.set_reduce_motion(true)
+	main.show_menu()
+	await process_frame
+	Juice.set_reduce_motion(false)
 	main.show_relations()
 	await process_frame
 	gs.heroes.theo.condition = "corajoso"

@@ -56,12 +56,24 @@ func _render() -> void:
 	spread.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	spread.add_theme_constant_override("separation", 0)
 	add_child(spread)
-	spread.add_child(_page(_left_page(id, h)))
-	var spine := ColorRect.new()
-	spine.color = Color("#6b4e2e")
-	spine.custom_minimum_size.x = 6
-	spread.add_child(spine)
-	spread.add_child(_page(_right_page(id, h)))
+	var left := _page(_left_page(id, h), "esquerda")
+	spread.add_child(left)
+	if ResourceLoader.exists("res://art/book/lombada.png"):
+		var spine := TextureRect.new()
+		spine.texture = load("res://art/book/lombada.png")
+		spine.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		spine.stretch_mode = TextureRect.STRETCH_SCALE
+		spine.custom_minimum_size.x = 22
+		spread.add_child(spine)
+	else:
+		var spine := ColorRect.new()
+		spine.color = Color("#6b4e2e")
+		spine.custom_minimum_size.x = 6
+		spread.add_child(spine)
+	var right := _page(_right_page(id, h), "direita")
+	spread.add_child(right)
+	Juice.fade_in(left, 0.0, 0.25)
+	Juice.fade_in(right, 0.08, 0.25)
 
 
 func _go(i: int) -> void:
@@ -290,16 +302,40 @@ func _add_locked(col: VBoxContainer, page: String) -> void:
 
 # ---------- peças visuais ----------
 
-func _page(content: Control) -> PanelContainer:
+func _page(content: Control, side: String = "esquerda") -> PanelContainer:
 	var p := PanelContainer.new()
 	p.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = C_PAGE
-	sb.border_color = C_PAGE_EDGE
-	sb.set_border_width_all(2)
-	sb.set_content_margin_all(18)
-	p.add_theme_stylebox_override("panel", sb)
-	p.add_child(content)
+	var tex_path := "res://art/book/pagina_%s.png" % side
+	if ResourceLoader.exists(tex_path):
+		# arte da página (pergaminho com bordas rasgadas), esticada sem deformar as bordas
+		var st := StyleBoxTexture.new()
+		st.texture = load(tex_path)
+		st.set_texture_margin_all(60)
+		st.content_margin_left = 44
+		st.content_margin_right = 44
+		st.content_margin_top = 36
+		st.content_margin_bottom = 36
+		p.add_theme_stylebox_override("panel", st)
+	else:
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = C_PAGE
+		sb.border_color = C_PAGE_EDGE
+		sb.set_border_width_all(2)
+		sb.set_content_margin_all(18)
+		p.add_theme_stylebox_override("panel", sb)
+	if ResourceLoader.exists("res://art/book/moldura_pagina.png"):
+		# moldura ornamental por dentro da página
+		var frame := PanelContainer.new()
+		var fs := StyleBoxTexture.new()
+		fs.texture = load("res://art/book/moldura_pagina.png")
+		fs.set_texture_margin_all(40)
+		fs.draw_center = false
+		fs.set_content_margin_all(22)
+		frame.add_theme_stylebox_override("panel", fs)
+		frame.add_child(content)
+		p.add_child(frame)
+	else:
+		p.add_child(content)
 	return p
 
 
@@ -381,6 +417,8 @@ func _pips_row(label: String, value: int, max_value: int, color: Color, suffix: 
 		pip.custom_minimum_size = Vector2(12, 12)
 		pip.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		row.add_child(pip)
+		if i < value:
+			Juice.fade_in(pip, 0.15 + i * 0.035, 0.15)
 	row.add_child(_text("  " + suffix, 13, C_INK_SOFT, false))
 	return row
 

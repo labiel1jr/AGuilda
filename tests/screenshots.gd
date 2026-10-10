@@ -9,6 +9,7 @@ func _initialize() -> void:
 	await process_frame
 	main.show_title()
 	await _shot("18_titulo")
+	main.moments_enabled = false
 	main.show_hub()
 	await _shot("10_capitulo")
 	gs.begin_chapter()

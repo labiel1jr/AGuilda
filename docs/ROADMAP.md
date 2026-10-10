@@ -41,6 +41,8 @@ Objetivo: uma experiência pequena, completa e jogável que mostre por que A Gui
 
 - [ ] Resultado explicado em linguagem narrativa ("Theo e Lyssa não se entenderam"), com a soma do score como detalhe opcional
 - [ ] Feedback visual de relações (o que mudou entre quem, e por quê)
+- [x] Game juice v1 (só código): selo, dado, placar, momentos de personagem, transições — ver Changelog
+- [ ] Game juice v2 (partículas com os sprites de `efeitos.json`) e v3 (som)
 - [ ] Melhor apresentação dos personagens (retratos maiores na montagem, falas curtas)
 - [ ] Mesma missão + party diferente = história diferente (textos por dupla/herói em `missions.json`)
 - [ ] Arcos pessoais para Lyssa, Bram, Vera e Corin
@@ -60,6 +62,8 @@ Objetivo: uma experiência pequena, completa e jogável que mostre por que A Gui
 - [ ] Mais capítulos, personagens, missões e finais
 - [x] Especificar os assets de cenário, objetos, interface, fundos e efeitos (`art/specs/cenario/`)
 - [ ] Produção dos assets P0 pelos artistas e integração no jogo
+- [x] Integrar as primeiras artes: ícones de itens, miniaturas (estado parado), páginas do Livro, ícone do jogo
+- [ ] Integrar o restante quando chegar: estados das miniaturas, ornamentos do Livro, pergaminho do mapa (`mapa_pergaminho.json`), ícone do Windows redesenhado
 - [ ] Arte final
 - [ ] Localização
 

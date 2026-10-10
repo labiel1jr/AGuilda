@@ -34,6 +34,8 @@ Este documento descreve **como o jogo está construído hoje**: módulos, fluxo 
 | `scripts/ui/magic_map.gd` | Mapa Mágico: desenho do pergaminho, grafo clicável, névoa, marcadores |
 | `scripts/ui/guild_book.gd` | Livro da Guilda (ficha em duas páginas) |
 | `scripts/ui/portrait.gd` | Retrato procedural (fallback quando não há imagem) |
+| `scripts/ui/juice.gd` | `Juice` (estático): game juice sóbrio — pop, fade, piscar, tremor, clarão, contador, texto voando, máquina de escrever; opção "Reduzir movimento" em `user://settings.cfg` |
+| `scripts/ui/wax_seal.gd` | Selo de cera do despacho desenhado por código |
 | `data/*.json` | Conteúdo (seção 4) |
 | `art/` | Retratos, cartazes, título, peças de mapa, especificações e ferramentas |
 | `tests/` | Testes headless e geradores de screenshot |
@@ -136,6 +138,7 @@ JSON não distingue `int` de `float`: números lidos viram `float`. Converter co
 
 - `main.gd` monta cada tela em `root` (um `VBoxContainer`) depois de `_clear()`. Navegação por chamadas diretas (`show_hub`, `show_party`, `show_map`, `show_result`...).
 - **Mapa Mágico** (`magic_map.gd`): `Control` com `_draw()` próprio. Recebe a expedição por referência, emite `node_chosen(pos)` e `arrived(pos)`, mostra tooltip por nó (`_get_tooltip`). Peças de `art/MapParts/<tipo>/` são carregadas listando a pasta (funciona no editor e exportado, removendo o sufixo `.import`).
+- **Game juice:** só visual, nunca muda o estado. Momentos de personagem são enfileirados pelo núcleo em `gs.pending_moments` (ruptura em `Mind`, saída em `GameState._depart`; não salvos) e encenados por `main._play_moments()` no hub, no mapa e no resultado.
 - **Retratos:** `h.portrait` aponta para `res://art/portraits/<id>.png`; sem imagem, usa `portrait.gd`.
 - **Cartazes:** `res://art/enemies/<id>.png`, na ordem de `mission.enemies` (chefe primeiro; o segundo vira o guarda do alvo no mapa).
 
@@ -158,6 +161,7 @@ Godot_v4.7.2-stable_win64_console.exe --path . -s res://tests/map_biomes.gd
 | `ui_smoke.gd` | Abre todas as telas, percorre uma expedição pela UI, salva e carrega; falha em qualquer erro de script |
 | `screenshots.gd` | Gera as imagens de `docs/img` (precisa de janela) |
 | `map_biomes.gd` | Uma imagem do mapa por bioma |
+| `juice_shots.gd` | Imagens dos momentos de juice (selo, dado, resultado, ruptura) |
 
 Saída esperada: `RESULTADO: OK (0 falha(s))` e `UI SMOKE OK`. Depois de criar um `class_name` novo, rodar `--import` uma vez para o Godot registrá-lo.
 
@@ -166,8 +170,9 @@ Saída esperada: `RESULTADO: OK (0 falha(s))` e `UI SMOKE OK`. Depois de criar u
 ## 8. Pipeline de Arte
 
 - Especificações (JSON) para gerar imagens: `art/specs/` (heróis, wallpaper) e `art/specs/inimigos/` (com `_indice.json` ligando inimigos a missões).
-- Cenário, objetos, interface, fundos e efeitos (sem personagens): `art/specs/cenario/` — `_estilo_cenario.json` (famílias de estilo, regras, modelo para assets novos), `_indice.json` (todos os assets com prioridade, status e destino) e um arquivo por categoria. Os artistas entregam **JPG com fundo branco puro** em `<pasta do destino>/originais/`; a ferramenta remove o branco e gera o PNG no destino.
+- Cenário, objetos, interface, fundos e efeitos (sem personagens): `art/specs/cenario/` — `_estilo_cenario.json` (famílias de estilo, regras, modelo para assets novos), `_indice.json` (todos os assets com prioridade, status e destino) e um arquivo por categoria. O ícone do jogo (Android e Windows) está em `art/specs/cenario/icone.json`; a arte do Livro em `livro.json`; o pergaminho do mapa em `mapa_pergaminho.json`; as miniaturas dos heróis no mapa em `art/specs/tokens_herois.json`. Os artistas entregam **JPG com fundo branco puro** em `<pasta do destino>/originais/`; a ferramenta remove o branco e gera o PNG no destino.
 - Originais em `art/portraits/originais/`, `art/enemies/originais/`, `art/geralimagem/originais/`.
+- `python art/tools/preparar_assets.py`: artes de cenário, itens, livro, miniaturas e ícone entregues em `art/ArtesEmGeral/<id>.jpg` (pasta com `.gdignore`) → PNG no `destino` de cada asset do `_indice.json` (remove o branco a partir das bordas, trata buracos fechados, recorta, reduz; imagens cheias como o livro aberto e o fundo do ícone não são recortadas). `python art/tools/marcar_status.py` atualiza o status de produção no índice e nos arquivos de categoria.
 - `python art/tools/preparar_retratos.py` e `python art/tools/preparar_inimigos.py`: leem o formato pelo conteúdo (há JPEG com extensão `.png`), removem o fundo por *flood fill* a partir das bordas (fundo branco, xadrez falso, madeira ou pedra, amostrado na borda), fecham rasgos com fechamento morfológico e salvam PNG RGBA 256×256.
 
 ---

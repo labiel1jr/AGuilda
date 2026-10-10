@@ -29,13 +29,29 @@
     "efeitos.json": {
       "titulo": "Efeitos visuais",
       "total": 11
+    },
+    "icone.json": {
+      "titulo": "Ícone do jogo",
+      "total": 6
+    },
+    "livro.json": {
+      "titulo": "Livro da Guilda",
+      "total": 18
+    },
+    "mapa_pergaminho.json": {
+      "titulo": "Mapa Mágico — pergaminho",
+      "total": 11
+    },
+    "../tokens_herois.json": {
+      "titulo": "Miniaturas dos heróis (marcadores do mapa)",
+      "total": 10
     }
   },
   "resumo_por_prioridade": {
-    "P0": 62,
-    "P1": 95,
-    "P2": 64,
-    "P3": 16
+    "P0": 82,
+    "P1": 109,
+    "P2": 73,
+    "P3": 17
   },
   "assets": [
     {
@@ -605,8 +621,9 @@
       "grupo": "armas",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/espada_longa.png"
+      "status": "integrado",
+      "destino": "res://art/items/espada_longa.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "item_adaga_elfica",
@@ -615,8 +632,9 @@
       "grupo": "armas",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/adaga_elfica.png"
+      "status": "integrado",
+      "destino": "res://art/items/adaga_elfica.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "item_cajado_runico",
@@ -625,8 +643,9 @@
       "grupo": "armas",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/cajado_runico.png"
+      "status": "integrado",
+      "destino": "res://art/items/cajado_runico.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "item_alaude_encantado",
@@ -635,8 +654,9 @@
       "grupo": "armas",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/alaude_encantado.png"
+      "status": "integrado",
+      "destino": "res://art/items/alaude_encantado.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "item_machado_anao",
@@ -645,8 +665,9 @@
       "grupo": "armas",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/machado_anao.png"
+      "status": "integrado",
+      "destino": "res://art/items/machado_anao.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "item_arco_longo",
@@ -655,8 +676,9 @@
       "grupo": "armas",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/arco_longo.png"
+      "status": "integrado",
+      "destino": "res://art/items/arco_longo.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "item_lamina_corvo",
@@ -665,8 +687,9 @@
       "grupo": "armas",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/lamina_corvo.png"
+      "status": "integrado",
+      "destino": "res://art/items/lamina_corvo.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "item_gibao_couro",
@@ -675,8 +698,9 @@
       "grupo": "armaduras",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/gibao_couro.png"
+      "status": "integrado",
+      "destino": "res://art/items/gibao_couro.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "item_manto_viajante",
@@ -685,8 +709,9 @@
       "grupo": "armaduras",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/manto_viajante.png"
+      "status": "integrado",
+      "destino": "res://art/items/manto_viajante.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "item_cota_malha",
@@ -695,8 +720,9 @@
       "grupo": "armaduras",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/cota_malha.png"
+      "status": "integrado",
+      "destino": "res://art/items/cota_malha.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "item_placas",
@@ -705,8 +731,9 @@
       "grupo": "armaduras",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/placas.png"
+      "status": "integrado",
+      "destino": "res://art/items/placas.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "item_amuleto_coragem",
@@ -715,8 +742,9 @@
       "grupo": "acessorios",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/amuleto_coragem.png"
+      "status": "integrado",
+      "destino": "res://art/items/amuleto_coragem.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "item_insignia_corvo",
@@ -725,8 +753,9 @@
       "grupo": "acessorios",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/insignia_corvo.png"
+      "status": "integrado",
+      "destino": "res://art/items/insignia_corvo.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "item_brinco_sabio",
@@ -735,8 +764,9 @@
       "grupo": "acessorios",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/brinco_sabio.png"
+      "status": "integrado",
+      "destino": "res://art/items/brinco_sabio.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "item_anel_amizade",
@@ -745,8 +775,9 @@
       "grupo": "acessorios",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/anel_amizade.png"
+      "status": "integrado",
+      "destino": "res://art/items/anel_amizade.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "item_pocao_cura",
@@ -755,8 +786,9 @@
       "grupo": "consumiveis",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/pocao_cura.png"
+      "status": "integrado",
+      "destino": "res://art/items/pocao_cura.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "item_tonico",
@@ -765,8 +797,9 @@
       "grupo": "consumiveis",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/tonico.png"
+      "status": "integrado",
+      "destino": "res://art/items/tonico.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "item_pergaminho_forca",
@@ -775,8 +808,9 @@
       "grupo": "consumiveis",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/pergaminho_forca.png"
+      "status": "integrado",
+      "destino": "res://art/items/pergaminho_forca.png",
+      "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
     },
     {
       "id": "rec_provisoes",
@@ -785,8 +819,9 @@
       "grupo": "recursos",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/provisoes.png"
+      "status": "integrado",
+      "destino": "res://art/items/provisoes.png",
+      "observacoes": "botão de provisões do mercador da rota"
     },
     {
       "id": "rec_moedas",
@@ -795,8 +830,9 @@
       "grupo": "recursos",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/items/ouro_{var}.png"
+      "status": "entregue",
+      "destino": "res://art/items/ouro_{var}.png",
+      "observacoes": "veio uma imagem com as 3 variações; recortada em ouro_pilha_pequena/pilha_media/bolsa_cheia"
     },
     {
       "id": "rec_bolsa_rota",
@@ -825,8 +861,9 @@
       "grupo": "ferramentas",
       "familia": "pixel_hd",
       "prioridade": "P2",
-      "status": "planejado",
-      "destino": "res://art/items/corda.png"
+      "status": "entregue",
+      "destino": "res://art/items/corda.png",
+      "observacoes": "ainda não há item de jogo que use"
     },
     {
       "id": "fer_lanterna",
@@ -835,8 +872,9 @@
       "grupo": "ferramentas",
       "familia": "pixel_hd",
       "prioridade": "P2",
-      "status": "planejado",
-      "destino": "res://art/items/lanterna.png"
+      "status": "entregue",
+      "destino": "res://art/items/lanterna.png",
+      "observacoes": "ainda não há item de jogo que use"
     },
     {
       "id": "fer_tocha",
@@ -845,8 +883,9 @@
       "grupo": "ferramentas",
       "familia": "pixel_hd",
       "prioridade": "P2",
-      "status": "planejado",
-      "destino": "res://art/items/tocha.png"
+      "status": "entregue",
+      "destino": "res://art/items/tocha.png",
+      "observacoes": "ainda não há item de jogo que use"
     },
     {
       "id": "fer_pa",
@@ -855,8 +894,9 @@
       "grupo": "ferramentas",
       "familia": "pixel_hd",
       "prioridade": "P3",
-      "status": "planejado",
-      "destino": "res://art/items/pa.png"
+      "status": "entregue",
+      "destino": "res://art/items/pa.png",
+      "observacoes": "ainda não há item de jogo que use"
     },
     {
       "id": "fer_picareta",
@@ -865,8 +905,9 @@
       "grupo": "ferramentas",
       "familia": "pixel_hd",
       "prioridade": "P3",
-      "status": "planejado",
-      "destino": "res://art/items/picareta.png"
+      "status": "entregue",
+      "destino": "res://art/items/picareta.png",
+      "observacoes": "ainda não há item de jogo que use"
     },
     {
       "id": "fer_gazuas",
@@ -875,8 +916,9 @@
       "grupo": "ferramentas",
       "familia": "pixel_hd",
       "prioridade": "P2",
-      "status": "planejado",
-      "destino": "res://art/items/gazuas.png"
+      "status": "entregue",
+      "destino": "res://art/items/gazuas.png",
+      "observacoes": "ainda não há item de jogo que use"
     },
     {
       "id": "fer_kit_cura",
@@ -885,8 +927,9 @@
       "grupo": "ferramentas",
       "familia": "pixel_hd",
       "prioridade": "P2",
-      "status": "planejado",
-      "destino": "res://art/items/kit_cura.png"
+      "status": "entregue",
+      "destino": "res://art/items/kit_cura.png",
+      "observacoes": "ainda não há item de jogo que use"
     },
     {
       "id": "fer_mapa",
@@ -895,8 +938,9 @@
       "grupo": "ferramentas",
       "familia": "pixel_hd",
       "prioridade": "P2",
-      "status": "planejado",
-      "destino": "res://art/items/mapa.png"
+      "status": "entregue",
+      "destino": "res://art/items/mapa.png",
+      "observacoes": "ainda não há item de jogo que use"
     },
     {
       "id": "fer_bussola",
@@ -905,8 +949,9 @@
       "grupo": "ferramentas",
       "familia": "pixel_hd",
       "prioridade": "P3",
-      "status": "planejado",
-      "destino": "res://art/items/bussola.png"
+      "status": "entregue",
+      "destino": "res://art/items/bussola.png",
+      "observacoes": "ainda não há item de jogo que use"
     },
     {
       "id": "fer_luneta",
@@ -915,8 +960,9 @@
       "grupo": "ferramentas",
       "familia": "pixel_hd",
       "prioridade": "P3",
-      "status": "planejado",
-      "destino": "res://art/items/luneta.png"
+      "status": "entregue",
+      "destino": "res://art/items/luneta.png",
+      "observacoes": "ainda não há item de jogo que use"
     },
     {
       "id": "fer_chave",
@@ -925,8 +971,9 @@
       "grupo": "ferramentas",
       "familia": "pixel_hd",
       "prioridade": "P2",
-      "status": "planejado",
-      "destino": "res://art/items/chave.png"
+      "status": "entregue",
+      "destino": "res://art/items/chave.png",
+      "observacoes": "ainda não há item de jogo que use"
     },
     {
       "id": "fer_carta",
@@ -935,8 +982,9 @@
       "grupo": "ferramentas",
       "familia": "pixel_hd",
       "prioridade": "P2",
-      "status": "planejado",
-      "destino": "res://art/items/carta.png"
+      "status": "entregue",
+      "destino": "res://art/items/carta.png",
+      "observacoes": "ainda não há item de jogo que use"
     },
     {
       "id": "fer_martelo",
@@ -945,8 +993,9 @@
       "grupo": "ferramentas",
       "familia": "pixel_hd",
       "prioridade": "P3",
-      "status": "planejado",
-      "destino": "res://art/items/martelo.png"
+      "status": "entregue",
+      "destino": "res://art/items/martelo.png",
+      "observacoes": "ainda não há item de jogo que use"
     },
     {
       "id": "fer_ervas",
@@ -955,8 +1004,9 @@
       "grupo": "ferramentas",
       "familia": "pixel_hd",
       "prioridade": "P3",
-      "status": "planejado",
-      "destino": "res://art/items/ervas.png"
+      "status": "entregue",
+      "destino": "res://art/items/ervas.png",
+      "observacoes": "ainda não há item de jogo que use"
     },
     {
       "id": "fer_armadilha",
@@ -965,8 +1015,9 @@
       "grupo": "ferramentas",
       "familia": "pixel_hd",
       "prioridade": "P3",
-      "status": "planejado",
-      "destino": "res://art/items/armadilha.png"
+      "status": "entregue",
+      "destino": "res://art/items/armadilha.png",
+      "observacoes": "ainda não há item de jogo que use"
     },
     {
       "id": "guilda_mural",
@@ -1305,8 +1356,9 @@
       "grupo": "fundos",
       "familia": "nanquim",
       "prioridade": "P1",
-      "status": "planejado",
-      "destino": "res://art/backgrounds/pergaminho_{bioma}.png"
+      "status": "cancelado",
+      "destino": "res://art/backgrounds/pergaminho_{bioma}.png",
+      "observacoes": "substituído por mapa_pergaminho.json → mapa_folha"
     },
     {
       "id": "fundo_chamada_bioma",
@@ -2407,7 +2459,484 @@
       "prioridade": "P3",
       "status": "planejado",
       "destino": "res://art/fx/corvos.png"
+    },
+    {
+      "id": "icone_mestre",
+      "nome": "Ícone — arte mestre",
+      "arquivo": "icone.json",
+      "grupo": "fonte",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/icon/icone_mestre.png",
+      "observacoes": "ícone do projeto (Godot) e base do .ico provisório do Windows"
+    },
+    {
+      "id": "icone_android_principal",
+      "nome": "Android — ícone principal",
+      "arquivo": "icone.json",
+      "grupo": "android",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/icon/android_192.png",
+      "observacoes": "launcher_icons/main_192x192"
+    },
+    {
+      "id": "icone_android_frente",
+      "nome": "Android — adaptativo: frente",
+      "arquivo": "icone.json",
+      "grupo": "android",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/icon/android_frente_432.png",
+      "observacoes": "launcher_icons/adaptive_foreground_432x432 (símbolo reduzido à zona segura)"
+    },
+    {
+      "id": "icone_android_fundo",
+      "nome": "Android — adaptativo: fundo",
+      "arquivo": "icone.json",
+      "grupo": "android",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/icon/android_fundo_432.png",
+      "observacoes": "launcher_icons/adaptive_background_432x432"
+    },
+    {
+      "id": "icone_android_mono",
+      "nome": "Android — adaptativo: monocromático",
+      "arquivo": "icone.json",
+      "grupo": "android",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "integrado",
+      "destino": "res://art/icon/android_mono_432.png",
+      "observacoes": "launcher_icons/adaptive_monochrome_432x432"
+    },
+    {
+      "id": "icone_windows",
+      "nome": "Windows — .ico",
+      "arquivo": "icone.json",
+      "grupo": "windows",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/icon/windows/icone_{var}.png (a ferramenta junta em res://art/icon/icone.ico)",
+      "observacoes": "usando .ico provisório gerado da arte mestre (art/icon/icone.ico); falta a versão redesenhada em 16–32 px"
+    },
+    {
+      "id": "livro_aberto",
+      "nome": "Livro aberto (base)",
+      "arquivo": "livro.json",
+      "grupo": "estrutura",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/book/livro_aberto.png",
+      "observacoes": "mesa de fundo da tela do Livro (escurecida); entregue em 1536×1024 (3:2), não 16:9"
+    },
+    {
+      "id": "livro_pagina_esq",
+      "nome": "Página esquerda (textura)",
+      "arquivo": "livro.json",
+      "grupo": "estrutura",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/book/pagina_esquerda.png",
+      "observacoes": "textura da página esquerda"
+    },
+    {
+      "id": "livro_pagina_dir",
+      "nome": "Página direita (textura)",
+      "arquivo": "livro.json",
+      "grupo": "estrutura",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/book/pagina_direita.png",
+      "observacoes": "textura da página direita"
+    },
+    {
+      "id": "livro_lombada",
+      "nome": "Lombada/dobra central",
+      "arquivo": "livro.json",
+      "grupo": "estrutura",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "integrado",
+      "destino": "res://art/book/lombada.png"
+    },
+    {
+      "id": "livro_capa_fechada",
+      "nome": "Capa fechada",
+      "arquivo": "livro.json",
+      "grupo": "estrutura",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "integrado",
+      "destino": "res://art/book/capa_fechada.png",
+      "observacoes": "ícone do botão Livro no hub"
+    },
+    {
+      "id": "livro_borda_ornamental",
+      "nome": "Moldura ornamental de página",
+      "arquivo": "livro.json",
+      "grupo": "estrutura",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "integrado",
+      "destino": "res://art/book/moldura_pagina.png",
+      "observacoes": "moldura interna das páginas (9-slice 40 px)"
+    },
+    {
+      "id": "livro_capitular",
+      "nome": "Moldura de letra capitular",
+      "arquivo": "livro.json",
+      "grupo": "ornamentos",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/book/capitular.png"
+    },
+    {
+      "id": "livro_moldura_retrato",
+      "nome": "Moldura do retrato",
+      "arquivo": "livro.json",
+      "grupo": "ornamentos",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/book/moldura_retrato.png"
+    },
+    {
+      "id": "livro_divisor",
+      "nome": "Divisor de seção",
+      "arquivo": "livro.json",
+      "grupo": "ornamentos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/book/divisor.png"
+    },
+    {
+      "id": "livro_titulo_secao",
+      "nome": "Faixa de título de seção",
+      "arquivo": "livro.json",
+      "grupo": "ornamentos",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/book/faixa_secao.png"
+    },
+    {
+      "id": "livro_caixa_atributo",
+      "nome": "Caixa de atributo",
+      "arquivo": "livro.json",
+      "grupo": "ornamentos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/book/caixa_atributo.png"
+    },
+    {
+      "id": "livro_pip",
+      "nome": "Marcadores de pips",
+      "arquivo": "livro.json",
+      "grupo": "ornamentos",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/book/pip_{var}.png"
+    },
+    {
+      "id": "livro_cadeado",
+      "nome": "Seção trancada",
+      "arquivo": "livro.json",
+      "grupo": "ornamentos",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/book/trancado.png"
+    },
+    {
+      "id": "livro_manchas",
+      "nome": "Manchas e marcas",
+      "arquivo": "livro.json",
+      "grupo": "ornamentos",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/book/mancha_{n}.png"
+    },
+    {
+      "id": "livro_fita",
+      "nome": "Fita marcadora",
+      "arquivo": "livro.json",
+      "grupo": "navegacao",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/book/fita.png"
+    },
+    {
+      "id": "livro_aba_heroi",
+      "nome": "Abas laterais por herói",
+      "arquivo": "livro.json",
+      "grupo": "navegacao",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/book/aba_{estado}.png"
+    },
+    {
+      "id": "livro_seta",
+      "nome": "Setas de folhear",
+      "arquivo": "livro.json",
+      "grupo": "navegacao",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/book/orelha_{var}.png"
+    },
+    {
+      "id": "livro_virar",
+      "nome": "Animação de virar a página",
+      "arquivo": "livro.json",
+      "grupo": "navegacao",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/book/virar.png"
+    },
+    {
+      "id": "mapa_folha",
+      "nome": "Folha de mapa envelhecida",
+      "arquivo": "mapa_pergaminho.json",
+      "grupo": "folha",
+      "familia": "nanquim",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/map/parchment/folha.png"
+    },
+    {
+      "id": "mapa_borda",
+      "nome": "Moldura cartográfica",
+      "arquivo": "mapa_pergaminho.json",
+      "grupo": "folha",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/map/parchment/borda.png"
+    },
+    {
+      "id": "mapa_vincos",
+      "nome": "Vincos e desgaste (sobreposição)",
+      "arquivo": "mapa_pergaminho.json",
+      "grupo": "folha",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/map/parchment/vincos.png"
+    },
+    {
+      "id": "mapa_vinheta",
+      "nome": "Escurecimento das bordas",
+      "arquivo": "mapa_pergaminho.json",
+      "grupo": "folha",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/map/parchment/vinheta.png"
+    },
+    {
+      "id": "mapa_rosa_ventos",
+      "nome": "Rosa dos ventos",
+      "arquivo": "mapa_pergaminho.json",
+      "grupo": "ornamentos",
+      "familia": "nanquim",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/map/parchment/rosa_ventos.png"
+    },
+    {
+      "id": "mapa_cartela",
+      "nome": "Cartela de título",
+      "arquivo": "mapa_pergaminho.json",
+      "grupo": "ornamentos",
+      "familia": "nanquim",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/map/parchment/cartela.png"
+    },
+    {
+      "id": "mapa_escala",
+      "nome": "Barra de escala",
+      "arquivo": "mapa_pergaminho.json",
+      "grupo": "ornamentos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/map/parchment/escala.png"
+    },
+    {
+      "id": "mapa_selo_guilda",
+      "nome": "Selo da guilda no mapa",
+      "arquivo": "mapa_pergaminho.json",
+      "grupo": "ornamentos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/map/parchment/selo.png"
+    },
+    {
+      "id": "mapa_rio",
+      "nome": "Peças de rio",
+      "arquivo": "mapa_pergaminho.json",
+      "grupo": "ornamentos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/map/parchment/rio_{var}.png"
+    },
+    {
+      "id": "mapa_caminho",
+      "nome": "Traço de caminho",
+      "arquivo": "mapa_pergaminho.json",
+      "grupo": "ornamentos",
+      "familia": "nanquim",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/map/parchment/caminho_{var}.png"
+    },
+    {
+      "id": "mapa_mar_bordas",
+      "nome": "Margens de lago/mar",
+      "arquivo": "mapa_pergaminho.json",
+      "grupo": "ornamentos",
+      "familia": "nanquim",
+      "prioridade": "P3",
+      "status": "planejado",
+      "destino": "res://art/map/parchment/costa_{n}.png"
+    },
+    {
+      "id": "token_theo",
+      "nome": "Miniatura: Theo",
+      "arquivo": "../tokens_herois.json",
+      "grupo": "miniaturas",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/tokens/theo_{estado}.png",
+      "observacoes": "só o estado 'parado' foi entregue; faltam andando, chamando, ferido, aflito e virtude"
+    },
+    {
+      "id": "token_lyssa",
+      "nome": "Miniatura: Lyssa",
+      "arquivo": "../tokens_herois.json",
+      "grupo": "miniaturas",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/tokens/lyssa_{estado}.png",
+      "observacoes": "só o estado 'parado' foi entregue; faltam andando, chamando, ferido, aflito e virtude"
+    },
+    {
+      "id": "token_mira",
+      "nome": "Miniatura: Mira",
+      "arquivo": "../tokens_herois.json",
+      "grupo": "miniaturas",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/tokens/mira_{estado}.png",
+      "observacoes": "só o estado 'parado' foi entregue; faltam andando, chamando, ferido, aflito e virtude"
+    },
+    {
+      "id": "token_senna",
+      "nome": "Miniatura: Senna",
+      "arquivo": "../tokens_herois.json",
+      "grupo": "miniaturas",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/tokens/senna_{estado}.png",
+      "observacoes": "só o estado 'parado' foi entregue; faltam andando, chamando, ferido, aflito e virtude"
+    },
+    {
+      "id": "token_bram",
+      "nome": "Miniatura: Bram",
+      "arquivo": "../tokens_herois.json",
+      "grupo": "miniaturas",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/tokens/bram_{estado}.png",
+      "observacoes": "só o estado 'parado' foi entregue; faltam andando, chamando, ferido, aflito e virtude"
+    },
+    {
+      "id": "token_vera",
+      "nome": "Miniatura: Vera",
+      "arquivo": "../tokens_herois.json",
+      "grupo": "miniaturas",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/tokens/vera_{estado}.png",
+      "observacoes": "só o estado 'parado' foi entregue; faltam andando, chamando, ferido, aflito e virtude"
+    },
+    {
+      "id": "token_corin",
+      "nome": "Miniatura: Corin",
+      "arquivo": "../tokens_herois.json",
+      "grupo": "miniaturas",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/tokens/corin_{estado}.png",
+      "observacoes": "só o estado 'parado' foi entregue; faltam andando, chamando, ferido, aflito e virtude"
+    },
+    {
+      "id": "token_base",
+      "nome": "Base genérica",
+      "arquivo": "../tokens_herois.json",
+      "grupo": "miniaturas",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "entregue",
+      "destino": "res://art/tokens/base.png",
+      "observacoes": "reserva para heróis sem miniatura"
+    },
+    {
+      "id": "token_sombra",
+      "nome": "Sombra de contato",
+      "arquivo": "../tokens_herois.json",
+      "grupo": "miniaturas",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "integrado",
+      "destino": "res://art/tokens/sombra.png"
+    },
+    {
+      "id": "token_balao",
+      "nome": "Balão de chamada",
+      "arquivo": "../tokens_herois.json",
+      "grupo": "miniaturas",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "integrado",
+      "destino": "res://art/tokens/balao.png",
+      "observacoes": "tira de 4 quadros sobre quem chama"
     }
   ],
-  "total": 237
+  "total": 282,
+  "total_ativos": 281,
+  "resumo_por_status": {
+    "cancelado": 1,
+    "entregue": 17,
+    "integrado": 39,
+    "planejado": 225
+  }
 }

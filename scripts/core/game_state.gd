@@ -56,6 +56,7 @@ var reputation := 0
 var dispatched_today := 0
 var pending_events := []  # eventos de vínculo aguardando escolha do jogador
 var pending_levelups := [] # subidas de nível aguardando escolha do jogador
+var pending_moments := []  # momentos de personagem para a UI encenar (ruptura, saída); não é salvo
 
 # RPG (níveis, equipamento, magias) — regras em HeroRPG
 var classes_data := {}
@@ -128,6 +129,7 @@ func new_game(seed_value: int = -1) -> void:
 	traits_data = _load_json("res://data/traits.json")
 	inventory.clear()
 	pending_levelups.clear()
+	pending_moments.clear()
 	recruits.clear()
 	heroes.clear()
 	hero_order.clear()
@@ -824,6 +826,7 @@ func _depart(id: String) -> Array:
 	promises.erase(id)
 	h.resting = false
 	var lines := ["%s deixou a Guilda do Corvo Cinzento. O equipamento ficou no Baú." % h.name]
+	pending_moments.append({"type": "saida", "id": id, "text": lines[0]})
 	# Irmandade — "Até o Fim" (GDD §5.5): o irmão de armas parte junto
 	for other in hero_order.duplicate():
 		if bond_label(id, other) == "Irmandade":

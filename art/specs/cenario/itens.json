@@ -15,7 +15,7 @@
         {
           "id": "item_espada_longa",
           "nome": "Espada Longa",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -24,12 +24,13 @@
           "descricao": "Espada reta de lâmina larga, guarda simples de ferro, punho de couro marrom.",
           "uso_no_jogo": "Ícone do item (arma) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/espada_longa.png",
-          "liga_com": "data/items.json → items.espada_longa"
+          "liga_com": "data/items.json → items.espada_longa",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         },
         {
           "id": "item_adaga_elfica",
           "nome": "Adaga Élfica",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -38,12 +39,13 @@
           "descricao": "Adaga fina e curva, guarda em forma de folha, lâmina clara levemente esverdeada.",
           "uso_no_jogo": "Ícone do item (arma) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/adaga_elfica.png",
-          "liga_com": "data/items.json → items.adaga_elfica"
+          "liga_com": "data/items.json → items.adaga_elfica",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         },
         {
           "id": "item_cajado_runico",
           "nome": "Cajado Rúnico",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -52,12 +54,13 @@
           "descricao": "Cajado de madeira escura com runas entalhadas que brilham em azul pálido e uma pedra no topo.",
           "uso_no_jogo": "Ícone do item (arma) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/cajado_runico.png",
-          "liga_com": "data/items.json → items.cajado_runico"
+          "liga_com": "data/items.json → items.cajado_runico",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         },
         {
           "id": "item_alaude_encantado",
           "nome": "Alaúde Encantado",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -66,12 +69,13 @@
           "descricao": "Alaúde de madeira clara com notas musicais douradas flutuando.",
           "uso_no_jogo": "Ícone do item (arma) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/alaude_encantado.png",
-          "liga_com": "data/items.json → items.alaude_encantado"
+          "liga_com": "data/items.json → items.alaude_encantado",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         },
         {
           "id": "item_machado_anao",
           "nome": "Machado Anão",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -80,12 +84,13 @@
           "descricao": "Machado de lâmina dupla, cabo curto com tiras de couro e runas anãs.",
           "uso_no_jogo": "Ícone do item (arma) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/machado_anao.png",
-          "liga_com": "data/items.json → items.machado_anao"
+          "liga_com": "data/items.json → items.machado_anao",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         },
         {
           "id": "item_arco_longo",
           "nome": "Arco Longo de Teixo",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -94,12 +99,13 @@
           "descricao": "Arco alto de teixo com corda tensa e uma flecha encaixada.",
           "uso_no_jogo": "Ícone do item (arma) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/arco_longo.png",
-          "liga_com": "data/items.json → items.arco_longo"
+          "liga_com": "data/items.json → items.arco_longo",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         },
         {
           "id": "item_lamina_corvo",
           "nome": "Lâmina do Corvo",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -108,7 +114,8 @@
           "descricao": "Relíquia: espada escura, guarda em forma de asas de corvo, pomo com pedra vermelha.",
           "uso_no_jogo": "Ícone do item (arma) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/lamina_corvo.png",
-          "liga_com": "data/items.json → items.lamina_corvo"
+          "liga_com": "data/items.json → items.lamina_corvo",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         }
       ]
     },
@@ -121,7 +128,7 @@
         {
           "id": "item_gibao_couro",
           "nome": "Gibão de Couro",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -130,12 +137,13 @@
           "descricao": "Colete de couro curtido com costuras visíveis.",
           "uso_no_jogo": "Ícone do item (armadura leve) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/gibao_couro.png",
-          "liga_com": "data/items.json → items.gibao_couro"
+          "liga_com": "data/items.json → items.gibao_couro",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         },
         {
           "id": "item_manto_viajante",
           "nome": "Manto do Viajante",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -144,12 +152,13 @@
           "descricao": "Capa com capuz, verde-musgo, broche de bronze.",
           "uso_no_jogo": "Ícone do item (armadura leve) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/manto_viajante.png",
-          "liga_com": "data/items.json → items.manto_viajante"
+          "liga_com": "data/items.json → items.manto_viajante",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         },
         {
           "id": "item_cota_malha",
           "nome": "Cota de Malha",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -158,12 +167,13 @@
           "descricao": "Camisa de malha metálica dobrada, brilho frio.",
           "uso_no_jogo": "Ícone do item (armadura média) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/cota_malha.png",
-          "liga_com": "data/items.json → items.cota_malha"
+          "liga_com": "data/items.json → items.cota_malha",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         },
         {
           "id": "item_placas",
           "nome": "Armadura de Placas",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -172,7 +182,8 @@
           "descricao": "Peitoral de placas com ombreiras, rebites dourados.",
           "uso_no_jogo": "Ícone do item (armadura pesada) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/placas.png",
-          "liga_com": "data/items.json → items.placas"
+          "liga_com": "data/items.json → items.placas",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         }
       ]
     },
@@ -185,7 +196,7 @@
         {
           "id": "item_amuleto_coragem",
           "nome": "Amuleto da Coragem",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -194,12 +205,13 @@
           "descricao": "Medalhão de leão em bronze num cordão.",
           "uso_no_jogo": "Ícone do item (acessório) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/amuleto_coragem.png",
-          "liga_com": "data/items.json → items.amuleto_coragem"
+          "liga_com": "data/items.json → items.amuleto_coragem",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         },
         {
           "id": "item_insignia_corvo",
           "nome": "Insígnia do Corvo",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -208,12 +220,13 @@
           "descricao": "Broche da guilda: corvo de asas abertas em prata escura.",
           "uso_no_jogo": "Ícone do item (acessório) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/insignia_corvo.png",
-          "liga_com": "data/items.json → items.insignia_corvo"
+          "liga_com": "data/items.json → items.insignia_corvo",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         },
         {
           "id": "item_brinco_sabio",
           "nome": "Brinco do Sábio",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -222,12 +235,13 @@
           "descricao": "Brinco de argola com pena e uma conta azul.",
           "uso_no_jogo": "Ícone do item (acessório) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/brinco_sabio.png",
-          "liga_com": "data/items.json → items.brinco_sabio"
+          "liga_com": "data/items.json → items.brinco_sabio",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         },
         {
           "id": "item_anel_amizade",
           "nome": "Anel dos Laços",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -236,7 +250,8 @@
           "descricao": "Dois anéis entrelaçados, ouro e prata.",
           "uso_no_jogo": "Ícone do item (acessório) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/anel_amizade.png",
-          "liga_com": "data/items.json → items.anel_amizade"
+          "liga_com": "data/items.json → items.anel_amizade",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         }
       ]
     },
@@ -249,7 +264,7 @@
         {
           "id": "item_pocao_cura",
           "nome": "Poção de Cura",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -258,12 +273,13 @@
           "descricao": "Frasco redondo com líquido vermelho e rolha de cortiça.",
           "uso_no_jogo": "Ícone do item (consumível) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/pocao_cura.png",
-          "liga_com": "data/items.json → items.pocao_cura"
+          "liga_com": "data/items.json → items.pocao_cura",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         },
         {
           "id": "item_tonico",
           "nome": "Tônico Revigorante",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -272,12 +288,13 @@
           "descricao": "Garrafinha alongada com líquido verde borbulhante.",
           "uso_no_jogo": "Ícone do item (consumível) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/tonico.png",
-          "liga_com": "data/items.json → items.tonico"
+          "liga_com": "data/items.json → items.tonico",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         },
         {
           "id": "item_pergaminho_forca",
           "nome": "Pergaminho de Bravura",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -286,7 +303,8 @@
           "descricao": "Pergaminho enrolado com lacre vermelho e fita dourada.",
           "uso_no_jogo": "Ícone do item (consumível) no Baú, Mercado, Equipamento e Resultado",
           "destino": "res://art/items/pergaminho_forca.png",
-          "liga_com": "data/items.json → items.pergaminho_forca"
+          "liga_com": "data/items.json → items.pergaminho_forca",
+          "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
         }
       ]
     },
@@ -299,7 +317,7 @@
         {
           "id": "rec_provisoes",
           "nome": "Provisões",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -308,12 +326,13 @@
           "descricao": "Saco de pano amarrado com pão e carne seca aparecendo.",
           "uso_no_jogo": "Contador de provisões no mapa e no mercador",
           "destino": "res://art/items/provisoes.png",
-          "liga_com": "route.json → provisions"
+          "liga_com": "route.json → provisions",
+          "observacoes": "botão de provisões do mercador da rota"
         },
         {
           "id": "rec_moedas",
           "nome": "Moedas de ouro",
-          "status": "planejado",
+          "status": "entregue",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -326,7 +345,8 @@
             "bolsa cheia"
           ],
           "uso_no_jogo": "Ouro da guilda e bolsa da rota",
-          "destino": "res://art/items/ouro_{var}.png"
+          "destino": "res://art/items/ouro_{var}.png",
+          "observacoes": "veio uma imagem com as 3 variações; recortada em ouro_pilha_pequena/pilha_media/bolsa_cheia"
         },
         {
           "id": "rec_bolsa_rota",
@@ -365,7 +385,7 @@
         {
           "id": "fer_corda",
           "nome": "Corda com gancho",
-          "status": "planejado",
+          "status": "entregue",
           "prioridade": "P2",
           "tamanho_final_px": [
             64,
@@ -373,12 +393,13 @@
           ],
           "descricao": "Rolo de corda com gancho de ferro de três pontas.",
           "uso_no_jogo": "Futuro: item de rota (travessias, escaladas)",
-          "destino": "res://art/items/corda.png"
+          "destino": "res://art/items/corda.png",
+          "observacoes": "ainda não há item de jogo que use"
         },
         {
           "id": "fer_lanterna",
           "nome": "Lanterna",
-          "status": "planejado",
+          "status": "entregue",
           "prioridade": "P2",
           "tamanho_final_px": [
             64,
@@ -386,12 +407,13 @@
           ],
           "descricao": "Lanterna de ferro com vela acesa.",
           "uso_no_jogo": "Futuro: item de rota (reduz estresse no escuro)",
-          "destino": "res://art/items/lanterna.png"
+          "destino": "res://art/items/lanterna.png",
+          "observacoes": "ainda não há item de jogo que use"
         },
         {
           "id": "fer_tocha",
           "nome": "Tocha",
-          "status": "planejado",
+          "status": "entregue",
           "prioridade": "P2",
           "tamanho_final_px": [
             64,
@@ -399,12 +421,13 @@
           ],
           "descricao": "Tocha de madeira com pano em chamas.",
           "uso_no_jogo": "Futuro: recurso de exploração",
-          "destino": "res://art/items/tocha.png"
+          "destino": "res://art/items/tocha.png",
+          "observacoes": "ainda não há item de jogo que use"
         },
         {
           "id": "fer_pa",
           "nome": "Pá",
-          "status": "planejado",
+          "status": "entregue",
           "prioridade": "P3",
           "tamanho_final_px": [
             64,
@@ -412,12 +435,13 @@
           ],
           "descricao": "Pá de madeira com lâmina de ferro gasta.",
           "uso_no_jogo": "Futuro: escavar tesouros",
-          "destino": "res://art/items/pa.png"
+          "destino": "res://art/items/pa.png",
+          "observacoes": "ainda não há item de jogo que use"
         },
         {
           "id": "fer_picareta",
           "nome": "Picareta",
-          "status": "planejado",
+          "status": "entregue",
           "prioridade": "P3",
           "tamanho_final_px": [
             64,
@@ -425,12 +449,13 @@
           ],
           "descricao": "Picareta de mineiro.",
           "uso_no_jogo": "Futuro: mina",
-          "destino": "res://art/items/picareta.png"
+          "destino": "res://art/items/picareta.png",
+          "observacoes": "ainda não há item de jogo que use"
         },
         {
           "id": "fer_gazuas",
           "nome": "Gazuas",
-          "status": "planejado",
+          "status": "entregue",
           "prioridade": "P2",
           "tamanho_final_px": [
             64,
@@ -438,12 +463,13 @@
           ],
           "descricao": "Estojo de couro aberto com ferramentas finas de abrir fechaduras.",
           "uso_no_jogo": "Futuro: abrir baús sem teste",
-          "destino": "res://art/items/gazuas.png"
+          "destino": "res://art/items/gazuas.png",
+          "observacoes": "ainda não há item de jogo que use"
         },
         {
           "id": "fer_kit_cura",
           "nome": "Kit de curandeiro",
-          "status": "planejado",
+          "status": "entregue",
           "prioridade": "P2",
           "tamanho_final_px": [
             64,
@@ -451,12 +477,13 @@
           ],
           "descricao": "Bolsa com bandagens, ervas e frasquinhos.",
           "uso_no_jogo": "Futuro: cura no acampamento",
-          "destino": "res://art/items/kit_cura.png"
+          "destino": "res://art/items/kit_cura.png",
+          "observacoes": "ainda não há item de jogo que use"
         },
         {
           "id": "fer_mapa",
           "nome": "Mapa dobrado",
-          "status": "planejado",
+          "status": "entregue",
           "prioridade": "P2",
           "tamanho_final_px": [
             64,
@@ -464,12 +491,13 @@
           ],
           "descricao": "Mapa de pergaminho dobrado com marca vermelha.",
           "uso_no_jogo": "Futuro: revelar névoa",
-          "destino": "res://art/items/mapa.png"
+          "destino": "res://art/items/mapa.png",
+          "observacoes": "ainda não há item de jogo que use"
         },
         {
           "id": "fer_bussola",
           "nome": "Bússola",
-          "status": "planejado",
+          "status": "entregue",
           "prioridade": "P3",
           "tamanho_final_px": [
             64,
@@ -477,12 +505,13 @@
           ],
           "descricao": "Bússola de latão aberta.",
           "uso_no_jogo": "Futuro: evita perder-se na névoa",
-          "destino": "res://art/items/bussola.png"
+          "destino": "res://art/items/bussola.png",
+          "observacoes": "ainda não há item de jogo que use"
         },
         {
           "id": "fer_luneta",
           "nome": "Luneta",
-          "status": "planejado",
+          "status": "entregue",
           "prioridade": "P3",
           "tamanho_final_px": [
             64,
@@ -490,12 +519,13 @@
           ],
           "descricao": "Luneta de latão estendida.",
           "uso_no_jogo": "Futuro: batedor",
-          "destino": "res://art/items/luneta.png"
+          "destino": "res://art/items/luneta.png",
+          "observacoes": "ainda não há item de jogo que use"
         },
         {
           "id": "fer_chave",
           "nome": "Chave antiga",
-          "status": "planejado",
+          "status": "entregue",
           "prioridade": "P2",
           "tamanho_final_px": [
             64,
@@ -503,12 +533,13 @@
           ],
           "descricao": "Chave grande de ferro com argola ornamentada.",
           "uso_no_jogo": "Futuro: item de história",
-          "destino": "res://art/items/chave.png"
+          "destino": "res://art/items/chave.png",
+          "observacoes": "ainda não há item de jogo que use"
         },
         {
           "id": "fer_carta",
           "nome": "Carta lacrada",
-          "status": "planejado",
+          "status": "entregue",
           "prioridade": "P2",
           "tamanho_final_px": [
             64,
@@ -516,12 +547,13 @@
           ],
           "descricao": "Envelope com lacre de cera do corvo.",
           "uso_no_jogo": "Itens de história (A Última Carta, convocações)",
-          "destino": "res://art/items/carta.png"
+          "destino": "res://art/items/carta.png",
+          "observacoes": "ainda não há item de jogo que use"
         },
         {
           "id": "fer_martelo",
           "nome": "Martelo e pregos",
-          "status": "planejado",
+          "status": "entregue",
           "prioridade": "P3",
           "tamanho_final_px": [
             64,
@@ -529,12 +561,13 @@
           ],
           "descricao": "Martelo de ferreiro com punhado de pregos.",
           "uso_no_jogo": "Futuro: consertos na guilda",
-          "destino": "res://art/items/martelo.png"
+          "destino": "res://art/items/martelo.png",
+          "observacoes": "ainda não há item de jogo que use"
         },
         {
           "id": "fer_ervas",
           "nome": "Ervas",
-          "status": "planejado",
+          "status": "entregue",
           "prioridade": "P3",
           "tamanho_final_px": [
             64,
@@ -542,12 +575,13 @@
           ],
           "descricao": "Maço de ervas amarradas.",
           "uso_no_jogo": "Futuro: ingrediente",
-          "destino": "res://art/items/ervas.png"
+          "destino": "res://art/items/ervas.png",
+          "observacoes": "ainda não há item de jogo que use"
         },
         {
           "id": "fer_armadilha",
           "nome": "Armadilha",
-          "status": "planejado",
+          "status": "entregue",
           "prioridade": "P3",
           "tamanho_final_px": [
             64,
@@ -555,7 +589,8 @@
           ],
           "descricao": "Armadilha de mandíbulas de ferro aberta.",
           "uso_no_jogo": "Futuro: eventos de caça",
-          "destino": "res://art/items/armadilha.png"
+          "destino": "res://art/items/armadilha.png",
+          "observacoes": "ainda não há item de jogo que use"
         }
       ]
     }

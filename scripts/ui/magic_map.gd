@@ -38,7 +38,10 @@ const BIOME_PARTS := {
 static var _parts := {}   # tipo -> [Texture2D] (carregado uma vez)
 
 var biome := "estrada"
-var tokens: Array = []        # [{name, color}]
+var tokens: Array = []        # [{id, name, color, tex}] — tex = miniatura (art/tokens), senão círculo
+var caller := ""              # herói que está chamando pelo Mapa Mágico (balão "!")
+static var _shadow: Texture2D = null
+static var _balloon: Texture2D = null
 var goal_texture: Texture2D = null   # cartaz do inimigo no alvo (sem ele, um X)
 var mini_texture: Texture2D = null   # cartaz do guarda do alvo (miniboss), se houver
 var type_info := {}           # tipo de nó -> {name, desc} (tooltip)
@@ -49,6 +52,7 @@ var moving := false
 var _from := Vector2.ZERO     # posição normalizada do grupo
 var _to := Vector2.ZERO
 var _to_pos: Array = []
+var _from_key := ""
 var _t := 1.0
 var _hover := []
 var _time := 0.0
@@ -66,6 +70,10 @@ func setup(mission: Dictionary, party: Array, seed_value: int, expedition: Dicti
 	tokens = party
 	exp = expedition
 	_rng.seed = seed_value
+	if _shadow == null and ResourceLoader.exists("res://art/tokens/sombra.png"):
+		_shadow = load("res://art/tokens/sombra.png")
+	if _balloon == null and ResourceLoader.exists("res://art/tokens/balao.png"):
+		_balloon = load("res://art/tokens/balao.png")
 	tooltip_text = " "
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	_build_graph()
@@ -79,6 +87,7 @@ func setup(mission: Dictionary, party: Array, seed_value: int, expedition: Dicti
 ## Anda até o nó; emite arrived ao chegar.
 func move_to(pos: Array) -> void:
 	_from = _group_pos()
+	_from_key = _key(exp.cur)
 	_to = _pos[_key(pos)]
 	_to_pos = pos
 	_t = 0.0
@@ -336,7 +345,16 @@ func _draw() -> void:
 		var pts := PackedVector2Array()
 		for q in e[0]:
 			pts.append(q * sz)
-		if walked.has(e[1] + ">" + e[2]):
+		if moving and e[1] == _from_key and _to_pos.size() == 2 and e[2] == _key(_to_pos):
+			# trecho sendo percorrido agora: o dourado avança com o grupo
+			var n := int(ceil((pts.size() - 1) * (_t * _t * (3.0 - 2.0 * _t))))
+			for i in range(0, pts.size() - 1, 2):
+				draw_line(pts[i], pts[i + 1], Color(C_INK, 0.5), 1.4, true)
+			if n >= 1:
+				var part := pts.slice(0, n + 1)
+				draw_polyline(part, Color(C_GOLD, 0.35), 9.0, true)
+				draw_polyline(part, Color("#b8892e"), 3.0, true)
+		elif walked.has(e[1] + ">" + e[2]):
 			draw_polyline(pts, Color(C_GOLD, 0.35), 9.0, true)
 			draw_polyline(pts, Color("#b8892e"), 3.0, true)
 		elif e[1] == cur_key and not moving and _is_reachable(_split(e[2])):
@@ -366,15 +384,21 @@ func _draw() -> void:
 
 	# marcadores dos heróis em volta da posição do grupo
 	var g := _group_pos() * sz + Vector2(0, -30)
-	for i in tokens.size():
-		var ang: float = TAU * i / max(1, tokens.size()) - PI / 2.0
-		var pos := g + (Vector2(cos(ang), sin(ang)) * 12.0 if tokens.size() > 1 else Vector2.ZERO)
-		var col: Color = tokens[i].color
-		var glow := 0.5 + 0.5 * sin(_time * 4.0 + i)
-		draw_circle(pos, 11.0 + glow * 2.0, Color(col, 0.30))
-		draw_circle(pos, 8.0, col)
-		draw_arc(pos, 8.0, 0, TAU, 24, C_INK, 1.5, true)
-		draw_string(font, pos + Vector2(-4, 5), String(tokens[i].name).left(1), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color.WHITE)
+	if moving and not Juice.reduce_motion:
+		g.y -= absf(sin(_t * PI * 5.0)) * 4.0   # passos
+	var minis := tokens.all(func(t): return t.get("tex") != null)
+	if minis:
+		_draw_minis(g + Vector2(0, 30))
+	else:
+		for i in tokens.size():
+			var ang: float = TAU * i / max(1, tokens.size()) - PI / 2.0
+			var pos := g + (Vector2(cos(ang), sin(ang)) * 12.0 if tokens.size() > 1 else Vector2.ZERO)
+			var col: Color = tokens[i].color
+			var glow := 0.5 + 0.5 * sin(_time * 4.0 + i)
+			draw_circle(pos, 11.0 + glow * 2.0, Color(col, 0.30))
+			draw_circle(pos, 8.0, col)
+			draw_arc(pos, 8.0, 0, TAU, 24, C_INK, 1.5, true)
+			draw_string(font, pos + Vector2(-4, 5), String(tokens[i].name).left(1), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color.WHITE)
 
 	_draw_compass(Vector2(sz.x - 46, sz.y - 46), 26.0)
 	# bordas envelhecidas + brilho mágico
@@ -382,6 +406,35 @@ func _draw() -> void:
 		var a := 0.10 * (10 - k) / 10.0
 		draw_rect(Rect2(Vector2(k * 3, k * 3), sz - Vector2(k * 6, k * 6)), Color(0.35, 0.22, 0.10, a), false, 3.0)
 	draw_rect(Rect2(Vector2(1, 1), sz - Vector2(2, 2)), Color(0.55, 0.4, 0.9, 0.35 + 0.15 * sin(_time * 1.5)), false, 2.0)
+
+
+## Miniaturas de RPG de mesa lado a lado, com sombra; quem chama fica à frente com o balão "!".
+func _draw_minis(feet: Vector2) -> void:
+	var n := tokens.size()
+	var size_tok := Vector2(42, 56)
+	var step := 26.0
+	var flip := moving and _to.x < _from.x
+	var order := range(n)
+	order.sort_custom(func(a, b): return tokens[a].id != caller and tokens[b].id == caller)
+	for i in order:
+		var t: Dictionary = tokens[i]
+		var base := feet + Vector2((i - (n - 1) / 2.0) * step, (2.0 if t.id == caller else 0.0))
+		if moving and not Juice.reduce_motion:
+			base.y -= absf(sin(_t * PI * 5.0 + i * 0.9)) * 3.0
+		if _shadow != null:
+			draw_texture_rect(_shadow, Rect2(base - Vector2(16, 5), Vector2(32, 10)), false, Color(1, 1, 1, 0.8))
+		var r := Rect2(base - Vector2(size_tok.x / 2.0, size_tok.y), size_tok)
+		if flip:
+			draw_set_transform(Vector2(2.0 * base.x, 0), 0.0, Vector2(-1, 1))
+		draw_texture_rect(t.tex, r, false)
+		draw_set_transform(Vector2.ZERO)
+		if t.id == caller and _balloon != null:
+			var frames := 4
+			var fw := _balloon.get_width() / float(frames)
+			var fi := int(_time * 8.0) % frames
+			var bh := _balloon.get_height()
+			var dst := Rect2(base + Vector2(-9, -size_tok.y - 22), Vector2(18, 18.0 * bh / fw))
+			draw_texture_rect_region(_balloon, dst, Rect2(fi * fw, 0, fw, bh))
 
 
 func _draw_node(pos: Array, c: Vector2, paper: Color) -> void:

@@ -110,6 +110,7 @@ static func _breaking_point(gs, id: String) -> Array:
 	else:
 		lines.append("✖ %s testa a própria vontade... e quebra: AFLIÇÃO — %s." % [h.name, info.name])
 	lines.append(String(info.text).replace("{heroi}", h.name))
+	gs.pending_moments.append({"type": "ruptura", "id": id, "kind": h.condition_kind, "name": info.name, "text": lines[1]})
 	return lines
 
 

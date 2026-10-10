@@ -101,7 +101,7 @@
         {
           "id": "fundo_pergaminho_mapa",
           "nome": "Textura de pergaminho do mapa",
-          "status": "planejado",
+          "status": "cancelado",
           "prioridade": "P1",
           "tamanho_final_px": [
             512,
@@ -117,7 +117,8 @@
           ],
           "uso_no_jogo": "Fundo do mapa por bioma (hoje é cor sólida)",
           "destino": "res://art/backgrounds/pergaminho_{bioma}.png",
-          "familia": "nanquim"
+          "familia": "nanquim",
+          "observacoes": "substituído por mapa_pergaminho.json → mapa_folha"
         },
         {
           "id": "fundo_chamada_bioma",

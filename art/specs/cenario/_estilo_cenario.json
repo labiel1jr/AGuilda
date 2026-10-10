@@ -145,7 +145,11 @@
       "guilda_": "objeto da guilda",
       "fundo_": "fundo",
       "ui_": "interface",
-      "fx_": "efeito"
+      "fx_": "efeito",
+      "icone_": "ícone do jogo (plataformas)",
+      "livro_": "Livro da Guilda",
+      "mapa_": "pergaminho do mapa",
+      "token_": "miniatura de herói (art/specs/tokens_herois.json)"
     },
     "categoria_nova": "Crie <categoria>.json nesta pasta com a mesma estrutura (herda, familia_padrao, grupos, reservado_para_futuro) e acrescente em _indice.json → arquivos."
   },

@@ -17,6 +17,7 @@ const OUTCOME_COLORS := {"limpo": Color("#7fb069"), "custo": Color("#d4a94a"), "
 const MagicMap := preload("res://scripts/ui/magic_map.gd")
 const GuildBook := preload("res://scripts/ui/guild_book.gd")
 const Portrait := preload("res://scripts/ui/portrait.gd")
+const WaxSeal := preload("res://scripts/ui/wax_seal.gd")
 
 var gs  # GameState
 var root: VBoxContainer
@@ -26,10 +27,18 @@ const TITLE_ART := "res://art/geralimagem/titulo.png"
 var selected: Array = []
 var prepared: Dictionary = {}   # magia preparada por conjurador na montagem de party
 var last_result := {}
+var moments_enabled := true     # encenar ruptura/saída (os testes de screenshot desligam)
+var _moment_open := false
+var _moment_layer: Control = null
+var _fresh_day := false
+var _last_toggle := ""
+var _map_prev := {}
+var _dice_box: Control = null
 
 
 func _ready() -> void:
 	gs = get_node("/root/GameState")
+	Juice.load_settings()
 	var bg := ColorRect.new()
 	bg.color = C_BG
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -83,7 +92,9 @@ func show_hub() -> void:
 	rel.disabled = not gs.affinity_visible()
 	rel.tooltip_text = "Construa o Quadro de Relações na tela Guilda." if rel.disabled else "Quadro de Relações"
 	top.add_child(rel)
-	top.add_child(_button("Livro", show_book.bind(0)))
+	var book_btn := _button("Livro", show_book.bind(0))
+	_button_icon(book_btn, _tex("res://art/book/capa_fechada.png"), 22)
+	top.add_child(book_btn)
 	top.add_child(_button("Encerrar dia ▶", _on_end_day))
 	top.add_child(_button("☰", show_menu))
 
@@ -115,8 +126,12 @@ func show_hub() -> void:
 	var board: Array = gs.board()
 	if board.is_empty():
 		list.add_child(_label("Nenhum pedido no mural hoje.", 15, C_MUTED))
-	for m in board:
-		list.add_child(_mission_card(m))
+	for i in board.size():
+		var card := _mission_card(board[i])
+		list.add_child(card)
+		if _fresh_day:
+			Juice.fade_in(card, 0.15 + i * 0.09, 0.4)
+	_fresh_day = false
 
 	# Elenco
 	var cast_panel := _panel(C_PANEL)
@@ -181,6 +196,7 @@ func show_hub() -> void:
 		brow.add_child(_spacer())
 		brow.add_child(_button("Assistir cena", show_backstage.bind(bs)))
 		bc.add_child(_label("%s e %s" % [gs.heroes[bs.a].name, gs.heroes[bs.b].name], 12, C_MUTED))
+	_play_moments()
 
 
 func _mission_card(m: Dictionary) -> Control:
@@ -218,11 +234,39 @@ func _on_end_day() -> void:
 	var lines: Array = gs.end_day()
 	gs.save_game("auto")
 	_clear()
-	root.add_child(_label("Fim do dia" if gs.chapter_state == "encerrado" else "Dia %d do capítulo" % gs.chapter_day(), 28, C_GOLD))
+	var title := "Fim do dia" if gs.chapter_state == "encerrado" else "Dia %d do capítulo" % gs.chapter_day()
+	root.add_child(_label(title, 28, C_GOLD))
 	root.add_child(_para("Os aventureiros descansam. A taverna esvazia. O mural range com pergaminhos novos.", 15, C_TEXT))
+	var items := []
 	for l in lines:
-		root.add_child(_para("• " + l, 15, C_TEXT))
+		var p := _para("• " + l, 15, C_TEXT)
+		root.add_child(p)
+		items.append(p)
 	root.add_child(_button("Abrir a guilda", show_hub))
+	_fresh_day = true
+	_day_transition(title, items)
+
+
+## Transição de dia: a tela escurece como uma vela apagando e volta com o novo dia.
+func _day_transition(title: String, items: Array) -> void:
+	var veil := ColorRect.new()
+	veil.color = Color("#120c08")
+	veil.set_anchors_preset(Control.PRESET_FULL_RECT)
+	veil.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(veil)
+	var l := _label(title, 34, C_GOLD)
+	l.set_anchors_preset(Control.PRESET_CENTER)
+	l.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	l.grow_vertical = Control.GROW_DIRECTION_BOTH
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	veil.add_child(l)
+	var hold := 0.15 if Juice.reduce_motion else 0.55
+	var tw := veil.create_tween()
+	tw.tween_interval(hold)
+	tw.tween_property(veil, "modulate:a", 0.0, 0.5)
+	tw.tween_callback(veil.queue_free)
+	for i in items.size():
+		Juice.fade_in(items[i], hold + 0.2 + i * 0.12, 0.35)
 
 
 # ================= Montagem de Party =================
@@ -293,6 +337,9 @@ func _render_party(m: Dictionary) -> void:
 		var tired := "  (Cansado: −40%)" if h.fatigue == 1 else ""
 		var prow := HBoxContainer.new()
 		rcol.add_child(prow)
+		if id == _last_toggle:
+			Juice.fade_in(prow, 0.0, 0.25)
+			Juice.pop(prow, 0.1, 0.25, 0.02)
 		prow.add_child(_label("→ %s%s" % [h.name, tired], 14, C_TEXT))
 		if HeroRPG.is_caster(gs, id):
 			prow.add_child(_spacer())
@@ -305,7 +352,10 @@ func _render_party(m: Dictionary) -> void:
 			var v: int = gs.pair_value(pr[0], pr[1])
 			var lbl: String = gs.bond_label(pr[0], pr[1])
 			var extra := "  · " + lbl if lbl != "" else ""
-			rcol.add_child(_label("%s ↔ %s  %s%s" % [gs.heroes[pr[0]].name, gs.heroes[pr[1]].name, gs.describe_aff(v), extra], 14, _aff_color(v)))
+			var pl := _label("%s ↔ %s  %s%s" % [gs.heroes[pr[0]].name, gs.heroes[pr[1]].name, gs.describe_aff(v), extra], 14, _aff_color(v))
+			rcol.add_child(pl)
+			if v <= -3 and _last_toggle in pr:
+				Juice.blink(pl, Color(2.0, 0.7, 0.6), 0.8)
 	for act in gs.active_bond_actions(selected):
 		rcol.add_child(_label("✦ Ação de Vínculo: %s (%s & %s)" % [act.action, gs.heroes[act.a].name, gs.heroes[act.b].name], 14, C_GOLD))
 
@@ -356,7 +406,9 @@ func _toggle_hero(m: Dictionary, id: String) -> void:
 		prepared.erase(id)
 	elif selected.size() < 4:
 		selected.append(id)
+	_last_toggle = id
 	_render_party(m)
+	_last_toggle = ""
 
 
 func _on_dispatch(m: Dictionary) -> void:
@@ -364,6 +416,32 @@ func _on_dispatch(m: Dictionary) -> void:
 	selected = []
 	prepared = {}
 	show_map(m)
+	_stamp_seal()
+
+
+## O Selo de Cera desce e carimba: a decisão está tomada.
+func _stamp_seal() -> void:
+	var seal = WaxSeal.new()
+	seal.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	seal.size = Vector2(170, 170)
+	seal.position = get_viewport_rect().size / 2.0 - seal.size / 2.0
+	seal.pivot_offset = seal.size / 2.0
+	add_child(seal)
+	var tw := seal.create_tween()
+	if Juice.reduce_motion:
+		seal.modulate.a = 0.0
+		tw.tween_property(seal, "modulate:a", 1.0, 0.15)
+	else:
+		seal.scale = Vector2.ONE * 2.4
+		seal.modulate.a = 0.0
+		tw.set_parallel(true)
+		tw.tween_property(seal, "scale", Vector2.ONE, 0.18).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+		tw.tween_property(seal, "modulate:a", 1.0, 0.12)
+		tw.set_parallel(false)
+		tw.tween_callback(func(): Juice.shake(self, 6.0, 0.25); Juice.flash(self, Color("#a8443c"), 0.18, 0.3))
+	tw.tween_interval(0.55)
+	tw.tween_property(seal, "modulate:a", 0.0, 0.35)
+	tw.tween_callback(seal.queue_free)
 
 
 # ================= Mapa Mágico (expedição) =================
@@ -425,7 +503,7 @@ func show_map(m: Dictionary) -> void:
 	var tokens := []
 	for id in gs.expedition.party:
 		var h: Dictionary = gs.heroes[id]
-		tokens.append({"name": h.name, "color": h.color})
+		tokens.append({"id": id, "name": h.name, "color": h.color, "tex": _tex("res://art/tokens/%s_parado.png" % id)})
 	var et := _enemy_texture(m)
 	if et != null:
 		_map.goal_texture = et
@@ -442,13 +520,26 @@ func show_map(m: Dictionary) -> void:
 
 func _map_refresh() -> void:
 	var exp: Dictionary = gs.expedition
+	if exp.is_empty() or not is_instance_valid(_map_party):
+		return
 	for c in _map_party.get_children():
 		c.queue_free()
+	var prev: Dictionary = _map_prev
+	_map_prev = {"provisions": exp.provisions, "gold": exp.gold, "bonus": exp.bonus, "items": exp.items.size(), "hp": {}, "stress": {}}
 	for id in exp.party:
 		var h: Dictionary = gs.heroes[id]
+		_map_prev.hp[id] = h.hp
+		_map_prev.stress[id] = int(h.get("stress", 0))
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 6)
 		_map_party.add_child(row)
+		if not prev.is_empty():
+			if h.hp < int(prev.hp.get(id, h.hp)):
+				Juice.blink(row, Color(2.0, 0.6, 0.55), 0.7)
+			elif int(h.get("stress", 0)) > int(prev.stress.get(id, 0)):
+				Juice.blink(row, Color(1.5, 0.8, 1.6), 0.7)
+			elif h.hp > int(prev.hp.get(id, h.hp)):
+				Juice.blink(row, Color(0.8, 1.7, 0.9), 0.7)
 		row.add_child(_portrait(h, 26))
 		row.add_child(_label(h.name, 14, h.color.lightened(0.25)))
 		row.add_child(_spacer())
@@ -458,6 +549,21 @@ func _map_refresh() -> void:
 	var mod := Expedition.route_mod(gs)
 	_map_status.text = "Provisões %d   ·   Bolsa da rota %d ouro   ·   Itens %d\nPreparação %+d   ·   Desgaste −%d   ·   Fome −%d   →   Rota no score %+d" % [
 		exp.provisions, exp.gold, exp.items.size(), exp.bonus, Expedition.wear(gs), mini(exp.hunger, 2), mod]
+	if not prev.is_empty():
+		var at := _map_status.global_position + Vector2(_map_status.size.x * 0.35, -6)
+		var deltas := [["gold", "%+d ouro", C_GOLD], ["provisions", "%+d provisões", C_TEXT], ["bonus", "%+d preparação", C_GOOD], ["items", "%+d item", C_GOLD]]
+		var k := 0
+		for d in deltas:
+			var dv: int = int(_map_prev[d[0]]) - int(prev[d[0]])
+			if dv != 0:
+				var colr: Color = C_BAD if dv < 0 else d[2]
+				var txt: String = d[1] % dv
+				get_tree().create_timer(0.18 * k).timeout.connect(func(): Juice.fly_text(self, txt, at, colr))
+				k += 1
+		if k > 0:
+			Juice.pop(_map_status, 0.05, 0.3)
+		if exp.provisions == 0 and int(prev.provisions) > 0:
+			Juice.blink(_map_status, Color(2.0, 0.7, 0.6), 1.0)
 	_map.reachable = Expedition.choices(gs)
 	if exp.pending == "" and not Expedition.at_boss(gs) and _map_action.get_child_count() == 0:
 		var hint := "Escolha o próximo caminho no mapa (passe o mouse para ver o que há em cada ponto)."
@@ -495,14 +601,18 @@ func _on_node_arrived(pos: Array) -> void:
 	_log_lines(out.lines, C_MUTED)
 	_clear_action()
 	if out.get("boss", false):
+		Juice.flash(self, Color("#a8443c"), 0.15, 0.6)
+	if out.get("boss", false):
 		var m := Expedition.mission(gs)
 		_map_action.add_child(_para("O grupo chegou ao alvo. Rota no score: %+d." % Expedition.route_mod(gs), 14, C_GOLD))
 		_map_action.add_child(_button("Enfrentar: " + m.name, _on_face_boss))
 	elif out.has("event"):
+		_map.caller = out.caller
 		_show_call(out.event, out.caller)
 	elif out.has("shop"):
 		_show_shop(out.shop)
 	_map_refresh()
+	_play_moments()
 
 
 ## O herói chama pelo Mapa Mágico e pede uma decisão.
@@ -534,10 +644,65 @@ func _show_call(ev: Dictionary, caller: String) -> void:
 
 func _on_call_choice(opt: Dictionary) -> void:
 	var r: Dictionary = Expedition.choose(gs, opt)
+	_map.caller = ""
 	_log_lines(["» " + opt.label], C_GOLD)
-	_log_lines(r.lines, C_TEXT)
 	_clear_action()
-	_map_refresh()
+	var finish := func():
+		if not is_instance_valid(_map_log) or gs.expedition.is_empty():
+			return
+		_log_lines(r.lines, C_TEXT)
+		_map_refresh()
+		_play_moments()
+	if r.has("dice"):
+		_roll_dice(r.dice, finish)
+	else:
+		finish.call()
+
+
+## d20 visível: gira, quica e para no resultado. Só visual — o teste já foi resolvido.
+func _roll_dice(d: Dictionary, done: Callable) -> void:
+	var box := _panel(C_PARCHMENT)
+	_dice_box = box
+	box.top_level = true
+	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(box)
+	var col := VBoxContainer.new()
+	col.alignment = BoxContainer.ALIGNMENT_CENTER
+	box.add_child(col)
+	var who := _label("%s testa %s (CD %d, %+d)" % [gs.heroes[d.hero].name, gs.ATTR_NAMES[d.attr], d.dc, d.mod], 14, C_INK)
+	who.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	col.add_child(who)
+	var num := _label("20", 54, C_INK)
+	num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	col.add_child(num)
+	var verdict := _label("", 18, C_INK)
+	verdict.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	col.add_child(verdict)
+	box.custom_minimum_size = Vector2(260, 150)
+	var frame_rect: Rect2 = _map.get_global_rect() if is_instance_valid(_map) else get_viewport_rect()
+	box.global_position = frame_rect.get_center() - box.custom_minimum_size / 2.0
+	var ok: bool = d.ok
+	var color: Color = Color("#3f6b2f") if ok else Color("#8a2f1f")
+	var tw := box.create_tween()
+	if not Juice.reduce_motion:
+		tw.tween_method(func(_v: float): num.text = str(randi_range(1, 20)), 0.0, 1.0, 0.7)
+	tw.tween_callback(func():
+		num.text = str(d.roll)
+		num.add_theme_color_override("font_color", color)
+		verdict.text = "%d %+d = %d  —  %s" % [d.roll, d.mod, d.roll + d.mod, "SUCESSO" if ok else "FALHOU"]
+		verdict.add_theme_color_override("font_color", color)
+		Juice.pop(num, 0.35, 0.3)
+		if d.roll == 20:
+			Juice.flash(self, Color("#f2d27a"), 0.3, 0.5)
+			Juice.shake(self, 3.0, 0.2)
+		elif d.roll == 1:
+			Juice.flash(self, Color("#8a2f1f"), 0.25, 0.5)
+			Juice.shake(self, 5.0, 0.3))
+	tw.tween_interval(0.25 if Juice.reduce_motion else 0.8)
+	tw.tween_property(box, "modulate:a", 0.0, 0.25)
+	tw.tween_callback(func():
+		box.queue_free()
+		done.call())
 
 
 func _show_shop(stock: Array) -> void:
@@ -551,6 +716,7 @@ func _show_shop(stock: Array) -> void:
 				stock.erase(iid)
 			_show_shop(stock))
 		b.tooltip_text = it.get("desc", "")
+		_button_icon(b, _item_tex(iid), 32)
 		b.disabled = gs.gold < int(it.price)
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		_map_action.add_child(b)
@@ -560,6 +726,7 @@ func _show_shop(stock: Array) -> void:
 			_log_lines(["Provisões compradas (+%d)." % int(sp.amount)], C_TEXT)
 		_show_shop(stock)
 		_map_refresh())
+	_button_icon(pb, _tex("res://art/items/provisoes.png"), 32)
 	pb.disabled = gs.gold < int(sp.price)
 	pb.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	_map_action.add_child(pb)
@@ -582,23 +749,58 @@ func show_result(res: Dictionary) -> void:
 	var rhead := HBoxContainer.new()
 	rhead.add_theme_constant_override("separation", 14)
 	root.add_child(rhead)
-	var poster := _enemy_poster(m, 104, res.outcome != "falha")
+	var reveal := 0.15 if Juice.reduce_motion else 1.0   # tempo até o veredito
+	var poster := _enemy_poster(m, 104, res.outcome != "falha", reveal)
 	if poster != null:
 		rhead.add_child(poster)
 	var rtitles := VBoxContainer.new()
 	rtitles.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	rhead.add_child(rtitles)
 	rtitles.add_child(_label(m.name, 22, C_GOLD))
-	rtitles.add_child(_para(gs.OUTCOME_NAMES[res.outcome], 30, OUTCOME_COLORS[res.outcome]))
+	var verdict := _label(gs.OUTCOME_NAMES[res.outcome], 30, OUTCOME_COLORS[res.outcome])
+	rtitles.add_child(verdict)
+	verdict.modulate.a = 0.0
+
+	# Placar: a barra enche até o resultado, com as linhas de custo e limpo
+	var sc: Dictionary = res.score
+	var t: Array = ScoreCalc.THRESHOLDS[m.risk]
+	var meter := HBoxContainer.new()
+	meter.add_theme_constant_override("separation", 10)
+	rtitles.add_child(meter)
+	var num := _label("0.0", 20, C_TEXT)
+	num.custom_minimum_size.x = 56
+	meter.add_child(num)
+	var bar := ProgressBar.new()
+	bar.show_percentage = false
+	bar.max_value = t[1] + 3
+	bar.custom_minimum_size = Vector2(260, 14)
+	bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = OUTCOME_COLORS[res.outcome]
+	bar.add_theme_stylebox_override("fill", fill)
+	meter.add_child(bar)
+	meter.add_child(_label("custo ≥ %d · limpo ≥ %d" % [t[0], t[1]], 13, C_MUTED))
+	Juice.count(num, 0.0, sc.total, "%.1f", reveal * 0.9)
+	var btw := bar.create_tween()
+	btw.tween_property(bar, "value", clampf(sc.total, 0.0, bar.max_value), reveal * 0.9).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	btw.tween_callback(func():
+		verdict.modulate.a = 1.0
+		Juice.pop(verdict, 0.35, 0.35)
+		match res.outcome:
+			"limpo":
+				Juice.flash(self, Color("#f2d27a"), 0.18, 0.5)
+			"falha":
+				Juice.shake(self, 4.0, 0.3)
+		_play_moments())
+
 	var p := _panel(C_PARCHMENT)
 	root.add_child(p)
+	Juice.fade_in(p, reveal + 0.1, 0.4)
 	var col := VBoxContainer.new()
 	p.add_child(col)
 	for l in res.lines:
 		col.add_child(_para(l, 16, C_INK))
 
-	var sc: Dictionary = res.score
-	var t: Array = ScoreCalc.THRESHOLDS[m.risk]
 	root.add_child(_para("Score %.1f  =  Base %.1f  + Cobertura %d  + Afinidade %+.1f  + Vínculo %d  + Poderes %d  + Oculto %d  + Mente %+d  + Rota %+d  + Sorte %+d      (custo ≥ %d · limpo ≥ %d)" % [sc.total, sc.base, sc.coverage, sc.affinity, sc.bond, sc.powers, sc.hidden, int(sc.get("mind", 0)), int(sc.get("route", 0)), sc.luck, t[0], t[1]], 13, C_MUTED))
 	if res.has("route"):
 		var rt: Dictionary = res.route
@@ -608,9 +810,74 @@ func show_result(res: Dictionary) -> void:
 		root.add_child(_label("Vínculos", 16, C_GOLD))
 		for ch in res.affinity:
 			var arrow := "▲" if ch.after > ch.before else ("▼" if ch.after < ch.before else "=")
-			root.add_child(_label("%s ↔ %s   %s  %s" % [gs.heroes[ch.a].name, gs.heroes[ch.b].name, gs.describe_change(ch.before, ch.after), arrow], 14, _aff_color(ch.after)))
+			var al := _label("%s ↔ %s   %s  %s" % [gs.heroes[ch.a].name, gs.heroes[ch.b].name, gs.describe_change(ch.before, ch.after), arrow], 14, _aff_color(ch.after))
+			root.add_child(al)
+			Juice.fade_in(al, reveal + 0.4 + res.affinity.find(ch) * 0.12, 0.3)
 	root.add_child(_spacer_v())
 	root.add_child(_button("Continuar", _after_result))
+
+
+## Encena um momento de personagem por vez (ruptura, saída), por cima da tela atual.
+func _play_moments() -> void:
+	if not moments_enabled or _moment_open or gs.pending_moments.is_empty():
+		return
+	var mo: Dictionary = gs.pending_moments.pop_front()
+	if not gs.heroes.has(mo.id):
+		_play_moments()
+		return
+	_moment_open = true
+	var h: Dictionary = gs.heroes[mo.id]
+	var layer := Control.new()
+	layer.set_anchors_preset(Control.PRESET_FULL_RECT)
+	layer.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(layer)
+	_moment_layer = layer
+	var dim := ColorRect.new()
+	dim.color = Color(0.05, 0.03, 0.02, 0.82)
+	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	layer.add_child(dim)
+	var center := CenterContainer.new()
+	center.set_anchors_preset(Control.PRESET_FULL_RECT)
+	layer.add_child(center)
+	var col := VBoxContainer.new()
+	col.alignment = BoxContainer.ALIGNMENT_CENTER
+	col.add_theme_constant_override("separation", 12)
+	col.custom_minimum_size.x = 560
+	center.add_child(col)
+	var por := _portrait(h, 150)
+	por.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	col.add_child(por)
+	var title := ""
+	var tcol := C_GOLD
+	match mo.type:
+		"ruptura":
+			var virtue: bool = mo.kind == "virtude"
+			title = ("✦ %s encontra força: %s" if virtue else "%s quebra: %s") % [h.name, mo.name]
+			tcol = Color("#f2d27a") if virtue else C_BAD
+			if virtue:
+				Juice.flash(self, Color("#f2d27a"), 0.35, 0.8)
+				Juice.pop(por, 0.15, 0.5)
+			else:
+				Juice.flash(self, Color("#8a2f1f"), 0.35, 0.8)
+				Juice.shake(self, 7.0, 0.4)
+		"saida":
+			title = "%s deixou a guilda" % h.name
+			tcol = C_MUTED
+			Juice.desaturate(por, Color(0.75, 0.66, 0.52, 0.75), 1.4)
+	var tl := _label(title, 26, tcol)
+	tl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	col.add_child(tl)
+	var body := _para(String(mo.text), 17, C_TEXT)
+	body.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	col.add_child(body)
+	Juice.typewrite(body)
+	var btn := _button("Continuar", func():
+		layer.queue_free()
+		_moment_open = false
+		_play_moments())
+	btn.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	col.add_child(btn)
+	Juice.fade_in(layer, 0.0, 0.3)
 
 
 func _after_result() -> void:
@@ -630,7 +897,27 @@ func show_bond_event(ev: Dictionary) -> void:
 	var a: Dictionary = gs.heroes[ev.a]
 	var b: Dictionary = gs.heroes[ev.b]
 	root.add_child(_label("Bastidores da guilda", 16, C_MUTED))
-	root.add_child(_label("\"%s\"" % info.title, 28, C_GOLD))
+	var bt := _label("\"%s\"" % info.title, 28, C_GOLD)
+	root.add_child(bt)
+	var pair := HBoxContainer.new()
+	pair.alignment = BoxContainer.ALIGNMENT_CENTER
+	pair.add_theme_constant_override("separation", 0)
+	root.add_child(pair)
+	var pa := _portrait(a, 84)
+	var pb := _portrait(b, 84)
+	var thread := ColorRect.new()
+	thread.color = C_GOLD if ev.threshold > 0 else C_BAD
+	thread.custom_minimum_size = Vector2(0, 3)
+	thread.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	pair.add_child(pa)
+	pair.add_child(thread)
+	pair.add_child(pb)
+	Juice.fade_in(pa, 0.0, 0.4)
+	Juice.fade_in(pb, 0.15, 0.4)
+	var ttw := thread.create_tween()
+	ttw.tween_interval(0.05 if Juice.reduce_motion else 0.35)
+	ttw.tween_property(thread, "custom_minimum_size:x", 140.0, 0.1 if Juice.reduce_motion else 0.5).set_ease(Tween.EASE_OUT)
+	Juice.pop(bt, 0.1, 0.3, 0.3)
 	root.add_child(_label("%s e %s  ·  %s" % [a.name, b.name, gs.describe_aff(gs.pair_value(ev.a, ev.b))], 18, C_TEXT))
 	root.add_child(_label("Como você enxerga o que existe entre eles?", 15, C_TEXT))
 	for lbl in info.labels:
@@ -641,6 +928,7 @@ func show_bond_event(ev: Dictionary) -> void:
 
 func _on_label_chosen(ev: Dictionary, lbl: String) -> void:
 	gs.choose_bond_label(ev, lbl)
+	Juice.flash(self, C_GOLD if ev.threshold > 0 else C_BAD, 0.2, 0.5)
 	_after_result()
 
 
@@ -724,6 +1012,11 @@ func show_relations() -> void:
 
 func show_book(index: int) -> void:
 	_clear()
+	var desk := _tex("res://art/book/livro_aberto.png")
+	if desk != null:
+		title_bg.texture = desk
+		title_bg.modulate = Color(0.32, 0.27, 0.22)
+		title_bg.visible = true
 	var book = GuildBook.new()
 	root.add_child(book)
 	book.setup(self, gs, index)
@@ -902,8 +1195,13 @@ func show_levelup(entry: Dictionary) -> void:
 	var pick := {"attr": "", "choice": {}}
 	var head := HBoxContainer.new()
 	root.add_child(head)
-	head.add_child(_portrait(h, 72))
-	head.add_child(_label("  %s chegou ao nível %d!" % [h.name, entry.level], 28, C_GOLD))
+	var lp := _portrait(h, 72)
+	head.add_child(lp)
+	var lt := _label("  %s chegou ao nível %d!" % [h.name, entry.level], 28, C_GOLD)
+	head.add_child(lt)
+	Juice.flash(self, Color("#f2d27a"), 0.2, 0.6)
+	Juice.pop(lp, 0.2, 0.4, 0.05)
+	Juice.pop(lt, 0.1, 0.35, 0.15)
 	root.add_child(_label("%s · %s" % [h["class"], h.archetype], 15, C_MUTED))
 
 	root.add_child(_label("Escolha um atributo para melhorar (+1):", 16, C_TEXT))
@@ -996,8 +1294,16 @@ func show_market() -> void:
 	root.add_child(_button("◀ Voltar", show_hub))
 
 
-func _item_row(it: Dictionary, action: String, disabled: bool, cb: Callable) -> Control:
+func _item_row(it: Dictionary, action: String, disabled: bool, cb: Callable, iid: String = "") -> Control:
 	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	if iid == "":
+		for k in gs.items_data.items:
+			if is_same(gs.items_data.items[k], it):
+				iid = k
+	var tex := _item_tex(iid)
+	if tex != null:
+		row.add_child(_icon(tex, 40))
 	var name := _label(("★ " if it.get("rare", false) else "") + it.name, 14, C_GOLD if it.get("rare", false) else C_TEXT)
 	name.custom_minimum_size.x = 190
 	row.add_child(name)
@@ -1045,6 +1351,9 @@ func show_equip(index: int) -> void:
 			row.add_child(_label("—", 14, C_MUTED))
 		else:
 			var it := HeroRPG.item(gs, cur)
+			var et := _item_tex(cur)
+			if et != null:
+				row.add_child(_icon(et, 36))
 			row.add_child(_label(it.name, 14, C_TEXT))
 			row.add_child(_para(it.desc, 12, C_MUTED))
 			row.add_child(_button("Remover", func():
@@ -1115,7 +1424,10 @@ func show_ultimatum(u: Dictionary) -> void:
 	root.add_child(_label("Ultimato", 16, C_BAD))
 	var head := HBoxContainer.new()
 	root.add_child(head)
-	head.add_child(_portrait(h, 72))
+	var up := _portrait(h, 72)
+	head.add_child(up)
+	Juice.desaturate(root, Color(0.86, 0.8, 0.74), 1.2)
+	Juice.blink(up, Color(1.6, 0.7, 0.6), 0.9)
 	head.add_child(_label("  %s está no limite" % h.name, 28, C_GOLD))
 	root.add_child(_label("Moral %d/10   ·   %s   ·   Nível %d" % [h.morale, gs.hero_status(u.id), h.level], 15, C_TEXT))
 	var p := _panel(C_PARCHMENT)
@@ -1270,6 +1582,10 @@ func show_menu() -> void:
 		root.add_child(b)
 	root.add_child(_label("O jogo também salva sozinho ao fim de cada dia (espaço automático).", 13, C_MUTED))
 	root.add_child(_button("Carregar um jogo", show_load.bind(false)))
+	root.add_child(_label("Opções", 18, C_TEXT))
+	root.add_child(_button("Reduzir movimento (sem tremor, sem zoom, animações curtas): %s" % ("Sim" if Juice.reduce_motion else "Não"), func():
+		Juice.set_reduce_motion(not Juice.reduce_motion)
+		show_menu()))
 	root.add_child(_button("Voltar ao título", show_title))
 	root.add_child(_spacer_v())
 	root.add_child(_button("◀ Voltar ao jogo", show_hub))
@@ -1312,7 +1628,7 @@ func _enemy_texture(m: Dictionary) -> Texture2D:
 
 
 ## Cartaz do inimigo; "defeated" risca com um X de tinta vermelha.
-func _enemy_poster(m: Dictionary, px: int, defeated: bool = false) -> Control:
+func _enemy_poster(m: Dictionary, px: int, defeated: bool = false, paint_delay: float = 0.0) -> Control:
 	var tex := _enemy_texture(m)
 	if tex == null:
 		return null
@@ -1333,6 +1649,13 @@ func _enemy_poster(m: Dictionary, px: int, defeated: bool = false) -> Control:
 			ln.begin_cap_mode = Line2D.LINE_CAP_ROUND
 			ln.end_cap_mode = Line2D.LINE_CAP_ROUND
 			tr.add_child(ln)
+			if paint_delay > 0.0:
+				var a: Vector2 = pts[0] * px
+				var b: Vector2 = pts[1] * px
+				ln.points = PackedVector2Array([a, a])
+				var ltw := ln.create_tween()
+				ltw.tween_interval(paint_delay + (0.18 if pts[0].x > 0.5 else 0.0))
+				ltw.tween_method(func(k: float): ln.points = PackedVector2Array([a, a.lerp(b, k)]), 0.0, 1.0, 0.18)
 	return tr
 
 
@@ -1360,6 +1683,35 @@ func _stress_chip(h: Dictionary) -> Control:
 	l.tooltip_text = tip
 	l.mouse_filter = Control.MOUSE_FILTER_STOP
 	return l
+
+
+## Textura se existir (arte entregue), senão null.
+func _tex(path: String) -> Texture2D:
+	return load(path) if ResourceLoader.exists(path) else null
+
+
+## Ícone do item (res://art/items/<id>.png).
+func _item_tex(iid: String) -> Texture2D:
+	return _tex("res://art/items/%s.png" % iid) if iid != "" else null
+
+
+func _icon(tex: Texture2D, px: int) -> TextureRect:
+	var tr := TextureRect.new()
+	tr.texture = tex
+	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	tr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	tr.custom_minimum_size = Vector2(px, px)
+	tr.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	return tr
+
+
+## Põe um ícone de textura num botão (tamanho máximo em px).
+func _button_icon(b: Button, tex: Texture2D, px: int) -> void:
+	if tex == null:
+		return
+	b.icon = tex
+	b.add_theme_constant_override("icon_max_width", px)
 
 
 func _hero_header(id: String, column: bool) -> Control:
@@ -1412,6 +1764,12 @@ func _on_new_game() -> void:
 
 func _clear() -> void:
 	title_bg.visible = false
+	title_bg.modulate = Color.WHITE
+	if is_instance_valid(_dice_box):
+		_dice_box.queue_free()   # a rolagem é só da tela do mapa
+	if ResourceLoader.exists(TITLE_ART):
+		title_bg.texture = load(TITLE_ART)
+	root.modulate = Color.WHITE
 	for c in root.get_children():
 		c.queue_free()
 
