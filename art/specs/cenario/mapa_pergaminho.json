@@ -34,7 +34,7 @@
         {
           "id": "mapa_folha",
           "nome": "Folha de mapa envelhecida",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             2048,
@@ -55,12 +55,13 @@
             "cidade (tom pálido)"
           ],
           "uso_no_jogo": "Fundo do Mapa Mágico (hoje é cor sólida + manchas desenhadas por código)",
-          "destino": "res://art/map/parchment/folha.png"
+          "destino": "res://art/map/parchment/folha.png",
+          "observacoes": "fundo do Mapa Mágico, tingido pela cor do bioma; entregue com fundo preto (removido) em 1168×784, abaixo dos 2048×1600 pedidos"
         },
         {
           "id": "mapa_borda",
           "nome": "Moldura cartográfica",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P1",
           "tamanho_final_px": [
             2048,
@@ -71,12 +72,13 @@
             "vazada no centro (fundo branco no JPG, removido)"
           ],
           "uso_no_jogo": "Camada por cima da folha, dando cara de mapa impresso",
-          "destino": "res://art/map/parchment/borda.png"
+          "destino": "res://art/map/parchment/borda.png",
+          "observacoes": "camada de multiplicar convertida em transparência pela luminosidade"
         },
         {
           "id": "mapa_vincos",
           "nome": "Vincos e desgaste (sobreposição)",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P1",
           "tamanho_final_px": [
             2048,
@@ -87,12 +89,13 @@
             "fundo branco puro: será usado em modo 'multiplicar', não recortado"
           ],
           "uso_no_jogo": "Overlay final do mapa: faz até os caminhos e peças parecerem impressos no papel velho",
-          "destino": "res://art/map/parchment/vincos.png"
+          "destino": "res://art/map/parchment/vincos.png",
+          "observacoes": "camada de multiplicar convertida em transparência pela luminosidade"
         },
         {
           "id": "mapa_vinheta",
           "nome": "Escurecimento das bordas",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P2",
           "tamanho_final_px": [
             1024,
@@ -103,7 +106,8 @@
             "fundo branco puro: usado em modo multiplicar"
           ],
           "uso_no_jogo": "Overlay leve",
-          "destino": "res://art/map/parchment/vinheta.png"
+          "destino": "res://art/map/parchment/vinheta.png",
+          "observacoes": "camada de multiplicar convertida em transparência pela luminosidade"
         }
       ]
     },
@@ -116,7 +120,7 @@
         {
           "id": "mapa_rosa_ventos",
           "nome": "Rosa dos ventos",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P0",
           "tamanho_final_px": [
             160,
@@ -124,12 +128,13 @@
           ],
           "descricao": "Rosa dos ventos de 16 pontas, ornamentada, com acento dourado #b8892e e a flor-de-lis no norte (sem letras).",
           "uso_no_jogo": "Canto inferior direito do mapa (hoje desenhada por código)",
-          "destino": "res://art/map/parchment/rosa_ventos.png"
+          "destino": "res://art/map/parchment/rosa_ventos.png",
+          "observacoes": "canto inferior direito, por cima das camadas"
         },
         {
           "id": "mapa_cartela",
           "nome": "Cartela de título",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P1",
           "tamanho_final_px": [
             420,
@@ -143,12 +148,13 @@
             30
           ],
           "uso_no_jogo": "Topo do mapa com o nome da missão escrito pelo jogo",
-          "destino": "res://art/map/parchment/cartela.png"
+          "destino": "res://art/map/parchment/cartela.png",
+          "observacoes": "topo do mapa com o nome da missão"
         },
         {
           "id": "mapa_escala",
           "nome": "Barra de escala",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P2",
           "tamanho_final_px": [
             240,
@@ -156,7 +162,8 @@
           ],
           "descricao": "Régua de mapa com divisões alternadas e floreio (sem números).",
           "uso_no_jogo": "Canto inferior esquerdo",
-          "destino": "res://art/map/parchment/escala.png"
+          "destino": "res://art/map/parchment/escala.png",
+          "observacoes": "canto inferior esquerdo"
         },
         {
           "id": "mapa_selo_guilda",

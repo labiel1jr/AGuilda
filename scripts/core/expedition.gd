@@ -94,7 +94,8 @@ static func _start_fixed(gs, mission: Dictionary, party: Array, prepared: Dictio
 	for spec_layer in fixed:
 		var layer := []
 		for spec in spec_layer:
-			layer.append({"type": String(spec.get("type", "evento")), "event": String(spec.get("event", "")), "next": spec.get("next", []).duplicate(), "done": false})
+			layer.append({"type": String(spec.get("type", "evento")), "event": String(spec.get("event", "")), "next": spec.get("next", []).duplicate(), "done": false,
+				"requires_flag": String(spec.get("requires_flag", "")), "forbids_flag": String(spec.get("forbids_flag", ""))})
 		layers.append(layer)
 	layers.append([{"type": "chefe", "next": [], "event": "", "done": false}])
 	for l in layers.size() - 1:
@@ -135,12 +136,20 @@ static func choices(gs) -> Array:
 		var out := []
 		for i in exp.layers[0].size():
 			out.append([0, i])
-		return out
+		return out.filter(func(p): return node_open(gs, p))
 	var node := node_at(gs, cur)
 	if node.type == "chefe":
 		return []
 	var tl: int = cur[0] + (2 if node.type == "atalho" else 1)
-	return node.next.map(func(j): return [tl, j])
+	return node.next.map(func(j): return [tl, j]).filter(func(p): return node_open(gs, p))
+
+
+## Nó de rota fixa que depende de flag (ex.: a escolta só sem contrato).
+static func node_open(gs, pos: Array) -> bool:
+	var n := node_at(gs, pos)
+	if String(n.get("requires_flag", "")) != "" and not gs.flags.has(n.requires_flag):
+		return false
+	return String(n.get("forbids_flag", "")) == "" or not gs.flags.has(n.forbids_flag)
 
 
 static func at_boss(gs) -> bool:
@@ -226,9 +235,11 @@ static func dc(gs, opt: Dictionary) -> int:
 static func test_hint(gs, opt: Dictionary) -> String:
 	if not opt.has("test"):
 		return ""
+	if auto_pass(gs, opt) != "":
+		return "sem teste"
 	var attr: String = opt.test.attr
 	var id := best_for(gs, attr)
-	return "%s CD %d · %s %+d" % [attr.capitalize(), dc(gs, opt), gs.heroes[id].name, modifier(gs, id, attr)]
+	return "%s CD %d · %s %+d" % [attr.capitalize(), dc(gs, opt), gs.heroes[id].name, modifier(gs, id, attr) + help_bonus(gs, opt)]
 
 
 ## "" se a opção pode ser escolhida; senão, o motivo.
@@ -250,10 +261,15 @@ static func choose(gs, opt: Dictionary) -> Dictionary:
 	var out := {"lines": []}
 	var hero := ""
 	var branch: Dictionary = opt
-	if opt.has("test"):
+	var auto := auto_pass(gs, opt)
+	if auto != "":
+		out.lines.append(auto)
+		branch = opt.ok
+		hero = best_for(gs, opt.test.attr)
+	elif opt.has("test"):
 		var attr: String = opt.test.attr
 		hero = best_for(gs, attr)
-		var mod := modifier(gs, hero, attr)
+		var mod := modifier(gs, hero, attr) + help_bonus(gs, opt)
 		var roll: int = gs.rng.randi_range(1, 20)
 		var target := dc(gs, opt)
 		var ok: bool = roll == 20 or (roll != 1 and roll + mod >= target)
@@ -268,6 +284,30 @@ static func choose(gs, opt: Dictionary) -> Dictionary:
 	out.lines.append_array(apply(gs, branch.get("fx", {}), hero))
 	exp.log.append_array(out.lines)
 	return out
+
+
+## Teste dispensado: um herói do grupo sabe fazer (test.auto_heroes) ou uma pista resolve (test.auto_flags).
+## Devolve a linha que explica, ou "".
+static func auto_pass(gs, opt: Dictionary) -> String:
+	if not opt.has("test"):
+		return ""
+	for id in opt.test.get("auto_heroes", []):
+		if gs.expedition.party.has(id):
+			return "%s resolve sem precisar de teste." % gs.heroes[id].name
+	for f in opt.test.get("auto_flags", []):
+		if gs.flags.has(f):
+			return "A pista que vocês já tinham resolve sem teste."
+	return ""
+
+
+## Ajuda no teste de quem está no grupo (test.help: {heroi: bônus}).
+static func help_bonus(gs, opt: Dictionary) -> int:
+	var n := 0
+	var help: Dictionary = opt.get("test", {}).get("help", {})
+	for id in help:
+		if gs.expedition.party.has(id):
+			n += int(help[id])
+	return n
 
 
 ## Aplica efeitos e devolve as linhas do que mudou.
@@ -343,6 +383,8 @@ static func apply(gs, fx: Dictionary, hero: String = "") -> Array:
 		lines.append_array(Mind.gain_trait(gs, id, t == "pos", "" if t in ["pos", "neg"] else t))
 	if fx.has("flag"):
 		Arcs.add_flag(gs, String(fx.flag))   # pista descoberta na rota (arcos)
+	for f in fx.get("flags", []):
+		Arcs.add_flag(gs, String(f))
 	if fx.has("affinity") and party.size() >= 2:
 		var pairs := ScoreCalc.pairs_of(party)
 		var pr: Array = pairs[gs.rng.randi_range(0, pairs.size() - 1)]

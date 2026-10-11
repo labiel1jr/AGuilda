@@ -62,7 +62,7 @@ Grade de afinidade inicial (`heroes.json → affinity`, linha → coluna):
 | Capítulo | Dias | Objetivo | Missões | Flag de sucesso |
 |---|---|---|---|---|
 | 1. Herança de Cinzas | 5 | Reputação 6+ | Lobos na Estrada de Vaurel, Ratos Gigantes no Celeiro, Escolta da Caravana de Especiarias, Febre no Vilarejo de Marrow, Runas na Cripta de Hollen, Disputa entre os Barões | `conselho_confia` |
-| 2. Ecos do Corvo | 5 | Sobreviver à Noite do Corvo | Os Credores da Guilda, Furto do Selo Perdido, Bandidos na Ponte Velha, A Torre do Mago Silencioso, O Ninho da Serpe, **A Noite do Corvo** | `noite_vencida` |
+| 2. Ecos do Corvo | 5 | Sobreviver à Noite do Corvo | Os Credores da Guilda, Furto do Selo Perdido, **A Marca nas Paredes** → O Depósito Vazio (arco, ver [plano](PLANO_BANDOLEIROS.md)), A Torre do Mago Silencioso, O Ninho da Serpe, **A Noite do Corvo** | `noite_vencida` |
 
 O Capítulo 2 abre diferente conforme `conselho_confia` (o Conselho apoia ou manda um observador).
 

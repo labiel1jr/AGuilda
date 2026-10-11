@@ -34,4 +34,8 @@ static func buy_upgrade(gs: GuildState, id: String) -> bool:
 
 
 static func mission_reward(gs: GuildState, m: Dictionary) -> int:
-	return int(round(int(m.get("reward", gs.upgrades_data.rewards.get(m.risk, 0))) * Town.reward_mult(gs)))
+	var mult := Town.reward_mult(gs)
+	for f in m.get("reward_flags", {}):   # recompensa negociada no arco (ex.: mc_bom_preco)
+		if gs.flags.has(f):
+			mult *= float(m.reward_flags[f])
+	return int(round(int(m.get("reward", gs.upgrades_data.rewards.get(m.risk, 0))) * mult))

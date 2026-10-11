@@ -66,7 +66,8 @@
       "missions": [
         "credores",
         "selo",
-        "ponte",
+        "marca",
+        "deposito",
         "torre",
         "serpe",
         "noite_corvo"
@@ -93,7 +94,8 @@
       ],
       "intro_flags": {
         "noite_vencida": "Depois da Noite do Corvo, os traidores têm medo de você. Isso abre portas.",
-        "!noite_vencida": "Depois da Noite do Corvo, a cidade acha que a guilda está acabada. Ninguém atende quando você bate."
+        "!noite_vencida": "Depois da Noite do Corvo, a cidade acha que a guilda está acabada. Ninguém atende quando você bate.",
+        "mc_recibo": "Mira compara o recibo do depósito com a lista de nomes: o mesmo selo de lacre nos dois papéis."
       },
       "missions": [
         "contrabando",

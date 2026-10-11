@@ -12,7 +12,7 @@
     },
     "itens.json": {
       "titulo": "Ícones de itens, recursos e ferramentas",
-      "total": 37
+      "total": 38
     },
     "guilda.json": {
       "titulo": "Guilda — objetos de cenário",
@@ -61,11 +61,15 @@
     "botoes.json": {
       "titulo": "Botões",
       "total": 9
+    },
+    "../cenas/cenas_marca.json": {
+      "titulo": "Cenas — A Marca nas Paredes",
+      "total": 1
     }
   },
   "resumo_por_prioridade": {
-    "P0": 87,
-    "P1": 134,
+    "P0": 90,
+    "P1": 137,
     "P2": 89,
     "P3": 17
   },
@@ -2737,8 +2741,9 @@
       "grupo": "folha",
       "familia": "nanquim",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/map/parchment/folha.png"
+      "status": "integrado",
+      "destino": "res://art/map/parchment/folha.png",
+      "observacoes": "fundo do Mapa Mágico, tingido pela cor do bioma; entregue com fundo preto (removido) em 1168×784, abaixo dos 2048×1600 pedidos"
     },
     {
       "id": "mapa_borda",
@@ -2747,8 +2752,9 @@
       "grupo": "folha",
       "familia": "nanquim",
       "prioridade": "P1",
-      "status": "planejado",
-      "destino": "res://art/map/parchment/borda.png"
+      "status": "integrado",
+      "destino": "res://art/map/parchment/borda.png",
+      "observacoes": "camada de multiplicar convertida em transparência pela luminosidade"
     },
     {
       "id": "mapa_vincos",
@@ -2757,8 +2763,9 @@
       "grupo": "folha",
       "familia": "nanquim",
       "prioridade": "P1",
-      "status": "planejado",
-      "destino": "res://art/map/parchment/vincos.png"
+      "status": "integrado",
+      "destino": "res://art/map/parchment/vincos.png",
+      "observacoes": "camada de multiplicar convertida em transparência pela luminosidade"
     },
     {
       "id": "mapa_vinheta",
@@ -2767,8 +2774,9 @@
       "grupo": "folha",
       "familia": "nanquim",
       "prioridade": "P2",
-      "status": "planejado",
-      "destino": "res://art/map/parchment/vinheta.png"
+      "status": "integrado",
+      "destino": "res://art/map/parchment/vinheta.png",
+      "observacoes": "camada de multiplicar convertida em transparência pela luminosidade"
     },
     {
       "id": "mapa_rosa_ventos",
@@ -2777,8 +2785,9 @@
       "grupo": "ornamentos",
       "familia": "nanquim",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/map/parchment/rosa_ventos.png"
+      "status": "integrado",
+      "destino": "res://art/map/parchment/rosa_ventos.png",
+      "observacoes": "canto inferior direito, por cima das camadas"
     },
     {
       "id": "mapa_cartela",
@@ -2787,8 +2796,9 @@
       "grupo": "ornamentos",
       "familia": "nanquim",
       "prioridade": "P1",
-      "status": "planejado",
-      "destino": "res://art/map/parchment/cartela.png"
+      "status": "integrado",
+      "destino": "res://art/map/parchment/cartela.png",
+      "observacoes": "topo do mapa com o nome da missão"
     },
     {
       "id": "mapa_escala",
@@ -2797,8 +2807,9 @@
       "grupo": "ornamentos",
       "familia": "nanquim",
       "prioridade": "P2",
-      "status": "planejado",
-      "destino": "res://art/map/parchment/escala.png"
+      "status": "integrado",
+      "destino": "res://art/map/parchment/escala.png",
+      "observacoes": "canto inferior esquerdo"
     },
     {
       "id": "mapa_selo_guilda",
@@ -3377,8 +3388,9 @@
       "grupo": "genericas",
       "familia": "pixel_hd",
       "prioridade": "P2",
-      "status": "planejado",
-      "destino": "res://art/scenes/povo_contra.png"
+      "status": "integrado",
+      "destino": "res://art/scenes/povo_contra.png",
+      "observacoes": "cartão do resultado; entregue em 3:2, cortado ao centro para 2,4:1"
     },
     {
       "id": "btn_madeira",
@@ -3478,14 +3490,36 @@
       "status": "integrado",
       "destino": "res://art/ui/tema_botoes.tres",
       "observacoes": "feito por código em UIKit.style_button, não como .tres"
+    },
+    {
+      "id": "item_lamina_runica",
+      "nome": "Lâmina Rúnica",
+      "arquivo": "itens.json",
+      "grupo": "armas",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "integrado",
+      "destino": "res://art/items/lamina_runica.png",
+      "observacoes": "ícone da Lâmina Rúnica (recompensa do arco A Marca nas Paredes)"
+    },
+    {
+      "id": "cena_mc_decisao",
+      "nome": "A marca na mesa da guilda",
+      "arquivo": "../cenas/cenas_marca.json",
+      "grupo": "decisao",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "integrado",
+      "destino": "res://art/scenes/mc_decisao.png",
+      "observacoes": "topo da tela de decisão 'A marca nas paredes'"
     }
   ],
-  "total": 331,
-  "total_ativos": 327,
+  "total": 333,
+  "total_ativos": 329,
   "resumo_por_status": {
     "cancelado": 4,
     "entregue": 20,
-    "integrado": 76,
-    "planejado": 231
+    "integrado": 86,
+    "planejado": 223
   }
 }

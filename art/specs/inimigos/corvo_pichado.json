@@ -1,0 +1,57 @@
+{
+  "_doc": "Cartaz do pedido 'A Marca nas Paredes' (Etapa 1, docs/PLANO_BANDOLEIROS.md). Não é um inimigo: é a imagem do cartaz no Quadro de Avisos para uma missão de investigação sem adversário à vista. Fica nesta pasta porque o jogo lê o cartaz de res://art/enemies/<id>.png (data/missions.json → marca.enemies). Herda de _estilo_inimigos.json só a moldura (cartaz, prego, selo). Não é imagem.",
+  "herda": "_estilo_inimigos.json",
+  "id": "corvo_pichado",
+  "nome": "O Corvo nas Paredes",
+  "titulo": "Pedido da Liga do Cais",
+  "nivel": "pedido",
+  "risco": "baixo",
+  "cor_do_selo": "#6b8f5a",
+  "missoes": [
+    "marca"
+  ],
+  "bioma": "cidade",
+  "ato": 1,
+  "tipo": "objeto",
+  "paleta": {
+    "_doc": "Cores próprias, somadas à paleta_global_inimigos (máx. 12).",
+    "pedra_muro": [
+      "#8c8577",
+      "#635d52",
+      "#45403a"
+    ],
+    "tinta_preta": "#1f1d22",
+    "escorrido": "#3a3640",
+    "luz_lampiao": "#e0a84a"
+  },
+  "aparencia": {
+    "corpo": "um trecho de muro de pedra da Baixada do Cais, com o corvo da guilda pintado em tinta preta, grande, ocupando o centro",
+    "olhos": "o olho do corvo pintado é um borrão de tinta que escorre",
+    "detalhe_chave": "o corvo é uma cópia malfeita do brasão da guilda (asas tortas, bico grande demais); a tinta ainda escorre, foi pintado esta noite"
+  },
+  "equipamento_ou_ataque": {
+    "arma": "nenhuma",
+    "marcas": "uma lata de tinta tombada e um pincel no chão ao pé do muro; a luz quente de um lampião vinda da esquerda"
+  },
+  "pose": "muro visto de frente, levemente de baixo",
+  "expressao": "inquietante: a marca da guilda onde ela não deveria estar",
+  "leitura_narrativa": "Alguém está assinando crimes com o nome da guilda.",
+  "ligacao_com_a_historia": "Capítulo 2, 'Ecos do Corvo': alguém usa o passado do Corvo contra a guilda. A marca é falsa (pista mc_marca_falsa).",
+  "marcador_mapa_16px": {
+    "silhueta": "corvo preto de asas abertas",
+    "destaque": "1 px de tinta escorrendo"
+  },
+  "variacao_derrotado": "cartaz com X; o corvo meio apagado por escovão e água, só o contorno ainda visível",
+  "arquivos": {
+    "cartaz": "res://art/enemies/corvo_pichado.png",
+    "marcador": "res://art/enemies/corvo_pichado_token.png",
+    "derrotado": "res://art/enemies/corvo_pichado_derrotado.png"
+  },
+  "prompt_en": "pixel art poster image on a torn aged parchment wanted poster, 64x64 pixels, 16-bit RPG style, dark medieval fantasy, cold desaturated palette, 1px dark outline, iron nail at the top, wax seal in the bottom right corner, crisp pixels, no anti-aliasing, a weathered stone wall in a poor harbor district at night with a large raven emblem crudely painted in dripping black paint, wings crooked and beak too big, fresh paint running down the stones, a tipped paint can and brush at the foot of the wall, warm lantern light from the left, wax seal color #6b8f5a",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, readable text, letters, graffiti words, watermark, signature, gore, cute, chibi, checkerboard transparency pattern, white background, jpeg artifacts",
+  "notas_para_o_artista": [
+    "O corvo da guilda verdadeiro está no quadro de avisos (art/guild/quadro_avisos.png, no telhado): o pintado aqui deve lembrar ele, mas errado.",
+    "Sem letras nem palavras no muro.",
+    "Entrega em JPG com fundo branco, como os outros cartazes."
+  ]
+}

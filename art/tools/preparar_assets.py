@@ -5,10 +5,12 @@ Para cada arquivo cujo nome é um id de art/specs/cenario/_indice.json:
   - remove o fundo branco a partir das bordas (exceto peças de imagem cheia);
   - recorta a área útil e salva PNG RGBA no 'destino' do asset, no tamanho de saída abaixo.
 
-Uso:  python art/tools/preparar_assets.py
+Uso:  python art/tools/preparar_assets.py [id ...]
+      Com ids, processa só esses (sem ids, todos: cuidado, regera também artes com recorte manual).
 """
 import json
 import re
+import sys
 from collections import deque
 from pathlib import Path
 
@@ -156,10 +158,15 @@ def main():
     idx = json.loads(INDICE.read_text(encoding="utf-8"))
     ids = {a["id"]: a for a in idx["assets"]}
     feitos = []
+    so = set(sys.argv[1:])
     for f in sorted(SRC.iterdir()):
         if f.suffix.lower() not in (".jpg", ".jpeg", ".png"):
             continue
         aid = re.split(r"[.,]", f.name)[0]
+        if so and aid not in so:
+            continue
+        if aid.startswith("mapa_"):
+            continue   # peças do pergaminho do mapa: art/tools/preparar_mapa.py
         if aid.startswith("btn_"):
             continue   # botões: art/tools/preparar_botoes.py
         if aid not in ids:
@@ -171,6 +178,11 @@ def main():
         if aid.startswith("cena_"):
             # cenas do resultado: imagem cheia (sem recorte), guardada em 2x da exibição
             out = img.convert("RGB")
+            if out.width / out.height < 2.2:
+                # entregue mais alta que a faixa 2,4:1: corta o centro (céu e chão sobram)
+                h = round(out.width / 2.4)
+                y = (out.height - h) // 2
+                out = out.crop((0, y, out.width, y + h))
             out.thumbnail((960, 400), Image.LANCZOS)
             alvos = destino_png(dest, aid)
         elif aid in CHEIAS:

@@ -80,6 +80,16 @@ MARCAS.update({
     "btn_selo_alvo": ("integrado", "ícone do botão Enfrentar no mapa (sem a animação de carimbo)"),
     "btn_icones_acao": ("integrado", "folha 4x7 com rótulos desalinhados: recortada pelo desenho (art/tools/preparar_botoes.py); sobraram 4 desenhos sem uso"),
     "btn_tema": ("integrado", "feito por código em UIKit.style_button, não como .tres"),
+    "cena_povo_contra": ("integrado", "cartão do resultado; entregue em 3:2, cortado ao centro para 2,4:1"),
+    "cena_mc_decisao": ("integrado", "topo da tela de decisão 'A marca nas paredes'"),
+    "item_lamina_runica": ("integrado", "ícone da Lâmina Rúnica (recompensa do arco A Marca nas Paredes)"),
+    "mapa_folha": ("integrado", "fundo do Mapa Mágico, tingido pela cor do bioma; entregue com fundo preto (removido) em 1168×784, abaixo dos 2048×1600 pedidos"),
+    "mapa_borda": ("integrado", "camada de multiplicar convertida em transparência pela luminosidade"),
+    "mapa_vincos": ("integrado", "camada de multiplicar convertida em transparência pela luminosidade"),
+    "mapa_vinheta": ("integrado", "camada de multiplicar convertida em transparência pela luminosidade"),
+    "mapa_rosa_ventos": ("integrado", "canto inferior direito, por cima das camadas"),
+    "mapa_cartela": ("integrado", "topo do mapa com o nome da missão"),
+    "mapa_escala": ("integrado", "canto inferior esquerdo"),
     "icone_windows": ("planejado", "usando .ico provisório gerado da arte mestre (art/icon/icone.ico); falta a versão redesenhada em 16–32 px"),
 })
 

@@ -46,6 +46,8 @@ O jogo é dividido em **atos** e **capítulos**. Cada capítulo abre com uma cen
 | ![Equipamento](docs/img/13_equipamento.png) | ![Nível](docs/img/14_nivel.png) |
 | **Mapa — floresta** | **Mapa — montanha** |
 | ![Mapa floresta](docs/img/20_mapa_floresta.png) | ![Mapa montanha](docs/img/26_mapa_montanha.png) |
+| **Decisão de arco** | **Ultimato** |
+| ![Decisão](docs/img/27_decisao.png) | ![Ultimato](docs/img/16_ultimato.png) |
 | **Bastidores no hub** | **Cena de bastidor** |
 | ![Bastidores](docs/img/8_hub_bastidores.png) | ![Cena de bastidor](docs/img/9_bastidor.png) |
 | **Abertura de capítulo** | **Melhorias da Guilda** |

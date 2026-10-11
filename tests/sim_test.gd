@@ -23,6 +23,7 @@ func _init() -> void:
 	_check_story(gs)
 	_check_town(gs)
 	_check_arcs(gs)
+	_check_marca(gs)
 	_random_playthroughs(gs, 150)
 	print("RESULTADO: %s (%d falha(s))" % ["OK" if failures == 0 else "FALHOU", failures])
 	gs.free()
@@ -633,7 +634,7 @@ func _check_mind(gs) -> void:
 	_expect(Expedition.option_block(gs, {"requires": {"guild_gold": 25}}) != "", "opção com custo fica bloqueada sem ouro")
 	var has_mini := true
 	for mm in gs.missions:
-		if mm.risk != "baixo":
+		if mm.risk != "baixo" and not mm.has("route"):   # rota fixa é desenhada à mão
 			var e: Dictionary = Expedition.start(gs, mm, ["vera"], {})
 			var layer: Array = e.layers[e.layers.size() - 2]
 			if not layer.any(func(n): return n.type == "miniboss"):
@@ -753,6 +754,76 @@ func _check_arcs(gs) -> void:
 	var r: Dictionary = _run_expedition(gs, a, ["vera", "bram"], {}, RandomNumberGenerator.new())
 	_expect(not r.is_empty(), "rota fixa chega ao fim")
 	a.erase("route")
+
+
+## Arco "A Marca nas Paredes" (Cap. 2): completável com e sem contrato, e encerrável na decisão.
+func _marca_run(gs, seed: int, party: Array, negotiation: int, decision: String) -> Dictionary:
+	gs.new_game(seed)
+	_to_chapter(gs, "c2")
+	var marca := _mission(gs, "marca")
+	var dep := _mission(gs, "deposito")
+	var out := {"dep_locked": dep.status == "bloqueada", "marca_open": marca.status == "aberta"}
+	var rng := RandomNumberGenerator.new()
+	rng.seed = seed
+	Expedition.start(gs, marca, party, {})
+	var first: Dictionary = Expedition.enter(gs, Expedition.choices(gs)[0])
+	Expedition.choose(gs, first.event.options[negotiation])
+	out.paths = Expedition.choices(gs).size()
+	var mid: Dictionary = Expedition.enter(gs, Expedition.choices(gs)[0])
+	Expedition.choose(gs, mid.event.options[0])
+	Expedition.enter(gs, Expedition.choices(gs)[0])
+	Expedition.finish(gs)
+	out.knows = gs.flags.has("mc_deposito")
+	out.pending = gs.pending_decisions.size()
+	var pend: Dictionary = gs.pending_decisions.pop_front()
+	var d := Arcs.decision(gs, "mc_decisao")
+	var ch: Array = Arcs.choices(gs, d).filter(func(c): return c.id == decision)
+	if ch.is_empty():
+		ch = Arcs.choices(gs, d).filter(func(c): return c.id == "ir")
+	Arcs.resolve(gs, pend, ch[0])
+	out.dep_status = dep.status
+	out.reward = Economy.mission_reward(gs, dep)
+	if dep.status == "aberta":
+		var r: Dictionary = _run_expedition(gs, dep, party, {}, rng)
+		out.result = r.outcome
+		out.recibo = gs.flags.has("mc_recibo")
+		out.lamina = gs.inventory.has("lamina_runica")
+	return out
+
+
+func _check_marca(gs) -> void:
+	var a := _marca_run(gs, 101, ["vera", "bram", "lyssa"], 0, "ir")
+	_expect(a.marca_open and a.dep_locked, "Marca: etapa 1 no quadro, depósito bloqueado")
+	_expect(a.paths == 2, "Marca: com contrato, a escolta não aparece (2 caminhos)")
+	_expect(a.knows and a.pending == 1, "Marca: etapa 1 dá o endereço e agenda a decisão")
+	_expect(a.dep_status == "aberta", "Marca: 'Ir ao depósito' abre a etapa 2")
+	_expect(a.has("result"), "Marca: etapa 2 completável com contrato")
+	if a.get("result", "") != "falha":
+		_expect(a.recibo and a.lamina, "Marca: vitória dá o recibo e a Lâmina Rúnica")
+	var b := _marca_run(gs, 202, ["theo", "mira"], 2, "ir")
+	_expect(b.paths == 3, "Marca: sem contrato, a escolta aparece (3 caminhos)")
+	_expect(b.has("result"), "Marca: etapa 2 completável sem contrato")
+	var base := _marca_run(gs, 303, ["theo", "mira"], 0, "guarda")
+	_expect(base.dep_status == "cancelada", "Marca: 'Avisar a guarda' encerra o arco")
+	# recompensa negociada
+	gs.new_game(5)
+	var dep := _mission(gs, "deposito")
+	var normal: int = Economy.mission_reward(gs, dep)
+	gs.flags.append("mc_bom_preco")
+	_expect(Economy.mission_reward(gs, dep) > normal, "Marca: pedir mais aumenta a recompensa")
+	gs.flags.erase("mc_bom_preco")
+	gs.flags.append("mc_sem_contrato")
+	_expect(Economy.mission_reward(gs, dep) < normal, "Marca: sem contrato, só metade (cobrada com a prova)")
+	# teste dispensado e ajuda
+	gs.new_game(6)
+	Expedition.start(gs, _mission(gs, "marca"), ["senna", "theo"], {})
+	var fig: Dictionary = Expedition.event_by_id(gs, "", "mc_figueira")
+	_expect(Expedition.auto_pass(gs, fig.options[0]) != "", "Marca: Senna fala com Lisandre sem teste")
+	var neg: Dictionary = Expedition.event_by_id(gs, "", "mc_negociacao")
+	_expect(Expedition.help_bonus(gs, neg.options[1]) == 0, "Marca: sem Bram, sem ajuda na pechincha")
+	gs.expedition.party = ["bram", "theo"]
+	_expect(Expedition.help_bonus(gs, neg.options[1]) == 2, "Marca: Bram dá +2 na pechincha")
+	gs.expedition = {}
 
 
 func _expect(ok: bool, msg: String) -> void:

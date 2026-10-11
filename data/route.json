@@ -1127,6 +1127,267 @@
           }
         ]
       }
+    ],
+    "baixada": [
+      {
+        "id": "mc_negociacao",
+        "title": "A sala dos fundos do Anzol Torto",
+        "text": "Mestre Odo e Dona Brisa contam moedas que ainda não pagaram. Tibério Unha-Fina sorri do canto: \"Dizem que há corvos pintados nas paredes. E um elfo que conversa à noite com um estrangeiro de capa verde.\" Odo pigarreia: \"Pagamos o preço de sempre. Pegar ou largar.\"",
+        "options": [
+          {
+            "label": "Aceitar o preço",
+            "text": "Um aperto de mão e uma caneca. Contrato fechado.",
+            "fx": {
+              "flag": "mc_contrato"
+            }
+          },
+          {
+            "label": "Pedir mais (a guilda vale mais que isso)",
+            "test": {
+              "attr": "carisma",
+              "help": {
+                "bram": 2
+              }
+            },
+            "ok": {
+              "text": "Dona Brisa ri pela primeira vez. \"Feito. Mas quero o bando fora da Baixada.\"",
+              "fx": {
+                "flags": [
+                  "mc_contrato",
+                  "mc_bom_preco"
+                ]
+              }
+            },
+            "fail": {
+              "text": "Odo cruza os braços. Fecham pelo preço de sempre, de má vontade.",
+              "fx": {
+                "flag": "mc_contrato",
+                "stress_one": 1
+              }
+            }
+          },
+          {
+            "label": "Pedir o dobro",
+            "text": "Odo se levanta. \"Os Lanternas fazem por menos.\" A porta bate. A guilda segue sem contrato.",
+            "fx": {
+              "flag": "mc_sem_contrato"
+            }
+          }
+        ]
+      },
+      {
+        "id": "mc_marcas",
+        "title": "Corvos nas paredes",
+        "text": "As marcas estão por toda a Baixada, umas frescas, outras já desbotadas. {heroi} repara que o desenho é o corvo antigo da guilda, de antes da ruína.",
+        "options": [
+          {
+            "label": "Seguir as marcas mais velhas",
+            "test": {
+              "attr": "destreza",
+              "auto_heroes": [
+                "lyssa",
+                "vera"
+              ]
+            },
+            "ok": {
+              "text": "As marcas velhas descem as escadas até as docas. E o traço está errado: quem pintou nunca viu o corvo de perto.",
+              "fx": {
+                "flags": [
+                  "mc_deposito",
+                  "mc_marca_falsa"
+                ],
+                "bonus": 1
+              }
+            },
+            "fail": {
+              "text": "A noite inteira atrás de tinta. Por fim, uma criança aponta as docas por uma moeda.",
+              "fx": {
+                "flag": "mc_deposito",
+                "stress_one": 1
+              }
+            }
+          },
+          {
+            "label": "Perguntar aos vizinhos",
+            "test": {
+              "attr": "carisma",
+              "dc": 1
+            },
+            "ok": {
+              "text": "Uma lavadeira viu homens de lenço cinza carregando caixas para um depósito perto da escada das docas.",
+              "fx": {
+                "flag": "mc_deposito"
+              }
+            },
+            "fail": {
+              "text": "\"Gente da guilda perguntando dos corvos da guilda?\" As portas se fecham. Só se ouve, de longe, a palavra \"docas\".",
+              "fx": {
+                "flag": "mc_deposito",
+                "stress_one": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "mc_figueira",
+        "title": "O Pátio da Figueira",
+        "text": "Sob a única árvore da Baixada, a elfa Lisandre vela o irmão. Ele se recusou a guardar as caixas de um bando. Ela olha para a guilda com desconfiança.",
+        "options": [
+          {
+            "label": "Sentar com ela e ouvir",
+            "test": {
+              "attr": "carisma",
+              "auto_heroes": [
+                "senna"
+              ],
+              "help": {
+                "corin": 1
+              }
+            },
+            "ok": {
+              "text": "Lisandre fala baixo: os Mãos-Cinzas, o depósito da escada, e um aviso. \"Não entrem pela porta. Eles esperam atrás das caixas.\"",
+              "fx": {
+                "flags": [
+                  "mc_deposito",
+                  "mc_marca_falsa",
+                  "mc_figueira"
+                ]
+              }
+            },
+            "fail": {
+              "text": "Ela só aponta as escadas das docas e vira o rosto.",
+              "fx": {
+                "flag": "mc_deposito"
+              }
+            }
+          },
+          {
+            "label": "Deixar uma moeda para o enterro",
+            "text": "Lisandre aceita sem agradecer e diz uma palavra: \"Docas.\"",
+            "fx": {
+              "flag": "mc_deposito",
+              "guild_gold": -5
+            }
+          }
+        ]
+      },
+      {
+        "id": "mc_escolta",
+        "title": "A escolta sem contrato",
+        "text": "Sem a Liga, a guilda aceita escoltar um mercador miúdo que não fechou com ninguém. Na esquina do peixe, quatro lenços cinzas bloqueiam a rua.",
+        "options": [
+          {
+            "label": "Enfrentar os quatro",
+            "test": {
+              "attr": "forca"
+            },
+            "ok": {
+              "text": "Os quatro correm. Um deixa cair um bilhete: o endereço de um depósito nas docas e um lembrete para \"pintar mais corvos\".",
+              "fx": {
+                "flags": [
+                  "mc_deposito",
+                  "mc_marca_falsa"
+                ],
+                "gold": 10
+              }
+            },
+            "fail": {
+              "text": "Os ladrões levam a carroça, mas um bilhete fica no chão: um endereço nas docas.",
+              "fx": {
+                "flag": "mc_deposito",
+                "hp_one": -2
+              }
+            }
+          },
+          {
+            "label": "Fugir com o mercador",
+            "test": {
+              "attr": "destreza"
+            },
+            "ok": {
+              "text": "Pelos becos, ninguém se fere. O mercador, agradecido, sabe onde o bando guarda o roubo.",
+              "fx": {
+                "flag": "mc_deposito"
+              }
+            },
+            "fail": {
+              "text": "Um tropeço na escada. O mercador escapa, e só lembra de gritar \"docas!\".",
+              "fx": {
+                "flag": "mc_deposito",
+                "hp_one": -1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "mc_escada",
+        "title": "A escada das docas",
+        "text": "Centenas de degraus de pedra descem até o porto. Do alto, {heroi} vê o depósito: portas fechadas e nenhuma luz.",
+        "options": [
+          {
+            "label": "Descer pelos telhados",
+            "test": {
+              "attr": "destreza"
+            },
+            "ok": {
+              "text": "De cima, dá para ver os vultos lá dentro. Ninguém os viu chegar.",
+              "fx": {
+                "bonus": 1
+              }
+            },
+            "fail": {
+              "text": "Uma telha escorrega e cai no beco. Lá embaixo, alguém apaga uma vela.",
+              "fx": {
+                "stress_one": 1
+              }
+            }
+          },
+          {
+            "label": "Descer pela escada, como pescadores",
+            "text": "Capuzes e redes emprestadas. Ninguém olha duas vezes.",
+            "fx": {}
+          }
+        ]
+      },
+      {
+        "id": "mc_emboscada",
+        "title": "O depósito vazio",
+        "text": "A porta está destrancada. Lá dentro, caixas empilhadas até o teto e silêncio demais.",
+        "options": [
+          {
+            "label": "Parar e olhar com calma",
+            "test": {
+              "attr": "conhecimento",
+              "dc": 2,
+              "auto_flags": [
+                "mc_figueira"
+              ]
+            },
+            "ok": {
+              "text": "Vultos atrás das caixas, arcos prontos. A guilda entra pelo lado que eles não vigiam.",
+              "fx": {
+                "bonus": 2
+              }
+            },
+            "fail": {
+              "text": "Uma chuva de flechas vem de todas as caixas ao mesmo tempo.",
+              "fx": {
+                "hp_one": -2,
+                "bonus": -2
+              }
+            }
+          },
+          {
+            "label": "Entrar de uma vez",
+            "text": "A guilda entra antes que os arqueiros se acomodem, mas alguém leva uma flecha.",
+            "fx": {
+              "hp_one": -1
+            }
+          }
+        ]
+      }
     ]
   }
 }

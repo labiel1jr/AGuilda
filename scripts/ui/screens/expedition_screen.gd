@@ -60,6 +60,7 @@ static func show_map(ui: GuildUI, m: Dictionary) -> void:
 	var ets := Widgets.enemy_textures(ui, m)
 	if ets.size() >= 2:
 		ui._map.mini_texture = ets[1]
+	ui._map.flags = ui.gs.flags
 	ui._map.setup(m, tokens, ui.gs.day * 1000 + ui.gs.missions.find(m), ui.gs.expedition)
 	ui._map.node_chosen.connect(ui._on_node_chosen)
 	ui._map.arrived.connect(ui._on_node_arrived)

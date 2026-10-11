@@ -223,6 +223,9 @@ static func dispatch(gs: GuildState, mission: Dictionary, party: Array, prepared
 	if fx.has("flag"):
 		Arcs.add_flag(gs, fx.flag)
 	Arcs.after_mission(gs, mission, party, fx)   # flags extras e decisão de arco
+	if fx.has("item"):
+		gs.inventory.append(String(fx.item))
+		lines.append("Recompensa: %s vai para o Baú." % HeroRPG.item(gs, String(fx.item)).name)
 	if fx.has("text"):
 		lines.append(fx.text)
 	for id in party:

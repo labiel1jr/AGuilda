@@ -386,7 +386,7 @@
         {
           "id": "cena_povo_contra",
           "nome": "Povo contra",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P2",
           "tamanho_final_px": [
             480,
@@ -394,7 +394,8 @@
           ],
           "descricao": "Janelas se fechando, uma porta batendo, olhares desconfiados sobre um vulto na rua.",
           "uso_no_jogo": "Má fama atrapalhou numa missão de diplomacia",
-          "destino": "res://art/scenes/povo_contra.png"
+          "destino": "res://art/scenes/povo_contra.png",
+          "observacoes": "cartão do resultado; entregue em 3:2, cortado ao centro para 2,4:1"
         }
       ]
     }

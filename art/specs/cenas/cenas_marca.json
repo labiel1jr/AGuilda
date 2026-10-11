@@ -1,0 +1,71 @@
+{
+  "_doc": "Cenas do arco 'A Marca nas Paredes' (docs/PLANO_BANDOLEIROS.md). Mesmo formato, técnica e entrega das cenas do resultado (cenas_resultado.json → formato). Não contém imagens: é a especificação para artistas. Personagens de fora da guilda (Lisandre, Tibério, Odo, Brisa) são descritos aqui; heróis seguem os retratos aprovados (art/portraits/<id>.png).",
+  "herda": [
+    "../_estilo.json",
+    "../cenario/_estilo_cenario.json",
+    "cenas_resultado.json"
+  ],
+  "titulo": "Cenas — A Marca nas Paredes",
+  "familia_padrao": "pixel_hd",
+  "versao": 1,
+  "formato": {
+    "tamanho_final_px": [
+      480,
+      200
+    ],
+    "proporcao": "2,4 : 1 (faixa de cinema); na tela de decisão é exibida com ~160 px de altura",
+    "entrega": "JPG da CENA COMPLETA (cena ocupa a imagem toda), em art/ArtesEmGeral/<id>.jpg",
+    "texto": "nenhum texto na imagem"
+  },
+  "elenco": {
+    "_doc": "Personagens da missão que podem aparecer nas cenas (nomes próprios do A Guilda).",
+    "tiberio": "Tibério Unha-Fina: anão SEM barba (raro e marcante), queixo quadrado, bem vestido para a Baixada, colete de brocado gasto, anéis demais, sorriso de quem sabe mais do que diz",
+    "odo": "Mestre Odo Carrapato: mercador baixo e redondo, avental de couro, uma balança pequena no cinto, sempre contando moedas",
+    "brisa": "Dona Brisa Fenwick: mercadora alta e magra, xale verde-escuro, cabelo grisalho preso, olhar duro",
+    "lisandre": "Lisandre: elfa jovem, pobre, cabelos claros soltos, manto remendado; sentada sob uma figueira retorcida, segurando uma flor ou um pano",
+    "maos_cinzas": "ladrões de lenço cinza no rosto e mãos sujas de tinta (ver art/specs/inimigos/maos_cinzas.json)"
+  },
+  "grupos": [
+    {
+      "id": "decisao",
+      "nome": "Tela de decisão",
+      "descricao": "Imagem no topo da tela de decisão do arco (data/decisions.json → mc_decisao.image).",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "cena_mc_decisao",
+          "nome": "A marca na mesa da guilda",
+          "status": "integrado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "A mesa grande da guilda à luz de velas. No centro, um pedaço de reboco arrancado de uma parede, com o corvo pintado em tinta preta (a cópia malfeita). Em volta, só as mãos dos heróis apoiadas na mesa, cada uma de um jeito: uma manopla de ferro fechada em punho, uma mão pequena tamborilando, uma mão com luva de couro apontando o reboco.",
+          "composicao": [
+            "centro: o reboco com o corvo pintado, iluminado por uma vela; a tinta brilha, ainda úmida",
+            "em volta: mãos e antebraços de 3 ou 4 pessoas, sem rostos (qualquer grupo de heróis pode ter ido)",
+            "à direita, ao fundo, a janela da guilda com a Baixada do Cais à noite lá embaixo, uma ou duas luzes de lampião",
+            "sobre a mesa: um mapa da Baixada com um círculo nas docas e o contrato da Liga dobrado"
+          ],
+          "luz": "vela no centro, luz quente; fundo frio azulado pela janela",
+          "paleta": "madeira escura da guilda, dourado da vela (#f2d27a), preto da tinta (#1f1d22), azul noturno na janela",
+          "uso_no_jogo": "Tela de decisão 'A marca nas paredes', acima do texto e das falas dos heróis",
+          "destino": "res://art/scenes/mc_decisao.png",
+          "liga_com": "data/decisions.json → mc_decisao.image",
+          "prompt_en": "pixel art cinematic scene, 2.4:1 wide, a heavy wooden guild table at night lit by a single candle, in the center a chunk of torn plaster with a crude dripping black raven painted on it, several adventurers' hands resting around it (an iron gauntlet clenched, a small hand drumming fingers, a leather-gloved hand pointing), a folded contract and a district map with the docks circled, behind them a window over a poor harbor district at night with a few lantern lights, warm candlelight versus cold blue night, detailed 16-bit RPG style, crisp pixels, dark vignette edges, no text, no faces",
+          "observacoes": "topo da tela de decisão 'A marca nas paredes'"
+        }
+      ]
+    }
+  ],
+  "reservado_para_futuro": {
+    "_doc": "Cenas que a missão poderia usar, mas que ainda não têm lugar no jogo (os eventos da rota e o resultado específico de missão não mostram imagem hoje). Viram assets quando a tela ganhar o espaço.",
+    "ideias": [
+      "cena_mc_negociacao: a sala dos fundos do Anzol Torto; Odo e Brisa contando moedas, Tibério sorrindo no canto (evento mc_negociacao)",
+      "cena_mc_figueira: Lisandre sob a única árvore da Baixada, à noite, com a guarda fechando o portão do pátio ao fundo (evento mc_figueira)",
+      "cena_mc_emboscada: o interior do depósito, caixas até o teto, vultos e pontas de flecha aparecendo atrás delas (evento mc_emboscada)",
+      "cena_mc_festa: a festa no Anzol Torto, Tibério erguendo a caneca, a Baixada apagando os corvos pela janela (final 'Prova na mão')"
+    ]
+  }
+}

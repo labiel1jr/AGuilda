@@ -1,4 +1,72 @@
 {
   "_doc": "Decisões de arco (scripts/systems/arc_system.gd). Disparadas por effects.<resultado>.decision de uma missão; mostradas depois do resultado. Campos: id, title, text, image (opcional, cena), voices {heroi: {text, leans: id da escolha que ele defende}}, choices [{id, label, text (resultado), requires_flags, forbids_flags, flags, gold, esteem, morale {heroi: n}, stress {heroi: n}}]. Quem 'leans' para a escolha feita ganha +1 de moral; quem queria outra ganha +1 de estresse.",
-  "decisions": []
+  "decisions": [
+    {
+      "id": "mc_decisao",
+      "title": "A marca nas paredes",
+      "text": "O grupo voltou da Baixada sabendo onde os Mãos-Cinzas se escondem. Na mesa da guilda, o corvo pintado num pedaço de reboco arrancado da parede.",
+      "voices": {
+        "vera": {
+          "text": "Estão sujando o nome desta casa. Vamos hoje.",
+          "leans": "ir"
+        },
+        "lyssa": {
+          "text": "Ladrão não pinta assinatura dos outros de graça. Alguém está pagando. Eu quero ver o baú.",
+          "leans": "ir"
+        },
+        "bram": {
+          "text": "Um depósito, um bando e depois o Anzol Torto? Já estou de botas.",
+          "leans": "ir"
+        },
+        "theo": {
+          "text": "Isto é trabalho para a guarda. Se formos sozinhos, vão dizer que a guilda faz justiça com as próprias mãos.",
+          "leans": "guarda"
+        },
+        "senna": {
+          "text": "Primeiro, as paredes. Enquanto o corvo estiver lá, o povo vai olhar torto para nós.",
+          "leans": "limpar"
+        },
+        "mira": {
+          "text": "Apagar a marca nos dá tempo para entender quem a encomendou.",
+          "leans": "limpar"
+        },
+        "corin": {
+          "text": "Lisandre enterrou o irmão hoje. Que a Baixada veja a guilda limpando, não só lutando.",
+          "leans": "limpar"
+        }
+      },
+      "choices": [
+        {
+          "id": "ir",
+          "label": "Ir ao depósito",
+          "text": "Amanhã, ao anoitecer, a guilda desce a escada das docas.",
+          "flags": [
+            "mc_ir_deposito"
+          ]
+        },
+        {
+          "id": "limpar",
+          "label": "Limpar a marca das paredes primeiro",
+          "text": "Baldes, escovas e meia guilda na Baixada. O povo vê. O depósito pode esperar uma noite.",
+          "requires_flags": [
+            "mc_marca_falsa"
+          ],
+          "esteem": 1,
+          "flags": [
+            "mc_ir_deposito"
+          ]
+        },
+        {
+          "id": "guarda",
+          "label": "Avisar a guarda e esperar",
+          "text": "A guarda agradece e não faz nada. Os Lanternas cobram dos mercadores e prendem dois ladrões pequenos. Os corvos continuam nas paredes.",
+          "esteem": -1,
+          "flags": [
+            "mc_marca_fica"
+          ]
+        }
+      ],
+      "image": "res://art/scenes/mc_decisao.png"
+    }
+  ]
 }

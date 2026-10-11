@@ -169,23 +169,132 @@
       }
     },
     {
-      "id": "ponte",
-      "name": "Bandidos na Ponte Velha",
-      "type": "combate",
-      "risk": "alto",
-      "biome": "estrada",
-      "primary": "forca",
-      "secondary": "destreza",
-      "day": 2,
+      "id": "marca",
+      "name": "A Marca nas Paredes",
+      "type": "diplomacia",
+      "risk": "baixo",
+      "biome": "cidade",
+      "primary": "carisma",
+      "secondary": "conhecimento",
+      "day": 1,
       "deadline": 3,
-      "desc": "Ex-soldados tomaram a ponte e cobram pedágio de sangue.",
+      "arc": "marca",
+      "stage": 1,
+      "desc": "A Liga do Cais quer contratar a guilda: um bando rouba os depósitos da Baixada e pinta o corvo antigo nas paredes. A cidade já cochicha que foi a própria guilda.",
+      "route": {
+        "provisions": 3,
+        "fixed": [
+          [
+            {
+              "type": "npc",
+              "event": "mc_negociacao"
+            }
+          ],
+          [
+            {
+              "type": "evento",
+              "event": "mc_marcas"
+            },
+            {
+              "type": "npc",
+              "event": "mc_figueira"
+            },
+            {
+              "type": "combate",
+              "event": "mc_escolta",
+              "requires_flag": "mc_sem_contrato"
+            }
+          ]
+        ]
+      },
       "texts": {
-        "limpo": "{party} retoma a ponte. Os bandidos fogem para o norte.",
-        "custo": "A ponte foi liberada, mas a luta foi dura demais.",
-        "falha": "Os bandidos usavam o tabardo antigo da guilda. Eram ex-membros do Corvo Cinzento."
+        "limpo": "{party} volta da Baixada com o endereço do esconderijo e a certeza de que a marca é falsa.",
+        "custo": "{party} descobre onde o bando se esconde, mas a Baixada inteira viu a guilda bisbilhotando.",
+        "falha": "A noite rendeu pouco: um endereço sussurrado e muitas portas fechadas na cara da guilda."
+      },
+      "effects": {
+        "limpo": {
+          "decision": "mc_decisao"
+        },
+        "custo": {
+          "decision": "mc_decisao"
+        },
+        "falha": {
+          "decision": "mc_decisao",
+          "flags": [
+            "mc_deposito"
+          ]
+        }
       },
       "enemies": [
-        "desertor_corvo"
+        "corvo_pichado"
+      ]
+    },
+    {
+      "id": "deposito",
+      "name": "O Depósito Vazio",
+      "type": "combate",
+      "risk": "medio",
+      "biome": "cidade",
+      "primary": "forca",
+      "secondary": "destreza",
+      "day": 1,
+      "deadline": 3,
+      "arc": "marca",
+      "stage": 2,
+      "requires_flag": "mc_ir_deposito",
+      "forbids_flag": "mc_marca_fica",
+      "arc_delay": 1,
+      "reward_flags": {
+        "mc_bom_preco": 1.5,
+        "mc_sem_contrato": 0.5
+      },
+      "desc": "O esconderijo dos Mãos-Cinzas fica num depósito junto à escada das docas. Por fora, parece vazio.",
+      "route": {
+        "provisions": 2,
+        "fixed": [
+          [
+            {
+              "type": "evento",
+              "event": "mc_escada"
+            }
+          ],
+          [
+            {
+              "type": "evento",
+              "event": "mc_emboscada"
+            }
+          ]
+        ]
+      },
+      "texts": {
+        "limpo": "{party} derruba os Mãos-Cinzas entre as caixas. No baú arrombado, além do ouro, um recibo com um selo que ninguém da guilda esperava ver.",
+        "custo": "{party} vence, mas sai do depósito mancando. O bando caiu; o recibo do mandante estava no baú.",
+        "falha": "As flechas vieram de todas as caixas ao mesmo tempo. O bando fugiu pelas docas, e a marca continua nas paredes."
+      },
+      "effects": {
+        "limpo": {
+          "flags": [
+            "mc_recibo"
+          ],
+          "item": "lamina_runica",
+          "text": "Na volta, Tibério paga uma rodada no Anzol Torto. \"À guilda que limpou o próprio nome!\""
+        },
+        "custo": {
+          "flags": [
+            "mc_recibo"
+          ],
+          "text": "A Liga paga, a guarda agradece de longe e a Baixada começa a apagar os corvos das paredes."
+        },
+        "falha": {
+          "flags": [
+            "mc_marca_fica"
+          ],
+          "text": "Na manhã seguinte, há um corvo novo pintado no muro da própria guilda."
+        }
+      },
+      "enemies": [
+        "maos_cinzas"
       ]
     },
     {

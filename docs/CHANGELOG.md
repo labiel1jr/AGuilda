@@ -4,6 +4,20 @@ Histórico de versões, da mais recente para a mais antiga. Datas dos commits no
 
 ---
 
+## Mapa em pergaminho e arte da Marca nas Paredes — 2026-10-11
+
+- **Mapa Mágico com arte**: folha de pergaminho dobrada (tingida por bioma), vincos e furos, vinheta e borda impressa por cima de tudo, rosa dos ventos, régua e a **cartela com o nome da missão** no topo.
+- **A Marca nas Paredes** com arte: cartaz do pedido (o corvo pintado no muro), cartaz dos Mãos-Cinzas, cena da decisão na mesa da guilda e o ícone da Lâmina Rúnica.
+- Cena `povo_contra` do resultado integrada (as 24 cenas genéricas e de par estão completas).
+- `preparar_assets.py` aceita ids (`python art/tools/preparar_assets.py <id> ...`) para não regerar artes com recorte manual; `preparar_mapa.py` prepara as peças do pergaminho.
+
+## Missão "A Marca nas Paredes" (Capítulo 2) — 2026-10-11
+
+- **Primeiro arco de missões jogável**, no lugar de "Bandidos na Ponte Velha": um bando pinta o corvo antigo da guilda nas paredes da Baixada do Cais. Etapa 1 com negociação do contrato (aceitar, pedir mais com teste de Carisma, pedir o dobro e perder o contrato) e três caminhos para achar o esconderijo; decisão na guilda com a opinião de cada herói; Etapa 2 no depósito com a emboscada.
+- Quem vai muda a história: Senna faz Lisandre falar sem teste, Lyssa e Vera reconhecem o corvo falso, Bram ajuda a pechinchar; a pista da Figueira evita a emboscada.
+- Recompensas: pagamento maior ou menor conforme a negociação, a **Lâmina Rúnica** e o recibo do mandante, que aparece na abertura do Capítulo 3.
+- Rota fixa com caminhos que só aparecem com uma pista (a escolta, só sem contrato).
+
 ## Botões com arte e mais 8 cenas do resultado — 2026-10-11
 
 - **Botões de madeira, pergaminho, escolha, perigo, medalhão e barra do hub** (`UIKit.button` escolhe a peça pelo texto ou pelo tipo pedido). Só o estado normal foi entregue; hover, pressionado e desativado são o mesmo desenho clareado ou escurecido por código.

@@ -1,0 +1,66 @@
+{
+  "_doc": "Especificação de pixel art do inimigo Mãos-Cinzas (arco 'A Marca nas Paredes', docs/PLANO_BANDOLEIROS.md). Herda de _estilo_inimigos.json. Não é imagem.",
+  "herda": "_estilo_inimigos.json",
+  "id": "maos_cinzas",
+  "nome": "Os Mãos-Cinzas",
+  "titulo": "Ladrões da Baixada do Cais",
+  "nivel": "comum",
+  "risco": "medio",
+  "cor_do_selo": "#d4a94a",
+  "missoes": [
+    "deposito"
+  ],
+  "bioma": "cidade",
+  "ato": 1,
+  "tipo": "humano",
+  "paleta": {
+    "_doc": "Cores próprias, somadas à paleta_global_inimigos (máx. 12). Mais escura e urbana que o Saqueador da Estrada, para não confundir os dois.",
+    "lenco_cinza": [
+      "#8a8f99",
+      "#5c616b"
+    ],
+    "gibao": [
+      "#3e3a36",
+      "#2a2724"
+    ],
+    "pele": [
+      "#b98b65",
+      "#8a603f"
+    ],
+    "tinta_preta": "#1f1d22",
+    "madeira_caixa": [
+      "#7a5c3e",
+      "#55402c"
+    ]
+  },
+  "aparencia": {
+    "corpo": "arqueiro magro, agachado atrás de uma caixa de carga de madeira; só o tronco, os braços e a cabeça aparecem acima da caixa",
+    "olhos": "atentos, mirando o observador por cima do lenço",
+    "detalhe_chave": "as mãos e os antebraços sujos de tinta preta e cinza (é ele quem pinta os corvos nas paredes); o lenço cinza amarrado no rosto"
+  },
+  "equipamento_ou_ataque": {
+    "arma": "arco curto tensionado, flecha de ponta de pedra polida apontada para o observador",
+    "marcas": "um pincel grosso enfiado no cinto e, na lateral da caixa, um corvo pintado às pressas (traço errado, asas tortas)"
+  },
+  "pose": "de frente, meio corpo atrás da caixa, arco puxado na altura do rosto",
+  "expressao": "frio e paciente: é uma emboscada, ele está esperando",
+  "leitura_narrativa": "O bando que finge ser a guilda: ladrões comuns, mas organizados e pagos por alguém de fora.",
+  "ligacao_com_a_historia": "Etapa 2 'O Depósito Vazio': arqueiros atrás das caixas; o corvo pintado na caixa é a mesma marca falsa das paredes (pista mc_marca_falsa).",
+  "marcador_mapa_16px": {
+    "silhueta": "cabeça de lenço e arco acima de uma caixa",
+    "destaque": "1 px cinza claro (ponta da flecha)"
+  },
+  "variacao_derrotado": "cartaz com X; a caixa tombada, o arco quebrado e o pincel caído no chão manchando o pergaminho de tinta",
+  "arquivos": {
+    "cartaz": "res://art/enemies/maos_cinzas.png",
+    "marcador": "res://art/enemies/maos_cinzas_token.png",
+    "derrotado": "res://art/enemies/maos_cinzas_derrotado.png"
+  },
+  "prompt_en": "pixel art enemy portrait on a torn aged parchment wanted poster, 64x64 pixels, 16-bit RPG style, dark medieval fantasy, cold desaturated palette, harsh light from top-left, 1px dark outline, iron nail at the top, wax seal in the bottom right corner, facing the viewer, menacing, crisp pixels, no anti-aliasing, lean urban thief archer crouching behind a wooden cargo crate, grey scarf tied over nose and mouth, dark leather jerkin, hands and forearms stained with black paint, short bow drawn with a polished stone arrowhead aimed at the viewer, thick paintbrush tucked in the belt, a crude badly painted raven symbol on the side of the crate, wax seal color #d4a94a",
+  "prompt_negativo_en": "blurry, anti-aliasing, smooth gradients, photorealistic, 3d render, readable text, letters, watermark, signature, gore, explicit blood, cute, chibi, warm saturated palette, checkerboard transparency pattern, white background, jpeg artifacts",
+  "notas_para_o_artista": [
+    "Não confundir com o Saqueador da Estrada (art/enemies/saqueador.png): aqui é cidade, arco em vez de facão, e a caixa na frente.",
+    "O corvo pintado na caixa deve parecer uma cópia malfeita do corvo da guilda (asas tortas, bico grande demais): é a pista de que a marca é falsa.",
+    "Entrega em JPG com fundo branco, como os outros cartazes."
+  ]
+}

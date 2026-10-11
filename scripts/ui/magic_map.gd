@@ -36,8 +36,10 @@ const BIOME_PARTS := {
 }
 
 static var _parts := {}   # tipo -> [Texture2D] (carregado uma vez)
+static var _sheet := {}   # peças do pergaminho (art/map/parchment): folha, borda, vincos, vinheta, rosa_ventos, cartela, escala
 
 var biome := "estrada"
+var mission_name := ""        # escrito na cartela do topo
 var tokens: Array = []        # [{id, name, color, tex}] — tex = miniatura (art/tokens), senão círculo
 var caller := ""              # herói que está chamando pelo Mapa Mágico (balão "!")
 static var _shadow: Texture2D = null
@@ -47,6 +49,7 @@ var mini_texture: Texture2D = null   # cartaz do guarda do alvo (miniboss), se h
 var type_info := {}           # tipo de nó -> {name, desc} (tooltip)
 var exp: Dictionary = {}      # gs.expedition (mesmo objeto, atualizado pelo jogo)
 var reachable: Array = []     # [[camada, índice]] clicáveis agora
+var flags: Array = []         # gs.flags (mesmo objeto): esconde nós de rota fixa que dependem de pista
 var speed := 1.0
 var moving := false
 var _from := Vector2.ZERO     # posição normalizada do grupo
@@ -67,6 +70,10 @@ var _rng := RandomNumberGenerator.new()
 
 func setup(mission: Dictionary, party: Array, seed_value: int, expedition: Dictionary) -> void:
 	biome = mission.get("biome", "estrada")
+	mission_name = String(mission.get("name", ""))
+	if _sheet.is_empty():
+		for n in ["folha", "borda", "vincos", "vinheta", "rosa_ventos", "cartela", "escala"]:
+			_sheet[n] = UIKit.tex("res://art/map/parchment/%s.png" % n)
 	tokens = party
 	exp = expedition
 	_rng.seed = seed_value
@@ -275,8 +282,10 @@ func _build_decor() -> void:
 					continue
 				if absf(p.x - _river_x(p.y - half.y)) < half.x + 0.02:
 					continue
-				if p.x > 0.86 and p.y > 0.80:
+				if p.x > 0.78 and p.y > 0.70:
 					continue   # canto da rosa dos ventos
+				if (p.x > 0.36 and p.x < 0.64 and p.y < 0.16) or (p.x < 0.30 and p.y > 0.84):
+					continue   # cartela do nome e régua
 				var r := Rect2(p - Vector2(half.x, half.y * 2.0), half * 2.0).grow(-0.004)
 				if taken.any(func(o): return o.intersects(r)):
 					continue
@@ -316,8 +325,13 @@ func _draw() -> void:
 	var sz := size
 	var paper: Color = PAPER.get(biome, PAPER.estrada)
 	draw_rect(Rect2(Vector2.ZERO, sz), paper)
+	var sheet: Texture2D = _sheet.get("folha")
+	if sheet != null:
+		# papel com vincos e manchas desenhados; o bioma só tinge
+		draw_rect(Rect2(Vector2.ZERO, sz), Color("#2b2118"))
+		draw_texture_rect(sheet, Rect2(Vector2.ZERO, sz), false, paper.lightened(0.55))
 	# manchas suaves do pergaminho (degradê radial em anéis)
-	for st in _stains:
+	for st in ([] if sheet != null else _stains):
 		for k in 6:
 			draw_circle(st.p * sz, st.r * sz.x * (1.0 - k * 0.15), Color(0.45, 0.32, 0.18, st.a / 6.0))
 	_draw_river(sz)
@@ -342,6 +356,8 @@ func _draw() -> void:
 		walked[_key(exp.path[i - 1]) + ">" + _key(exp.path[i])] = true
 	var cur_key := _key(exp.cur)
 	for e in _edges:
+		if _closed(e[2]) or _closed(e[1]):
+			continue
 		var pts := PackedVector2Array()
 		for q in e[0]:
 			pts.append(q * sz)
@@ -377,9 +393,10 @@ func _draw() -> void:
 	var font := ThemeDB.fallback_font
 	draw_string(font, start + Vector2(-26, 18), "a Guilda", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, C_INK)
 
+	_draw_sheet_pieces(sz)
 	for k in _pos:
 		var pos := _split(k)
-		if pos[0] >= 0:
+		if pos[0] >= 0 and not _closed(k):
 			_draw_node(pos, _pos[k] * sz, paper)
 
 	# marcadores dos heróis em volta da posição do grupo
@@ -400,11 +417,23 @@ func _draw() -> void:
 			draw_arc(pos, 8.0, 0, TAU, 24, C_INK, 1.5, true)
 			draw_string(font, pos + Vector2(-4, 5), String(tokens[i].name).left(1), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color.WHITE)
 
-	_draw_compass(Vector2(sz.x - 46, sz.y - 46), 26.0)
-	# bordas envelhecidas + brilho mágico
-	for k in 10:
-		var a := 0.10 * (10 - k) / 10.0
-		draw_rect(Rect2(Vector2(k * 3, k * 3), sz - Vector2(k * 6, k * 6)), Color(0.35, 0.22, 0.10, a), false, 3.0)
+	# camadas de cima: vincos e furos, vinheta e a borda impressa (sem a arte, bordas por código)
+	var over := false
+	for n in ["vincos", "vinheta", "borda"]:
+		if _sheet.get(n) != null:
+			draw_texture_rect(_sheet[n], Rect2(Vector2.ZERO, sz), false)
+			over = true
+	if not over:
+		for k in 10:
+			var a := 0.10 * (10 - k) / 10.0
+			draw_rect(Rect2(Vector2(k * 3, k * 3), sz - Vector2(k * 6, k * 6)), Color(0.35, 0.22, 0.10, a), false, 3.0)
+	var rose: Texture2D = _sheet.get("rosa_ventos")
+	if rose != null:
+		var rh := 92.0
+		var rw := rh * rose.get_width() / rose.get_height()
+		draw_texture_rect(rose, Rect2(sz * Vector2(0.885, 0.86) - Vector2(rw, rh), Vector2(rw, rh)), false)
+	else:
+		_draw_compass(Vector2(sz.x - 46, sz.y - 46), 26.0)
 	draw_rect(Rect2(Vector2(1, 1), sz - Vector2(2, 2)), Color(0.55, 0.4, 0.9, 0.35 + 0.15 * sin(_time * 1.5)), false, 2.0)
 
 
@@ -435,6 +464,38 @@ func _draw_minis(feet: Vector2) -> void:
 			var bh := _balloon.get_height()
 			var dst := Rect2(base + Vector2(-9, -size_tok.y - 22), Vector2(18, 18.0 * bh / fw))
 			draw_texture_rect_region(_balloon, dst, Rect2(fi * fw, 0, fw, bh))
+
+
+## Cartela com o nome da missão (topo) e régua (canto inferior esquerdo), por baixo dos caminhos.
+func _draw_sheet_pieces(sz: Vector2) -> void:
+	var cart: Texture2D = _sheet.get("cartela")
+	if cart != null and mission_name != "":
+		var cw := minf(250.0, sz.x * 0.32)
+		var ch := cw * cart.get_height() / cart.get_width()
+		var r := Rect2(Vector2((sz.x - cw) / 2.0, 10), Vector2(cw, ch))
+		draw_texture_rect(cart, r, false)
+		var font := ThemeDB.fallback_font
+		var fs := 15
+		while fs > 9 and font.get_string_size(mission_name, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x > cw * 0.62:
+			fs -= 1
+		var tw := font.get_string_size(mission_name, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+		draw_string(font, Vector2(sz.x / 2.0 - tw / 2.0, r.position.y + ch * 0.47 + fs * 0.35), mission_name, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, C_INK)
+	var esc: Texture2D = _sheet.get("escala")
+	if esc != null:
+		var ew := 130.0
+		var eh := ew * esc.get_height() / esc.get_width()
+		draw_texture_rect(esc, Rect2(sz * Vector2(0.11, 0.86) - Vector2(0, eh), Vector2(ew, eh)), false)
+
+
+## Nó de rota fixa fechado por pista (requires_flag ausente ou forbids_flag presente): não aparece.
+func _closed(k: String) -> bool:
+	var pos := _split(k)
+	if pos[0] < 0:
+		return false
+	var node: Dictionary = exp.layers[pos[0]][pos[1]]
+	var req := String(node.get("requires_flag", ""))
+	var forb := String(node.get("forbids_flag", ""))
+	return (req != "" and not flags.has(req)) or (forb != "" and flags.has(forb))
 
 
 func _draw_node(pos: Array, c: Vector2, paper: Color) -> void:

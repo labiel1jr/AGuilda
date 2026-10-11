@@ -17,9 +17,6 @@
     "cripta": [
       "o_selado"
     ],
-    "ponte": [
-      "desertor_corvo"
-    ],
     "noite_corvo": [
       "desertor_corvo",
       "capitao_varek"
@@ -50,6 +47,12 @@
     ],
     "ninho_corvo": [
       "fundadores"
+    ],
+    "marca": [
+      "corvo_pichado"
+    ],
+    "deposito": [
+      "maos_cinzas"
     ]
   },
   "inimigos": [
@@ -101,7 +104,6 @@
       "risco": "alto",
       "ato": 1,
       "missoes": [
-        "ponte",
         "noite_corvo"
       ]
     },
@@ -195,6 +197,26 @@
       "ato": 2,
       "missoes": [
         "ninho_corvo"
+      ]
+    },
+    {
+      "id": "maos_cinzas",
+      "nome": "Os Mãos-Cinzas",
+      "nivel": "comum",
+      "risco": "medio",
+      "ato": 1,
+      "missoes": [
+        "deposito"
+      ]
+    },
+    {
+      "id": "corvo_pichado",
+      "nome": "O Corvo nas Paredes",
+      "nivel": "pedido",
+      "risco": "baixo",
+      "ato": 1,
+      "missoes": [
+        "marca"
       ]
     }
   ]

@@ -8,7 +8,6 @@
   "risco": "alto",
   "cor_do_selo": "#d1603d",
   "missoes": [
-    "ponte",
     "noite_corvo"
   ],
   "bioma": "estrada",
@@ -44,7 +43,7 @@
   "pose": "postura militar, escudo à frente",
   "expressao": "boca torta, desprezo",
   "leitura_narrativa": "O choque do Ato 1: os inimigos usam o mesmo símbolo que os heróis. Precisa ser reconhecível como 'um dos nossos'.",
-  "ligacao_com_a_historia": "Texto de falha de 'ponte': 'os bandidos usavam o tabardo antigo da guilda'. Vera enterrou metade da guilda antiga — ela pode conhecê-lo.",
+  "ligacao_com_a_historia": "Nasceu na missão 'ponte' (Bandidos na Ponte Velha), substituída no Capítulo 2 pelo arco 'A Marca nas Paredes'; continua como inimigo da Noite do Corvo. Vera enterrou metade da guilda antiga — ela pode conhecê-lo.",
   "marcador_mapa_16px": {
     "silhueta": "elmo aberto + escudo redondo",
     "destaque": "1 px cinza claro (corvo do tabardo)"

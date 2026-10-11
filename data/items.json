@@ -8,6 +8,7 @@
     "lendario": ["lamina_corvo", "placas", "anel_amizade"]
   },
   "items": {
+    "lamina_runica":    {"name": "Lâmina Rúnica", "slot": "arma", "price": 70, "shop": false, "desc": "+1 Força, +1 Resistência. Montante com uma runa de impacto, tirada do baú dos Mãos-Cinzas.", "effects": [{"type": "attr", "attr": "forca", "value": 1}, {"type": "attr", "attr": "resistencia", "value": 1}]},
     "espada_longa":     {"name": "Espada Longa", "slot": "arma", "price": 40, "shop": true, "desc": "+1 Força.", "effects": [{"type": "attr", "attr": "forca", "value": 1}]},
     "adaga_elfica":     {"name": "Adaga Élfica", "slot": "arma", "price": 40, "shop": true, "desc": "+1 Destreza.", "effects": [{"type": "attr", "attr": "destreza", "value": 1}]},
     "cajado_runico":    {"name": "Cajado Rúnico", "slot": "arma", "price": 45, "shop": true, "desc": "+1 Conhecimento.", "effects": [{"type": "attr", "attr": "conhecimento", "value": 1}]},

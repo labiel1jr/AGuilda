@@ -39,7 +39,7 @@ static func show_decision(ui: GuildUI, pending: Dictionary) -> void:
 	ui.root.add_child(UIKit.label("O que a guilda decide?", 15, GuildUI.C_TEXT))
 	for c in Arcs.choices(ui.gs, d):
 		var who: Array = vs.filter(func(v): return v.leans == c.id).map(func(v): return ui.gs.heroes[v.id].name)
-		var label: String = c.label + ("   — %s apoia" % ", ".join(who) if not who.is_empty() else "")
+		var label: String = c.label + ("   — %s %s" % [" e ".join(who), "apoia" if who.size() == 1 else "apoiam"] if not who.is_empty() else "")
 		var b := UIKit.button(label, func(): DecisionScreen.choose(ui, pending, c), "escolha")
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		ui.root.add_child(b)

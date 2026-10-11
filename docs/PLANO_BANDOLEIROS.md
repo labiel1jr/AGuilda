@@ -1,6 +1,6 @@
 # Plano — "A Marca nas Paredes" (segunda missão grande)
 
-**Status:** planejamento aprovado (nada implementado). Decisões na §9.
+**Status:** passos 1 a 4 implementados (jogável do pedido ao recibo); falta a arte (passo 5). O que mudou em relação ao plano está na §10.
 **Base:** a aventura *Caçada aos Bandoleiros*, adaptação de fã de uma missão secundária de *Dragon Age II*, lida como referência de estrutura. É obra derivada de propriedade de terceiros: **nomes, falas e textos abaixo são próprios do A Guilda**. Da original aproveitamos só a forma: um contrato negociado, três caminhos de investigação para a mesma pista e um esconderijo que é uma emboscada.
 **Documentos relacionados:** [Plano Alvorada](PLANO_ALVORADA.md) · [GDD](GDD.md) · [Narrativa](NARRATIVA.md) · [Referências de RPG](REFERENCIAS_RPG.md)
 
@@ -99,7 +99,7 @@ Nada novo: usa só o que o passo 1 da Alvorada já criou.
 
 | Peça | Uso aqui |
 |---|---|
-| **Arco de missões** (`Arcs`) | Etapa 2 com `requires_flag: mc_ir_deposito`; "Bandidos na Ponte Velha" com `forbids_flag` se o arco a substituir |
+| **Arco de missões** (`Arcs`) | Etapa 2 com `requires_flag: mc_ir_deposito`; Etapa 2 com `forbids_flag: mc_marca_fica` (cancelada se a guilda avisar a guarda) |
 | **Decisão de arco** | `mc_decisao` em `decisions.json`, com falas dos heróis |
 | **Rota fixa** | Duas rotas curtas; a camada de três caminhos com o nó da escolta `requires_flag` (ver abaixo) |
 | **Eventos da rota** | ~10 eventos novos em `route.json` (grupo `baixada`) |
@@ -126,13 +126,18 @@ Pequenas extensões necessárias:
 
 ---
 
-## 7. Arte necessária (specs a criar)
+## 7. Arte necessária
 
-- **Cartaz do inimigo:** os Mãos-Cinzas (arqueiro atrás de caixas, lenço cinza no rosto).
-- **Cartaz do pedido:** o corvo pichado numa parede de pedra.
-- **Cenas do resultado/decisão:** a marca do corvo no muro; Lisandre sob a figueira; o depósito com vultos atrás das caixas; a festa no Anzol Torto.
-- **Item:** a Lâmina Rúnica.
-- **Mapa:** marcos da Baixada (escadas, depósitos, a figueira) no padrão nanquim.
+Specs prontas para o artista (o jogo já aponta para os arquivos e mostra a arte assim que ela existir):
+
+| Asset | Spec | Onde aparece |
+|---|---|---|
+| Cartaz do pedido: o corvo pintado num muro | `art/specs/inimigos/corvo_pichado.json` → `art/enemies/corvo_pichado.png` | Cartaz da Etapa 1 no Quadro de Avisos e alvo do mapa |
+| Cartaz dos Mãos-Cinzas (arqueiro atrás da caixa) | `art/specs/inimigos/maos_cinzas.json` → `art/enemies/maos_cinzas.png` | Cartaz da Etapa 2, alvo do mapa e resultado |
+| Cena da decisão: o reboco com o corvo na mesa da guilda | `art/specs/cenas/cenas_marca.json` → `art/scenes/mc_decisao.png` | Topo da tela de decisão |
+| Ícone da Lâmina Rúnica | `art/specs/cenario/itens.json` → `art/items/lamina_runica.png` | Baú, Equipamento e resultado |
+
+Reservadas para quando a tela tiver lugar (eventos da rota e resultado específico de missão ainda não mostram imagem): negociação no Anzol Torto, Lisandre sob a figueira, o interior do depósito e a festa (ver `cenas_marca.json → reservado_para_futuro`).
 
 ---
 
@@ -153,7 +158,28 @@ Cada passo com teste no `sim_test.gd` (o arco tem que ser completável com e sem
 | Tema | Decisão |
 |---|---|
 | Momento | **Ato 1, Capítulo 2**, a partir do dia 1 |
-| Ponte Velha | **Substituída** pelo arco (o capítulo continua com 6 missões e o mesmo ritmo) |
+| Ponte Velha | **Substituída** pelo arco (o quadro mostra 6 pedidos; o Depósito entra como 7º quando a decisão o abre) |
 | Tamanho | 2 etapas + decisão curta; os três finais |
 | Tom | Leve-sombrio: crime de bairro e um luto, sem gore; espaço para humor (Bram, a pechincha, a festa) |
 | Ordem | Implementar **antes** da Alvorada: é menor e testa os sistemas do passo 1 em conteúdo real |
+
+---
+
+## 10. Como ficou no jogo
+
+**Dados:** missões `marca` e `deposito` em `missions.json` (no lugar de `ponte` no Capítulo 2), eventos do grupo `baixada` em `route.json` (`mc_negociacao`, `mc_marcas`, `mc_figueira`, `mc_escolta`, `mc_escada`, `mc_emboscada`), decisão `mc_decisao` em `decisions.json`, item `lamina_runica` em `items.json` e a linha `mc_recibo` na abertura do Capítulo 3.
+
+**Flags:** `mc_contrato` · `mc_bom_preco` · `mc_sem_contrato` (negociação) → `mc_deposito` · `mc_marca_falsa` · `mc_figueira` (caminhos) → `mc_ir_deposito` ou `mc_marca_fica` (decisão) → `mc_recibo` (vitória no depósito).
+
+**Extensões de código que a missão trouxe (servem à Alvorada):**
+- Nó de rota fixa com `requires_flag`/`forbids_flag`: fora do caminho e escondido no mapa enquanto a pista não permite.
+- Teste dispensado (`test.auto_heroes`, `test.auto_flags`) e ajuda de herói no teste (`test.help`), com a dica do botão mostrando "sem teste" ou o bônus somado.
+- `flags` (lista) nos efeitos de evento; `item` nos efeitos de missão; `reward_flags` multiplicando a recompensa.
+
+**Simplificações em relação ao plano (podem voltar depois):**
+- "Limpar a marca primeiro" dá +1 de Estima e abre o depósito no mesmo prazo de "Ir" (não ocupa um herói nem atrasa um dia a mais).
+- "Ninguém paga": sem contrato, o depósito paga metade da recompensa (a cobrança com a prova), sem teste de Carisma.
+- A chuva de flechas fere quem fez o teste (não sempre o Bram); Theo não protege, Vera não dá +1, Lyssa não precisa abrir o baú (o baú vem com a vitória), Corin não dá Mente.
+- "A marca fica" na derrota: só a flag e a frase; sem Fama −1 e sem o bastidor "A marca no muro da guilda". A festa no Anzol Torto é só uma frase do resultado, não um bastidor.
+
+**Testes:** `sim_test.gd` (`_check_marca`) percorre o arco com contrato, sem contrato e recusando na decisão; `tests/marca_shots.gd` gera as telas do arco (hub, negociação, caminhos, Figueira, resultado e decisão).

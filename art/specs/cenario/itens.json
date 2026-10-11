@@ -116,6 +116,22 @@
           "destino": "res://art/items/lamina_corvo.png",
           "liga_com": "data/items.json → items.lamina_corvo",
           "observacoes": "ícone no Mercado, Baú e Equipamento (e no mercador da rota)"
+        },
+        {
+          "id": "item_lamina_runica",
+          "nome": "Lâmina Rúnica",
+          "status": "integrado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            64,
+            64
+          ],
+          "descricao": "Montante (espada de duas mãos) de lâmina larga e escura, com uma única runa de impacto gravada perto da guarda, brilhando em azul-pálido; punho longo enrolado em couro cinza.",
+          "uso_no_jogo": "Ícone do item (arma) no Baú, Equipamento e Resultado; recompensa do arco 'A Marca nas Paredes'",
+          "destino": "res://art/items/lamina_runica.png",
+          "liga_com": "data/items.json → items.lamina_runica",
+          "prompt_en": "pixel art item icon, 64x64, 16-bit RPG style, a dark broad two-handed greatsword with a single glowing pale blue impact rune engraved near the crossguard, long grip wrapped in grey leather, 1px dark outline, light from top-left, white background, crisp pixels, no text",
+          "observacoes": "ícone da Lâmina Rúnica (recompensa do arco A Marca nas Paredes)"
         }
       ]
     },
