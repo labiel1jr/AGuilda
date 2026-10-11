@@ -49,6 +49,7 @@ Objetivo: uma experiência pequena, completa e jogável que mostre por que A Gui
 - [x] Dado d20 arremessado na cena nos testes (provisório por código; sprites especificados em `dado.json`)
 - [ ] Game juice v2 (partículas com os sprites de `efeitos.json`) e v3 (som)
 - [ ] Melhor apresentação dos personagens (retratos maiores na montagem, falas curtas)
+- [ ] **Alvorada Rubra** — primeira missão grande (arco de 3 etapas com decisão, dois ramos e três finais; Halvard como recruta). Plano: [PLANO_ALVORADA.md](PLANO_ALVORADA.md)
 - [ ] Mesma missão + party diferente = história diferente (textos por dupla/herói em `missions.json`)
 - [ ] Arcos pessoais para Lyssa, Bram, Vera e Corin
 - [ ] Eventos de rota que reagem a quem está no grupo e às condições

@@ -75,6 +75,7 @@ O histórico de cada versão está no [Changelog](docs/CHANGELOG.md) e o que vem
 | [Roadmap](docs/ROADMAP.md) | Prioridades até a v1.0 e depois |
 | [Changelog](docs/CHANGELOG.md) | Histórico de versões |
 | [Análise e Melhorias](docs/ANALISE_E_MELHORIAS.md) | Direção de design e plano de consolidação |
+| [Plano: Alvorada Rubra](docs/PLANO_ALVORADA.md) | Primeira missão grande: arco em Vau-Salgado, decisão moral, dois ramos, três finais |
 | [Referências de RPG](docs/REFERENCIAS_RPG.md) | Princípios de RPG de mesa (campanha, aventuras, tempo livre, tesouro, magia, raças, monstros) adaptados ao jogo, para preencher dados e planejar melhorias |
 
 ## Rodar
