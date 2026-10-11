@@ -7,9 +7,16 @@ static func has_upgrade(gs: GuildState, id: String) -> bool:
 	return gs.upgrades_owned.has(id)
 
 
+## Melhorias que o jogador enxerga: as comuns e as ocultas já reveladas por bastidores.
+static func visible_upgrades(gs: GuildState) -> Array:
+	return gs.upgrades_data.upgrades.filter(func(up): return not up.get("hidden", false) or gs.upgrades_revealed.has(up.id) or gs.upgrades_owned.has(up.id))
+
+
 static func upgrade_block_reason(gs: GuildState, up: Dictionary) -> String:
 	if Economy.has_upgrade(gs, up.id):
 		return "Construído"
+	if up.get("hidden", false) and not gs.upgrades_revealed.has(up.id):
+		return "Ainda não descoberta"
 	if gs.reputation < int(up.rep):
 		return "Requer Reputação %d" % int(up.rep)
 	if gs.gold < int(up.cost):
@@ -27,4 +34,4 @@ static func buy_upgrade(gs: GuildState, id: String) -> bool:
 
 
 static func mission_reward(gs: GuildState, m: Dictionary) -> int:
-	return int(m.get("reward", gs.upgrades_data.rewards.get(m.risk, 0)))
+	return int(round(int(m.get("reward", gs.upgrades_data.rewards.get(m.risk, 0))) * Town.reward_mult(gs)))

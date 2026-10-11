@@ -2,6 +2,7 @@ class_name ScoreCalc
 ## Cálculo de score da missão (GDD §5.6).
 ## Score = Base + Cobertura + Afinidade + Vínculo + Poderes + Oculto + Mente + Rota + Sorte
 ## Mente = traços, aflições e virtudes dos membros (Mind.score_bonus), até ±3.
+## Povo = fama do grupo no povo, só em missões de diplomacia (Town.score_bonus), −1 a +2.
 ## Rota = preparação − desgaste − fome do mapa de expedição (Expedition.route_mod).
 ## Poderes = itens, talentos e magias preparadas (HeroRPG), limitado a +3.
 
@@ -88,12 +89,13 @@ static func compute(gs, mission: Dictionary, party: Array, luck = null, prepared
 		hidden = int(mission.hidden.mod)
 
 	var mind := Mind.score_bonus(gs, mission, party, prepared)
-	var total := base + coverage + affinity + bond + powers + hidden + mind + route
+	var povo := Town.score_bonus(gs, mission, party)
+	var total := base + coverage + affinity + bond + powers + hidden + mind + povo + route
 	if luck != null:
 		total += luck
 	return {
 		"base": base, "coverage": coverage, "affinity": affinity, "bond": bond, "powers": powers,
-		"hidden": hidden, "mind": mind, "route": route, "luck": luck, "total": total, "actions": actions,
+		"hidden": hidden, "mind": mind, "povo": povo, "route": route, "luck": luck, "total": total, "actions": actions,
 	}
 
 

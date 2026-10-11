@@ -265,14 +265,14 @@ static func show_shop(ui: GuildUI, stock: Array) -> void:
 	ui._map_action.add_child(UIKit.label("Mercador de estrada — ouro da guilda: %d" % ui.gs.gold, 15, GuildUI.C_GOLD))
 	for iid in stock:
 		var it: Dictionary = HeroRPG.item(ui.gs, iid)
-		var b := UIKit.button("%s — %d ouro" % [it.name, int(it.price)], func():
+		var b := UIKit.button("%s — %d ouro" % [it.name, HeroRPG.buy_price(ui.gs, iid)], func():
 			if HeroRPG.buy(ui.gs, iid):
 				ExpeditionScreen.log_lines(ui, ["Comprado: %s (vai para o Baú)." % it.name], GuildUI.C_TEXT)
 				stock.erase(iid)
 			ExpeditionScreen.show_shop(ui, stock))
 		b.tooltip_text = it.get("desc", "")
 		UIKit.button_icon(b, UIKit.item_tex(iid), 32)
-		b.disabled = ui.gs.gold < int(it.price)
+		b.disabled = ui.gs.gold < HeroRPG.buy_price(ui.gs, iid)
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		ui._map_action.add_child(b)
 	var sp: Dictionary = ui.gs.route_data.shop_provisions

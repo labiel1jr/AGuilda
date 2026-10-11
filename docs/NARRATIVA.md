@@ -94,12 +94,16 @@ Outras tags: Cripta (exige um especialista em magia), Selo (proibido quem tem pa
 
 ## 6. Bastidores
 
-14 cenas curtas na guilda (`backstage.json`), até 2 por dia, com escolhas que mexem em afinidade e moral:
+27 cenas curtas (`backstage.json`), até 2 por dia, com escolhas que mexem em afinidade, moral, estresse, fama no povo, estima da cidade e ouro:
 
-- **Gerais (por afinidade):** taverna, treino, discussão, conversa ao luar, lealdade, lição, código, mapa.
+- **Entre heróis (por afinidade):** taverna, treino, discussão, conversa ao luar, lealdade, lição, código, mapa; o pão dos órfãos (Theo descobre o lado de Lyssa que ela esconde).
 - **Ligadas à história:** primeira noite na guilda, chegada de Corin, Senna encontra o nome do irmão na lista, o peso do código (Theo), Dario como guia, véspera do Ninho.
+- **Na cidade:** canções na praça (Bram), o telhado da viúva de um antigo membro, o boato sobre Senna, o menino que queria ser paladino (Theo), a bolsa do nobre (Lyssa), o beco dos doentes (Corin), a festa da cidade (só com a cidade grata).
+- **Que revelam melhorias:** o ferreiro sem forja (Vera e Dorin → Forja), os livros do arquivista (Mira → Biblioteca), a sala esquecida (Corin → Capela), os cavalos velhos (→ Estábulo), o porão da guilda (Bram → Taverna).
 
----
+### A cidade
+
+A guilda não existe no vácuo: a cidade observa. Cada herói tem uma **fama no povo** — Bram vira o bardo da praça, Lyssa a ladra que devolve aos pobres (ou a ladra, só), Senna a mercenária que ninguém entende — e a guilda tem a **estima da cidade**, que é outra coisa que a reputação com o Conselho: o Conselho pode confiar na guilda enquanto o povo a teme, e vice-versa.
 
 ## 7. Mapa de Expedição
 

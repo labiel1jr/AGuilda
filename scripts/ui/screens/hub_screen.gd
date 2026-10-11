@@ -22,7 +22,10 @@ static func show_hub(ui: GuildUI) -> void:
 	titles.add_theme_constant_override("separation", 0)
 	top.add_child(titles)
 	titles.add_child(UIKit.label("A Guilda do Corvo Cinzento", 24, GuildUI.C_GOLD))
-	titles.add_child(UIKit.label("Capítulo %d — %s   ·   Dia %d/%d   ·   Reputação %d   ·   Ouro %d   ·   Despachos %d/%d" % [ch.number, ch.title, ui.gs.chapter_day(), int(ch.days), ui.gs.reputation, ui.gs.gold, ui.gs.dispatched_today, ui.gs.slots()], 14, GuildUI.C_TEXT))
+	var status := UIKit.label("Cap. %d — %s  ·  Dia %d/%d  ·  Reputação %d  ·  Estima %d  ·  Ouro %d  ·  Despachos %d/%d" % [ch.number, ch.title, ui.gs.chapter_day(), int(ch.days), ui.gs.reputation, ui.gs.town_esteem, ui.gs.gold, ui.gs.dispatched_today, ui.gs.slots()], 14, GuildUI.C_TEXT)
+	status.tooltip_text = "Reputação: o que o Conselho pensa da guilda.\nEstima da cidade: %s — o povo %s." % [Town.esteem_label(ui.gs.town_esteem), "cobra mais caro" if Town.price_mult(ui.gs) > 1.0 else ("faz preço de amigo e paga melhor" if Town.price_mult(ui.gs) < 1.0 else "trata a guilda como qualquer outra")]
+	status.mouse_filter = Control.MOUSE_FILTER_STOP
+	titles.add_child(status)
 	top.add_child(UIKit.spacer())
 	top.add_child(UIKit.button("Guilda", ui.show_upgrades))
 	top.add_child(UIKit.button("Mercado", ui.show_market))
@@ -41,8 +44,8 @@ static func show_hub(ui: GuildUI) -> void:
 	body.add_theme_constant_override("separation", 16)
 	ui.root.add_child(body)
 
-	# Mural
-	var board_panel := UIKit.panel(GuildUI.C_PANEL)
+	# Mural: quadro de avisos de madeira com os pedidos pregados (inspirado nos quadros de vila de RPG)
+	var board_panel := HubScreen.board_frame()
 	board_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	board_panel.size_flags_stretch_ratio = 2.0
 	body.add_child(board_panel)
@@ -50,7 +53,7 @@ static func show_hub(ui: GuildUI) -> void:
 	board_panel.add_child(bcol)
 	var bhead := HBoxContainer.new()
 	bcol.add_child(bhead)
-	bhead.add_child(UIKit.label("Mural de Quests", 20, GuildUI.C_GOLD))
+	bhead.add_child(UIKit.label("Quadro de Avisos", 20, Color("#f2d27a")))
 	bhead.add_child(UIKit.spacer())
 	bhead.add_child(UIKit.label("Objetivo: " + ch.goal.text, 13, GuildUI.C_MUTED))
 	var scroll := ScrollContainer.new()
@@ -59,11 +62,18 @@ static func show_hub(ui: GuildUI) -> void:
 	bcol.add_child(scroll)
 	var list := VBoxContainer.new()
 	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	list.add_theme_constant_override("separation", 8)
+	list.add_theme_constant_override("separation", 14)
 	scroll.add_child(list)
 	var board: Array = ui.gs.board()
 	if board.is_empty():
-		list.add_child(UIKit.label("Nenhum pedido no mural hoje.", 15, GuildUI.C_MUTED))
+		var empty := UIKit.tex("res://art/guild/cartaz_vazio.png")
+		if empty != null:
+			var ei := UIKit.icon(empty, 180)
+			ei.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+			list.add_child(ei)
+		var el := UIKit.label("Nenhum pedido no quadro hoje.", 15, Color("#f2d27a"))
+		el.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		list.add_child(el)
 	for i in board.size():
 		var card := HubScreen.mission_card(ui, board[i])
 		list.add_child(card)
@@ -137,8 +147,61 @@ static func show_hub(ui: GuildUI) -> void:
 	Moments.play_moments(ui)
 
 
+## Moldura de madeira do quadro de avisos (arte res://art/guild/quadro_avisos.png quando existir).
+static func board_frame() -> PanelContainer:
+	var p := PanelContainer.new()
+	var art := UIKit.tex("res://art/guild/quadro_avisos.png")
+	if art != null:
+		# quadro recortado da arte (483×357): telhado em cima, vigas dos lados; o miolo de tábuas estica
+		var st := StyleBoxTexture.new()
+		st.texture = art
+		st.texture_margin_left = 72
+		st.texture_margin_right = 78
+		st.texture_margin_top = 123
+		st.texture_margin_bottom = 36
+		st.content_margin_left = 76
+		st.content_margin_right = 82
+		st.content_margin_top = 112
+		st.content_margin_bottom = 40
+		p.add_theme_stylebox_override("panel", st)
+	else:
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color("#5a3d24")
+		sb.border_color = Color("#2b1a10")
+		sb.set_border_width_all(8)
+		sb.set_corner_radius_all(4)
+		sb.set_content_margin_all(16)
+		sb.shadow_color = Color(0, 0, 0, 0.4)
+		sb.shadow_size = 6
+		p.add_theme_stylebox_override("panel", sb)
+	return p
+
+
+## Cartaz de missão: papel pregado no quadro, levemente torto; arrancado ao montar a party.
 static func mission_card(ui: GuildUI, m: Dictionary) -> Control:
-	var card := UIKit.panel(GuildUI.C_PARCHMENT)
+	var card := PanelContainer.new()
+	var paper := UIKit.tex("res://art/guild/cartaz_missao.png")
+	if paper != null:
+		var st := StyleBoxTexture.new()
+		st.texture = paper
+		st.set_texture_margin_all(40)
+		st.set_content_margin_all(20)
+		st.content_margin_top = 26
+		card.add_theme_stylebox_override("panel", st)
+	else:
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color("#e6d4a8")
+		sb.border_color = Color("#b89c6a")
+		sb.set_border_width_all(1)
+		sb.set_content_margin_all(14)
+		sb.content_margin_top = 18
+		sb.shadow_color = Color(0, 0, 0, 0.45)
+		sb.shadow_size = 5
+		sb.shadow_offset = Vector2(2, 3)
+		card.add_theme_stylebox_override("panel", sb)
+	var tilt := (absi(hash(m.id)) % 5 - 2) * 0.006   # cada cartaz um pouco torto
+	card.rotation = tilt
+	card.resized.connect(func(): card.pivot_offset = card.size / 2.0)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 10)
 	card.add_child(row)
@@ -153,13 +216,24 @@ static func mission_card(ui: GuildUI, m: Dictionary) -> Control:
 	head.add_child(UIKit.label(m.name, 17, GuildUI.C_INK))
 	head.add_child(UIKit.spacer())
 	head.add_child(UIKit.label("[%s]" % ui.gs.RISK_NAMES[m.risk], 14, GuildUI.RISK_COLORS[m.risk].darkened(0.25)))
+	var seal_kind := HubScreen.seal_kind(ui, m)
+	var seal := UIKit.tex("res://art/guild/selo_%s.png" % seal_kind)
+	if seal != null:
+		var si := UIKit.icon(seal, 34)
+		si.tooltip_text = {"comum": "Pedido comum", "urgente": "Urgente: último dia!", "pessoal": "Missão pessoal", "lendario": "Pedido lendário"}[seal_kind]
+		si.mouse_filter = Control.MOUSE_FILTER_STOP
+		head.add_child(si)
 	col.add_child(UIKit.para(m.desc, 13, GuildUI.C_INK))
 	var left: int = ui.gs.expires_on(m) - ui.gs.day
 	var prazo := "último dia!" if left <= 0 else "%d dia(s)" % (left + 1)
 	col.add_child(UIKit.para("Tipo: %s   ·   %s + %s   ·   Prazo: %s   ·   Recompensa: %d ouro" % [m.type.capitalize(), ui.gs.ATTR_NAMES[m.primary], ui.gs.ATTR_NAMES[m.secondary], prazo, ui.gs.mission_reward(m)], 13, GuildUI.C_INK.lightened(0.25)))
 	for tag in m.get("tags", []):
 		col.add_child(UIKit.para("⚑ " + tag.text, 13, Color("#8a3b1f")))
-	var btn := UIKit.button("Montar party", ui.show_party.bind(m))
+	if paper == null:   # a arte do cartaz já traz o prego; sem ela, o prego é desenhado
+		var pin = load("res://scripts/ui/components/pin.gd").new()
+		pin.offset_x = float(absi(hash(m.id)) % 41 - 20)
+		card.add_child(pin)
+	var btn := UIKit.button("Montar party", func(): HubScreen.tear_off(ui, card, m))
 	btn.disabled = ui.gs.free_slots() <= 0
 	if btn.disabled:
 		btn.tooltip_text = "Sem slots de despacho hoje."
@@ -205,3 +279,26 @@ static func day_transition(ui: GuildUI, title: String, items: Array) -> void:
 	tw.tween_callback(veil.queue_free)
 	for i in items.size():
 		Juice.fade_in(items[i], hold + 0.2 + i * 0.12, 0.35)
+
+
+## Arranca o cartaz do quadro (girando e subindo) e abre a montagem de party.
+static func tear_off(ui: GuildUI, card: Control, m: Dictionary) -> void:
+	if Juice.reduce_motion:
+		ui.show_party(m)
+		return
+	var tw := card.create_tween().set_parallel(true)
+	tw.tween_property(card, "rotation", card.rotation + (0.18 if card.rotation >= 0 else -0.18), 0.18)
+	tw.tween_property(card, "scale", Vector2(1.04, 1.04), 0.18)
+	tw.tween_property(card, "modulate:a", 0.0, 0.2).set_delay(0.06)
+	tw.chain().tween_callback(func(): ui.show_party(m))
+
+
+## Tipo do pedido para o selo de cera do cartaz.
+static func seal_kind(ui: GuildUI, m: Dictionary) -> String:
+	if m.risk == "lendario":
+		return "lendario"
+	if m.get("tags", []).any(func(t): return t.get("type", "") == "requires_hero"):
+		return "pessoal"
+	if ui.gs.expires_on(m) - ui.gs.day <= 0:
+		return "urgente"
+	return "comum"

@@ -24,6 +24,7 @@ static func init_hero(gs, h: Dictionary, src: Dictionary) -> void:
 	h.rest_request = false
 	h.slots = max_slots(gs, h.id, h)
 	Mind.ensure(h)
+	Town.ensure(h)
 
 
 # ---------- classe e níveis ----------
@@ -136,6 +137,22 @@ static func hero_effects(gs, id: String, prepared_spell: String = "") -> Array:
 	if prepared_spell != "":
 		out.append_array(spell(gs, prepared_spell).get("effects", []))
 	out.append_array(Mind.effects(gs, h))
+	# melhorias da guilda que valem para cada herói (as de grupo entram uma vez em power_bonus)
+	for e in guild_effects(gs):
+		if not e.type in GROUP_EFFECTS:
+			out.append(e)
+	return out
+
+
+const GROUP_EFFECTS := ["score", "mission_type", "affinity"]
+
+
+## Efeitos das melhorias construídas (data/upgrades.json → effects).
+static func guild_effects(gs) -> Array:
+	var out := []
+	for up in gs.upgrades_data.upgrades:
+		if gs.upgrades_owned.has(up.id):
+			out.append_array(up.get("effects", []))
 	return out
 
 
@@ -158,7 +175,11 @@ static func party_effects(gs, party: Array, prepared: Dictionary) -> Array:
 
 static func power_bonus(gs, mission: Dictionary, party: Array, prepared: Dictionary) -> int:
 	var total := 0
-	for pe in party_effects(gs, party, prepared):
+	var effs := party_effects(gs, party, prepared)
+	for e in guild_effects(gs):
+		if e.type in GROUP_EFFECTS:
+			effs.append({"owner": "", "e": e})   # melhoria de grupo: uma vez só
+	for pe in effs:
 		var e: Dictionary = pe.e
 		if e.type == "score":
 			total += int(e.value)
@@ -359,8 +380,13 @@ static func shop_items(gs) -> Array:
 	return out
 
 
+## Preço de compra com a Estima da cidade aplicada.
+static func buy_price(gs, item_id: String) -> int:
+	return int(round(int(item(gs, item_id).price) * Town.price_mult(gs)))
+
+
 static func buy(gs, item_id: String) -> bool:
-	var price: int = int(item(gs, item_id).price)
+	var price: int = buy_price(gs, item_id)
 	if gs.gold < price:
 		return false
 	gs.gold -= price

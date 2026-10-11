@@ -151,7 +151,10 @@
       "mapa_": "pergaminho do mapa",
       "token_": "miniatura de herói (art/specs/tokens_herois.json)",
       "dado_": "dado arremessado nos testes (dado.json)",
-      "cena_": "cena ilustrada de momento do resultado (art/specs/cenas/cenas_resultado.json)"
+      "cena_": "cena ilustrada de momento do resultado (art/specs/cenas/cenas_resultado.json)",
+      "quadro_": "quadro de avisos",
+      "cartaz_": "cartaz do quadro de avisos",
+      "btn_": "botão (botoes.json)"
     },
     "categoria_nova": "Crie <categoria>.json nesta pasta com a mesma estrutura (herda, familia_padrao, grupos, reservado_para_futuro) e acrescente em _indice.json → arquivos."
   },

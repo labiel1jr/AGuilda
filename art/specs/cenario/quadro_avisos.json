@@ -1,0 +1,206 @@
+{
+  "_doc": "Quadro de avisos do hub, onde os pedidos de missão ficam pregados (inspiração de clima: os quadros de aviso de vila dos RPGs de fantasia, como o de The Witcher 3 — madeira gasta, papéis sobrepostos, pregos, avisos rasgados). Arte ORIGINAL: não copiar elementos, símbolos ou textos de outro jogo. Não contém imagens: é a especificação para artistas. Herda de _estilo_cenario.json. Substitui o asset 'guilda_mural' de guilda.json. Enquanto a arte não chega, o jogo desenha uma moldura de madeira, cartazes de papel tortos e pregos por código.",
+  "herda": "_estilo_cenario.json",
+  "titulo": "Quadro de avisos",
+  "familia_padrao": "pixel_hd",
+  "versao": 1,
+  "conceito": {
+    "ideia": "Um quadro de avisos de praça, de tábuas velhas, com um telhadinho de madeira para a chuva, preso em dois postes. Já foi da Guilda do Corvo Cinzento: um corvo entalhado no alto, meio apagado. Os pedidos de missão são papéis pregados, cada um com o cartaz do inimigo (já existente) e o texto que o jogo escreve.",
+    "clima": "fim de tarde, madeira úmida, papéis amarelados, alguns rasgados e outros cobertos por avisos mais novos; sensação de 'vida de vila', de que muita gente pede ajuda ali",
+    "como_o_jogo_usa": {
+      "fundo": "o quadro é a moldura do painel 'Quadro de Avisos' no hub (9-slice): o centro de tábuas fica livre e os cartazes do jogo são empilhados por cima",
+      "cartaz": "cada missão é um papel (9-slice) levemente torto, com um prego no alto; ao clicar em 'Montar party', o cartaz é arrancado (gira, sobe e some)",
+      "selo": "o selo de cera no canto do cartaz indica o tipo de pedido (comum, urgente, pessoal, lendário)"
+    },
+    "paleta": {
+      "madeira": [
+        "#5a3d24",
+        "#3d2818",
+        "#7a5534"
+      ],
+      "telhado": [
+        "#4a3020",
+        "#2b1a10"
+      ],
+      "ferro": [
+        "#3a3530",
+        "#6e655a",
+        "#b8ad9c"
+      ],
+      "papel": [
+        "#e6d4a8",
+        "#cbb487",
+        "#f4e8c8"
+      ],
+      "lacre": {
+        "comum": "#8a6a3a",
+        "urgente": "#a8443c",
+        "pessoal": "#5b7fbf",
+        "lendario": "#d4a94a"
+      }
+    },
+    "regras": [
+      "Sem texto legível em nenhuma peça (o jogo escreve tudo)",
+      "Centro das tábuas sem papéis desenhados na arte do fundo (só furos de prego, marcas e restos rasgados nas bordas), para não confundir com as missões",
+      "Luz da superior esquerda; o telhado projeta uma sombra suave no topo das tábuas"
+    ]
+  },
+  "total_assets": 7,
+  "grupos": [
+    {
+      "id": "quadro",
+      "nome": "Quadro",
+      "descricao": "A moldura de madeira em que os cartazes ficam.",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "quadro_avisos",
+          "nome": "Quadro de avisos (moldura 9-slice)",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            1024,
+            640
+          ],
+          "descricao": "Quadro de tábuas verticais gastas, emoldurado por vigas grossas com cantoneiras de ferro; no alto, um telhadinho de duas águas com telhas de madeira e o corvo da guilda entalhado no centro da viga de cima; dois postes aparecem nas laterais e descem até a borda de baixo; uma lanterna apagada pendurada num gancho no canto superior direito. Nas bordas internas, restos de avisos rasgados, pregos tortos e marcas de papel arrancado.",
+          "detalhes": [
+            "9-slice: margens de 48 px (esquerda, direita, baixo) e 96 px no topo (telhado); o miolo de tábuas repete sem emenda",
+            "entregar como imagem completa (exceção ao fundo branco: o quadro ocupa a imagem toda; o que fica fora pode ser preto #000000)"
+          ],
+          "variacoes": [
+            "normal",
+            "reconstruída (fim do Ato 2: madeira consertada, corvo repintado, lanterna acesa)"
+          ],
+          "uso_no_jogo": "Moldura do painel 'Quadro de Avisos' no hub",
+          "destino": "res://art/guild/quadro_avisos.png",
+          "liga_com": "scripts/ui/screens/hub_screen.gd → board_frame (StyleBoxTexture, margens 48)",
+          "prompt_en": "pixel art medieval village notice board, weathered vertical wooden planks framed by thick beams with iron corners, small wooden gable roof on top with a carved raven emblem, two posts on the sides, unlit lantern hanging on a hook, torn paper scraps and bent nails along the inner edges, empty center planks, late afternoon light, detailed 16-bit RPG style, no text",
+          "observacoes": "veio como cena (quadro na praça); recortado o quadro com telhado e usado como moldura 9-slice do painel"
+        }
+      ]
+    },
+    {
+      "id": "cartazes",
+      "nome": "Cartazes",
+      "descricao": "O papel de cada pedido de missão (o jogo escreve o texto e põe o cartaz do inimigo).",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "cartaz_missao",
+          "nome": "Cartaz de missão (papel 9-slice)",
+          "status": "integrado",
+          "prioridade": "P0",
+          "tamanho_final_px": [
+            512,
+            320
+          ],
+          "descricao": "Folha de papel grosso amarelado, bordas levemente rasgadas e onduladas, uma dobra marcada no meio, mancha de chuva num canto; furo de prego no alto ao centro (o prego é peça separada). Sem texto.",
+          "detalhes": [
+            "9-slice: margens de 32 px; o centro precisa ser liso o bastante para texto escuro (#2a1f14) ficar legível",
+            "entregar em fundo branco puro"
+          ],
+          "uso_no_jogo": "Fundo de cada pedido no quadro",
+          "destino": "res://art/guild/cartaz_missao.png",
+          "liga_com": "scripts/ui/screens/hub_screen.gd → mission_card",
+          "observacoes": "papel de cada pedido (9-slice 40); o furo de prego da arte substitui o prego desenhado"
+        },
+        {
+          "id": "cartaz_selos",
+          "nome": "Selos de cera do cartaz",
+          "status": "integrado",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            64,
+            64
+          ],
+          "descricao": "Lacre de cera redondo com o corvo em relevo, para o canto inferior direito do cartaz; uma cor por tipo de pedido.",
+          "variacoes": [
+            "comum (cera marrom)",
+            "urgente (vermelha, com uma fita rasgada)",
+            "pessoal (azul, com um laço)",
+            "lendario (dourada, com brilho)"
+          ],
+          "uso_no_jogo": "Canto do cartaz: tipo de pedido (urgente = último dia; pessoal = missão pessoal; lendário = risco lendário)",
+          "destino": "res://art/guild/selo_{var}.png",
+          "observacoes": "comum, urgente (último dia), pessoal (missão pessoal) e lendário no canto do cartaz; o urgente veio aplicado sobre um cartaz e foi recortado só o lacre"
+        },
+        {
+          "id": "cartaz_prego",
+          "nome": "Prego/tachinha",
+          "status": "entregue",
+          "prioridade": "P1",
+          "tamanho_final_px": [
+            32,
+            32
+          ],
+          "descricao": "Prego de cabeça grande, enferrujado, visto de frente com uma pequena sombra.",
+          "variacoes": [
+            "prego de ferro",
+            "tachinha de latão"
+          ],
+          "uso_no_jogo": "Prende cada cartaz no quadro (hoje desenhado por código)",
+          "destino": "res://art/guild/prego_{var}.png",
+          "observacoes": "o furo da arte do cartaz já faz o papel; usado só se o cartaz não tiver arte"
+        },
+        {
+          "id": "cartaz_arrancado",
+          "nome": "Cartaz sendo arrancado",
+          "status": "entregue",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            512,
+            320
+          ],
+          "descricao": "Tira de 4 quadros: o papel se soltando do prego, rasgando um cantinho que fica preso no quadro.",
+          "animacao": {
+            "quadros": 4,
+            "fps": 14,
+            "loop": false
+          },
+          "uso_no_jogo": "Ao clicar em 'Montar party' (hoje: giro e fade por código)",
+          "destino": "res://art/guild/cartaz_arrancado.png",
+          "observacoes": "tira de 4 quadros; o arrancar ainda é animado por código"
+        },
+        {
+          "id": "restos_papel",
+          "nome": "Restos de papel rasgado",
+          "status": "entregue",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            96,
+            64
+          ],
+          "descricao": "Pedaços de avisos antigos ainda presos por pregos (cantos rasgados, tiras), para espalhar entre os cartazes.",
+          "variacoes": [
+            "6 peças"
+          ],
+          "uso_no_jogo": "Decoração entre os cartazes",
+          "destino": "res://art/guild/restos_{n}.png",
+          "observacoes": "6 peças recortadas em art/guild/restos_1..6; ainda não espalhadas no quadro"
+        },
+        {
+          "id": "cartaz_vazio",
+          "nome": "Aviso 'nenhum pedido hoje'",
+          "status": "integrado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            256,
+            160
+          ],
+          "descricao": "Um papel pequeno e solitário pregado torto, com uma pena desenhada (sem texto), para o dia sem pedidos.",
+          "uso_no_jogo": "Quando o quadro está vazio",
+          "destino": "res://art/guild/cartaz_vazio.png",
+          "observacoes": "quadro sem pedidos"
+        }
+      ]
+    }
+  ],
+  "reservado_para_futuro": {
+    "_doc": "Novos tipos de aviso (recompensas da cidade, procurados, recados de heróis) entram como variações do cartaz.",
+    "ideias": [
+      "cartaz de 'procurado' com o rosto do inimigo e a recompensa",
+      "recados entre heróis pregados no quadro (bastidores)",
+      "avisos da cidade que mudam com a Estima"
+    ]
+  }
+}

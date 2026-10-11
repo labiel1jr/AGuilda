@@ -34,6 +34,7 @@ Este documento descreve **como o jogo está construído hoje**: módulos, fluxo 
 | `scripts/systems/backstage_system.gd` | `Backstage`: sorteio e escolhas dos bastidores |
 | `scripts/systems/save_system.gd` | `SaveSystem`: salvar e carregar |
 | `scripts/systems/ending_system.gd` | `Endings`: epílogo |
+| `scripts/systems/town_system.gd` | `Town`: Fama no povo (por herói) e Estima da cidade (guilda); preços, recompensa, termo Povo do score, efeito das missões vistas pelo povo |
 | `scripts/systems/result_story.gd` | `ResultStory`: o porquê do resultado em frases — escolhe até 3 momentos pelo peso no score (pares, Ações de Vínculo, destaque, cansaço, condições, poderes, rota, sorte), com o estado de antes das consequências; variação determinística, sem usar o rng |
 | `scripts/core/score_calc.gd` | `ScoreCalc` (estático): fórmula do score e limiares |
 | `scripts/core/hero_rpg.gd` | `HeroRPG` (estático): XP, níveis, efeitos, equipamento, magias, saque, mercado |
@@ -44,6 +45,7 @@ Este documento descreve **como o jogo está construído hoje**: módulos, fluxo 
 | `scripts/ui/components/ui_kit.gd` | `UIKit`: peças básicas sem estado (rótulo, parágrafo, painel, botão, ícone, cores de estado) |
 | `scripts/ui/components/widgets.gd` | `Widgets`: retrato, cabeçalho de herói, cartaz de inimigo, chip de estresse |
 | `scripts/ui/components/dice_throw.gd` | `DiceThrow`: d20 arremessado sobre o mapa nos testes (voo, quiques, parada na face, destaque de sucesso/falha/crítico); usa os sprites de `art/dice/` quando existirem, senão desenha por código |
+| `scripts/ui/components/pin.gd` | Prego dos cartazes do quadro de avisos (até chegar a arte) |
 | `scripts/ui/components/moments.gd` | `Moments`: cena de ruptura e de saída por cima da tela atual |
 | `scripts/ui/magic_map.gd` | Mapa Mágico: desenho do pergaminho, grafo clicável, névoa, marcadores |
 | `scripts/ui/guild_book.gd` | Livro da Guilda (ficha em duas páginas) |
@@ -114,7 +116,7 @@ Cada JSON tem um campo `_doc` explicando o formato.
 | `missions.json` | Missões: tipo, risco, bioma, atributos, dia de chegada, prazo, tags, oculto, textos por resultado, efeitos por resultado, inimigos, pesos de rota opcionais |
 | `chapters.json` | Atos e capítulos: duração, missões, objetivo, flags, textos de abertura por flag, encerramentos |
 | `backstage.json` | Eventos de bastidor: condições (afinidade, capítulo, flag), texto, escolhas e efeitos |
-| `upgrades.json` | Ouro inicial, recompensa por risco, melhorias (custo e reputação) |
+| `upgrades.json` | Ouro inicial, recompensa por risco, estima inicial (`town`) e melhorias (custo, reputação, `hidden`, `effects` que valem para todos os heróis) |
 | `classes.json` | XP, níveis, classes, magias e talentos (tipos de efeito) |
 | `items.json` | Itens, tabelas de saque por risco, chance por resultado |
 | `route.json` | Mapa de expedição: camadas, provisões, CD por risco, tipos de nó, pesos por bioma, eventos e efeitos |

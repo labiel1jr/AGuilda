@@ -1,0 +1,206 @@
+{
+  "_doc": "Sistema de botões do A Guilda: para os botões deixarem de ser só texto e seguirem o padrão do projeto (madeira, latão, pergaminho, lacre). Não contém imagens: é a especificação para artistas. Herda de _estilo_cenario.json (paleta, pixel art detalhado, entrega em JPG com fundo branco). Substitui o asset genérico 'ui_botao' de interface.json; reaproveita os ícones 'ui_menu_*' e 'ui_selo_despachar' de lá. O jogo aplica as peças por um tema do Godot (StyleBoxTexture por estado), com o texto escrito por cima.",
+  "herda": "_estilo_cenario.json",
+  "titulo": "Botões",
+  "familia_padrao": "pergaminho_ui",
+  "versao": 1,
+  "conceito": {
+    "ideia": "Cada tipo de ação tem um material que o jogador aprende a reconhecer: MADEIRA com latão para seguir em frente (ações principais), PERGAMINHO para voltar e consultar, TIRA DE PERGAMINHO com fita para escolhas da história, LACRE VERMELHO para decisões sem volta, SELO DE CERA para o despacho, e MEDALHÃO de latão para ícones pequenos.",
+    "por_que": "Hoje todos os botões são retângulos escuros com texto. O material diz o peso da decisão antes de ler o rótulo, reforça o clima de guilda medieval e ajuda no celular (alvos de toque maiores e reconhecíveis).",
+    "regras": [
+      "Sem texto na arte (o jogo escreve o rótulo); o centro de cada peça é liso o bastante para texto legível",
+      "Todas as peças em 9-slice: cantos fixos, bordas que repetem, centro que estica sem deformar",
+      "Altura mínima de 48 px no tamanho final (alvo de toque no celular)",
+      "Mesmo desenho em todos os estados; os estados mudam luz, cor e profundidade, não a forma",
+      "Luz da superior esquerda, contorno #1a120c como no resto do projeto"
+    ],
+    "estados": {
+      "normal": "repouso",
+      "hover": "borda de latão acende (#f2d27a), leve brilho; no celular, igual ao normal",
+      "pressionado": "afunda 2 px (sombra inferior some, superfície um tom mais escura)",
+      "desativado": "dessaturado ~60%, latão vira ferro opaco; madeira com uma rachadura discreta",
+      "foco": "contorno pontilhado dourado de 2 px por fora (teclado e controle)"
+    },
+    "texto": {
+      "madeira": "#f1e6cc com sombra #1a120c de 1 px",
+      "pergaminho": "#2a1f14",
+      "lacre": "#f4e8c8",
+      "fonte": "a fonte atual do jogo; uma fonte medieval legível e de licença livre está reservada para o futuro (grupo 'reservado_para_futuro')"
+    },
+    "paleta": {
+      "madeira": ["#5a3d24", "#3d2818", "#7a5534"],
+      "latao": ["#b8892e", "#d4a94a", "#f2d27a"],
+      "ferro": ["#3a3530", "#6e655a"],
+      "pergaminho": ["#e8d9b5", "#c9b083", "#f4e8c8"],
+      "lacre": ["#a8443c", "#7a2e28", "#c8645a"]
+    },
+    "onde_cada_tipo_vai": {
+      "primario_madeira": ["Continuar", "Montar party", "Construir", "Comprar", "Equipar", "Confirmar", "Treinar", "Começar o capítulo", "Abrir a guilda", "Seguir viagem", "Assistir cena", "Novo jogo", "Carregar"],
+      "secundario_pergaminho": ["◀ Voltar (todas as telas)", "Voltar ao Livro", "Voltar ao título", "Fechar o livro", "Ver detalhes do score", "Espaços de save", "Opções (Reduzir movimento)"],
+      "escolha_narrativa": ["opções dos bastidores", "chamadas do Mapa Mágico (com o teste do lado)", "escolha de rótulo de vínculo", "escolhas do ultimato", "mercador da rota"],
+      "perigo_lacre": ["Deixar partir (ultimato)", "Vender", "Remover equipamento", "Sair do jogo", "Encerrar dia (confirmação)"],
+      "selo": ["DESPACHAR PARTY (já especificado: ui_selo_despachar)", "Enfrentar o alvo (variação)"],
+      "medalhao_icone": ["☰ menu", "◀ ▶ do Livro", "Descansar / Acordar no elenco", "Acelerar no mapa"],
+      "barra_do_hub": ["Guilda", "Mercado", "Quadro", "Livro", "Encerrar dia ▶"]
+    }
+  },
+  "total_assets": 9,
+  "grupos": [
+    {
+      "id": "pecas",
+      "nome": "Peças de botão (9-slice)",
+      "descricao": "Os fundos dos botões, um por tipo de ação, com os 5 estados lado a lado (ou um arquivo por estado).",
+      "familia": "pergaminho_ui",
+      "assets": [
+        {
+          "id": "btn_madeira",
+          "nome": "Botão primário — placa de madeira",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [192, 64],
+          "descricao": "Placa de madeira escura com veios horizontais, cantoneiras de latão nos quatro cantos e um filete de latão por dentro da borda; dois pregos pequenos nas laterais.",
+          "estados": ["normal", "hover", "pressionado", "desativado", "foco"],
+          "nine_slice": [24, 20, 24, 20],
+          "uso_no_jogo": "Ações principais que levam o jogo adiante",
+          "destino": "res://art/ui/btn_madeira_{estado}.png",
+          "prompt_en": "pixel art medieval game UI button, dark wooden plank with horizontal grain, brass corner caps and thin brass inner frame, two small nails, empty center for text, 9-slice ready, light from top-left, plain solid white background, no text"
+        },
+        {
+          "id": "btn_pergaminho",
+          "nome": "Botão secundário — pergaminho",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [176, 56],
+          "descricao": "Retângulo de pergaminho com bordas levemente queimadas e um filete de tinta sépia; cantinho superior direito dobrado.",
+          "estados": ["normal", "hover", "pressionado", "desativado", "foco"],
+          "nine_slice": [20, 18, 20, 18],
+          "uso_no_jogo": "Voltar, fechar, consultar e opções",
+          "destino": "res://art/ui/btn_pergaminho_{estado}.png"
+        },
+        {
+          "id": "btn_escolha",
+          "nome": "Botão de escolha narrativa — tira de pergaminho",
+          "status": "planejado",
+          "prioridade": "P0",
+          "tamanho_final_px": [640, 64],
+          "descricao": "Tira longa de pergaminho com uma fita vermelha presa à esquerda (onde o jogo pode pôr um ícone pequeno) e espaço amplo para texto alinhado à esquerda em até duas linhas; à direita, uma área mais clara para o 'teste' (ex.: Destreza CD 11 · Lyssa +4).",
+          "estados": ["normal", "hover (a fita levanta)", "pressionado", "desativado (cadeado pequeno sobre a fita)", "foco"],
+          "nine_slice": [56, 20, 24, 20],
+          "uso_no_jogo": "Todas as escolhas da história (bastidores, chamadas do mapa, vínculos, ultimato)",
+          "destino": "res://art/ui/btn_escolha_{estado}.png"
+        },
+        {
+          "id": "btn_perigo",
+          "nome": "Botão de decisão sem volta — lacre",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [192, 64],
+          "descricao": "Mesma placa de madeira do primário, atravessada por uma faixa de lacre vermelho com um pingo de cera escorrendo; cantoneiras de ferro em vez de latão.",
+          "estados": ["normal", "hover (o lacre brilha)", "pressionado", "desativado", "foco"],
+          "nine_slice": [24, 20, 24, 20],
+          "uso_no_jogo": "Deixar um herói partir, vender, remover, sair",
+          "destino": "res://art/ui/btn_perigo_{estado}.png"
+        },
+        {
+          "id": "btn_medalhao",
+          "nome": "Botão de ícone — medalhão de latão",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [56, 56],
+          "descricao": "Medalhão redondo de latão com aro trabalhado e fundo de madeira escura; o ícone (ui_menu_*) fica no centro.",
+          "estados": ["normal", "hover", "pressionado", "desativado", "ativo (aro dourado mais grosso)"],
+          "uso_no_jogo": "Menu ☰, setas do Livro, Descansar/Acordar, Acelerar",
+          "destino": "res://art/ui/btn_medalhao_{estado}.png"
+        },
+        {
+          "id": "btn_barra_hub",
+          "nome": "Botão da barra do hub — placa com ícone",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [160, 56],
+          "descricao": "Placa de madeira mais estreita com um nicho à esquerda para o ícone (Guilda: martelo; Mercado: balança; Quadro: alfinete com fio; Livro: capa; Encerrar dia: lua e vela) e o rótulo à direita; pendurada por duas correntinhas no topo, como placa de loja.",
+          "estados": ["normal", "hover (balança levemente)", "pressionado", "desativado (com cadeado, ex.: Quadro antes da melhoria)", "novidade (fita dourada no canto: bastidor ou melhoria nova)"],
+          "nine_slice": [52, 18, 18, 18],
+          "uso_no_jogo": "Barra superior do hub",
+          "destino": "res://art/ui/btn_barra_{estado}.png",
+          "liga_com": "interface.json → ui_menu_guilda, ui_menu_mercado, ui_menu_quadro, ui_menu_livro, ui_menu_encerrar_dia"
+        },
+        {
+          "id": "btn_selo_alvo",
+          "nome": "Selo — enfrentar o alvo",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [96, 96],
+          "descricao": "Variação do selo de despacho (ui_selo_despachar) em cera preta com o corvo e duas espadas cruzadas; para o momento de enfrentar o alvo no mapa.",
+          "estados": ["normal", "hover", "carimbado (4 quadros)"],
+          "uso_no_jogo": "Botão 'Enfrentar' no fim da expedição",
+          "destino": "res://art/ui/selo_alvo.png",
+          "liga_com": "interface.json → ui_selo_despachar"
+        }
+      ]
+    },
+    {
+      "id": "icones_acao",
+      "nome": "Ícones de ação",
+      "descricao": "Ícones pequenos para pôr à esquerda do rótulo (16–24 px finais), completando os ui_menu_* que já existem.",
+      "familia": "pixel_hd",
+      "assets": [
+        {
+          "id": "btn_icones_acao",
+          "nome": "Conjunto de ícones de ação",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [24, 24],
+          "descricao": "Um ícone por ação, no mesmo traço dos ui_menu_*: silhueta clara sobre transparente, legível em 16 px.",
+          "variacoes": [
+            "voltar (seta de pena para a esquerda)",
+            "continuar (seta de pena para a direita)",
+            "confirmar (lacre com visto)",
+            "comprar (moeda caindo na mão)",
+            "vender (moeda saindo da mão)",
+            "equipar (espada entrando na bainha)",
+            "remover (gancho vazio)",
+            "construir (martelo e tábua)",
+            "treinar (espadas de madeira cruzadas)",
+            "assistir_cena (máscara de teatro)",
+            "conversar (dois balões)",
+            "seguir_viagem (bota)",
+            "enfrentar (espada e caveira)",
+            "comecar_capitulo (livro abrindo)",
+            "abrir_guilda (porta aberta)",
+            "fechar (livro fechando)",
+            "ver_detalhes (lupa)",
+            "opcoes (ampulheta e engrenagem de madeira)",
+            "sair (porta com seta)",
+            "novo_jogo (pena no tinteiro)"
+          ],
+          "uso_no_jogo": "À esquerda do rótulo dos botões",
+          "destino": "res://art/ui/icones/{var}.png"
+        }
+      ]
+    },
+    {
+      "id": "tema",
+      "nome": "Tema",
+      "descricao": "Arquivo de tema do Godot montado pela programação a partir das peças (não é arte, é registro do que precisa existir).",
+      "familia": "pergaminho_ui",
+      "assets": [
+        {
+          "id": "btn_tema",
+          "nome": "Tema de botões (Godot)",
+          "status": "planejado",
+          "prioridade": "P1",
+          "tamanho_final_px": [0, 0],
+          "descricao": "res://art/ui/tema_botoes.tres com um tipo de botão por peça (Madeira, Pergaminho, Escolha, Perigo, Medalhao, BarraHub) e StyleBoxTexture por estado; UIKit.button(texto, acao, tipo) escolhe o tipo. Sem as imagens, o tema usa StyleBoxFlat nas mesmas cores.",
+          "uso_no_jogo": "Todos os botões",
+          "destino": "res://art/ui/tema_botoes.tres",
+          "liga_com": "scripts/ui/components/ui_kit.gd → button"
+        }
+      ]
+    }
+  ],
+  "reservado_para_futuro": {
+    "_doc": "Tipos de botão novos entram como novas peças com os mesmos 5 estados.",
+    "ideias": ["fonte medieval legível de licença livre para rótulos", "botão de toggle (interruptor de alavanca de madeira) para opções", "sons de clique por material (madeira, papel, cera) no Juice v3", "variação 'reconstruída' da barra do hub para o fim do Ato 2"]
+  }
+}

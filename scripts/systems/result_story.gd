@@ -40,6 +40,11 @@ static func build(gs: GuildState, mission: Dictionary, party: Array, sc: Diction
 		if not cond.is_empty():
 			var kind := "virtude" if h.condition_kind == "virtude" else "aflicao"
 			cands.append([3.0, kind, [id], {"condicao": String(cond.name).to_lower()}])
+	var povo := int(sc.get("povo", 0))
+	if povo != 0:
+		var famous := party.duplicate()
+		famous.sort_custom(func(x, y): return int(gs.heroes[x].get("fame", 0)) > int(gs.heroes[y].get("fame", 0)))
+		cands.append([2.0 + absi(povo), "povo" if povo > 0 else "povo_contra", [famous[0] if povo > 0 else famous[-1]], {}])
 	if int(sc.get("powers", 0)) >= 2:
 		cands.append([float(sc.powers), "poderes", [], {}])
 	if not route.is_empty():

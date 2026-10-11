@@ -55,6 +55,12 @@ static func _candidate_pairs(gs: GuildState, ev: Dictionary) -> Array:
 				continue
 			if ev.has("requires_flag") and not gs.flags.has(ev.requires_flag):
 				continue
+			if ev.has("reveals") and (gs.upgrades_revealed.has(ev.reveals) or gs.upgrades_owned.has(ev.reveals)):
+				continue   # a melhoria que a cena revelaria já é conhecida
+			if ev.has("min_esteem") and gs.town_esteem < int(ev.min_esteem):
+				continue
+			if ev.has("max_esteem") and gs.town_esteem > int(ev.max_esteem):
+				continue
 			if ev.has("max") and v > int(ev.max):
 				continue
 			out.append([a, b])
@@ -84,5 +90,36 @@ static func resolve_backstage(gs: GuildState, bs: Dictionary, choice: Dictionary
 		var id: String = a if who == "a" else b
 		gs.heroes[id].fatigue = clampi(gs.heroes[id].fatigue + int(choice.fatigue[who]), 0, 2)
 		lines.append("%s ficou %s." % [gs.heroes[id].name, GuildState.FATIGUE_NAMES[gs.heroes[id].fatigue].to_lower()])
+	for who in choice.get("fame", {}):
+		var l := Town.change_fame(gs, a if who == "a" else b, int(choice.fame[who]))
+		if l != "":
+			lines.append(l)
+	if choice.has("esteem"):
+		var l := Town.change_esteem(gs, int(choice.esteem))
+		if l != "":
+			lines.append(l)
+	for who in choice.get("stress", {}):
+		var id: String = a if who == "a" else b
+		var n := int(choice.stress[who])
+		if n > 0:
+			lines.append_array(Mind.add_stress(gs, id, n))
+		else:
+			Mind.relieve(gs, id, -n)
+		lines.append("%s: estresse %+d." % [gs.heroes[id].name, n])
+	if choice.has("gold"):
+		gs.gold = maxi(0, gs.gold + int(choice.gold))
+		lines.append("Ouro da guilda %+d." % int(choice.gold))
+	if choice.has("reveal_upgrade") and not gs.upgrades_revealed.has(choice.reveal_upgrade):
+		gs.upgrades_revealed.append(choice.reveal_upgrade)
+		for up in gs.upgrades_data.upgrades:
+			if up.id == choice.reveal_upgrade:
+				lines.append("✦ Nova melhoria disponível na Guilda: %s (%d ouro)." % [up.name, int(up.cost)])
 	bs.done = true
 	return lines
+
+
+## "" se a escolha pode ser feita; senão, o motivo (ex.: custo em ouro).
+static func choice_block(gs: GuildState, choice: Dictionary) -> String:
+	if int(choice.get("gold", 0)) < 0 and gs.gold < -int(choice.gold):
+		return "Precisa de %d de ouro" % -int(choice.gold)
+	return ""

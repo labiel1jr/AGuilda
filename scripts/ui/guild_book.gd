@@ -103,6 +103,7 @@ func _left_page(id: String, h: Dictionary) -> Control:
 	col.add_child(_rule())
 	col.add_child(_pips_row("PV", h.hp, h.hp_max, C_HP, "%d/%d" % [h.hp, h.hp_max]))
 	col.add_child(_pips_row("Moral", h.morale, 10, C_GOLD, "%d/10" % h.morale))
+	col.add_child(_text("Fama no povo: %s (%+d)" % [Town.fame_label(int(h.get("fame", 0))), int(h.get("fame", 0))], 13, C_INK_SOFT, true))
 	col.add_child(_pips_row("Estresse", int(h.get("stress", 0)), int(gs.traits_data.stress_max), C_RUBRIC, Mind.stress_label(gs, h)))
 	var cond: Dictionary = Mind.condition_info(gs, h)
 	var marks := HFlowContainer.new()
@@ -329,7 +330,8 @@ func _page(content: Control, side: String = "esquerda") -> PanelContainer:
 		fs.texture = load("res://art/book/moldura_pagina.png")
 		fs.set_texture_margin_all(40)
 		fs.draw_center = false
-		fs.set_content_margin_all(22)
+		fs.set_content_margin_all(26)
+		fs.content_margin_top = 34   # o ornamento do canto não cobre o primeiro título
 		frame.add_theme_stylebox_override("panel", fs)
 		frame.add_child(content)
 		p.add_child(frame)
@@ -449,6 +451,7 @@ func _aff_bar(v: int) -> Control:
 
 func _heading(t: String) -> Control:
 	var l := _text(t.to_upper(), 13, C_RUBRIC, false)
+	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART   # título longo não pode alargar a página
 	return l
 
 

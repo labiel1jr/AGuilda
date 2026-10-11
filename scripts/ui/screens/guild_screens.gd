@@ -17,8 +17,10 @@ static func show_backstage(ui: GuildUI, bs: Dictionary) -> void:
 	p.add_child(UIKit.para(ui.gs.backstage_text(bs, bs.event.text), 17, GuildUI.C_INK))
 	ui.root.add_child(UIKit.label("O que você faz?", 15, GuildUI.C_TEXT))
 	for choice in bs.event.choices:
-		var b := UIKit.button(ui.gs.backstage_text(bs, choice.label), ui._on_backstage_choice.bind(bs, choice))
+		var block := Backstage.choice_block(ui.gs, choice)
+		var b := UIKit.button(ui.gs.backstage_text(bs, choice.label) + ("   (%s)" % block if block != "" else ""), ui._on_backstage_choice.bind(bs, choice))
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.disabled = block != ""
 		ui.root.add_child(b)
 	ui.root.add_child(UIKit.spacer_v())
 	ui.root.add_child(UIKit.button("◀ Voltar (decidir depois)", ui.show_hub))
@@ -41,13 +43,20 @@ static func on_backstage_choice(ui: GuildUI, bs: Dictionary, choice: Dictionary)
 
 static func show_relations(ui: GuildUI) -> void:
 	ui._clear()
-	ui.root.add_child(UIKit.label("Quadro de Relações", 24, GuildUI.C_GOLD))
+	var top := HBoxContainer.new()
+	ui.root.add_child(top)
+	top.add_child(UIKit.label("Quadro de Relações", 24, GuildUI.C_GOLD))
+	top.add_child(UIKit.spacer())
+	top.add_child(UIKit.button("◀ Voltar", ui.show_hub))   # no topo: a grade pode passar da altura da tela
 	ui.root.add_child(UIKit.label("Valor do par = o menor dos dois lados. Passe o mouse para ver os dois valores e o vínculo.", 13, GuildUI.C_MUTED))
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	ui.root.add_child(scroll)
 	var grid := GridContainer.new()
 	grid.columns = ui.gs.hero_order.size() + 1
 	grid.add_theme_constant_override("h_separation", 6)
 	grid.add_theme_constant_override("v_separation", 6)
-	ui.root.add_child(grid)
+	scroll.add_child(grid)
 	grid.add_child(UIKit.label("", 14, GuildUI.C_TEXT))
 	for id in ui.gs.hero_order:
 		grid.add_child(Widgets.hero_header(ui, id, true))
@@ -71,7 +80,6 @@ static func show_relations(ui: GuildUI) -> void:
 			var cell := UIKit.cell("%+d%s" % [v, " ✦" if lbl != "" else ""], UIKit.aff_color(v).darkened(0.55), GuildUI.C_TEXT, tip)
 			cell.custom_minimum_size = Vector2(96, 52)
 			grid.add_child(cell)
-	ui.root.add_child(UIKit.spacer_v())
 	ui.root.add_child(UIKit.button("◀ Voltar", ui.show_hub))
 
 
@@ -101,7 +109,7 @@ static func show_upgrades(ui: GuildUI) -> void:
 	grid.add_theme_constant_override("h_separation", 12)
 	grid.add_theme_constant_override("v_separation", 12)
 	ui.root.add_child(grid)
-	for up in ui.gs.upgrades_data.upgrades:
+	for up in Economy.visible_upgrades(ui.gs):
 		var owned: bool = ui.gs.has_upgrade(up.id)
 		var card := UIKit.panel(GuildUI.C_PARCHMENT if owned else Color("#4a3a2a"))
 		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -109,7 +117,7 @@ static func show_upgrades(ui: GuildUI) -> void:
 		var col := VBoxContainer.new()
 		card.add_child(col)
 		var ink := GuildUI.C_INK if owned else GuildUI.C_TEXT
-		col.add_child(UIKit.label(("✓ " if owned else "") + up.name, 18, ink))
+		col.add_child(UIKit.label(("✓ " if owned else ("✦ " if up.get("hidden", false) else "")) + up.name, 18, ink))
 		col.add_child(UIKit.para(up.desc, 13, ink))
 		var row := HBoxContainer.new()
 		col.add_child(row)
@@ -121,6 +129,9 @@ static func show_upgrades(ui: GuildUI) -> void:
 			GuildScreens.show_upgrades(ui))
 		b.disabled = reason != ""
 		row.add_child(b)
+	var hidden_left: int = ui.gs.upgrades_data.upgrades.size() - Economy.visible_upgrades(ui.gs).size()
+	if hidden_left > 0:
+		ui.root.add_child(UIKit.para("✦ Há %d melhoria(s) ainda por descobrir. Preste atenção aos bastidores: às vezes um aventureiro traz uma ideia — ou alguém — para a guilda." % hidden_left, 14, GuildUI.C_GOLD))
 	var slots_info := "Slots de missão por dia: %d (Reputação 5 → 2 slots · Reputação 12 → 3 slots)" % ui.gs.slots()
 	ui.root.add_child(UIKit.label(slots_info, 14, GuildUI.C_TEXT))
 	ui.root.add_child(UIKit.spacer_v())

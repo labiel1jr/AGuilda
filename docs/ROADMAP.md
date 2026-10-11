@@ -42,6 +42,8 @@ Objetivo: uma experiência pequena, completa e jogável que mostre por que A Gui
 - [x] Resultado explicado em linguagem narrativa ("Vera e Bram lutaram como uma só lâmina"), com a soma do score como detalhe opcional
 - [x] Primeiras cenas do resultado integradas (Vera e Bram, Lyssa e Mira, Theo e Lyssa)
 - [ ] Restante das cenas do resultado (`art/specs/cenas/cenas_resultado.json`: genéricas por momento, derrota de Vera e Bram, outros pares)
+- [x] Bastidores que evoluem relações, fama no povo e estima da cidade, e revelam melhorias da guilda (13 cenas novas)
+- [x] Quadro de avisos no estilo de vila de RPG (por código; arte especificada em `quadro_avisos.json`)
 - [ ] Feedback visual de relações (o que mudou entre quem, e por quê)
 - [x] Game juice v1 (só código): selo, dado, placar, momentos de personagem, transições — ver Changelog
 - [x] Dado d20 arremessado na cena nos testes (provisório por código; sprites especificados em `dado.json`)

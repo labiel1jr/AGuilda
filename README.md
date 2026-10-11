@@ -15,16 +15,16 @@ O jogo não é sobre combate. É sobre gestão de gente complicada com poder de 
 O jogo é dividido em **atos** e **capítulos**. Cada capítulo abre com uma cena, dura alguns dias e tem um objetivo; o resultado muda o texto dos capítulos seguintes. São dois atos, com dois capítulos cada.
 
 1. **Mural de Quests** — pedidos chegam a cada dia, com o cartaz do inimigo, risco, prazo e atributos exigidos.
-2. **Montagem de Party** — escolha de 1 a 4 aventureiros. O preview mostra a afinidade, o estresse e as condições de cada um, mas nunca o resultado.
+2. **Montagem de Party** — escolha de 1 a 4 aventureiros pelos cartões com retrato e nome. O preview mostra a afinidade, o estresse e as condições de cada um, mas nunca o resultado.
 3. **Despacho** — o **Selo de Cera** carimba a decisão.
 4. **Mapa Mágico (expedição)** — a missão vira um mapa de pergaminho com caminhos e bifurcações; os heróis andam como **miniaturas de RPG de mesa**. Em cada encruzilhada um herói **chama pelo Mapa Mágico** e você escolhe o próximo ponto: combate, tesouro, mercador, acampamento, encontro, atalho, estranho, santuário ou o guarda do alvo. Os testes são um **d20 arremessado na cena** + o atributo do herói mais apto.
 5. **Resolução** — a barra do score enche até o veredito: Sucesso Limpo, Sucesso com Custo ou Falha com Revelação. O jogo conta **por que** deu assim, em até três momentos (*"Vera e Bram lutaram como uma só lâmina."*, *"Theo e Lyssa não se entenderam — e isso custou caro."*); a soma do score fica em "ver detalhes". Falhar nunca é beco sem saída: é gancho de história.
 6. **Vínculos** — quem vai junto se aproxima ou se afasta. Ao cruzar limiares, você decide o que existe entre eles (Amizade, Mentoria, Rivalidade, Romance...), e isso desbloqueia **Ações de Vínculo**.
 7. **Estresse** — expedições pesam. No limite, o herói **quebra** (Paranoico, Desesperado...) ou **se supera** (Corajoso, Inspirador...), e pode ganhar traços permanentes. Ele não volta só ferido: volta diferente.
-8. **Bastidores** — cenas curtas na guilda (taverna, treino, brigas, segredos). Você escolhe como reagir.
+8. **Bastidores** — cenas curtas na guilda e na cidade (taverna, treino, a praça, a viúva, o beco dos doentes...). Você escolhe como reagir: a escolha mexe na relação entre os heróis, na **Fama** de cada um no povo e na **Estima da cidade** pela guilda — e às vezes revela uma **melhoria nova** (a forja do ferreiro que Vera trouxe, a biblioteca que Mira salvou, a capela de Corin...).
 9. **Evolução** — XP, níveis, magias, talentos, equipamento, saque e mercado. Conjuradores preparam uma magia antes do despacho.
 10. **Descanso** — mande um herói descansar: recupera fadiga, PV, magias, moral, alivia o estresse e cura aflições.
-11. **Guilda** — gaste o ouro em melhorias: Quadro de Relações, Enfermaria, Arquivo e Salão de Treinamento.
+11. **Guilda** — gaste o ouro em melhorias: Quadro de Relações, Enfermaria, Arquivo, Salão de Treinamento e as que os bastidores revelarem (Forja, Biblioteca, Capela, Estábulo, Taverna), que melhoram todos os heróis. A cidade grata faz preço de amigo e paga melhor; a desconfiada cobra mais.
 12. **Encerrar o dia** — o dia vira, missões expiram, novos pedidos chegam. Quem não sai junto vai se afastando; quem fica com moral baixa dá um ultimato.
 
 ### Galeria
@@ -75,6 +75,7 @@ O histórico de cada versão está no [Changelog](docs/CHANGELOG.md) e o que vem
 | [Roadmap](docs/ROADMAP.md) | Prioridades até a v1.0 e depois |
 | [Changelog](docs/CHANGELOG.md) | Histórico de versões |
 | [Análise e Melhorias](docs/ANALISE_E_MELHORIAS.md) | Direção de design e plano de consolidação |
+| [Referências de RPG](docs/REFERENCIAS_RPG.md) | Princípios de RPG de mesa (campanha, aventuras, tempo livre, tesouro, magia, raças, monstros) adaptados ao jogo, para preencher dados e planejar melhorias |
 
 ## Rodar
 
@@ -94,7 +95,7 @@ Nome dos arquivos: `AGuilda-v<versão>-debug.apk` (ex.: `AGuilda-v0.9-debug.apk`
 | Caminho | Conteúdo |
 |---|---|
 | `scripts/core/game_state.gd` | Autoload `GameState`: estado da guilda, início de jogo, fim do dia e API pública |
-| `scripts/systems/` | Regras por assunto: relações, missões e despacho, capítulos, economia, saídas, bastidores, save, finais, resultado contado em frases |
+| `scripts/systems/` | Regras por assunto: relações, missões e despacho, capítulos, economia, cidade (fama e estima), saídas, bastidores, save, finais, resultado contado em frases |
 | `scripts/core/score_calc.gd` | Fórmula de score e limiares |
 | `scripts/core/hero_rpg.gd` | RPG: XP, nível, efeitos, equipamento, magias, saque, mercado |
 | `scripts/core/expedition.gd` | Expedição: grafo de nós, testes d20, efeitos e modificador da rota |
@@ -119,9 +120,9 @@ A regra de jogo fica em `scripts/core` e `scripts/systems`; a UI só lê o estad
 | `route.json` | Mapa de expedição: tipos de nó, pesos por bioma, eventos com testes e efeitos |
 | `traits.json` | Estresse, aflições, virtudes e traços |
 | `result_story.json` | Resultado contado em frases: momentos por tipo (sinergia, conflito, destaque, aflição, rota, sorte...), textos por resultado e frases/imagens próprias de pares |
-| `backstage.json` | Eventos de bastidor: condições, texto e escolhas com efeitos |
+| `backstage.json` | Eventos de bastidor: condições (par, afinidade, capítulo, flag, estima), texto e escolhas com efeitos (afinidade, moral, fadiga, estresse, fama, estima, ouro, revelar melhoria) |
 | `classes.json` / `items.json` | Classes, magias, talentos / itens, saque e mercado |
-| `upgrades.json` | Ouro inicial, recompensas e melhorias da guilda |
+| `upgrades.json` | Ouro inicial, recompensas, estima inicial da cidade e melhorias da guilda (comuns e ocultas, com efeitos nos heróis) |
 | `ultimatum.json` / `endings.json` | Ultimato por moral baixa / finais e desfechos |
 | `narration.json` / `book.json` | Narração do mapa / seções trancadas do Livro |
 
@@ -152,7 +153,7 @@ Adicione um objeto em `data/backstage.json`:
 ```
 
 - `min`/`max`: faixa de afinidade do par. `heroes`: fixa um ou os dois heróis (`null` = qualquer). `once`: aparece uma vez por jogo.
-- Efeitos: `aff` = [a→b, b→a], `morale` e `fatigue` por `a`/`b`. Mudanças de afinidade disparam os eventos de vínculo normalmente.
+- Efeitos: `aff` = [a→b, b→a], `morale`, `fatigue`, `stress` e `fame` por `a`/`b`; `esteem` (Estima da cidade); `gold` (negativo = custo, bloqueia a escolha sem ouro); `reveal_upgrade` (revela uma melhoria oculta de `upgrades.json`). Condições extras: `min_esteem`/`max_esteem` e `reveals` (a cena some quando a melhoria já é conhecida). Mudanças de afinidade disparam os eventos de vínculo normalmente.
 
 ### Criando eventos de rota
 

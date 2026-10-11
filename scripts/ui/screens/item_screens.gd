@@ -23,7 +23,7 @@ static func show_market(ui: GuildUI) -> void:
 	lcol.add_child(UIKit.label("À venda", 18, GuildUI.C_GOLD))
 	for iid in HeroRPG.shop_items(ui.gs):
 		var it := HeroRPG.item(ui.gs, iid)
-		lcol.add_child(ItemScreens.item_row(ui, it, "Comprar %d" % int(it.price), ui.gs.gold < int(it.price), func():
+		lcol.add_child(ItemScreens.item_row(ui, it, "Comprar %d" % HeroRPG.buy_price(ui.gs, iid), ui.gs.gold < HeroRPG.buy_price(ui.gs, iid), func():
 			HeroRPG.buy(ui.gs, iid)
 			ItemScreens.show_market(ui)))
 

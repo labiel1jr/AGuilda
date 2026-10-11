@@ -4,105 +4,214 @@
   "beats": {
     "sinergia": {
       "doc": "par com afinidade boa (Companheiros +4 ou mais)",
-      "texts": ["{a} e {b} lutaram como se fossem uma só pessoa.", "Entre {a} e {b}, um olhar bastava.", "{a} cobriu {b} sem precisar de uma palavra."],
-      "texts_falha": ["{a} e {b} lutaram juntos até o fim — não bastou.", "Nem a confiança entre {a} e {b} segurou o que veio."],
+      "texts": [
+        "{a} e {b} lutaram como se fossem uma só pessoa.",
+        "Entre {a} e {b}, um olhar bastava.",
+        "{a} cobriu {b} sem precisar de uma palavra."
+      ],
+      "texts_falha": [
+        "{a} e {b} lutaram juntos até o fim — não bastou.",
+        "Nem a confiança entre {a} e {b} segurou o que veio."
+      ],
       "image": "res://art/scenes/sinergia.png"
     },
     "laco_lendario": {
       "doc": "par em Dupla Lendária (+8)",
-      "texts": ["{a} e {b} já não lutam lado a lado: lutam como um só.", "Quem viu {a} e {b} juntos vai contar essa história por anos."],
+      "texts": [
+        "{a} e {b} já não lutam lado a lado: lutam como um só.",
+        "Quem viu {a} e {b} juntos vai contar essa história por anos."
+      ],
       "image": "res://art/scenes/laco_lendario.png"
     },
     "conflito": {
       "doc": "par em Tensão Velada ou Conflito Aberto",
-      "texts": ["{a} e {b} não se entenderam — e isso custou caro.", "{a} ignorou cada aviso de {b}.", "Entre {a} e {b}, cada ordem virava discussão."],
-      "texts_limpo": ["{a} e {b} mal se falaram, mas o trabalho saiu — por pouco."],
+      "texts": [
+        "{a} e {b} não se entenderam — e isso custou caro.",
+        "{a} ignorou cada aviso de {b}.",
+        "Entre {a} e {b}, cada ordem virava discussão."
+      ],
+      "texts_limpo": [
+        "{a} e {b} mal se falaram, mas o trabalho saiu — por pouco."
+      ],
       "image": "res://art/scenes/conflito.png"
     },
     "acao_vinculo": {
       "doc": "Ação de Vínculo ativa (texto por ação; {acao} = nome)",
-      "texts": ["{a} e {b} usaram o que construíram juntos: {acao}."],
+      "texts": [
+        "{a} e {b} usaram o que construíram juntos: {acao}."
+      ],
       "por_acao": {
-        "Impulso do Mentor": ["{a} guiou {b} passo a passo, e {b} lutou acima do próprio nível."],
-        "Esforço Extra": ["{a} e {b} deram tudo um pelo outro — e vão sentir isso amanhã."],
-        "Competição": ["{a} e {b} disputaram cada golpe, e o inimigo pagou por isso."],
-        "Sincronia Perfeita": ["{a} e {b} se moveram como um só corpo."],
-        "Cobertura Mútua": ["{a} não deixou {b} cair."]
+        "Impulso do Mentor": [
+          "{a} guiou {b} passo a passo, e {b} lutou acima do próprio nível."
+        ],
+        "Esforço Extra": [
+          "{a} e {b} deram tudo um pelo outro — e vão sentir isso amanhã."
+        ],
+        "Competição": [
+          "{a} e {b} disputaram cada golpe, e o inimigo pagou por isso."
+        ],
+        "Sincronia Perfeita": [
+          "{a} e {b} se moveram como um só corpo."
+        ],
+        "Cobertura Mútua": [
+          "{a} não deixou {b} cair."
+        ]
       },
       "image": "res://art/scenes/acao_vinculo.png"
     },
     "destaque": {
       "doc": "membro com o atributo principal da missão alto (7+); texto por atributo",
       "por_atributo": {
-        "forca": ["A força de {heroi} abriu caminho onde não havia.", "{heroi} derrubou o que estava no caminho — e o que não estava."],
-        "destreza": ["{heroi} foi rápido(a) demais para eles.", "Ninguém viu {heroi} chegar."],
-        "conhecimento": ["{heroi} entendeu o que os outros só viam.", "Foi a cabeça de {heroi} que resolveu."],
-        "carisma": ["{heroi} falou, e até os inimigos escutaram.", "A voz de {heroi} virou o jogo."],
-        "resistencia": ["{heroi} aguentou o que ninguém mais aguentaria.", "{heroi} ficou de pé quando todos caíram."]
+        "forca": [
+          "A força de {heroi} abriu caminho onde não havia.",
+          "{heroi} derrubou o que estava no caminho — e o que não estava."
+        ],
+        "destreza": [
+          "{heroi} foi rápido(a) demais para eles.",
+          "Ninguém viu {heroi} chegar."
+        ],
+        "conhecimento": [
+          "{heroi} entendeu o que os outros só viam.",
+          "Foi a cabeça de {heroi} que resolveu."
+        ],
+        "carisma": [
+          "{heroi} falou, e até os inimigos escutaram.",
+          "A voz de {heroi} virou o jogo."
+        ],
+        "resistencia": [
+          "{heroi} aguentou o que ninguém mais aguentaria.",
+          "{heroi} ficou de pé quando todos caíram."
+        ]
       },
       "image": "res://art/scenes/destaque_{atributo}.png"
     },
     "cansaco": {
       "doc": "membro Cansado no despacho",
-      "texts": ["{heroi} chegou cansado(a) e rendeu menos do que podia.", "O cansaço de {heroi} pesou em cada passo."],
+      "texts": [
+        "{heroi} chegou cansado(a) e rendeu menos do que podia.",
+        "O cansaço de {heroi} pesou em cada passo."
+      ],
       "image": "res://art/scenes/cansaco.png"
     },
     "aflicao": {
       "doc": "membro com aflição",
-      "texts": ["{heroi}, {condicao}, atrapalhou mais do que ajudou.", "Com {heroi} {condicao}, o grupo andou pisando em ovos."],
+      "texts": [
+        "{heroi}, {condicao}, atrapalhou mais do que ajudou.",
+        "Com {heroi} {condicao}, o grupo andou pisando em ovos."
+      ],
       "image": "res://art/scenes/aflicao.png"
     },
     "virtude": {
       "doc": "membro com virtude",
-      "texts": ["{heroi}, {condicao}, ergueu o grupo inteiro.", "Foi {heroi}, {condicao}, quem segurou a linha."],
+      "texts": [
+        "{heroi}, {condicao}, ergueu o grupo inteiro.",
+        "Foi {heroi}, {condicao}, quem segurou a linha."
+      ],
       "image": "res://art/scenes/virtude.png"
     },
     "poderes": {
       "doc": "itens, talentos e magias somaram",
-      "texts": ["O equipamento e a magia preparada fizeram diferença.", "Bem armados e preparados, não deram chance ao acaso."],
+      "texts": [
+        "O equipamento e a magia preparada fizeram diferença.",
+        "Bem armados e preparados, não deram chance ao acaso."
+      ],
       "image": "res://art/scenes/poderes.png"
     },
     "preparacao": {
       "doc": "preparação acumulada na rota",
-      "texts": ["A preparação no caminho fez diferença: o alvo foi pego de surpresa.", "O que descobriram na estrada valeu mais que qualquer espada."],
+      "texts": [
+        "A preparação no caminho fez diferença: o alvo foi pego de surpresa.",
+        "O que descobriram na estrada valeu mais que qualquer espada."
+      ],
       "image": "res://art/scenes/preparacao.png"
     },
     "fome": {
       "doc": "passos sem provisões",
-      "texts": ["A fome da estrada pesou nas pernas e na cabeça."],
+      "texts": [
+        "A fome da estrada pesou nas pernas e na cabeça."
+      ],
       "image": "res://art/scenes/fome.png"
     },
     "desgaste": {
       "doc": "membros chegaram muito feridos",
-      "texts": ["Chegaram ao alvo feridos demais para lutar inteiros."],
+      "texts": [
+        "Chegaram ao alvo feridos demais para lutar inteiros."
+      ],
       "image": "res://art/scenes/desgaste.png"
     },
     "sorte": {
       "doc": "sorte máxima",
-      "texts": ["E, dessa vez, os deuses sorriram.", "Um golpe de sorte que ninguém vai admitir."],
+      "texts": [
+        "E, dessa vez, os deuses sorriram.",
+        "Um golpe de sorte que ninguém vai admitir."
+      ],
       "image": "res://art/scenes/sorte.png"
     },
     "azar": {
       "doc": "azar máximo",
-      "texts": ["Tudo o que podia dar errado deu.", "O azar sentou à mesa com eles."],
+      "texts": [
+        "Tudo o que podia dar errado deu.",
+        "O azar sentou à mesa com eles."
+      ],
       "image": "res://art/scenes/azar.png"
     },
     "sozinho": {
       "doc": "missão sem sucesso limpo feita por um herói sozinho",
-      "texts": ["{heroi} foi sozinho(a) — e sentiu o peso disso."],
+      "texts": [
+        "{heroi} foi sozinho(a) — e sentiu o peso disso."
+      ],
       "image": "res://art/scenes/sozinho.png"
+    },
+    "povo": {
+      "doc": "missão de diplomacia em que a fama do grupo ajudou",
+      "texts": [
+        "A cidade conhece {heroi}: as portas se abriram antes de baterem.",
+        "Bastou dizerem que {heroi} estava junto, e a conversa mudou de tom."
+      ],
+      "image": "res://art/scenes/povo.png"
+    },
+    "povo_contra": {
+      "doc": "missão de diplomacia em que a má fama atrapalhou",
+      "texts": [
+        "Ninguém quis ouvir {heroi}. A má fama chegou antes dele(a).",
+        "Quando viram {heroi}, as janelas se fecharam."
+      ],
+      "image": "res://art/scenes/povo_contra.png"
     }
   },
   "pairs": {
     "bram|vera": {
-      "sinergia": {"texts": ["Vera e Bram lutaram como uma só lâmina."], "texts_falha": ["Vera ficou na frente de Bram até o fim. Não bastou."], "image": "res://art/scenes/par_bram_vera_sinergia.png"},
-      "acao_vinculo": {"texts": ["Vera mostrou o golpe uma vez. Bram acertou na segunda."], "image": "res://art/scenes/par_bram_vera_sinergia.png"}
+      "sinergia": {
+        "texts": [
+          "Vera e Bram lutaram como uma só lâmina."
+        ],
+        "texts_falha": [
+          "Vera ficou na frente de Bram até o fim. Não bastou."
+        ],
+        "image": "res://art/scenes/par_bram_vera_sinergia.png"
+      },
+      "acao_vinculo": {
+        "texts": [
+          "Vera mostrou o golpe uma vez. Bram acertou na segunda."
+        ],
+        "image": "res://art/scenes/par_bram_vera_sinergia.png"
+      }
     },
     "lyssa|mira": {
-      "sinergia": {"texts": ["Lyssa abriu a porta; Mira já sabia o que havia atrás dela."], "image": "res://art/scenes/par_lyssa_mira_sinergia.png"}
+      "sinergia": {
+        "texts": [
+          "Lyssa abriu a porta; Mira já sabia o que havia atrás dela."
+        ],
+        "image": "res://art/scenes/par_lyssa_mira_sinergia.png"
+      }
     },
     "lyssa|theo": {
-      "conflito": {"texts": ["Theo chamou de roubo. Lyssa chamou de plano. O inimigo chamou de oportunidade."], "image": "res://art/scenes/par_lyssa_theo_conflito.png"}
+      "conflito": {
+        "texts": [
+          "Theo chamou de roubo. Lyssa chamou de plano. O inimigo chamou de oportunidade."
+        ],
+        "image": "res://art/scenes/par_lyssa_theo_conflito.png"
+      }
     }
   }
 }

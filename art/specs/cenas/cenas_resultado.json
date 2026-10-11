@@ -25,7 +25,7 @@
     "derrota": "dessaturado, chuva ou poeira",
     "magia": "azul arcano (#5b7fbf) e roxo (#8a6fb0)"
   },
-  "total_assets": 22,
+  "total_assets": 24,
   "grupos": [
     {
       "id": "pares",
@@ -106,7 +106,7 @@
         {
           "id": "cena_sinergia",
           "nome": "Sinergia",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P1",
           "tamanho_final_px": [
             480,
@@ -114,12 +114,13 @@
           ],
           "descricao": "Duas silhuetas de costas uma para a outra, armas em punho, cercadas, luz dourada entre elas.",
           "uso_no_jogo": "Par com afinidade boa",
-          "destino": "res://art/scenes/sinergia.png"
+          "destino": "res://art/scenes/sinergia.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_laco_lendario",
           "nome": "Dupla lendária",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P2",
           "tamanho_final_px": [
             480,
@@ -127,12 +128,13 @@
           ],
           "descricao": "Duas silhuetas em pleno salto, contra um sol enorme, como numa tapeçaria heroica.",
           "uso_no_jogo": "Par em Dupla Lendária",
-          "destino": "res://art/scenes/laco_lendario.png"
+          "destino": "res://art/scenes/laco_lendario.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_conflito",
           "nome": "Conflito",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P1",
           "tamanho_final_px": [
             480,
@@ -140,12 +142,13 @@
           ],
           "descricao": "Duas mãos puxando o mesmo mapa rasgado ao meio, luz vermelha, sombras duras.",
           "uso_no_jogo": "Par em tensão ou conflito",
-          "destino": "res://art/scenes/conflito.png"
+          "destino": "res://art/scenes/conflito.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_acao_vinculo",
           "nome": "Ação de Vínculo",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P1",
           "tamanho_final_px": [
             480,
@@ -153,12 +156,13 @@
           ],
           "descricao": "Duas mãos de luvas diferentes segurando juntas o mesmo cabo de espada, fios dourados entrelaçados em volta.",
           "uso_no_jogo": "Ação de Vínculo ativa",
-          "destino": "res://art/scenes/acao_vinculo.png"
+          "destino": "res://art/scenes/acao_vinculo.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_destaque_forca",
           "nome": "Destaque: Força",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P1",
           "tamanho_final_px": [
             480,
@@ -166,12 +170,13 @@
           ],
           "descricao": "Um portão de madeira explodindo para dentro, um vulto de costas com o ombro à frente.",
           "uso_no_jogo": "Destaque de Força",
-          "destino": "res://art/scenes/destaque_forca.png"
+          "destino": "res://art/scenes/destaque_forca.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_destaque_destreza",
           "nome": "Destaque: Destreza",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P1",
           "tamanho_final_px": [
             480,
@@ -179,12 +184,13 @@
           ],
           "descricao": "Rastro de movimento entre telhados à noite, uma adaga brilhando no ar.",
           "uso_no_jogo": "Destaque de Destreza",
-          "destino": "res://art/scenes/destaque_destreza.png"
+          "destino": "res://art/scenes/destaque_destreza.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_destaque_conhecimento",
           "nome": "Destaque: Conhecimento",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P1",
           "tamanho_final_px": [
             480,
@@ -192,12 +198,13 @@
           ],
           "descricao": "Runas acendendo numa parede de pedra, uma mão com giz completando o último símbolo.",
           "uso_no_jogo": "Destaque de Conhecimento",
-          "destino": "res://art/scenes/destaque_conhecimento.png"
+          "destino": "res://art/scenes/destaque_conhecimento.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_destaque_carisma",
           "nome": "Destaque: Carisma",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P1",
           "tamanho_final_px": [
             480,
@@ -205,12 +212,13 @@
           ],
           "descricao": "Uma multidão de silhuetas baixando as armas diante de um vulto de braço erguido.",
           "uso_no_jogo": "Destaque de Carisma",
-          "destino": "res://art/scenes/destaque_carisma.png"
+          "destino": "res://art/scenes/destaque_carisma.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_destaque_resistencia",
           "nome": "Destaque: Resistência",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P1",
           "tamanho_final_px": [
             480,
@@ -218,12 +226,13 @@
           ],
           "descricao": "Um vulto de pé sob chuva de flechas, escudo cravejado, os outros caídos atrás dele.",
           "uso_no_jogo": "Destaque de Resistência",
-          "destino": "res://art/scenes/destaque_resistencia.png"
+          "destino": "res://art/scenes/destaque_resistencia.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_cansaco",
           "nome": "Cansaço",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P2",
           "tamanho_final_px": [
             480,
@@ -231,12 +240,13 @@
           ],
           "descricao": "Botas enlameadas arrastando pela estrada, espada arrastada no chão.",
           "uso_no_jogo": "Membro cansado",
-          "destino": "res://art/scenes/cansaco.png"
+          "destino": "res://art/scenes/cansaco.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_aflicao",
           "nome": "Aflição",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P1",
           "tamanho_final_px": [
             480,
@@ -244,12 +254,13 @@
           ],
           "descricao": "Um vulto encolhido junto à fogueira, sombras alongadas com olhos nas árvores, tons vermelhos.",
           "uso_no_jogo": "Membro aflito",
-          "destino": "res://art/scenes/aflicao.png"
+          "destino": "res://art/scenes/aflicao.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_virtude",
           "nome": "Virtude",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P1",
           "tamanho_final_px": [
             480,
@@ -257,7 +268,8 @@
           ],
           "descricao": "Um vulto erguendo a arma no alto de uma pedra, luz dourada rasgando as nuvens.",
           "uso_no_jogo": "Membro com virtude",
-          "destino": "res://art/scenes/virtude.png"
+          "destino": "res://art/scenes/virtude.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_poderes",
@@ -349,6 +361,32 @@
           "descricao": "Um vulto pequeno numa estrada enorme e vazia ao anoitecer.",
           "uso_no_jogo": "Herói que foi sozinho e não teve sucesso limpo",
           "destino": "res://art/scenes/sozinho.png"
+        },
+        {
+          "id": "cena_povo",
+          "nome": "Povo a favor",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Portas e janelas da rua se abrindo, gente acenando para um vulto que chega com o corvo da guilda no manto.",
+          "uso_no_jogo": "Fama do grupo ajudou numa missão de diplomacia",
+          "destino": "res://art/scenes/povo.png"
+        },
+        {
+          "id": "cena_povo_contra",
+          "nome": "Povo contra",
+          "status": "planejado",
+          "prioridade": "P2",
+          "tamanho_final_px": [
+            480,
+            200
+          ],
+          "descricao": "Janelas se fechando, uma porta batendo, olhares desconfiados sobre um vulto na rua.",
+          "uso_no_jogo": "Má fama atrapalhou numa missão de diplomacia",
+          "destino": "res://art/scenes/povo_contra.png"
         }
       ]
     }

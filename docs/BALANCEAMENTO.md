@@ -141,6 +141,23 @@ Pesos de nó por bioma estão em `route.json → weights`; uma missão pode sobr
 
 ---
 
+## 6.1 Cidade e melhorias (`town_system.gd`, `upgrades.json`)
+
+| Constante | Valor |
+|---|---|
+| Estima inicial / faixa | 3 / 0 a 20 (desconfiada ≤2 · indiferente ≤6 · simpática ≤11 · grata ≤16 · devota) |
+| Fama inicial / faixa | 0 / −5 a 10 |
+| Missão na cidade ou estrada | limpo: estima +1 e fama +1 para o grupo · falha: −1 |
+| Missão expirada | estima −1 |
+| Preços do mercado | estima ≤2: ×1,2 · ≥12: ×0,9 · ≥17: ×0,8 |
+| Recompensa | estima ≥12: ×1,15 |
+| Termo Povo (diplomacia) | fama média ≥8: +2 · ≥5: +1 · ≤−3: −1 |
+| Melhorias ocultas | Forja 70 (rep 2), Biblioteca 80 (rep 3), Capela 90 (rep 3), Estábulo 100 (rep 4), Taverna 60 (rep 2) |
+
+Melhorias de grupo (`score`, `mission_type`, `affinity`) entram uma vez no score; as demais valem para cada herói.
+
+Nos 13 bastidores novos, as escolhas de "recusar" não tiram moral: a primeira versão tirava, e as saídas de heróis na simulação aleatória subiram de ~140 para 220. Depois do ajuste ficaram entre ~155 e ~180 (a simulação escolhe ao acaso e os bastidores novos também mexem em estresse).
+
 ## 7. Simulação
 
 `sim_test.gd` roda **150 partidas aleatórias** completas: parties, magias, caminhos e opções da rota escolhidos ao acaso; descansa quem pede; compra todas as melhorias possíveis. É uma política **ruim de propósito** — mede o piso do jogo, não a experiência de um jogador que pensa.

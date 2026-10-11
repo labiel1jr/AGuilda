@@ -52,13 +52,21 @@
     },
     "../cenas/cenas_resultado.json": {
       "titulo": "Cenas do resultado",
-      "total": 22
+      "total": 24
+    },
+    "quadro_avisos.json": {
+      "titulo": "Quadro de avisos",
+      "total": 7
+    },
+    "botoes.json": {
+      "titulo": "Botões",
+      "total": 9
     }
   },
   "resumo_por_prioridade": {
-    "P0": 84,
-    "P1": 127,
-    "P2": 83,
+    "P0": 87,
+    "P1": 134,
+    "P2": 89,
     "P3": 17
   },
   "assets": [
@@ -1034,8 +1042,9 @@
       "grupo": "props",
       "familia": "pixel_hd",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/guild/props/mural.png"
+      "status": "cancelado",
+      "destino": "res://art/guild/props/mural.png",
+      "observacoes": "substituído por quadro_avisos.json"
     },
     {
       "id": "guilda_quadro_relacoes",
@@ -1445,8 +1454,9 @@
       "grupo": "molduras",
       "familia": "pergaminho_ui",
       "prioridade": "P0",
-      "status": "planejado",
-      "destino": "res://art/ui/botao.png"
+      "status": "cancelado",
+      "destino": "res://art/ui/botao.png",
+      "observacoes": "substituído por botoes.json"
     },
     {
       "id": "ui_aba",
@@ -3070,8 +3080,9 @@
       "grupo": "genericas",
       "familia": "pixel_hd",
       "prioridade": "P1",
-      "status": "planejado",
-      "destino": "res://art/scenes/sinergia.png"
+      "status": "integrado",
+      "destino": "res://art/scenes/sinergia.png",
+      "observacoes": "cartão do resultado"
     },
     {
       "id": "cena_laco_lendario",
@@ -3080,8 +3091,9 @@
       "grupo": "genericas",
       "familia": "pixel_hd",
       "prioridade": "P2",
-      "status": "planejado",
-      "destino": "res://art/scenes/laco_lendario.png"
+      "status": "integrado",
+      "destino": "res://art/scenes/laco_lendario.png",
+      "observacoes": "cartão do resultado"
     },
     {
       "id": "cena_conflito",
@@ -3090,8 +3102,9 @@
       "grupo": "genericas",
       "familia": "pixel_hd",
       "prioridade": "P1",
-      "status": "planejado",
-      "destino": "res://art/scenes/conflito.png"
+      "status": "integrado",
+      "destino": "res://art/scenes/conflito.png",
+      "observacoes": "cartão do resultado"
     },
     {
       "id": "cena_acao_vinculo",
@@ -3100,8 +3113,9 @@
       "grupo": "genericas",
       "familia": "pixel_hd",
       "prioridade": "P1",
-      "status": "planejado",
-      "destino": "res://art/scenes/acao_vinculo.png"
+      "status": "integrado",
+      "destino": "res://art/scenes/acao_vinculo.png",
+      "observacoes": "cartão do resultado"
     },
     {
       "id": "cena_destaque_forca",
@@ -3110,8 +3124,9 @@
       "grupo": "genericas",
       "familia": "pixel_hd",
       "prioridade": "P1",
-      "status": "planejado",
-      "destino": "res://art/scenes/destaque_forca.png"
+      "status": "integrado",
+      "destino": "res://art/scenes/destaque_forca.png",
+      "observacoes": "cartão do resultado"
     },
     {
       "id": "cena_destaque_destreza",
@@ -3120,8 +3135,9 @@
       "grupo": "genericas",
       "familia": "pixel_hd",
       "prioridade": "P1",
-      "status": "planejado",
-      "destino": "res://art/scenes/destaque_destreza.png"
+      "status": "integrado",
+      "destino": "res://art/scenes/destaque_destreza.png",
+      "observacoes": "cartão do resultado"
     },
     {
       "id": "cena_destaque_conhecimento",
@@ -3130,8 +3146,9 @@
       "grupo": "genericas",
       "familia": "pixel_hd",
       "prioridade": "P1",
-      "status": "planejado",
-      "destino": "res://art/scenes/destaque_conhecimento.png"
+      "status": "integrado",
+      "destino": "res://art/scenes/destaque_conhecimento.png",
+      "observacoes": "cartão do resultado"
     },
     {
       "id": "cena_destaque_carisma",
@@ -3140,8 +3157,9 @@
       "grupo": "genericas",
       "familia": "pixel_hd",
       "prioridade": "P1",
-      "status": "planejado",
-      "destino": "res://art/scenes/destaque_carisma.png"
+      "status": "integrado",
+      "destino": "res://art/scenes/destaque_carisma.png",
+      "observacoes": "cartão do resultado"
     },
     {
       "id": "cena_destaque_resistencia",
@@ -3150,8 +3168,9 @@
       "grupo": "genericas",
       "familia": "pixel_hd",
       "prioridade": "P1",
-      "status": "planejado",
-      "destino": "res://art/scenes/destaque_resistencia.png"
+      "status": "integrado",
+      "destino": "res://art/scenes/destaque_resistencia.png",
+      "observacoes": "cartão do resultado"
     },
     {
       "id": "cena_cansaco",
@@ -3160,8 +3179,9 @@
       "grupo": "genericas",
       "familia": "pixel_hd",
       "prioridade": "P2",
-      "status": "planejado",
-      "destino": "res://art/scenes/cansaco.png"
+      "status": "integrado",
+      "destino": "res://art/scenes/cansaco.png",
+      "observacoes": "cartão do resultado"
     },
     {
       "id": "cena_aflicao",
@@ -3170,8 +3190,9 @@
       "grupo": "genericas",
       "familia": "pixel_hd",
       "prioridade": "P1",
-      "status": "planejado",
-      "destino": "res://art/scenes/aflicao.png"
+      "status": "integrado",
+      "destino": "res://art/scenes/aflicao.png",
+      "observacoes": "cartão do resultado"
     },
     {
       "id": "cena_virtude",
@@ -3180,8 +3201,9 @@
       "grupo": "genericas",
       "familia": "pixel_hd",
       "prioridade": "P1",
-      "status": "planejado",
-      "destino": "res://art/scenes/virtude.png"
+      "status": "integrado",
+      "destino": "res://art/scenes/virtude.png",
+      "observacoes": "cartão do resultado"
     },
     {
       "id": "cena_poderes",
@@ -3252,14 +3274,201 @@
       "prioridade": "P2",
       "status": "planejado",
       "destino": "res://art/scenes/sozinho.png"
+    },
+    {
+      "id": "quadro_avisos",
+      "nome": "Quadro de avisos (moldura 9-slice)",
+      "arquivo": "quadro_avisos.json",
+      "grupo": "quadro",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/guild/quadro_avisos.png",
+      "observacoes": "veio como cena (quadro na praça); recortado o quadro com telhado e usado como moldura 9-slice do painel"
+    },
+    {
+      "id": "cartaz_missao",
+      "nome": "Cartaz de missão (papel 9-slice)",
+      "arquivo": "quadro_avisos.json",
+      "grupo": "cartazes",
+      "familia": "pixel_hd",
+      "prioridade": "P0",
+      "status": "integrado",
+      "destino": "res://art/guild/cartaz_missao.png",
+      "observacoes": "papel de cada pedido (9-slice 40); o furo de prego da arte substitui o prego desenhado"
+    },
+    {
+      "id": "cartaz_selos",
+      "nome": "Selos de cera do cartaz",
+      "arquivo": "quadro_avisos.json",
+      "grupo": "cartazes",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "integrado",
+      "destino": "res://art/guild/selo_{var}.png",
+      "observacoes": "comum, urgente (último dia), pessoal (missão pessoal) e lendário no canto do cartaz; o urgente veio aplicado sobre um cartaz e foi recortado só o lacre"
+    },
+    {
+      "id": "cartaz_prego",
+      "nome": "Prego/tachinha",
+      "arquivo": "quadro_avisos.json",
+      "grupo": "cartazes",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "entregue",
+      "destino": "res://art/guild/prego_{var}.png",
+      "observacoes": "o furo da arte do cartaz já faz o papel; usado só se o cartaz não tiver arte"
+    },
+    {
+      "id": "cartaz_arrancado",
+      "nome": "Cartaz sendo arrancado",
+      "arquivo": "quadro_avisos.json",
+      "grupo": "cartazes",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "entregue",
+      "destino": "res://art/guild/cartaz_arrancado.png",
+      "observacoes": "tira de 4 quadros; o arrancar ainda é animado por código"
+    },
+    {
+      "id": "restos_papel",
+      "nome": "Restos de papel rasgado",
+      "arquivo": "quadro_avisos.json",
+      "grupo": "cartazes",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "entregue",
+      "destino": "res://art/guild/restos_{n}.png",
+      "observacoes": "6 peças recortadas em art/guild/restos_1..6; ainda não espalhadas no quadro"
+    },
+    {
+      "id": "cartaz_vazio",
+      "nome": "Aviso 'nenhum pedido hoje'",
+      "arquivo": "quadro_avisos.json",
+      "grupo": "cartazes",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "integrado",
+      "destino": "res://art/guild/cartaz_vazio.png",
+      "observacoes": "quadro sem pedidos"
+    },
+    {
+      "id": "cena_povo",
+      "nome": "Povo a favor",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/scenes/povo.png"
+    },
+    {
+      "id": "cena_povo_contra",
+      "nome": "Povo contra",
+      "arquivo": "../cenas/cenas_resultado.json",
+      "grupo": "genericas",
+      "familia": "pixel_hd",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/scenes/povo_contra.png"
+    },
+    {
+      "id": "btn_madeira",
+      "nome": "Botão primário — placa de madeira",
+      "arquivo": "botoes.json",
+      "grupo": "pecas",
+      "familia": "pergaminho_ui",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/btn_madeira_{estado}.png"
+    },
+    {
+      "id": "btn_pergaminho",
+      "nome": "Botão secundário — pergaminho",
+      "arquivo": "botoes.json",
+      "grupo": "pecas",
+      "familia": "pergaminho_ui",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/btn_pergaminho_{estado}.png"
+    },
+    {
+      "id": "btn_escolha",
+      "nome": "Botão de escolha narrativa — tira de pergaminho",
+      "arquivo": "botoes.json",
+      "grupo": "pecas",
+      "familia": "pergaminho_ui",
+      "prioridade": "P0",
+      "status": "planejado",
+      "destino": "res://art/ui/btn_escolha_{estado}.png"
+    },
+    {
+      "id": "btn_perigo",
+      "nome": "Botão de decisão sem volta — lacre",
+      "arquivo": "botoes.json",
+      "grupo": "pecas",
+      "familia": "pergaminho_ui",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/btn_perigo_{estado}.png"
+    },
+    {
+      "id": "btn_medalhao",
+      "nome": "Botão de ícone — medalhão de latão",
+      "arquivo": "botoes.json",
+      "grupo": "pecas",
+      "familia": "pergaminho_ui",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/btn_medalhao_{estado}.png"
+    },
+    {
+      "id": "btn_barra_hub",
+      "nome": "Botão da barra do hub — placa com ícone",
+      "arquivo": "botoes.json",
+      "grupo": "pecas",
+      "familia": "pergaminho_ui",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/btn_barra_{estado}.png"
+    },
+    {
+      "id": "btn_selo_alvo",
+      "nome": "Selo — enfrentar o alvo",
+      "arquivo": "botoes.json",
+      "grupo": "pecas",
+      "familia": "pergaminho_ui",
+      "prioridade": "P2",
+      "status": "planejado",
+      "destino": "res://art/ui/selo_alvo.png"
+    },
+    {
+      "id": "btn_icones_acao",
+      "nome": "Conjunto de ícones de ação",
+      "arquivo": "botoes.json",
+      "grupo": "icones_acao",
+      "familia": "pixel_hd",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/icones/{var}.png"
+    },
+    {
+      "id": "btn_tema",
+      "nome": "Tema de botões (Godot)",
+      "arquivo": "botoes.json",
+      "grupo": "tema",
+      "familia": "pergaminho_ui",
+      "prioridade": "P1",
+      "status": "planejado",
+      "destino": "res://art/ui/tema_botoes.tres"
     }
   ],
-  "total": 313,
-  "total_ativos": 311,
+  "total": 331,
+  "total_ativos": 327,
   "resumo_por_status": {
-    "cancelado": 2,
-    "entregue": 17,
-    "integrado": 43,
-    "planejado": 251
+    "cancelado": 4,
+    "entregue": 20,
+    "integrado": 59,
+    "planejado": 248
   }
 }

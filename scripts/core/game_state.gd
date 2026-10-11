@@ -106,7 +106,9 @@ var upgrades_owned := []
 var trained_today := false
 var route_data := {}
 var traits_data := {}
-var result_story_data := {}   # textos do resultado contado (data/result_story.json)
+var result_story_data := {}
+var town_esteem := 3           # Estima da cidade pela guilda (Town)
+var upgrades_revealed := []     # melhorias ocultas já reveladas por bastidores   # textos do resultado contado (data/result_story.json)
 var expedition := {}         # expedição em andamento (Expedition), vazia fora do mapa
 var pair_history := {}         # "a|b" -> [{day, mission, outcome}] (exibido com o Arquivo)
 
@@ -194,6 +196,8 @@ func new_game(seed_value: int = -1) -> void:
 	backstage_data = _load_json("res://data/backstage.json")
 	backstage_once.clear()
 	upgrades_data = _load_json("res://data/upgrades.json")
+	town_esteem = int(upgrades_data.get("town", {}).get("start_esteem", 3))
+	upgrades_revealed = []
 	gold = int(upgrades_data.get("start_gold", 0))
 	upgrades_owned.clear()
 	trained_today = false
@@ -259,6 +263,7 @@ func end_day() -> Array:
 		if m.status == "aberta" and m.day <= day and (day >= Missions.expires_on(self, m) or chapter_over):
 			m.status = "expirada"
 			reputation = max(0, reputation - 1)
+			Town.change_esteem(self, -1)   # quem pediu ajuda e não foi atendido conta para os vizinhos
 			lines.append("A missão \"%s\" expirou. A reputação da guilda caiu." % m.name)
 	lines.append_array(Relations.apply_neglect(self))
 	lines.append_array(Departures.process_departures(self))
@@ -305,6 +310,7 @@ const SAVE_KEYS := [
 	"chapter_state", "chapter_result", "flags", "gold", "upgrades_owned",
 	"trained_today", "pair_history", "initial_affinity", "last_together",
 	"backstage_today", "backstage_once", "ultimatums", "promises", "departed",
+	"town_esteem", "upgrades_revealed",
 ]
 
 

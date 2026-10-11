@@ -232,6 +232,7 @@ static func dispatch(gs: GuildState, mission: Dictionary, party: Array, prepared
 	lines = rpg_lines + lines
 	lines.append_array(HeroRPG.after_mission(gs, mission, party, prep, result))
 	lines.append_array(Mind.after_mission(gs, mission, party, prep, result))
+	lines.append_array(Town.after_mission(gs, mission, party, result))
 	gs.dispatched_today += 1
 	return {"mission": mission, "party": party, "score": sc, "outcome": result, "lines": lines, "affinity": aff_changes, "prepared": prep, "story": story}
 

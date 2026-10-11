@@ -40,6 +40,7 @@ static func load_game(gs: GuildState, slot: String) -> bool:
 	gs.rng.state = data.rng_state
 	for id in gs.heroes:
 		Mind.ensure(gs.heroes[id])   # saves anteriores à v0.9
+		Town.ensure(gs.heroes[id])
 	return true
 
 

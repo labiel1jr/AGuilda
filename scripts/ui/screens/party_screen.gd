@@ -36,23 +36,13 @@ static func render_party(ui: GuildUI, m: Dictionary) -> void:
 	lcol.add_theme_constant_override("separation", 6)
 	lp.add_child(lcol)
 	lcol.add_child(UIKit.label("AVENTUREIROS", 16, GuildUI.C_GOLD))
+	var grid := GridContainer.new()
+	grid.columns = 4
+	grid.add_theme_constant_override("h_separation", 8)
+	grid.add_theme_constant_override("v_separation", 8)
+	lcol.add_child(grid)
 	for id in ui.gs.hero_order:
-		var h: Dictionary = ui.gs.heroes[id]
-		var reason: String = ui.gs.unavailable_reason(id, m)
-		var row := HBoxContainer.new()
-		lcol.add_child(row)
-		row.add_child(UIKit.swatch(h.color))
-		var is_sel := ui.selected.has(id)
-		var b := UIKit.button(("✓ " if is_sel else "") + h.name, ui._toggle_hero.bind(m, id))
-		b.custom_minimum_size.x = 110
-		b.disabled = reason != "" or (not is_sel and ui.selected.size() >= 4)
-		row.add_child(b)
-		var ea: Dictionary = HeroRPG.effective_attrs(ui.gs, id)
-		row.add_child(UIKit.label("Nv %d · %s %d / %s %d" % [h.level, ui.gs.ATTR_NAMES[m.primary].left(3), ea[m.primary], ui.gs.ATTR_NAMES[m.secondary].left(3), ea[m.secondary]], 13, GuildUI.C_TEXT))
-		row.add_child(UIKit.spacer())
-		row.add_child(Widgets.stress_chip(ui, h))
-		var state: String = reason if reason != "" else ui.gs.hero_status(id)
-		row.add_child(UIKit.label(state, 13, GuildUI.C_BAD if reason != "" else UIKit.fatigue_color(h)))
+		grid.add_child(PartyScreen.hero_card(ui, m, id))
 
 	# Party selecionada
 	var rp := UIKit.panel(GuildUI.C_PANEL)
@@ -72,7 +62,9 @@ static func render_party(ui: GuildUI, m: Dictionary) -> void:
 		if id == ui._last_toggle:
 			Juice.fade_in(prow, 0.0, 0.25)
 			Juice.pop(prow, 0.1, 0.25, 0.02)
-		prow.add_child(UIKit.label("→ %s%s" % [h.name, tired], 14, GuildUI.C_TEXT))
+		prow.add_theme_constant_override("separation", 8)
+		prow.add_child(Widgets.portrait(ui, h, 32))
+		prow.add_child(UIKit.label("%s%s" % [h.name, tired], 14, GuildUI.C_TEXT))
 		if HeroRPG.is_caster(ui.gs, id):
 			prow.add_child(UIKit.spacer())
 			prow.add_child(PartyScreen.spell_picker(ui, m, id))
@@ -199,3 +191,70 @@ static func spell_picker(ui: GuildUI, m: Dictionary, id: String) -> Control:
 			ui.prepared[id] = sid
 		PartyScreen.render_party(ui, m))
 	return ob
+
+
+## Cartão de escolha do aventureiro: retrato, nome embaixo, atributos da missão e estado.
+static func hero_card(ui: GuildUI, m: Dictionary, id: String) -> Control:
+	var h: Dictionary = ui.gs.heroes[id]
+	var reason: String = ui.gs.unavailable_reason(id, m)
+	var is_sel := ui.selected.has(id)
+	var full := not is_sel and ui.selected.size() >= 4
+	var b := Button.new()
+	b.custom_minimum_size = Vector2(132, 168)
+	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	b.disabled = reason != "" or full
+	b.pressed.connect(ui._toggle_hero.bind(m, id))
+	for st in ["normal", "hover", "pressed", "disabled", "focus"]:
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color("#4a3a2a") if not is_sel else Color("#5e4a2c")
+		if st == "hover" and not b.disabled:
+			sb.bg_color = sb.bg_color.lightened(0.12)
+		sb.border_color = GuildUI.C_GOLD if is_sel else (h.color.darkened(0.2) if st == "hover" else Color("#2b2118"))
+		sb.set_border_width_all(3 if is_sel else 2)
+		sb.set_corner_radius_all(8)
+		sb.set_content_margin_all(6)
+		if st == "focus":
+			sb.draw_center = false
+		b.add_theme_stylebox_override(st, sb)
+	var col := VBoxContainer.new()
+	col.set_anchors_preset(Control.PRESET_FULL_RECT)
+	col.offset_left = 6
+	col.offset_right = -6
+	col.offset_top = 6
+	col.offset_bottom = -6
+	col.alignment = BoxContainer.ALIGNMENT_CENTER
+	col.add_theme_constant_override("separation", 2)
+	col.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	b.add_child(col)
+	var por := Widgets.portrait(ui, h, 76)
+	por.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	por.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	col.add_child(por)
+	var name := UIKit.label(("✓ " if is_sel else "") + h.name, 15, GuildUI.C_GOLD if is_sel else h.color.lightened(0.3))
+	name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	col.add_child(name)
+	var ea: Dictionary = HeroRPG.effective_attrs(ui.gs, id)
+	var stats := UIKit.label("Nv %d · %s %d · %s %d" % [h.level, ui.gs.ATTR_NAMES[m.primary].left(3), ea[m.primary], ui.gs.ATTR_NAMES[m.secondary].left(3), ea[m.secondary]], 11, GuildUI.C_TEXT)
+	stats.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	col.add_child(stats)
+	var state: String = reason if reason != "" else ui.gs.hero_status(id)
+	var cond: Dictionary = Mind.condition_info(ui.gs, h)
+	if reason == "" and not cond.is_empty():
+		state += " · " + cond.name
+	var sl := UIKit.label(state, 11, GuildUI.C_BAD if reason != "" else UIKit.fatigue_color(h))
+	sl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	col.add_child(sl)
+	for c in col.get_children():
+		c.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if b.disabled and not is_sel:
+		b.modulate = Color(1, 1, 1, 0.55)
+	var chip := Widgets.stress_chip(ui, h)   # só para reaproveitar a explicação de estresse e traços
+	var tip: String = chip.tooltip_text
+	chip.free()
+	var head := ""
+	if reason != "":
+		head = "Indisponível: %s\n" % reason
+	elif full:
+		head = "A party já tem 4.\n"
+	b.tooltip_text = head + tip
+	return b

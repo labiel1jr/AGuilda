@@ -15,7 +15,7 @@
         {
           "id": "guilda_mural",
           "nome": "Mural de quests",
-          "status": "planejado",
+          "status": "cancelado",
           "prioridade": "P0",
           "tamanho_final_px": [
             320,
@@ -27,7 +27,8 @@
             "com papéis"
           ],
           "uso_no_jogo": "Fundo do Mural de Quests no hub",
-          "destino": "res://art/guild/props/mural.png"
+          "destino": "res://art/guild/props/mural.png",
+          "observacoes": "substituído por quadro_avisos.json"
         },
         {
           "id": "guilda_quadro_relacoes",

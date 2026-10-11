@@ -1,15 +1,114 @@
 {
-  "_doc": "Upgrades da guilda (GDD §5.12). cost em ouro, rep = reputação mínima para comprar.",
+  "_doc": "Upgrades da guilda (GDD §5.12). cost em ouro, rep = reputação mínima para comprar. hidden: só aparece depois que um bastidor revela (choice.reveal_upgrade). effects: efeitos (mesmo formato de itens/talentos) que valem para TODOS os heróis enquanto a melhoria existir. town: estima inicial da cidade.",
   "start_gold": 30,
-  "rewards": {"baixo": 20, "medio": 35, "alto": 60, "lendario": 90},
+  "rewards": {
+    "baixo": 20,
+    "medio": 35,
+    "alto": 60,
+    "lendario": 90
+  },
   "upgrades": [
-    {"id": "quadro", "name": "Quadro de Relações", "cost": 40, "rep": 0,
-     "desc": "Revela a afinidade exata entre os aventureiros. Sem ele, você só sabe o que observa."},
-    {"id": "enfermaria", "name": "Enfermaria", "cost": 60, "rep": 3,
-     "desc": "Descanso recupera um estado de fadiga a mais e o dobro de PV."},
-    {"id": "arquivo", "name": "Arquivo da Guilda", "cost": 50, "rep": 4,
-     "desc": "Registra o histórico de cada dupla: missões feitas juntos e resultados."},
-    {"id": "salao", "name": "Salão de Treinamento", "cost": 80, "rep": 5,
-     "desc": "Uma vez por dia, treine uma dupla: +1 de afinidade, mas os dois ficam Cansados."}
-  ]
+    {
+      "id": "quadro",
+      "name": "Quadro de Relações",
+      "cost": 40,
+      "rep": 0,
+      "desc": "Revela a afinidade exata entre os aventureiros. Sem ele, você só sabe o que observa."
+    },
+    {
+      "id": "enfermaria",
+      "name": "Enfermaria",
+      "cost": 60,
+      "rep": 3,
+      "desc": "Descanso recupera um estado de fadiga a mais e o dobro de PV."
+    },
+    {
+      "id": "arquivo",
+      "name": "Arquivo da Guilda",
+      "cost": 50,
+      "rep": 4,
+      "desc": "Registra o histórico de cada dupla: missões feitas juntos e resultados."
+    },
+    {
+      "id": "salao",
+      "name": "Salão de Treinamento",
+      "cost": 80,
+      "rep": 5,
+      "desc": "Uma vez por dia, treine uma dupla: +1 de afinidade, mas os dois ficam Cansados."
+    },
+    {
+      "id": "forja",
+      "name": "Forja de Dorin",
+      "cost": 70,
+      "rep": 2,
+      "hidden": true,
+      "desc": "O velho ferreiro anão que Vera trouxe afia tudo o que a guilda leva. +1 em missões de combate.",
+      "effects": [
+        {
+          "type": "mission_type",
+          "mission_type": "combate",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "biblioteca",
+      "name": "Biblioteca do Arquivista",
+      "cost": 80,
+      "rep": 3,
+      "hidden": true,
+      "desc": "Os livros que Mira salvou viram estudo. +15% de XP para todos.",
+      "effects": [
+        {
+          "type": "xp_pct",
+          "value": 15
+        }
+      ]
+    },
+    {
+      "id": "capela",
+      "name": "Capela da Guilda",
+      "cost": 90,
+      "rep": 3,
+      "hidden": true,
+      "desc": "A sala que Corin consagrou acalma quem volta da estrada. Todos ganham 1 a menos de estresse.",
+      "effects": [
+        {
+          "type": "stress_resist",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "estabulo",
+      "name": "Estábulo",
+      "cost": 100,
+      "rep": 4,
+      "hidden": true,
+      "desc": "Cavalos velhos, mas firmes: a viagem cansa menos. Todos voltam um estado menos cansados.",
+      "effects": [
+        {
+          "type": "fatigue_resist",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "taverna",
+      "name": "Taverna da Guilda",
+      "cost": 60,
+      "rep": 2,
+      "hidden": true,
+      "desc": "O porão virou o lugar mais animado da cidade. Todos voltam de missão com +1 de moral.",
+      "effects": [
+        {
+          "type": "morale_after",
+          "value": 1
+        }
+      ]
+    }
+  ],
+  "town": {
+    "start_esteem": 3
+  }
 }

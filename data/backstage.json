@@ -1,5 +1,5 @@
 {
-  "_doc": "Eventos de bastidor (GDD §5.4, §5.12). Cada evento envolve um par {a}/{b}. Condições: heroes (par exato, na ordem a,b), min/max (afinidade do par), once (só uma vez por jogo), weight. Efeitos por escolha: aff [a→b, b→a], morale {a,b}, fatigue {a,b}. chapters: só nesses capítulos. requires_flag: só com a flag.",
+  "_doc": "Eventos de bastidor (GDD §5.4, §5.12). Cada evento envolve um par {a}/{b}. Condições: heroes (par exato, na ordem a,b; null = qualquer), min/max (afinidade do par), once (só uma vez por jogo), weight, chapters, requires_flag, min_esteem/max_esteem (Estima da cidade), reveals (id de melhoria: a cena não aparece se ela já for conhecida). Efeitos por escolha: aff [a→b, b→a], morale {a,b}, fatigue {a,b}, stress {a,b} (negativo alivia), fame {a,b} (fama no povo), esteem (Estima da cidade), gold (negativo = custo; bloqueia a escolha sem ouro), reveal_upgrade (revela uma melhoria oculta de upgrades.json para construir com ouro).",
   "per_day": 2,
   "events": [
     {
@@ -451,6 +451,482 @@
             "b": -1
           },
           "result": "Dormem pouco, mas dormem."
+        }
+      ]
+    },
+    {
+      "id": "praca_canto",
+      "title": "Canções na praça",
+      "heroes": [
+        "bram",
+        null
+      ],
+      "weight": 3,
+      "text": "Bram encontrou um palco improvisado na praça do mercado e quer tocar. {b} olha para a multidão, desconfiado(a).",
+      "choices": [
+        {
+          "label": "Deixar Bram tocar de graça para o povo",
+          "fame": {
+            "a": 2
+          },
+          "esteem": 1,
+          "morale": {
+            "a": 1
+          },
+          "aff": [
+            1,
+            0
+          ],
+          "result": "A praça para. Até os guardas batem o pé. Na volta, crianças seguem Bram cantando o refrão."
+        },
+        {
+          "label": "Passar o chapéu",
+          "gold": 15,
+          "fame": {
+            "a": 1
+          },
+          "result": "As moedas caem no chapéu. Um mercador comenta que a guilda agora vende até canção."
+        },
+        {
+          "label": "Lembrar que há trabalho a fazer",
+          "aff": [
+            0,
+            -1
+          ],
+          "result": "Bram guarda o alaúde sem dizer nada. {b} finge não ver a cara dele."
+        }
+      ]
+    },
+    {
+      "id": "telhado_viuva",
+      "title": "O telhado da viúva",
+      "min": -2,
+      "weight": 3,
+      "text": "Uma viúva bate à porta: a chuva derrubou parte do telhado e o marido dela era da antiga guilda. {a} e {b} estão à toa no pátio.",
+      "choices": [
+        {
+          "label": "Mandar {a} e {b} consertarem o telhado",
+          "fatigue": {
+            "a": 1,
+            "b": 1
+          },
+          "aff": [
+            1,
+            1
+          ],
+          "fame": {
+            "a": 1,
+            "b": 1
+          },
+          "esteem": 2,
+          "result": "Martelam até o anoitecer, rindo dos erros um do outro. A rua inteira vê o corvo da guilda no telhado da viúva."
+        },
+        {
+          "label": "Pagar um carpinteiro (20 ouro)",
+          "gold": -20,
+          "esteem": 1,
+          "result": "O telhado fica pronto, mas a viúva queria ver a guilda. Agradece com educação."
+        },
+        {
+          "label": "Dizer que a guilda não faz caridade",
+          "esteem": -2,
+          "result": "A porta se fecha devagar. {a} passa o resto do dia calado(a)."
+        }
+      ]
+    },
+    {
+      "id": "boato_senna",
+      "title": "Dizem que ela é perigosa",
+      "heroes": [
+        "senna",
+        null
+      ],
+      "weight": 2,
+      "text": "Na feira, corre um boato: Senna, a mercenária da guilda, teria matado um homem por uma dívida de três moedas. {b} ouviu e veio contar.",
+      "choices": [
+        {
+          "label": "Senna conta a verdade em público",
+          "fame": {
+            "a": 2
+          },
+          "stress": {
+            "a": 1
+          },
+          "aff": [
+            1,
+            1
+          ],
+          "result": "Senna sobe num caixote e explica, seca, que o homem tinha uma faca e ela não. A feira fica em silêncio. Depois, alguém aplaude."
+        },
+        {
+          "label": "{b} defende Senna diante da feira",
+          "fame": {
+            "a": 1,
+            "b": -1
+          },
+          "aff": [
+            2,
+            1
+          ],
+          "result": "{b} compra a briga. Perde um pouco do bom nome, mas Senna não esquece."
+        },
+        {
+          "label": "Ignorar o boato",
+          "fame": {
+            "a": -1
+          },
+          "result": "O boato cresce sozinho. Senna passa a sair só à noite."
+        }
+      ]
+    },
+    {
+      "id": "menino_paladino",
+      "title": "O menino que queria ser paladino",
+      "heroes": [
+        "theo",
+        null
+      ],
+      "weight": 2,
+      "text": "Um menino de rua segue Theo há dias, imitando o jeito dele de andar. Hoje ele trouxe uma espada de pau e pediu uma lição. {b} assiste.",
+      "choices": [
+        {
+          "label": "Theo ensina, com {b} de adversário",
+          "fame": {
+            "a": 2,
+            "b": 1
+          },
+          "morale": {
+            "a": 1
+          },
+          "aff": [
+            1,
+            1
+          ],
+          "esteem": 1,
+          "result": "Theo corrige a postura do menino com uma paciência que ninguém sabia que ele tinha. {b} \"perde\" o duelo de propósito."
+        },
+        {
+          "label": "Theo manda o menino para casa",
+          "result": "\"Aqui não é lugar para você.\" Theo fala como se falasse para si mesmo."
+        }
+      ]
+    },
+    {
+      "id": "carteira_nobre",
+      "title": "A bolsa do nobre",
+      "heroes": [
+        "lyssa",
+        null
+      ],
+      "min": -5,
+      "weight": 2,
+      "text": "Um nobre empurrou uma velha na fila do pão. Minutos depois, Lyssa aparece com a bolsa dele — e um sorriso. {b} viu tudo.",
+      "choices": [
+        {
+          "label": "Deixar Lyssa distribuir as moedas na fila",
+          "fame": {
+            "a": 3
+          },
+          "esteem": 1,
+          "aff": [
+            0,
+            1
+          ],
+          "result": "A fila do pão nunca foi tão feliz. O nobre jura vingança contra \"a guilda dos ladrões\"."
+        },
+        {
+          "label": "Devolver a bolsa ao nobre",
+          "esteem": 1,
+          "aff": [
+            -1,
+            1
+          ],
+          "result": "O nobre agradece sem olhar para ninguém. Lyssa fica uma semana sem falar com {b}."
+        },
+        {
+          "label": "Ficar com o ouro para a guilda",
+          "gold": 25,
+          "fame": {
+            "a": -2
+          },
+          "esteem": -1,
+          "result": "O ouro é bom. A fama, nem tanto: na feira, já chamam a guilda de covil."
+        }
+      ]
+    },
+    {
+      "id": "beco_doentes",
+      "title": "O beco dos doentes",
+      "heroes": [
+        "corin",
+        null
+      ],
+      "weight": 2,
+      "text": "Corin descobriu um beco onde os doentes da cidade dormem no chão. Ele quer passar a noite lá cuidando deles. {b} se oferece para ir junto.",
+      "choices": [
+        {
+          "label": "Financiar remédios (15 ouro) e deixar os dois irem",
+          "gold": -15,
+          "fame": {
+            "a": 2,
+            "b": 1
+          },
+          "esteem": 2,
+          "stress": {
+            "a": -2
+          },
+          "fatigue": {
+            "a": 1,
+            "b": 1
+          },
+          "aff": [
+            1,
+            1
+          ],
+          "result": "Ao amanhecer, o beco tem cobertores e um caldeirão. Alguém escreveu um corvo na parede, com carvão."
+        },
+        {
+          "label": "Deixar Corin ir sozinho",
+          "fame": {
+            "a": 1
+          },
+          "fatigue": {
+            "a": 1
+          },
+          "result": "Corin volta exausto e feliz. Não pede nada; nunca pede."
+        },
+        {
+          "label": "Proibir: a guilda precisa dele inteiro",
+          "result": "Corin obedece. Mas reza mais alto do que o normal naquela noite."
+        }
+      ]
+    },
+    {
+      "id": "festa_cidade",
+      "title": "A cidade convida",
+      "min_esteem": 10,
+      "once": true,
+      "weight": 4,
+      "min": 0,
+      "text": "Os comerciantes da cidade organizam uma festa e mandam convite para a guilda — com o nome de {a} e {b} escritos à mão.",
+      "choices": [
+        {
+          "label": "Ir à festa como convidados de honra",
+          "morale": {
+            "a": 2,
+            "b": 2
+          },
+          "aff": [
+            1,
+            1
+          ],
+          "fame": {
+            "a": 1,
+            "b": 1
+          },
+          "stress": {
+            "a": -2,
+            "b": -2
+          },
+          "result": "Brindes, música e um discurso desajeitado do prefeito. Pela primeira vez, a guilda é tratada como parte da cidade."
+        },
+        {
+          "label": "Agradecer e ficar de guarda",
+          "esteem": 1,
+          "result": "A cidade dança tranquila sabendo que alguém vigia os portões."
+        }
+      ]
+    },
+    {
+      "id": "ferreiro_dorin",
+      "title": "O ferreiro sem forja",
+      "heroes": [
+        "vera",
+        null
+      ],
+      "reveals": "forja",
+      "once": true,
+      "weight": 4,
+      "text": "Vera reencontra Dorin, um ferreiro anão que trabalhou para a antiga guilda e perdeu a forja em dívidas. {b} percebe que ela não quer deixá-lo ir.",
+      "choices": [
+        {
+          "label": "Oferecer a ele um canto no pátio da guilda",
+          "reveal_upgrade": "forja",
+          "aff": [
+            1,
+            1
+          ],
+          "morale": {
+            "a": 1
+          },
+          "result": "Dorin olha o pátio, cospe no chão e diz que serve. Vera sorri — coisa rara."
+        },
+        {
+          "label": "Pagar uma rodada e desejar sorte",
+          "result": "Dorin vai embora para outra cidade. Vera fica olhando a porta por um bom tempo."
+        }
+      ]
+    },
+    {
+      "id": "livros_arquivista",
+      "title": "Os livros do arquivista",
+      "heroes": [
+        "mira",
+        null
+      ],
+      "reveals": "biblioteca",
+      "once": true,
+      "weight": 4,
+      "text": "No porão, Mira acha caixas de livros do antigo arquivista da guilda — mofados, mas inteiros. {b} ajuda a carregar a primeira caixa.",
+      "choices": [
+        {
+          "label": "Separar uma sala para os livros",
+          "reveal_upgrade": "biblioteca",
+          "aff": [
+            1,
+            1
+          ],
+          "morale": {
+            "a": 2
+          },
+          "result": "Mira passa a noite catalogando. De manhã, {b} a encontra dormindo sobre um mapa antigo, sorrindo."
+        },
+        {
+          "label": "Vender os livros a um antiquário",
+          "gold": 30,
+          "aff": [
+            -1,
+            0
+          ],
+          "result": "O ouro entra. Mira não discute — só para de falar de livros."
+        }
+      ]
+    },
+    {
+      "id": "sala_consagrada",
+      "title": "A sala esquecida",
+      "heroes": [
+        "corin",
+        null
+      ],
+      "reveals": "capela",
+      "once": true,
+      "weight": 4,
+      "chapters": [
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "text": "Corin encontrou uma sala fechada com um vitral rachado. Diz que um lugar quieto faria bem a quem volta da estrada. {b} não sabe se acredita em deuses, mas acredita em silêncio.",
+      "choices": [
+        {
+          "label": "Deixar Corin consagrar a sala",
+          "reveal_upgrade": "capela",
+          "stress": {
+            "a": -1,
+            "b": -2
+          },
+          "aff": [
+            1,
+            1
+          ],
+          "result": "Velas, pão e uma prece curta. {b} fica depois que todos saem."
+        },
+        {
+          "label": "Usar a sala como depósito",
+          "result": "A sala vira depósito de barris. Corin reza entre eles mesmo assim."
+        }
+      ]
+    },
+    {
+      "id": "cavalos_velhos",
+      "title": "Cavalos à venda",
+      "reveals": "estabulo",
+      "once": true,
+      "weight": 3,
+      "min": -1,
+      "text": "Um carroceiro falido oferece três cavalos velhos à guilda por quase nada. {a} acha que é armadilha; {b} já está dando cenoura para um deles.",
+      "choices": [
+        {
+          "label": "Aceitar e preparar um estábulo",
+          "reveal_upgrade": "estabulo",
+          "aff": [
+            1,
+            1
+          ],
+          "morale": {
+            "b": 1
+          },
+          "result": "Os cavalos são lentos, mas teimosos como a guilda. {a} acaba batizando o mais feio."
+        },
+        {
+          "label": "Recusar",
+          "result": "O carroceiro vai embora resmungando. {b} acena para o cavalo."
+        }
+      ]
+    },
+    {
+      "id": "porao_taverna",
+      "title": "O porão da guilda",
+      "heroes": [
+        "bram",
+        null
+      ],
+      "reveals": "taverna",
+      "once": true,
+      "weight": 4,
+      "min": 0,
+      "text": "Bram desenhou com giz, na parede do porão, o plano de uma taverna: balcão, palco, até o nome. {b} acha a ideia boa demais para admitir.",
+      "choices": [
+        {
+          "label": "Aprovar o plano de Bram",
+          "reveal_upgrade": "taverna",
+          "morale": {
+            "a": 2
+          },
+          "aff": [
+            1,
+            1
+          ],
+          "result": "Bram pula de alegria e bate a cabeça na viga. {b} ri tanto que precisa sentar."
+        },
+        {
+          "label": "Pedir que foque no trabalho",
+          "result": "O desenho continua na parede. Bram passa por ele todo dia."
+        }
+      ]
+    },
+    {
+      "id": "pao_orfaos",
+      "title": "O pão dos órfãos",
+      "heroes": [
+        "theo",
+        "lyssa"
+      ],
+      "max": 1,
+      "once": true,
+      "weight": 5,
+      "text": "Theo segue Lyssa achando que vai flagrá-la roubando. Flagra: ela está dando o próprio pão a um grupo de órfãos atrás do mercado.",
+      "choices": [
+        {
+          "label": "Theo se junta a ela em silêncio",
+          "aff": [
+            3,
+            1
+          ],
+          "fame": {
+            "a": 1,
+            "b": 1
+          },
+          "result": "Nenhum dos dois comenta o assunto depois. Mas na missão seguinte, Theo segura a porta para Lyssa."
+        },
+        {
+          "label": "Theo vai embora sem ser visto",
+          "aff": [
+            2,
+            0
+          ],
+          "result": "Theo não conta a ninguém. Mas para de chamar Lyssa de ladra — pelo menos em voz alta."
         }
       ]
     }

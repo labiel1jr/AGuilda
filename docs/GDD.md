@@ -149,7 +149,7 @@ Com o par em **Laço Forte (+6)** e o rótulo certo, a ação vale sempre que fo
 ### 5.6 Score da Missão
 
 ```
-Score = Base + Cobertura + Afinidade + Vínculo + Poderes + Oculto + Mente + Rota + Sorte
+Score = Base + Cobertura + Afinidade + Vínculo + Poderes + Oculto + Mente + Povo + Rota + Sorte
 ```
 
 | Termo | Origem |
@@ -161,6 +161,7 @@ Score = Base + Cobertura + Afinidade + Vínculo + Poderes + Oculto + Mente + Rot
 | Poderes | Itens, talentos e magias preparadas, até +3 |
 | Oculto | Requisito oculto da missão |
 | Mente | Virtudes, aflições e traços do grupo, até ±3 |
+| Povo | Fama do grupo no povo, só em diplomacia, −1 a +2 |
 | Rota | Preparação − desgaste − fome do mapa de expedição, de −2 a +3 |
 | Sorte | Inteiro de −2 a +2 |
 
@@ -225,8 +226,9 @@ Os heróis andam pelo mapa como **miniaturas de RPG de mesa** (base na cor de ca
 
 - **Reputação:** sobe com sucessos, cai com falhas e missões expiradas; libera slots e melhorias.
 - **Ouro:** recompensa por risco; gasto em melhorias, mercado, ultimatos e opções da rota.
-- **Melhorias:** Quadro de Relações, Enfermaria, Arquivo da Guilda, Salão de Treinamento.
-- **Bastidores:** até 2 cenas por dia na guilda (taverna, treino, discussões, segredos), com escolhas que mexem em afinidade e moral; algumas ligadas a capítulos e flags.
+- **Melhorias:** Quadro de Relações, Enfermaria, Arquivo da Guilda, Salão de Treinamento — e as **ocultas**, que só aparecem quando um bastidor as revela e depois são construídas com ouro: Forja de Dorin (+1 em combate), Biblioteca do Arquivista (+15% XP), Capela da Guilda (−1 de estresse ganho), Estábulo (volta menos cansado), Taverna da Guilda (+1 de moral depois de cada missão). O efeito vale para todos os heróis.
+- **A cidade e o povo:** cada herói tem **Fama no povo** (−5 a 10: malvisto, desconhecido, conhecido, querido, lenda do povo) e a guilda tem **Estima da cidade** (0 a 20), separada da Reputação com o Conselho. Sobem e descem com bastidores e com missões vistas pelo povo (na cidade e na estrada: limpo +1, falha −1); missão expirada custa estima. Cidade desconfiada encarece o mercado; grata dá desconto e paga 15% a mais nas missões; em missões de **diplomacia**, a fama do grupo entra no score (termo **Povo**, −1 a +2).
+- **Bastidores:** até 2 cenas por dia na guilda e na cidade (taverna, treino, discussões, segredos, a praça, a viúva, o beco dos doentes, a festa da cidade), com escolhas que mexem em afinidade, moral, estresse, fama, estima e ouro; algumas revelam melhorias; outras dependem de capítulo, flag ou estima.
 - **Salvar e carregar:** 3 espaços + automático ao fim de cada dia.
 
 ---

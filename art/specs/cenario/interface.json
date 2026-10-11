@@ -85,7 +85,7 @@
         {
           "id": "ui_botao",
           "nome": "Botão",
-          "status": "planejado",
+          "status": "cancelado",
           "prioridade": "P0",
           "tamanho_final_px": [
             64,
@@ -105,7 +105,8 @@
             10,
             10,
             10
-          ]
+          ],
+          "observacoes": "substituído por botoes.json"
         },
         {
           "id": "ui_aba",

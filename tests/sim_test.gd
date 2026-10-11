@@ -21,6 +21,7 @@ func _init() -> void:
 	_check_expedition(gs)
 	_check_mind(gs)
 	_check_story(gs)
+	_check_town(gs)
 	_random_playthroughs(gs, 150)
 	print("RESULTADO: %s (%d falha(s))" % ["OK" if failures == 0 else "FALHOU", failures])
 	gs.free()
@@ -663,6 +664,52 @@ func _check_story(gs) -> void:
 	_expect(r2.story.any(func(b): return b.type == "conflito"), "Theo e Lyssa geram um momento de conflito")
 	var again: Dictionary = gs.dispatch(_mission(gs, "ratos"), ["vera"])
 	_expect(not again.story.any(func(b): return b.text.contains("{")), "sem marcadores sobrando no texto")
+
+
+func _check_town(gs) -> void:
+	gs.new_game(33)
+	_expect(gs.town_esteem == 3 and int(gs.heroes.bram.fame) == 0, "cidade começa indiferente e heróis desconhecidos")
+	# melhoria oculta: não aparece nem pode ser comprada antes do bastidor
+	gs.gold = 500
+	gs.reputation = 10
+	_expect(not Economy.visible_upgrades(gs).any(func(u): return u.id == "forja"), "Forja começa oculta")
+	_expect(not gs.buy_upgrade("forja"), "oculta não pode ser construída")
+	var ev: Dictionary = gs.backstage_data.events.filter(func(e): return e.id == "ferreiro_dorin")[0]
+	var bs := {"event": ev, "a": "vera", "b": "bram", "done": false}
+	var lines: Array = gs.resolve_backstage(bs, ev.choices[0])
+	_expect(gs.upgrades_revealed.has("forja") and lines.any(func(l): return l.contains("Nova melhoria")), "bastidor revela a Forja")
+	_expect(Backstage._candidate_pairs(gs, ev).is_empty(), "cena que revela não volta depois de revelada")
+	var m := _mission(gs, "lobos")
+	var before: int = ScoreCalc.compute(gs, m, ["vera", "bram"], 0).powers
+	_expect(gs.buy_upgrade("forja"), "Forja construída com ouro")
+	_expect(ScoreCalc.compute(gs, m, ["vera", "bram"], 0).powers == before + 1, "Forja dá +1 em combate uma vez só (não por herói)")
+	# capela: efeito por herói
+	gs.upgrades_revealed.append("capela")
+	gs.buy_upgrade("capela")
+	gs.heroes.mira.stress = 0
+	Mind.add_stress(gs, "mira", 2)
+	_expect(gs.heroes.mira.stress == 1, "Capela: cada herói ganha 1 a menos de estresse")
+	# fama, estima e escolhas com custo
+	var ev2: Dictionary = gs.backstage_data.events.filter(func(e): return e.id == "telhado_viuva")[0]
+	gs.resolve_backstage({"event": ev2, "a": "theo", "b": "senna", "done": false}, ev2.choices[0])
+	_expect(int(gs.heroes.theo.fame) == 1 and gs.town_esteem == 5, "ajudar a viúva: fama +1 e estima +2")
+	gs.gold = 0
+	_expect(Backstage.choice_block(gs, ev2.choices[1]) != "", "escolha com custo bloqueada sem ouro")
+	gs.town_esteem = 17
+	_expect(HeroRPG.buy_price(gs, "espada_longa") < int(HeroRPG.item(gs, "espada_longa").price), "cidade devota baixa os preços")
+	gs.town_esteem = 0
+	_expect(HeroRPG.buy_price(gs, "espada_longa") > int(HeroRPG.item(gs, "espada_longa").price), "cidade desconfiada encarece")
+	# termo Povo só em diplomacia
+	var dip := _mission(gs, "caravana")
+	gs.heroes.bram.fame = 9
+	gs.heroes.mira.fame = 9
+	_expect(ScoreCalc.compute(gs, dip, ["bram", "mira"], 0).povo == 2, "fama alta dá +2 em diplomacia")
+	_expect(ScoreCalc.compute(gs, m, ["bram", "mira"], 0).povo == 0, "e nada em combate")
+	# save
+	gs.save_game("teste_town")
+	gs.load_game("teste_town")
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(gs.save_path("teste_town")))
+	_expect(gs.upgrades_revealed.has("forja") and int(gs.heroes.bram.fame) == 9, "save guarda melhorias reveladas e fama")
 
 
 func _expect(ok: bool, msg: String) -> void:

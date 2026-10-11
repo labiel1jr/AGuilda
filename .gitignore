@@ -1,3 +1,6 @@
 .godot/
 *.tmp
 export/
+
+# Livros de RPG de referência (material protegido): só local, nunca no repositório público
+referencias/

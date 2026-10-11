@@ -4,6 +4,28 @@ Histórico de versões, da mais recente para a mais antiga. Datas dos commits no
 
 ---
 
+## Arte do quadro de avisos e cenas genéricas integradas — 2026-10-11
+
+- **Quadro de avisos com arte**: o quadro (recortado da cena da praça que veio do artista) é a moldura do painel; cada pedido usa o papel do cartaz com o prego da arte e um **selo de cera por tipo** — comum, urgente (último dia), pessoal (missão pessoal) e lendário; quadro vazio mostra o cartaz da pena.
+- **12 cenas genéricas do resultado** integradas (sinergia, dupla lendária, conflito, Ação de Vínculo, destaques dos 5 atributos, cansaço, aflição, virtude).
+- Entregues e guardadas para depois: prego avulso, cartaz arrancado (4 quadros), restos de papel (6 peças).
+- Observações para o artista: o quadro veio como cena (não como moldura) e o selo urgente veio aplicado sobre um cartaz — ambos foram recortados.
+
+## Especificação dos botões — 2026-10-11
+
+- `art/specs/cenario/botoes.json`: sistema de botões por material — madeira com latão (ações principais), pergaminho (voltar e consultar), tira de pergaminho com fita (escolhas da história), lacre (decisões sem volta), selo (despacho e enfrentar), medalhão (ícones) e placa da barra do hub — com 5 estados, 9-slice, 20 ícones de ação e o tema do Godot. Substitui o `ui_botao` genérico.
+
+## A cidade, novos bastidores e o quadro de avisos — 2026-10-10
+
+- **Fama no povo** (por herói, −5 a 10) e **Estima da cidade** (guilda, 0 a 20), separada da Reputação com o Conselho (`scripts/systems/town_system.gd`). Mudam com bastidores e com missões na cidade e na estrada; a estima muda os preços e a recompensa; a fama entra no score de diplomacia (termo **Povo**) e no resultado contado ("A cidade conhece Bram: as portas se abriram").
+- **13 bastidores novos**: na cidade (canções na praça, o telhado da viúva, o boato sobre Senna, o menino que queria ser paladino, a bolsa do nobre, o beco dos doentes, a festa da cidade), entre heróis (o pão dos órfãos, com Theo e Lyssa) e os que **revelam melhorias** (o ferreiro Dorin, os livros do arquivista, a sala consagrada, os cavalos velhos, o porão da taverna). Escolhas com custo ficam bloqueadas sem ouro.
+- **Melhorias ocultas**: Forja, Biblioteca, Capela, Estábulo e Taverna aparecem quando um bastidor as revela e são construídas com ouro; o efeito vale para todos os heróis.
+- **Quadro de Avisos** no hub: moldura de madeira, pedidos como papéis pregados e levemente tortos, arrancados ao montar a party. Arte especificada em `art/specs/cenario/quadro_avisos.json` (quadro com telhadinho e o corvo entalhado, cartaz, selos por tipo de pedido, pregos, restos de papel); substitui o antigo `guilda_mural`.
+- **Montagem de party:** cada aventureiro é um cartão com o **retrato e o nome embaixo**, os atributos da missão e o estado; selecionado ganha borda dourada e ✓, indisponível fica apagado com o motivo. A party selecionada também mostra os retratos.
+- **Quadro de Relações:** com 7 aventureiros a grade passava da tela e escondia o "Voltar"; agora há um "Voltar" no topo e a grade rola.
+- **Livro:** as páginas esquerda e direita voltaram a ter a mesma largura (um título longo sem quebra de linha alargava a direita) e o conteúdo se afastou do ornamento do canto da moldura.
+- Fama no Livro; Estima no topo do hub (com explicação ao passar o mouse); saves antigos ganham os campos novos.
+
 ## Resultado contado em frases — 2026-10-10
 
 - A tela de resultado mostra **por que** a missão deu certo ou errado, em até 3 momentos com frase e imagem: par em sinergia ou conflito, Ação de Vínculo, destaque por atributo, cansaço, aflição/virtude, poderes, preparação, fome, desgaste, sorte, azar, ir sozinho. A soma do score foi para "ver detalhes".
