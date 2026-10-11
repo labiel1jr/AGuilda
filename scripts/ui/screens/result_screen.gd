@@ -143,7 +143,9 @@ static func story_card(ui: GuildUI, beat: Dictionary) -> Control:
 
 
 static func after_result(ui: GuildUI) -> void:
-	if not ui.gs.pending_events.is_empty():
+	if not ui.gs.pending_decisions.is_empty():
+		DecisionScreen.show_decision(ui, ui.gs.pending_decisions.pop_front())
+	elif not ui.gs.pending_events.is_empty():
 		ResultScreen.show_bond_event(ui, ui.gs.pending_events.pop_front())
 	elif not ui.gs.pending_levelups.is_empty():
 		ResultScreen.show_levelup(ui, ui.gs.pending_levelups.pop_front())
@@ -183,7 +185,7 @@ static func show_bond_event(ui: GuildUI, ev: Dictionary) -> void:
 	for lbl in info.labels:
 		var action: String = ui.gs.BOND_ACTIONS.get(lbl, "")
 		var hint := "  — desbloqueia \"%s\" em Laço Forte" % action if action != "" else ""
-		ui.root.add_child(UIKit.button(lbl + hint, ui._on_label_chosen.bind(ev, lbl)))
+		ui.root.add_child(UIKit.button(lbl + hint, ui._on_label_chosen.bind(ev, lbl), "escolha"))
 
 
 static func on_label_chosen(ui: GuildUI, ev: Dictionary, lbl: String) -> void:

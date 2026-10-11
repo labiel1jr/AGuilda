@@ -274,7 +274,7 @@
         {
           "id": "cena_poderes",
           "nome": "Poderes",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P2",
           "tamanho_final_px": [
             480,
@@ -282,12 +282,13 @@
           ],
           "descricao": "Mesa de acampamento com armas brilhando e um pergaminho de magia se desenrolando em luz azul.",
           "uso_no_jogo": "Itens e magias somaram",
-          "destino": "res://art/scenes/poderes.png"
+          "destino": "res://art/scenes/poderes.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_preparacao",
           "nome": "Preparação",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P1",
           "tamanho_final_px": [
             480,
@@ -295,12 +296,13 @@
           ],
           "descricao": "Mapa da rota aberto com uma faca cravada sobre o covil do alvo, anotações a carvão.",
           "uso_no_jogo": "Preparação da rota",
-          "destino": "res://art/scenes/preparacao.png"
+          "destino": "res://art/scenes/preparacao.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_fome",
           "nome": "Fome",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P2",
           "tamanho_final_px": [
             480,
@@ -308,12 +310,13 @@
           ],
           "descricao": "Saco de provisões vazio virado no chão, uma casca de pão, mãos sujas.",
           "uso_no_jogo": "Fome na rota",
-          "destino": "res://art/scenes/fome.png"
+          "destino": "res://art/scenes/fome.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_desgaste",
           "nome": "Desgaste",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P2",
           "tamanho_final_px": [
             480,
@@ -321,12 +324,13 @@
           ],
           "descricao": "Ataduras ensanguentadas, escudo rachado encostado numa pedra.",
           "uso_no_jogo": "Grupo muito ferido",
-          "destino": "res://art/scenes/desgaste.png"
+          "destino": "res://art/scenes/desgaste.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_sorte",
           "nome": "Sorte",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P2",
           "tamanho_final_px": [
             480,
@@ -334,12 +338,13 @@
           ],
           "descricao": "O d20 da guilda parado no 20 sobre uma mesa, faíscas douradas.",
           "uso_no_jogo": "Sorte máxima",
-          "destino": "res://art/scenes/sorte.png"
+          "destino": "res://art/scenes/sorte.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_azar",
           "nome": "Azar",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P2",
           "tamanho_final_px": [
             480,
@@ -347,12 +352,13 @@
           ],
           "descricao": "Corda de ponte arrebentando, um corvo rindo num galho.",
           "uso_no_jogo": "Azar máximo",
-          "destino": "res://art/scenes/azar.png"
+          "destino": "res://art/scenes/azar.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_sozinho",
           "nome": "Sozinho",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P2",
           "tamanho_final_px": [
             480,
@@ -360,12 +366,13 @@
           ],
           "descricao": "Um vulto pequeno numa estrada enorme e vazia ao anoitecer.",
           "uso_no_jogo": "Herói que foi sozinho e não teve sucesso limpo",
-          "destino": "res://art/scenes/sozinho.png"
+          "destino": "res://art/scenes/sozinho.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_povo",
           "nome": "Povo a favor",
-          "status": "planejado",
+          "status": "integrado",
           "prioridade": "P2",
           "tamanho_final_px": [
             480,
@@ -373,7 +380,8 @@
           ],
           "descricao": "Portas e janelas da rua se abrindo, gente acenando para um vulto que chega com o corvo da guilda no manto.",
           "uso_no_jogo": "Fama do grupo ajudou numa missão de diplomacia",
-          "destino": "res://art/scenes/povo.png"
+          "destino": "res://art/scenes/povo.png",
+          "observacoes": "cartão do resultado"
         },
         {
           "id": "cena_povo_contra",

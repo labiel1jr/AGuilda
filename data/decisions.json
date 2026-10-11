@@ -1,0 +1,4 @@
+{
+  "_doc": "Decisões de arco (scripts/systems/arc_system.gd). Disparadas por effects.<resultado>.decision de uma missão; mostradas depois do resultado. Campos: id, title, text, image (opcional, cena), voices {heroi: {text, leans: id da escolha que ele defende}}, choices [{id, label, text (resultado), requires_flags, forbids_flags, flags, gold, esteem, morale {heroi: n}, stress {heroi: n}}]. Quem 'leans' para a escolha feita ganha +1 de moral; quem queria outra ganha +1 de estresse.",
+  "decisions": []
+}

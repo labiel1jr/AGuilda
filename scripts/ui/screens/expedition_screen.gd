@@ -154,7 +154,9 @@ static func on_node_arrived(ui: GuildUI, pos: Array) -> void:
 	if out.get("boss", false):
 		var m := Expedition.mission(ui.gs)
 		ui._map_action.add_child(UIKit.para("O grupo chegou ao alvo. Rota no score: %+d." % Expedition.route_mod(ui.gs), 14, GuildUI.C_GOLD))
-		ui._map_action.add_child(UIKit.button("Enfrentar: " + m.name, ui._on_face_boss))
+		var face := UIKit.button("Enfrentar: " + m.name, ui._on_face_boss)
+		UIKit.button_icon(face, UIKit.tex("res://art/ui/selo_alvo.png"), 28)
+		ui._map_action.add_child(face)
 	elif out.has("event"):
 		ui._map.caller = out.caller
 		ExpeditionScreen.show_call(ui, out.event, out.caller)
@@ -182,7 +184,7 @@ static func show_call(ui: GuildUI, ev: Dictionary, caller: String) -> void:
 	txt.add_child(UIKit.para(Expedition._fill(ui.gs, ev.text, caller), 14, GuildUI.C_INK))
 	for opt in ev.options:
 		var hint := Expedition.test_hint(ui.gs, opt)
-		var b := UIKit.button(opt.label + ("   [%s]" % hint if hint != "" else ""), ui._on_call_choice.bind(opt))
+		var b := UIKit.button(opt.label + ("   [%s]" % hint if hint != "" else ""), ui._on_call_choice.bind(opt), "escolha")
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		var block := Expedition.option_block(ui.gs, opt)
 		if block != "":

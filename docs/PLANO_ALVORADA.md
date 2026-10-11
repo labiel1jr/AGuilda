@@ -1,4 +1,4 @@
-# Plano — "Alvorada Rubra" (primeira missão grande)
+# Plano — "Alvorada Rubra" (missão grande do Ato 2)
 
 **Status:** planejamento aprovado (nada implementado). Decisões na §9.
 **Base:** a aventura *Alvorada de Sangue* (Coleção Aventuras, RPGBrasil), lida como referência de estrutura. A obra tem todos os direitos reservados: **nomes, falas e textos abaixo são próprios do A Guilda**; da original aproveitamos só a ideia (tirano escondido atrás de um "monstro" que leva a culpa, com uma escolha moral no meio).

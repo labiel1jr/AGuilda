@@ -220,8 +220,9 @@ static func dispatch(gs: GuildState, mission: Dictionary, party: Array, prepared
 	for hid in fx.get("morale", {}):
 		if gs.heroes.has(hid):
 			gs.heroes[hid].morale = clampi(gs.heroes[hid].morale + int(fx.morale[hid]), 0, 10)
-	if fx.has("flag") and not gs.flags.has(fx.flag):
-		gs.flags.append(fx.flag)
+	if fx.has("flag"):
+		Arcs.add_flag(gs, fx.flag)
+	Arcs.after_mission(gs, mission, party, fx)   # flags extras e decisão de arco
 	if fx.has("text"):
 		lines.append(fx.text)
 	for id in party:

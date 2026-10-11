@@ -61,6 +61,7 @@ static func start_chapter(gs: GuildState, i: int) -> void:
 		if ch.missions.has(m.id):
 			m.status = "aberta"
 			m.day = gs.chapter_start + m.rel_day - 1
+	Arcs.on_chapter_start(gs)   # missões de arco esperam a flag que as abre
 	gs.chapter_state = "intro"
 
 

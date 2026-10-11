@@ -18,7 +18,7 @@ static func show_backstage(ui: GuildUI, bs: Dictionary) -> void:
 	ui.root.add_child(UIKit.label("O que você faz?", 15, GuildUI.C_TEXT))
 	for choice in bs.event.choices:
 		var block := Backstage.choice_block(ui.gs, choice)
-		var b := UIKit.button(ui.gs.backstage_text(bs, choice.label) + ("   (%s)" % block if block != "" else ""), ui._on_backstage_choice.bind(bs, choice))
+		var b := UIKit.button(ui.gs.backstage_text(bs, choice.label) + ("   (%s)" % block if block != "" else ""), ui._on_backstage_choice.bind(bs, choice), "escolha")
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.disabled = block != ""
 		ui.root.add_child(b)
@@ -210,7 +210,7 @@ static func show_ultimatum(ui: GuildUI, u: Dictionary) -> void:
 	for choice in ui.gs.ultimatum_data.choices:
 		var reason: String = ui.gs.ultimatum_block_reason(choice)
 		var b := UIKit.button(ui.gs.ultimatum_text(u.id, choice.label) + ("" if reason == "" else "  (%s)" % reason), func():
-			GuildScreens.toast(ui, "\n".join(ui.gs.resolve_ultimatum(u, choice)), ui.show_hub))
+			GuildScreens.toast(ui, "\n".join(ui.gs.resolve_ultimatum(u, choice)), ui.show_hub), "escolha")
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.disabled = reason != ""
 		ui.root.add_child(b)

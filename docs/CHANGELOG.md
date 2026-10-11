@@ -4,6 +4,21 @@ Histórico de versões, da mais recente para a mais antiga. Datas dos commits no
 
 ---
 
+## Botões com arte e mais 8 cenas do resultado — 2026-10-11
+
+- **Botões de madeira, pergaminho, escolha, perigo, medalhão e barra do hub** (`UIKit.button` escolhe a peça pelo texto ou pelo tipo pedido). Só o estado normal foi entregue; hover, pressionado e desativado são o mesmo desenho clareado ou escurecido por código.
+- **20 ícones de ação** à esquerda dos rótulos conhecidos (Voltar, Continuar, Seguir viagem, Assistir cena…); selo preto do alvo no botão Enfrentar.
+- **Hub**: navegação numa linha própria abaixo do título (Guilda, Mercado, Quadro, Livro… Encerrar dia), com o ícone no nicho da placa; menu ☰ no medalhão.
+- **8 cenas do resultado** novas: poderes, preparação, fome, desgaste, sorte, azar, sozinho e povo. Falta `povo_contra`.
+- `art/tools/preparar_botoes.py` recorta as peças e a folha de ícones (rótulos da folha vieram desalinhados; recorte pelo desenho).
+
+## Sistemas de missão grande (Alvorada, passo 1) — 2026-10-10
+
+- **Arcos de missões** (`Arcs`): missões que só abrem com uma flag, ramos cancelados pela escolha oposta, flags vindas de missões e de eventos da rota.
+- **Decisão de arco**: tela depois do resultado com a cena, a fala de cada herói que esteve lá e as escolhas; quem apoiou a escolha feita ganha moral, quem queria outra ganha estresse.
+- **Rota fixa**: missão pode desenhar a própria expedição (`route.fixed`), com eventos de qualquer grupo.
+- Ainda sem conteúdo: `data/decisions.json` vazio até a Etapa 1 da Alvorada.
+
 ## Arte do quadro de avisos e cenas genéricas integradas — 2026-10-11
 
 - **Quadro de avisos com arte**: o quadro (recortado da cena da praça que veio do artista) é a moldura do painel; cada pedido usa o papel do cartaz com o prego da arte e um **selo de cera por tipo** — comum, urgente (último dia), pessoal (missão pessoal) e lendário; quadro vazio mostra o cartaz da pena.

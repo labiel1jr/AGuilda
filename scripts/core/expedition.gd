@@ -20,6 +20,9 @@ static func start(gs, mission: Dictionary, party: Array, prepared: Dictionary) -
 	var weights: Dictionary = rd.weights.get(mission.get("biome", ""), rd.weights.default).duplicate()
 	weights.merge(mission.get("route", {}).get("weights", {}), true)
 
+	var fixed: Array = mission.get("route", {}).get("fixed", [])
+	if not fixed.is_empty():
+		return _start_fixed(gs, mission, party, prepared, fixed)
 	var layers := []
 	for l in n_layers:
 		var count := rng.randi_range(2, 3)
@@ -76,6 +79,32 @@ static func start(gs, mission: Dictionary, party: Array, prepared: Dictionary) -
 		"mission": mission.id, "party": party.duplicate(), "prepared": prepared.duplicate(),
 		"layers": layers, "cur": START.duplicate(), "path": [START.duplicate()],
 		"provisions": int(rd.provisions_start.get(mission.risk, 3)),
+		"gold": 0, "items": [], "bonus": 0, "hunger": 0, "days": 0,
+		"pending": "", "log": [],
+	}
+	gs.expedition = exp
+	return exp
+
+
+## Rota desenhada à mão (missions.json → route.fixed): lista de camadas, cada nó {type, event, next?}.
+## Sem "next", o nó liga a todos da camada seguinte. O alvo é acrescentado no fim.
+static func _start_fixed(gs, mission: Dictionary, party: Array, prepared: Dictionary, fixed: Array) -> Dictionary:
+	var rd := data(gs)
+	var layers := []
+	for spec_layer in fixed:
+		var layer := []
+		for spec in spec_layer:
+			layer.append({"type": String(spec.get("type", "evento")), "event": String(spec.get("event", "")), "next": spec.get("next", []).duplicate(), "done": false})
+		layers.append(layer)
+	layers.append([{"type": "chefe", "next": [], "event": "", "done": false}])
+	for l in layers.size() - 1:
+		for node in layers[l]:
+			if node.next.is_empty():
+				node.next = range(layers[l + 1].size())
+	var exp := {
+		"mission": mission.id, "party": party.duplicate(), "prepared": prepared.duplicate(),
+		"layers": layers, "cur": START.duplicate(), "path": [START.duplicate()],
+		"provisions": int(mission.get("route", {}).get("provisions", rd.provisions_start.get(mission.risk, 3))),
 		"gold": 0, "items": [], "bonus": 0, "hunger": 0, "days": 0,
 		"pending": "", "log": [],
 	}
@@ -156,6 +185,11 @@ static func event_by_id(gs, type: String, id: String) -> Dictionary:
 	for ev in data(gs).events.get(type, []):
 		if ev.id == id:
 			return ev
+	# rotas fixas usam eventos de qualquer grupo (ex.: "vau_salgado")
+	for group in data(gs).events:
+		for ev in data(gs).events[group]:
+			if ev.id == id:
+				return ev
 	return {}
 
 
@@ -307,6 +341,8 @@ static func apply(gs, fx: Dictionary, hero: String = "") -> Array:
 		var id: String = hero if hero != "" else party[gs.rng.randi_range(0, party.size() - 1)]
 		var t := String(fx.trait)
 		lines.append_array(Mind.gain_trait(gs, id, t == "pos", "" if t in ["pos", "neg"] else t))
+	if fx.has("flag"):
+		Arcs.add_flag(gs, String(fx.flag))   # pista descoberta na rota (arcos)
 	if fx.has("affinity") and party.size() >= 2:
 		var pairs := ScoreCalc.pairs_of(party)
 		var pr: Array = pairs[gs.rng.randi_range(0, pairs.size() - 1)]

@@ -22,6 +22,7 @@ func _init() -> void:
 	_check_mind(gs)
 	_check_story(gs)
 	_check_town(gs)
+	_check_arcs(gs)
 	_random_playthroughs(gs, 150)
 	print("RESULTADO: %s (%d falha(s))" % ["OK" if failures == 0 else "FALHOU", failures])
 	gs.free()
@@ -710,6 +711,48 @@ func _check_town(gs) -> void:
 	gs.load_game("teste_town")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(gs.save_path("teste_town")))
 	_expect(gs.upgrades_revealed.has("forja") and int(gs.heroes.bram.fame) == 9, "save guarda melhorias reveladas e fama")
+
+
+func _check_arcs(gs) -> void:
+	gs.new_game(55)
+	var ids: Array = Chapters.current_chapter(gs).missions
+	var a := _mission(gs, ids[0])
+	var b := _mission(gs, ids[1])
+	a.requires_flag = "teste_pista"
+	a.arc_delay = 1
+	b.forbids_flag = "teste_pista"
+	Arcs.on_chapter_start(gs)
+	_expect(a.status == "bloqueada", "missão de arco começa bloqueada")
+	Arcs.add_flag(gs, "teste_pista")
+	_expect(a.status == "aberta" and a.day == gs.day + 1, "flag abre a missão de arco com atraso")
+	_expect(b.status == "cancelada", "flag proibida cancela o outro ramo")
+	# decisão
+	gs.decisions_data = {"decisions": [{"id": "dt", "title": "T", "text": "x",
+		"voices": {"vera": {"text": "sim", "leans": "c1"}, "bram": {"text": "não", "leans": "c2"}},
+		"choices": [{"id": "c1", "label": "A", "text": "feito", "flags": ["dt_c1"], "gold": 5},
+			{"id": "c2", "label": "B", "text": "outro", "requires_flags": ["nunca"]}]}]}
+	Arcs.after_mission(gs, a, ["vera", "bram"], {"decision": "dt"})
+	_expect(gs.pending_decisions.size() == 1, "missão agenda decisão")
+	var pend: Dictionary = gs.pending_decisions.pop_front()
+	var d := Arcs.decision(gs, "dt")
+	_expect(Arcs.choices(gs, d).size() == 1, "escolha com flag faltando fica escondida")
+	gs.heroes.vera.morale = 5
+	var st: int = gs.heroes.bram.stress
+	var g: int = gs.gold
+	Arcs.resolve(gs, pend, d.choices[0])
+	_expect(gs.heroes.vera.morale == 6 and gs.heroes.bram.stress == st + 1, "quem concorda ganha moral, quem discorda ganha estresse")
+	_expect(gs.flags.has("dt_c1") and gs.gold == g + 5, "escolha aplica flag e ouro")
+	# rota fixa
+	var groups: Dictionary = Expedition.data(gs).events
+	var ev_id: String = groups[groups.keys()[0]][0].id
+	a.route = {"fixed": [[{"type": "evento", "event": ev_id}], [{"type": "evento", "event": ev_id}, {"type": "descanso"}]], "provisions": 4}
+	var exp: Dictionary = Expedition.start(gs, a, ["vera", "bram"], {})
+	_expect(exp.layers.size() == 3 and exp.layers[1].size() == 2 and exp.layers[2][0].type == "chefe", "rota fixa segue o desenho e termina no alvo")
+	_expect(exp.provisions == 4 and exp.layers[0][0].next == [0, 1], "rota fixa: provisões e ligações padrão")
+	_expect(not Expedition.event_by_id(gs, "inexistente", ev_id).is_empty(), "evento de rota fixa achado em qualquer grupo")
+	var r: Dictionary = _run_expedition(gs, a, ["vera", "bram"], {}, RandomNumberGenerator.new())
+	_expect(not r.is_empty(), "rota fixa chega ao fim")
+	a.erase("route")
 
 
 func _expect(ok: bool, msg: String) -> void:

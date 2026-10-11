@@ -35,6 +35,7 @@ Este documento descreve **como o jogo está construído hoje**: módulos, fluxo 
 | `scripts/systems/save_system.gd` | `SaveSystem`: salvar e carregar |
 | `scripts/systems/ending_system.gd` | `Endings`: epílogo |
 | `scripts/systems/town_system.gd` | `Town`: Fama no povo (por herói) e Estima da cidade (guilda); preços, recompensa, termo Povo do score, efeito das missões vistas pelo povo |
+| `scripts/systems/arc_system.gd` | `Arcs`: missões de arco (`requires_flag` bloqueia até a flag, `forbids_flag` cancela o ramo não escolhido, `arc_delay`), efeitos `flags`/`decision` de missão e decisões de arco (`data/decisions.json`: falas dos heróis, escolhas com flags, moral/estresse, ouro, estima). Rota fixa da expedição: `route.fixed` em missions.json |
 | `scripts/systems/result_story.gd` | `ResultStory`: o porquê do resultado em frases — escolhe até 3 momentos pelo peso no score (pares, Ações de Vínculo, destaque, cansaço, condições, poderes, rota, sorte), com o estado de antes das consequências; variação determinística, sem usar o rng |
 | `scripts/core/score_calc.gd` | `ScoreCalc` (estático): fórmula do score e limiares |
 | `scripts/core/hero_rpg.gd` | `HeroRPG` (estático): XP, níveis, efeitos, equipamento, magias, saque, mercado |

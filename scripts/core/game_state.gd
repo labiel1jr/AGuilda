@@ -107,6 +107,8 @@ var trained_today := false
 var route_data := {}
 var traits_data := {}
 var result_story_data := {}
+var decisions_data := {}       # decisões de arco (data/decisions.json)
+var pending_decisions := []    # decisões de arco aguardando o jogador [{id, party, mission}]
 var town_esteem := 3           # Estima da cidade pela guilda (Town)
 var upgrades_revealed := []     # melhorias ocultas já reveladas por bastidores   # textos do resultado contado (data/result_story.json)
 var expedition := {}         # expedição em andamento (Expedition), vazia fora do mapa
@@ -135,6 +137,8 @@ func new_game(seed_value: int = -1) -> void:
 	items_data = _load_json("res://data/items.json")
 	traits_data = _load_json("res://data/traits.json")
 	result_story_data = _load_json("res://data/result_story.json")
+	decisions_data = _load_json("res://data/decisions.json")
+	pending_decisions = []
 	inventory.clear()
 	pending_levelups.clear()
 	pending_moments.clear()
@@ -310,7 +314,7 @@ const SAVE_KEYS := [
 	"chapter_state", "chapter_result", "flags", "gold", "upgrades_owned",
 	"trained_today", "pair_history", "initial_affinity", "last_together",
 	"backstage_today", "backstage_once", "ultimatums", "promises", "departed",
-	"town_esteem", "upgrades_revealed",
+	"town_esteem", "upgrades_revealed", "pending_decisions",
 ]
 
 

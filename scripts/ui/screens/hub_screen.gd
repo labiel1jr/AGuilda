@@ -27,17 +27,29 @@ static func show_hub(ui: GuildUI) -> void:
 	status.mouse_filter = Control.MOUSE_FILTER_STOP
 	titles.add_child(status)
 	top.add_child(UIKit.spacer())
-	top.add_child(UIKit.button("Guilda", ui.show_upgrades))
-	top.add_child(UIKit.button("Mercado", ui.show_market))
-	var rel := UIKit.button("Quadro" if ui.gs.affinity_visible() else "🔒 Quadro", ui.show_relations)
+	top.add_child(UIKit.button("☰", ui.show_menu))
+	var nav := HBoxContainer.new()
+	nav.add_theme_constant_override("separation", 8)
+	ui.root.add_child(nav)
+	top = nav
+	var guild_btn := UIKit.button("Guilda", ui.show_upgrades, "barra")
+	UIKit.button_icon(guild_btn, UIKit.tex("res://art/ui/icones/construir.png"), 24)
+	top.add_child(guild_btn)
+	var market_btn := UIKit.button("Mercado", ui.show_market, "barra")
+	UIKit.button_icon(market_btn, UIKit.tex("res://art/ui/icones/comprar.png"), 24)
+	top.add_child(market_btn)
+	var rel := UIKit.button("Quadro" if ui.gs.affinity_visible() else "🔒 Quadro", ui.show_relations, "barra")
+	UIKit.button_icon(rel, UIKit.tex("res://art/ui/icones/conversar.png"), 24)
 	rel.disabled = not ui.gs.affinity_visible()
 	rel.tooltip_text = "Construa o Quadro de Relações na tela Guilda." if rel.disabled else "Quadro de Relações"
 	top.add_child(rel)
-	var book_btn := UIKit.button("Livro", ui.show_book.bind(0))
-	UIKit.button_icon(book_btn, UIKit.tex("res://art/book/capa_fechada.png"), 22)
+	var book_btn := UIKit.button("Livro", ui.show_book.bind(0), "barra")
+	UIKit.button_icon(book_btn, UIKit.tex("res://art/book/capa_fechada.png"), 24)
 	top.add_child(book_btn)
-	top.add_child(UIKit.button("Encerrar dia ▶", ui._on_end_day))
-	top.add_child(UIKit.button("☰", ui.show_menu))
+	top.add_child(UIKit.spacer())
+	var end_btn := UIKit.button("Encerrar dia ▶", ui._on_end_day, "barra")
+	UIKit.button_icon(end_btn, UIKit.tex("res://art/ui/icones/opcoes.png"), 24)   # ampulheta
+	top.add_child(end_btn)
 
 	var body := HBoxContainer.new()
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL

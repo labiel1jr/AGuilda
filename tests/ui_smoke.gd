@@ -159,6 +159,13 @@ func _initialize() -> void:
 	# PV e incapacitado
 	gs.heroes.mira.hp = 0
 	assert(gs.unavailable_reason("mira", m) == "Incapacitado")
+	# decisão de arco
+	gs.decisions_data = {"decisions": [{"id": "dt", "title": "Teste", "text": "Escolha.", "voices": {"vera": {"text": "Vamos.", "leans": "c1"}}, "choices": [{"id": "c1", "label": "Seguir", "text": "Seguimos."}]}]}
+	var dpend := {"id": "dt", "party": ["vera", "bram"], "mission": ""}
+	DecisionScreen.show_decision(main, dpend)
+	await process_frame
+	DecisionScreen.choose(main, dpend, gs.decisions_data.decisions[0].choices[0])
+	await process_frame
 	print("UI SMOKE OK")
 	quit()
 

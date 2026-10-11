@@ -160,6 +160,8 @@ def main():
         if f.suffix.lower() not in (".jpg", ".jpeg", ".png"):
             continue
         aid = re.split(r"[.,]", f.name)[0]
+        if aid.startswith("btn_"):
+            continue   # botões: art/tools/preparar_botoes.py
         if aid not in ids:
             print("sem asset:", f.name)
             continue
